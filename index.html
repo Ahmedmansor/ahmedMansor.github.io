@@ -164,7 +164,7 @@
                             <h4>${project.title}</h4>
                             <p>${project.description}</p>
                             <div class="tech-tags">${tagsHTML}</div>
-                            <span class="view-project-btn">${translations.indexPage.projectsData[0].viewProject}</span>
+                            <span class="view-project-btn">${project.viewProject || (translations.indexPage.projectsData[0] ? translations.indexPage.projectsData[0].viewProject : "View Project Details")}</span>
                         </div>
                     </a>
                 `;

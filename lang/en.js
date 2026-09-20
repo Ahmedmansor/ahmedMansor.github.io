@@ -39,6 +39,26 @@ translations = {
         ],
         viewProject: "View Project Details",
       },
+      {
+        title: "SemanticCut AI",
+        description:
+          "An intelligent end-to-end Python & AI pipeline that automates viral multilingual short-form video production, featuring Gemini semantic mapping, WhisperX alignment, and Premiere Pro XML generation.",
+        thumbnail: "assets/images/semanticcut-thumbnail.jpg",
+        link: "semantic-cut.html",
+        tags: [
+          "Python",
+          "Google Gemini API",
+          "Groq API (Llama 3.3)",
+          "WhisperX Large-v3",
+          "FFmpeg",
+          "Pydub",
+          "Premiere XML",
+          "Semantic Video Mapping",
+          "AI Sound Design",
+          "Multilingual Audio",
+        ],
+        viewProject: "View Project Details",
+      },
     ],
   },
   // Text specific to the project1.html page
@@ -189,5 +209,52 @@ translations = {
           "<strong>State Synchronization:</strong><br>Providing immediate confirmation for the coach, the session view is dynamically updated the moment a player enrolls. This real-time data handling ensures coaches always have an up-to-date roster of participants.",
       },
     },
+  },
+  // Text specific to the semantic-cut.html page
+  semanticCutPage: {
+    pageTitle: "Project Details: SemanticCut AI",
+    headerTitle: "SemanticCut AI: Automated Multilingual Video Production Pipeline",
+    headerSubtitle: "Intelligent End-to-End AI Video Engineering System",
+    headerDescription:
+      "A cutting-edge Python & AI automation pipeline that cuts hours of manual video editing into minutes. It ingests raw episode video footage and a summarized text script, automatically producing high-retention multilingual short-form videos (Shorts/Reels) in 4 languages: English, Arabic, Spanish, and Portuguese.",
+    problemTitle: "⚠️ The Challenge / Problem",
+    problemDescription:
+      "Manually editing and summarizing cartoon episodes demands hours of tedious work: slicing silences, millisecond subtitle alignment, scouring raw footage for the right scene to match each line, and engineering comedic sound effects.",
+    solutionTitle: "💡 The Solution",
+    solutionDescription:
+      "This system converts raw episode footage + a summarized text script into an authentic, multi-track Adobe Premiere Pro project (XML) with a single command. It harnesses Google Gemini for conversational context understanding and semantic scene matching (Semantic Video Mapping), generates voiceovers in 4 languages, extracts millisecond-accurate synchronized captions via WhisperX, and overlays comedic sound effects automatically (AI SFX). The result? Viral-ready content with near-zero human intervention.",
+    techStackHeading: "Technologies & Architecture Stack",
+    demoVideoHeading: "🎬 Live Demonstration & Output Showcase",
+    demoVideoDescription:
+      "Watch the end-to-end automated workflow and the produced short-form content with multi-track Premiere Pro timeline alignment.",
+    flowchartHeading: "🗺️ System Architecture & Workflow Pipeline",
+    flowchartDescription:
+      "Complete architectural diagram detailing data flow from raw inputs through WhisperX, Google Gemini, and Groq to the final Premiere XML multi-track assembly.",
+    openFullDiagramBtn: "View Full High-Res Diagram",
+    deepDiveHeading: "🔬 Technical Deep Dive (Hacker Breakdown)",
+    deepDiveIntro:
+      "🎬 Core Pipeline Concept: An architectural breakdown of how SemanticCut AI orchestrates audio processing, computer vision reasoning, and timeline XML generation.",
+    stage1Title: "STAGE 1 · Raw Inputs & Ingestion",
+    stage1Desc:
+      "The system ingests the raw full-length video file (episode.mp4), text scripts across 4 target languages ([AR], [EN], [ES], [PT]), optional human studio recordings, cartoon sound effects library (bonk, boing, impacts), and the background music bed (BGM.wav).",
+    stage2Title:
+      "STAGE 2 · Raw Map Extraction & Timestamping (0_extract_raw_srt.py)",
+    stage2Desc:
+      "Utilizes WhisperX Large-v3 accelerated with float16 precision on an NVIDIA RTX 4070. Performs speech recognition and phoneme-level forced alignment on the raw video to construct raw_transcript.srt — the canonical spatial-temporal map of every dialogue and silence in the entire episode.",
+    stage3Title:
+      "STAGE 3 · Core Audio Engine & Multilingual Synchronization (auto_maker.py)",
+    stage3Desc:
+      "Three concurrent sub-engines guarantee rapid pacing and pitch-perfect sync: (3A) CapCut-Style Subtitle Scaling using Stable-Whisper for Arabic & WhisperX for other languages with mathematical speed-factor time division into sub_{lang}.srt and millisecond map sub_{lang}_sync.json. (3B) Fast & Snappy Voiceover with priority fallbacks to Google Gemini TTS tuned for Egyptian/character cadence, optimized through a Fast Pacing Engine (Pydub silence excision + FFmpeg speedup with pitch preservation). (3C) AI SFX Track driven by Groq API (Llama 3.3 70B) to classify comedic gags and punchlines, matching them with the sound library into SFX_Track_{lang}.wav.",
+    stage4Title:
+      "STAGE 4 · Semantic Video Mapping — The AI Brain (video_mapper.py)",
+    stage4Desc:
+      "The cognitive core of the system powered by Google Gemini — Shot Reasoning. Enforces three strict algorithmic heuristics: (1) Multi-episode trap rule to prevent context hallucination. (2) Hook rule (optimizing shot 0 for first 3-second viewer retention). (3) Action inference from context (aligning voiceover semantics with character physical gestures). Backed by a high-speed local cache (independent_langs_cache.json) to reuse matched visual sequences across all 4 languages instantly.",
+    stage5Title: "STAGE 5 · XML Generation & Final Multi-Track Assembly",
+    stage5Desc:
+      "Synthesizes an industry-standard Adobe Premiere Pro XML sequence (23.976 FPS, 1080×1920 9:16 vertical shorts format). Generates a complete 5-layer timeline: Video Track V1 (cut and reframed episode shots), Video Track V2 (dynamic watermark overlay), Audio Track A1 (Voiceover boosted +5dB), Audio Track A2 (AI comedy SFX at -8dB), and Audio Track A3 (BGM bed at 0dB with speech ducking).",
+    explainerHeading: "📺 Explainer Video & Deep Code Walkthrough",
+    explainerDescription:
+      "A comprehensive video walkthrough explaining the code structure, prompt engineering, and live Premiere XML timeline import.",
+    watchOnVimeoBtn: "Watch Full Demo on Vimeo",
   },
 };

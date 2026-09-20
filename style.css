@@ -444,24 +444,30 @@ main {
 /* ======== 6. Project Detail Page Styles ======== */
 .project-detail-header {
   text-align: center;
-  margin-bottom: 50px;
+  margin-bottom: 40px;
   padding-bottom: 25px;
   border-bottom: 1px solid #333;
 }
 
 .project-detail-header h1 {
   color: #bb86fc;
-  font-size: 3em;
-  margin-bottom: 15px;
+  font-size: clamp(1.6rem, 3.2vw, 2.35rem);
+  line-height: 1.32;
+  max-width: 920px;
+  margin: 0 auto 14px;
   font-family: "Montserrat", sans-serif;
   font-weight: 700;
+  letter-spacing: -0.3px;
+  word-break: normal;
+  overflow-wrap: break-word;
 }
 
 .project-detail-header p {
   color: #b3b3b3;
-  max-width: 700px;
+  max-width: 780px;
   margin: 0 auto;
-  font-size: 1.1em;
+  font-size: 1.05em;
+  line-height: 1.7;
 }
 
 /* ======== Google Play CTA Button / Badge ======== */
@@ -795,5 +801,1026 @@ html[dir="rtl"] .google-play-btn .btn-text {
   }
   .google-play-btn .btn-title {
     font-size: 1.15em;
+  }
+}
+
+/* ======== 8. SemanticCut AI Project Styles ======== */
+.semanticcut-header {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.project-badge-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(3, 218, 198, 0.12);
+  color: #03dac6;
+  border: 1px solid rgba(3, 218, 198, 0.3);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.85em;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 15px;
+}
+
+.project-subtitle {
+  color: #bb86fc;
+  font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+  line-height: 1.45;
+  font-weight: 600;
+  max-width: 780px;
+  margin: 0 auto 15px;
+}
+
+.project-main-desc {
+  color: #c4c4c4;
+  max-width: 850px;
+  margin: 0 auto;
+  font-size: 1.05em;
+  line-height: 1.8;
+}
+
+/* Problem / Solution Grid */
+.problem-solution-section {
+  margin: 35px 0;
+}
+
+.problem-solution-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+}
+
+.ps-card {
+  padding: 26px;
+  border-radius: 14px;
+  background: #1b1e26;
+  border: 1px solid #333;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+}
+
+.ps-card:hover {
+  transform: translateY(-4px);
+}
+
+.problem-card {
+  border-left: 4px solid #ef4444;
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.08) 0%, #1a1c23 100%);
+}
+
+.solution-card {
+  border-left: 4px solid #03dac6;
+  background: linear-gradient(135deg, rgba(3, 218, 198, 0.08) 0%, #1a1c23 100%);
+}
+
+html[dir="rtl"] .problem-card {
+  border-left: 1px solid #333;
+  border-right: 4px solid #ef4444;
+}
+
+html[dir="rtl"] .solution-card {
+  border-left: 1px solid #333;
+  border-right: 4px solid #03dac6;
+}
+
+.ps-icon {
+  font-size: 1.8em;
+  margin-bottom: 12px;
+}
+
+.problem-card .ps-icon {
+  color: #ef4444;
+}
+
+.solution-card .ps-icon {
+  color: #03dac6;
+}
+
+.ps-card h3 {
+  font-size: 1.35em;
+  margin-bottom: 12px;
+  color: #ffffff;
+}
+
+.ps-card p {
+  font-size: 0.98em;
+  color: #b0b8c4;
+  line-height: 1.7;
+}
+
+/* Tech Stack Single Line */
+.tech-stack-section {
+  margin: 40px 0;
+  text-align: center;
+}
+
+.section-title {
+  color: #ffffff;
+  font-size: clamp(1.3rem, 2.2vw, 1.7rem);
+  line-height: 1.35;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.section-title i {
+  color: #03dac6;
+}
+
+.section-subtext {
+  color: #a0aec0;
+  font-size: 1em;
+  margin-bottom: 25px;
+}
+
+.section-header-centered {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.tech-stack-single-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  background: #181c24;
+  padding: 16px 24px;
+  border-radius: 12px;
+  border: 1px solid #2e3846;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.tech-pill-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  font-size: 0.9em;
+  font-weight: 600;
+  color: #e2e8f0;
+  transition: all 0.25s ease;
+}
+
+.tech-pill-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(3, 218, 198, 0.15);
+  border-color: #03dac6;
+  color: #03dac6;
+}
+
+.tech-pill-badge i {
+  color: #03dac6;
+}
+
+.tech-pill-badge.python i {
+  color: #4b8bbe;
+}
+
+.tech-pill-badge.gemini i {
+  color: #bb86fc;
+}
+
+.tech-pill-badge.groq i {
+  color: #f59e0b;
+}
+
+.tech-pill-divider {
+  color: #475569;
+  font-weight: bold;
+}
+
+/* Demo Video Responsive Vimeo Embed */
+.demo-video-section {
+  margin: 50px 0;
+}
+
+.video-responsive-wrapper {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 ratio */
+  height: 0;
+  overflow: hidden;
+  border-radius: 16px;
+  border: 2px solid #2a3342;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7), 0 0 30px rgba(3, 218, 198, 0.12);
+  background: #000;
+}
+
+.video-responsive-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* Flowchart Architecture Section */
+.flowchart-section {
+  margin: 50px 0;
+}
+
+.flowchart-card {
+  background: #151820;
+  border: 1px solid #2a3342;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.flowchart-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 15px;
+}
+
+html[dir="rtl"] .flowchart-actions {
+  justify-content: flex-start;
+}
+
+.diagram-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  background: #232a36;
+  color: #03dac6 !important;
+  border: 1px solid #03dac6;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9em;
+  transition: all 0.3s ease;
+  text-decoration: none !important;
+}
+
+.diagram-btn:hover {
+  background: #03dac6;
+  color: #121212 !important;
+  box-shadow: 0 0 15px rgba(3, 218, 198, 0.4);
+}
+
+.flowchart-img-scroll {
+  overflow-x: auto;
+  text-align: center;
+  padding: 10px 0;
+  border-radius: 8px;
+}
+
+.flowchart-svg-object {
+  width: 100%;
+  height: 950px;
+  min-height: 650px;
+  display: block;
+  border: none;
+  border-radius: 12px;
+  background: #0d121c;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6), 0 0 25px rgba(14, 165, 233, 0.08);
+}
+
+.flowchart-svg-img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  display: inline-block;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 1100px) {
+  .flowchart-svg-object {
+    height: 780px;
+  }
+}
+
+@media (max-width: 768px) {
+  .flowchart-svg-object {
+    height: 600px;
+    min-width: 800px;
+  }
+}
+
+/* Deep Dive Stages */
+.deep-dive-section {
+  margin: 55px 0;
+}
+
+.deep-dive-intro {
+  color: #c4c4c4;
+  font-size: 1.1em;
+  max-width: 750px;
+  margin: 0 auto 35px;
+  line-height: 1.8;
+}
+
+.pipeline-stages-container {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.stage-card {
+  background: #1b1e26;
+  border: 1px solid #2e3846;
+  border-radius: 14px;
+  padding: 28px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stage-card.highlight-card {
+  border-color: rgba(3, 218, 198, 0.6);
+  box-shadow: 0 8px 25px rgba(3, 218, 198, 0.12);
+}
+
+.stage-card-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 16px;
+}
+
+.stage-number-badge {
+  font-size: 2em;
+  font-weight: 800;
+  font-family: "Montserrat", sans-serif;
+  color: #03dac6;
+  line-height: 1;
+  background: linear-gradient(135deg, #03dac6, #bb86fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.stage-tag {
+  display: inline-block;
+  font-size: 0.72em;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  color: #03dac6;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.stage-card h4 {
+  color: #ffffff;
+  font-size: 1.35em;
+  font-weight: 700;
+  margin: 0;
+}
+
+.stage-card-body {
+  color: #b0b8c4;
+  font-size: 1em;
+  line-height: 1.8;
+  margin-bottom: 18px;
+}
+
+.stage-tech-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.stage-tech-pills span {
+  background: #13161c;
+  color: #94a3b8;
+  border: 1px solid #2a3342;
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 0.82em;
+  font-weight: 600;
+}
+
+.stage-tech-pills span code {
+  color: #03dac6;
+}
+
+.stage-subgrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.stage-subcard {
+  background: #13161c;
+  border: 1px solid #2a3342;
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.stage-subcard h5 {
+  color: #03dac6;
+  font-size: 1em;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stage-subcard p {
+  color: #94a3b8;
+  font-size: 0.88em;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Premiere Track Rows */
+.stage-tracks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.track-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #13161c;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 1px solid #2a3342;
+}
+
+.track-badge {
+  font-weight: 800;
+  font-size: 0.85em;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.video-track .track-badge {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.audio-track .track-badge {
+  background: #16a34a;
+  color: #ffffff;
+}
+
+.track-desc {
+  color: #cbd5e1;
+  font-size: 0.92em;
+}
+
+.track-desc code {
+  color: #03dac6;
+}
+
+/* Explainer Video Showcase Card */
+.explainer-section {
+  margin: 55px 0 35px;
+}
+
+.explainer-card {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 30px;
+  background: #181c24;
+  border: 1.5px solid #2e3846;
+  border-radius: 16px;
+  padding: 24px;
+  align-items: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.explainer-thumb-wrapper {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+}
+
+.explainer-thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.explainer-card:hover .explainer-thumb-img {
+  transform: scale(1.05);
+}
+
+.explainer-play-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none !important;
+  transition: background 0.3s ease;
+}
+
+.explainer-play-overlay:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.play-pulse-circle {
+  width: 60px;
+  height: 60px;
+  background: #03dac6;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #121212;
+  font-size: 1.4em;
+  padding-left: 4px;
+  box-shadow: 0 0 25px rgba(3, 218, 198, 0.6);
+  transition: transform 0.3s ease;
+}
+
+.explainer-play-overlay:hover .play-pulse-circle {
+  transform: scale(1.15);
+}
+
+.explainer-content h4 {
+  font-size: 1.6em;
+  color: #ffffff;
+  margin-bottom: 12px;
+}
+
+.explainer-content p {
+  color: #a0aec0;
+  font-size: 1em;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.vimeo-watch-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 24px;
+  background: #1ab7ea;
+  color: #ffffff !important;
+  border-radius: 8px;
+  font-weight: 700;
+  text-decoration: none !important;
+  box-shadow: 0 4px 15px rgba(26, 183, 234, 0.4);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.vimeo-watch-btn:hover {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.stage-tech-pills span {
+  background: #13161c;
+  color: #94a3b8;
+  border: 1px solid #2a3342;
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 0.82em;
+  font-weight: 600;
+}
+
+.stage-tech-pills span code {
+  color: #03dac6;
+}
+
+.stage-subgrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.stage-subcard {
+  background: #13161c;
+  border: 1px solid #2a3342;
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.stage-subcard h5 {
+  color: #03dac6;
+  font-size: 1em;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stage-subcard p {
+  color: #94a3b8;
+  font-size: 0.88em;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Premiere Track Rows */
+.stage-tracks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.track-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #13161c;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 1px solid #2a3342;
+}
+
+.track-badge {
+  font-weight: 800;
+  font-size: 0.85em;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.video-track .track-badge {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.audio-track .track-badge {
+  background: #16a34a;
+  color: #ffffff;
+}
+
+.track-desc {
+  color: #cbd5e1;
+  font-size: 0.92em;
+}
+
+.track-desc code {
+  color: #03dac6;
+}
+
+/* Explainer Video Showcase Card */
+.explainer-section {
+  margin: 55px 0 35px;
+}
+
+.explainer-card {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 30px;
+  background: #181c24;
+  border: 1.5px solid #2e3846;
+  border-radius: 16px;
+  padding: 24px;
+  align-items: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.explainer-thumb-wrapper {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+}
+
+.explainer-thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.explainer-card:hover .explainer-thumb-img {
+  transform: scale(1.05);
+}
+
+.explainer-play-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none !important;
+  transition: background 0.3s ease;
+}
+
+.explainer-play-overlay:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.play-pulse-circle {
+  width: 60px;
+  height: 60px;
+  background: #03dac6;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #121212;
+  font-size: 1.4em;
+  padding-left: 4px;
+  box-shadow: 0 0 25px rgba(3, 218, 198, 0.6);
+  transition: transform 0.3s ease;
+}
+
+.explainer-play-overlay:hover .play-pulse-circle {
+  transform: scale(1.15);
+}
+
+.explainer-content h4 {
+  font-size: 1.6em;
+  color: #ffffff;
+  margin-bottom: 12px;
+}
+
+.explainer-content p {
+  color: #a0aec0;
+  font-size: 1em;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.vimeo-watch-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 24px;
+  background: #1ab7ea;
+  color: #ffffff !important;
+  border-radius: 8px;
+  font-weight: 700;
+  text-decoration: none !important;
+  box-shadow: 0 4px 15px rgba(26, 183, 234, 0.4);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.vimeo-watch-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(26, 183, 234, 0.6);
+}
+
+/* RTL Adjustments for SemanticCut Page */
+html[dir="rtl"] #semanticcut-page .ps-card,
+html[dir="rtl"] #semanticcut-page .stage-card,
+html[dir="rtl"] #semanticcut-page .stage-subcard,
+html[dir="rtl"] #semanticcut-page .explainer-content {
+  text-align: right;
+  direction: rtl;
+}
+
+html[dir="rtl"] #semanticcut-page .stage-card-header {
+  flex-direction: row-reverse;
+}
+
+html[dir="rtl"] #semanticcut-page .track-row {
+  flex-direction: row-reverse;
+}
+
+/* Mobile & Responsive typography for Project Detail Pages */
+@media (max-width: 800px) {
+  .project-detail-header {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+  }
+
+  .project-detail-header h1 {
+    font-size: 1.75rem;
+    line-height: 1.34;
+    padding: 0 8px;
+  }
+
+  .project-subtitle {
+    font-size: 1.05rem;
+    line-height: 1.45;
+    padding: 0 8px;
+  }
+
+  .section-title {
+    font-size: 1.4rem;
+    gap: 10px;
+  }
+
+  .problem-solution-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .explainer-card {
+    grid-template-columns: 1fr;
+  }
+
+  .tech-stack-single-line {
+    padding: 12px 14px;
+    gap: 8px;
+  }
+
+  .tech-pill-badge {
+    font-size: 0.8em;
+    padding: 5px 10px;
+  }
+
+  .stage-number-badge {
+    font-size: 1.7em;
+  }
+
+  .stage-card h4 {
+    font-size: 1.2em;
+  }
+
+  .explainer-content h4 {
+    font-size: 1.35em;
+  }
+}
+
+@media (max-width: 540px) {
+  .project-detail-header {
+    margin-bottom: 22px;
+    padding-bottom: 16px;
+  }
+
+  .project-badge-tag {
+    font-size: 0.76em;
+    padding: 5px 12px;
+    margin-bottom: 12px;
+  }
+
+  .project-detail-header h1 {
+    font-size: 1.32rem;
+    line-height: 1.36;
+    margin-bottom: 10px;
+    letter-spacing: normal;
+  }
+
+  .project-subtitle {
+    font-size: 0.92rem;
+    line-height: 1.45;
+    margin-bottom: 12px;
+  }
+
+  .project-main-desc {
+    font-size: 0.92em;
+    line-height: 1.65;
+  }
+
+  .section-title {
+    font-size: 1.18rem;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+
+  .section-subtext {
+    font-size: 0.88em;
+    margin-bottom: 18px;
+  }
+
+  .ps-card {
+    padding: 18px 16px;
+  }
+
+  .ps-icon {
+    font-size: 1.45em;
+    margin-bottom: 8px;
+  }
+
+  .ps-card h3 {
+    font-size: 1.1em;
+    margin-bottom: 8px;
+  }
+
+  .ps-card p {
+    font-size: 0.9em;
+    line-height: 1.6;
+  }
+
+  .tech-stack-section {
+    margin: 28px 0;
+  }
+
+  .tech-stack-single-line {
+    padding: 10px 12px;
+    gap: 6px;
+  }
+
+  .tech-pill-badge {
+    font-size: 0.76em;
+    padding: 4px 9px;
+  }
+
+  .tech-pill-divider {
+    display: none;
+  }
+
+  .demo-video-section {
+    margin: 35px 0;
+  }
+
+  .flowchart-section {
+    margin: 35px 0;
+  }
+
+  .flowchart-card {
+    padding: 14px;
+  }
+
+  .deep-dive-section {
+    margin: 35px 0;
+  }
+
+  .deep-dive-intro {
+    font-size: 0.9em;
+    line-height: 1.65;
+    margin-bottom: 22px;
+  }
+
+  .stage-card {
+    padding: 18px 15px;
+  }
+
+  .stage-card-header {
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .stage-number-badge {
+    font-size: 1.45em;
+  }
+
+  .stage-card h4 {
+    font-size: 1.08em;
+    line-height: 1.35;
+  }
+
+  .stage-card-body {
+    font-size: 0.9em;
+    line-height: 1.65;
+    margin-bottom: 14px;
+  }
+
+  .stage-subgrid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .stage-subcard {
+    padding: 12px 14px;
+  }
+
+  .stage-subcard h5 {
+    font-size: 0.92em;
+  }
+
+  .stage-subcard p {
+    font-size: 0.84em;
+  }
+
+  .explainer-card {
+    padding: 16px;
+  }
+
+  .explainer-content h4 {
+    font-size: 1.18em;
+  }
+
+  .explainer-content p {
+    font-size: 0.88em;
+  }
+
+  .vimeo-watch-btn {
+    padding: 8px 18px;
+    font-size: 0.88em;
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 380px) {
+  .project-detail-header h1 {
+    font-size: 1.18rem;
+    line-height: 1.35;
+  }
+
+  .project-subtitle {
+    font-size: 0.86rem;
+  }
+
+  .section-title {
+    font-size: 1.08rem;
   }
 }
