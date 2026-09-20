@@ -5,17 +5,19 @@ translations = {
     seeLess: "عرض أقل",
     backToHome: "العودة إلى الرئيسية",
   },
-  // Text specific to the index.html page
+  // Text specific to the index.html / home.html page
   indexPage: {
-    pageTitle: "أحمد منصور | معرض أعمال مطور فلاتر",
+    pageTitle: "الرئيسية | أحمد منصور - معرض أعمال مطور فلاتر",
     name: "أحمد محمد منصور",
     jobTitle: "مطور تطبيقات فلاتر",
     bio: "مطور فلاتر متخصص في بناء تطبيقات جوال عالية الأداء ومتجاوبة لمنصتي iOS و Android. أمتلك خبرة مثبتة في Dart و Flutter لتقديم تطبيقات جذابة بصريًا وغنية بالميزات. أستفيد بانتظام من أدوات الذكاء الاصطناعي لتسريع كتابة الكود وتعزيز كفاءة حل المشكلات.",
-    projectsTitle: "مشاريعي",
+    projectsTitle: "المشاريع المميزة",
     contactMe: "تواصل معي:",
     projectsData: [
       {
         title: "Linker EG",
+        bigTitle: "LINKER EG",
+        category: "تطبيقات فلاتر والأنظمة السحابية",
         description:
           "منصة متكاملة للرياضيين والمدربين للتواصل وعرض المهارات وتنمية حياتهم المهنية الرياضية.",
         thumbnail: "assets/images/project1-thumbnail.jpg",
@@ -29,18 +31,15 @@ translations = {
           "Dio",
           "GetIt & Injectable",
           "Freezed",
-          "Image Picker",
-          "SharedPreferences",
-          "Shimmer",
-          "dart",
           "Geolocation",
-          "Functional Programming (Dartz)",
-          "SMS Autofill",
+          "Dart",
         ],
         viewProject: "عرض تفاصيل المشروع",
       },
       {
         title: "SemanticCut AI",
+        bigTitle: "SEMANTIC CUT",
+        category: "الذكاء الاصطناعي وهندسة الفيديو",
         description:
           "أداة أتمتة ذكية متطورة (Python & AI) تختصر ساعات المونتاج إلى دقائق، وتقوم بصناعة فيديوهات قصيرة بـ 4 لغات مع مطابقة دلالية للمشاهد عبر Gemini وبناء مشاريع Premiere XML تلقائياً.",
         thumbnail: "assets/images/semanticcut-thumbnail.jpg",
@@ -48,14 +47,12 @@ translations = {
         tags: [
           "Python",
           "Google Gemini API",
-          "Groq API (Llama 3.3)",
+          "Groq (Llama 3.3)",
           "WhisperX Large-v3",
           "FFmpeg",
           "Pydub",
           "Premiere XML",
-          "Semantic Video Mapping",
           "AI Sound Design",
-          "Multilingual Audio",
         ],
         viewProject: "عرض تفاصيل المشروع",
       },
@@ -259,3 +256,6 @@ translations = {
     watchOnVimeoBtn: "مشاهدة الفيديو على Vimeo",
   },
 };
+
+// Alias for home.html page
+translations.homePage = translations.indexPage;

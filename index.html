@@ -4,23 +4,29 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title data-i18n-key="indexPage.pageTitle">
-      Ahmed Mansour | Flutter Developer Portfolio
+      Home | Ahmed Mansour - Flutter Developer Portfolio
     </title>
     <link rel="stylesheet" href="style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Montserrat:wght@400;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Montserrat:wght@400;600;700;800;900&display=swap"
       rel="stylesheet"
     />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     />
+
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   </head>
 
-  <body id="index-page">
-    <div class="container">
+  <body id="home-page">
+    <div class="container header-container">
       <header class="portfolio-header">
         <div class="portfolio-cover">
           <div class="language-switcher">
@@ -36,9 +42,11 @@
           />
         </div>
         <div class="profile-info-header">
-          <h1 data-i18n-key="indexPage.name"></h1>
-          <h2 data-i18n-key="indexPage.jobTitle"></h2>
-          <p class="bio" data-i18n-key="indexPage.bio"></p>
+          <h1 data-i18n-key="indexPage.name">Ahmed Mohamed Mansour</h1>
+          <h2 data-i18n-key="indexPage.jobTitle">Flutter Mobile Developer</h2>
+          <p class="bio" data-i18n-key="indexPage.bio">
+            Flutter Developer skilled in building responsive, high-performance mobile applications for both iOS and Android platforms.
+          </p>
           <div class="social-links">
             <a
               href="https://github.com/Ahmedmansor"
@@ -58,12 +66,42 @@
           </div>
         </div>
       </header>
+    </div>
 
-      <main>
-        <h3 data-i18n-key="indexPage.projectsTitle"></h3>
-        <div class="projects-grid" id="projects-grid-container"></div>
-      </main>
+    <!-- 3D GSAP Cylinder Carousel Section (Wide 4-Item Ring & Locked Pin Scroll) -->
+    <section class="carousel-section" id="projects-carousel-section" carousel="component">
+      <div class="carousel-viewport">
+        
+        <!-- 1. Top Title Zone (Layer on TOP, synchronized with scroll) -->
+        <div class="carousel-title-zone">
+          <div class="carousel-title-track" id="carousel-title-track">
+            <!-- 4 synchronized title items populated via JS -->
+          </div>
+        </div>
 
+        <!-- 2. Center 3D Stage (Wide Circular Stage) -->
+        <div class="carousel-scene">
+          <div class="carousel-wrap" carousel="wrap">
+            <div class="carousel-cylinder" id="carousel-cylinder">
+              <!-- 4 rich card widgets populated via JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Lower Controls Zone (Lime-Neon Arrows) -->
+        <div class="carousel-controls-zone">
+          <button class="carousel-arrow-btn prev-btn" id="carousel-prev" aria-label="Previous Project">
+            <i class="fas fa-arrow-left"></i>
+          </button>
+          <button class="carousel-arrow-btn next-btn" id="carousel-next" aria-label="Next Project">
+            <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <div class="container footer-container">
       <footer>
         <p style="text-align: center">
           <span data-i18n-key="indexPage.contactMe"></span>
@@ -84,7 +122,12 @@
     </div>
 
     <script>
+      // Register GSAP ScrollTrigger plugin
+      gsap.registerPlugin(ScrollTrigger);
+
       let translations = {};
+      let currentCarouselTimeline = null;
+      let activeScrollTriggerInstance = null;
 
       // Main translation function
       function translatePage() {
@@ -94,37 +137,36 @@
         document.documentElement.lang = currentLang;
         document.documentElement.dir = currentLang === "ar" ? "rtl" : "ltr";
 
-        // Detect which page we are on
-        const pageId = document.body.id; // 'index-page' or 'project1-page'
+        // Update body ID detection
+        const pageId = document.body.id;
         let pageTranslations = {};
 
-        if (pageId === "index-page") {
-          pageTranslations = translations.indexPage || {};
+        if (pageId === "home-page" || pageId === "index-page") {
+          pageTranslations = translations.homePage || translations.indexPage || {};
         } else if (pageId === "project1-page") {
           pageTranslations = translations.project1Page || {};
         }
 
         // Translate all elements with data-i18n-key
         document.querySelectorAll("[data-i18n-key]").forEach((element) => {
-          const key = element
-            .getAttribute("data-i18n-key")
+          const rawKey = element.getAttribute("data-i18n-key");
+          const key = rawKey
+            .replace("homePage.", "")
             .replace("indexPage.", "")
             .replace("project1Page.", "");
           const value = key
             .split(".")
             .reduce(
               (obj, k) =>
-                obj && obj[k] !== undefined ? obj[k] : translations.common[key],
+                obj && obj[k] !== undefined ? obj[k] : (translations.common && translations.common[key]),
               pageTranslations
             );
           if (value !== undefined) element.innerHTML = value;
         });
 
-        // Call page-specific functions
-        if (pageId === "index-page" && pageTranslations.projectsData) {
-          createProjectsGrid(pageTranslations.projectsData);
-        } else if (pageId === "project1-page") {
-          // ... (logic for project1.html is in its own file)
+        // Initialize / Re-render 3D Carousel with localized projects data
+        if ((pageId === "home-page" || pageId === "index-page") && pageTranslations.projectsData) {
+          init3DCarousel(pageTranslations.projectsData);
         }
       }
 
@@ -145,39 +187,208 @@
         document.head.appendChild(script);
       }
 
-      // Function to build the project cards grid
-      function createProjectsGrid(projects) {
-        const container = document.getElementById("projects-grid-container");
-        if (!container) return;
-        container.innerHTML = "";
+      // Function to initialize and build the 3D Cylinder Carousel (Exactly 4 items repeating the 2 projects)
+      function init3DCarousel(projects) {
+        // Clean up previous GSAP timelines and ScrollTriggers
+        if (currentCarouselTimeline) {
+          if (currentCarouselTimeline.scrollTrigger) {
+            currentCarouselTimeline.scrollTrigger.kill();
+          }
+          currentCarouselTimeline.kill();
+          currentCarouselTimeline = null;
+        }
+        if (activeScrollTriggerInstance) {
+          activeScrollTriggerInstance.kill();
+          activeScrollTriggerInstance = null;
+        }
 
-        projects.forEach((project) => {
+        const componentEl = $("#projects-carousel-section");
+        const titleTrack = $("#carousel-title-track");
+        const cylinder = $("#carousel-cylinder");
+
+        titleTrack.empty();
+        cylinder.empty();
+
+        if (!projects || projects.length === 0) return;
+
+        // Exactly 4 items: Project 1, Project 2, Project 1, Project 2
+        const p1 = projects[0];
+        const p2 = projects[1] || projects[0];
+        const fourProjects = [p1, p2, p1, p2];
+
+        // Build HTML for each carousel item
+        fourProjects.forEach((project, index) => {
+          // 1. Moving Title Item (height 120px matching .carousel-title-zone)
+          const displayTitle = project.bigTitle || project.title;
+          const displayCategory = project.category || "";
+          const titleHTML = `
+            <div class="carousel-title-item" data-index="${index}">
+              <span class="carousel-title-category">${displayCategory}</span>
+              <h2 class="carousel-title-heading">${displayTitle}</h2>
+            </div>
+          `;
+          titleTrack.append(titleHTML);
+
+          // 2. Rich Project Card Widget
           const tagsHTML = project.tags
-            .map((tag) => `<span>${tag}</span>`)
-            .join("");
+            ? project.tags.map((tag) => `<span>${tag}</span>`).join("")
+            : "";
+          const viewText = project.viewProject || "View Project Details";
+
           const cardHTML = `
-                    <a href="${project.link}" class="project-card">
-                        <div class="project-thumbnail-wrapper">
-                            <img src="${project.thumbnail}" alt="Thumbnail for ${project.title}">
-                        </div>
-                        <div class="project-info">
-                            <h4>${project.title}</h4>
-                            <p>${project.description}</p>
-                            <div class="tech-tags">${tagsHTML}</div>
-                            <span class="view-project-btn">${project.viewProject || (translations.indexPage.projectsData[0] ? translations.indexPage.projectsData[0].viewProject : "View Project Details")}</span>
-                        </div>
-                    </a>
-                `;
-          container.innerHTML += cardHTML;
+            <div class="carousel-item" carousel="item" data-index="${index}">
+              <a href="${project.link}" class="project-card">
+                <div class="project-thumbnail-wrapper">
+                  <img src="${project.thumbnail}" alt="${project.title}">
+                </div>
+                <div class="project-info">
+                  ${displayCategory ? `<span class="project-badge">${displayCategory}</span>` : ""}
+                  <h4>${project.title}</h4>
+                  <p>${project.description}</p>
+                  <div class="tech-tags">${tagsHTML}</div>
+                  <span class="view-project-btn">
+                    ${viewText} <i class="fas fa-arrow-right"></i>
+                  </span>
+                </div>
+              </a>
+            </div>
+          `;
+          cylinder.append(cardHTML);
         });
+
+        // Setup 3D Geometry and GSAP ScrollTrigger
+        setup3DCarouselAnimation(componentEl, fourProjects);
       }
 
-      // Add event listeners and load initial language
+      function setup3DCarouselAnimation(componentEl, fourProjects) {
+        let itemEl = componentEl.find("[carousel='item']");
+        let titleTrack = componentEl.find("#carousel-title-track");
+        let nextBtn = $("#carousel-next");
+        let prevBtn = $("#carousel-prev");
+
+        const itemCount = 4;
+        let activeIndex = 0;
+
+        function updateControls(index) {
+          activeIndex = index;
+          prevBtn.toggleClass("is-disabled", index === 0);
+          nextBtn.toggleClass("is-disabled", index === itemCount - 1);
+        }
+
+        const pinDistance = 2400; // Scroll distance during locked section interaction
+        const titleItemHeight = 120; // Exact height of each title item
+
+        // Function to position all 4 cards and the title track with 100% mathematical lockstep
+        function updateStage(progress) {
+          // progress ranges from 0.0 to 1.0 across the 3 intervals
+          let angle = progress * 3 * 90; // 0 to 270 degrees
+          let winWidth = window.innerWidth;
+          let rx = Math.round(Math.min(winWidth * 0.38, 520));
+          let rz = 240;
+
+          itemEl.each(function (i) {
+            let theta = (i * 90 - angle) % 360;
+            while (theta > 180) theta -= 360;
+            while (theta < -180) theta += 360;
+
+            let rad = (theta * Math.PI) / 180;
+            let cosT = Math.cos(rad);
+            let sinT = Math.sin(rad);
+
+            let x = rx * sinT;
+            let z = rz * (cosT - 1);
+            let rotY = -theta * 0.32; // Tilted gently towards viewer so front is always visible
+            let scale = 1.0 - 0.14 * (1 - cosT);
+            let opacity = cosT > -0.1 ? Math.max(0, Math.pow(Math.max(0, cosT), 0.6)) : 0;
+            let pointerEvents = Math.abs(theta) < 30 ? "auto" : "none";
+
+            $(this).css({
+              transform: `translate3d(${x}px, 0px, ${z}px) rotateY(${rotY}deg) scale(${scale})`,
+              opacity: opacity,
+              zIndex: Math.round((cosT + 1) * 10),
+              pointerEvents: pointerEvents
+            });
+
+            if (Math.abs(theta) < 30) {
+              $(this).find(".project-card").addClass("is-active");
+            } else {
+              $(this).find(".project-card").removeClass("is-active");
+            }
+          });
+
+          // Exact millimeter-accurate synchronized vertical title track translation
+          let titleY = -progress * 3 * titleItemHeight;
+          titleTrack[0].style.transform = `translate3d(0px, ${titleY}px, 0px)`;
+        }
+
+        // Initialize stage at progress 0 (Title 0 centered, Card 0 centered)
+        updateStage(0);
+        updateControls(0);
+
+        // GSAP ScrollTrigger timeline with locked PINNING
+        let tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: componentEl[0],
+            start: "top top",
+            end: `+=${pinDistance}`,
+            pin: true,
+            scrub: 0.6,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+            onUpdate: (self) => {
+              updateStage(self.progress);
+
+              let idx = Math.min(Math.round(self.progress * 3), 3);
+              if (idx !== activeIndex) {
+                updateControls(idx);
+              }
+            }
+          }
+        });
+        currentCarouselTimeline = tl;
+
+        // Dummy tween to establish timeline duration for ScrollTrigger scrub
+        tl.to({}, { duration: 30, ease: "none" });
+
+        // Navigation scroll helper
+        function scrollToStep(targetIndex) {
+          if (!tl.scrollTrigger) return;
+          let startY = tl.scrollTrigger.start;
+          let targetY = startY + (targetIndex / 3) * pinDistance;
+          $("html, body").stop().animate({ scrollTop: targetY }, 400);
+        }
+
+        // Arrow navigation clicks
+        nextBtn.off("click").on("click", function () {
+          if (activeIndex < 3) {
+            scrollToStep(activeIndex + 1);
+          }
+        });
+
+        prevBtn.off("click").on("click", function () {
+          if (activeIndex > 0) {
+            scrollToStep(activeIndex - 1);
+          }
+        });
+
+        // Clicking side cards rotates them to center
+        itemEl.off("click").on("click", function (e) {
+          let clickedIndex = $(this).data("index");
+          if (clickedIndex !== activeIndex) {
+            e.preventDefault();
+            scrollToStep(clickedIndex);
+          }
+        });
+
+        ScrollTrigger.refresh();
+      }
+
+      // Language switcher button listeners
       function setActiveLangButton(lang) {
         const enBtn = document.getElementById("lang-en-btn");
         const arBtn = document.getElementById("lang-ar-btn");
-        enBtn.classList.toggle("active", lang === "en");
-        arBtn.classList.toggle("active", lang === "ar");
+        if (enBtn) enBtn.classList.toggle("active", lang === "en");
+        if (arBtn) arBtn.classList.toggle("active", lang === "ar");
       }
 
       document.getElementById("lang-en-btn").addEventListener("click", () => {
@@ -189,9 +400,19 @@
         loadLanguage("ar");
       });
 
-      // Set initial active button
-      setActiveLangButton(localStorage.getItem("lang") || "en");
-      loadLanguage(localStorage.getItem("lang") || "en");
+      // Handle window resize for dynamic radius recalculation
+      let resizeTimeout;
+      window.addEventListener("resize", () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+          ScrollTrigger.refresh();
+        }, 200);
+      });
+
+      // Initialize language on startup
+      const initialLang = localStorage.getItem("lang") || "en";
+      setActiveLangButton(initialLang);
+      loadLanguage(initialLang);
     </script>
   </body>
 </html>

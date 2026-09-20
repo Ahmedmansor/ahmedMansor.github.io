@@ -149,7 +149,7 @@ body {
   max-width: 1200px;
   margin: 40px auto;
   padding: 20px;
-  background-color: #1a1a1a;
+  background-color: #000000;
   border-radius: 12px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
 }
@@ -1824,3 +1824,335 @@ html[dir="rtl"] #semanticcut-page .track-row {
     font-size: 1.08rem;
   }
 }
+
+/* ========================================================
+   3D CYLINDER CAROUSEL (WIDE CIRCULAR RING & LOCKED PIN SCROLL)
+   ======================================================== */
+
+.carousel-section {
+  position: relative;
+  width: 100%;
+  max-width: 1240px;
+  margin: 30px auto;
+  background: #000000;
+  border-radius: 24px;
+  overflow: hidden;
+  z-index: 10;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.7);
+}
+
+/* Pinned Viewport Container */
+.carousel-viewport {
+  width: 100%;
+  height: 100vh;
+  min-height: 680px;
+  max-height: 880px;
+  position: relative;
+  overflow: hidden;
+  background: #000000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 15px;
+  box-sizing: border-box;
+}
+
+/* 1. Synchronized Title Zone (Height 120px, overflow hidden to show ONLY active item) */
+.carousel-title-zone {
+  position: relative;
+  width: 100%;
+  height: 120px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  display: block;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.carousel-title-track {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  will-change: transform;
+  transform: translateY(0);
+}
+
+.carousel-title-item {
+  width: 100%;
+  height: 120px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.carousel-title-category {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #03dac6;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+}
+
+.carousel-title-heading {
+  font-size: clamp(2.4rem, 5.5vw, 4.4rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.1;
+  font-family: "Montserrat", "Cairo", sans-serif;
+  text-shadow: 0 4px 25px rgba(0, 0, 0, 0.95);
+}
+
+/* 2. 3D Stage (Wide Circular Stage) */
+.carousel-scene {
+  width: 100%;
+  height: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1200px;
+  perspective-origin: 50% 50%;
+  transform-style: preserve-3d;
+  z-index: 10;
+  position: relative;
+}
+
+.carousel-wrap {
+  width: 340px;
+  height: 470px;
+  position: relative;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+@media (max-width: 768px) {
+  .carousel-scene {
+    height: 440px;
+  }
+  .carousel-wrap {
+    width: 290px;
+    height: 430px;
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel-scene {
+    height: 410px;
+  }
+  .carousel-wrap {
+    width: 250px;
+    height: 400px;
+  }
+}
+
+.carousel-cylinder {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+/* Individual 3D Card Slots */
+.carousel-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  backface-visibility: hidden !important;
+  -webkit-backface-visibility: hidden !important;
+  border-radius: 20px;
+}
+
+/* Rich Card Widget Aesthetic */
+.carousel-item .project-card {
+  height: 100%;
+  width: 100%;
+  background: rgba(22, 24, 32, 0.96);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 25px rgba(3, 218, 198, 0.08);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  text-decoration: none;
+  color: #e0e0e0;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  pointer-events: auto;
+  backface-visibility: hidden !important;
+  -webkit-backface-visibility: hidden !important;
+}
+
+.carousel-item .project-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(3, 218, 198, 0.6);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.95), 0 0 35px rgba(3, 218, 198, 0.25);
+}
+
+.carousel-item .project-thumbnail-wrapper {
+  width: 100%;
+  height: 170px;
+  overflow: hidden;
+  background: #181d2d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.carousel-item .project-thumbnail-wrapper img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  padding: 12px;
+  filter: drop-shadow(0 0 15px rgba(52, 83, 255, 0.45));
+  transition: transform 0.4s ease;
+}
+
+.carousel-item .project-card:hover .project-thumbnail-wrapper img {
+  transform: scale(1.08);
+}
+
+.carousel-item .project-info {
+  padding: 16px 18px 18px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+html[dir="rtl"] .carousel-item .project-info {
+  text-align: right;
+}
+
+.carousel-item .project-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #bb86fc;
+  margin-bottom: 5px;
+}
+
+.carousel-item .project-info h4 {
+  margin: 0 0 6px;
+  color: #ffffff;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.carousel-item .project-info p {
+  margin: 0 0 10px;
+  font-size: 0.82rem;
+  color: #b3b3b3;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex-grow: 1;
+}
+
+.carousel-item .tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 12px;
+}
+
+.carousel-item .tech-tags span {
+  background: rgba(3, 218, 198, 0.12);
+  color: #03dac6;
+  padding: 3px 8px;
+  border-radius: 10px;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.carousel-item .view-project-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #03dac6;
+  color: #121212;
+  padding: 7px 16px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.8rem;
+  margin-top: auto;
+  align-self: flex-start;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(3, 218, 198, 0.3);
+}
+
+html[dir="rtl"] .carousel-item .view-project-btn {
+  align-self: flex-start;
+}
+
+.carousel-item .project-card:hover .view-project-btn {
+  background: #bb86fc;
+  color: #121212;
+  box-shadow: 0 4px 18px rgba(187, 134, 252, 0.4);
+}
+
+/* 3. Lower Controls Zone (Lime-Neon Arrows) */
+.carousel-controls-zone {
+  margin-top: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  z-index: 25;
+}
+
+.carousel-arrow-btn {
+  width: 64px;
+  height: 38px;
+  border-radius: 30px;
+  background-color: #ccff00;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 0 18px rgba(204, 255, 0, 0.45);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease;
+}
+
+.carousel-arrow-btn i {
+  color: #000000;
+  font-size: 1.15rem;
+  font-weight: 900;
+}
+
+.carousel-arrow-btn:hover:not(.is-disabled) {
+  transform: scale(1.1);
+  box-shadow: 0 0 28px rgba(204, 255, 0, 0.75);
+}
+
+.carousel-arrow-btn.is-disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+

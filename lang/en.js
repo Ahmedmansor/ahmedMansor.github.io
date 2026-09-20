@@ -5,17 +5,19 @@ translations = {
     seeLess: "See Less",
     backToHome: "Back to Home",
   },
-  // Text specific to the index.html page
+  // Text specific to the index.html / home.html page
   indexPage: {
-    pageTitle: "Ahmed Mansour | Flutter Developer Portfolio",
+    pageTitle: "Home | Ahmed Mansour - Flutter Developer Portfolio",
     name: "Ahmed Mohamed Mansour",
     jobTitle: "Flutter Mobile Developer",
     bio: "Flutter Developer skilled in building responsive, high-performance mobile applications for both iOS and Android platforms. Proficient in Dart and Flutter, with a proven ability to deliver visually appealing and feature-rich apps. Regularly leverage AI tools to accelerate code writing and enhance problem-solving efficiency.",
-    projectsTitle: "My Projects",
+    projectsTitle: "Featured Projects",
     contactMe: "Contact Me:",
     projectsData: [
       {
         title: "Linker EG",
+        bigTitle: "LINKER EG",
+        category: "Flutter & Cloud Platform",
         description:
           "An integrated platform for athletes and coaches to connect, showcase skills, and grow their sports careers.",
         thumbnail: "assets/images/project1-thumbnail.jpg",
@@ -29,33 +31,28 @@ translations = {
           "Dio",
           "GetIt & Injectable",
           "Freezed",
-          "Image Picker",
-          "SharedPreferences",
-          "Shimmer",
-          "dart",
           "Geolocation",
-          "Functional Programming (Dartz)",
-          "SMS Autofill",
+          "Dart",
         ],
         viewProject: "View Project Details",
       },
       {
         title: "SemanticCut AI",
+        bigTitle: "SEMANTIC CUT",
+        category: "AI & Automated Pipeline",
         description:
-          "An intelligent end-to-end Python & AI pipeline that automates viral multilingual short-form video production, featuring Gemini semantic mapping, WhisperX alignment, and Premiere Pro XML generation.",
+          "An intelligent end-to-end Python & AI pipeline that automates viral multilingual short-form video production with Gemini & WhisperX.",
         thumbnail: "assets/images/semanticcut-thumbnail.jpg",
         link: "semantic-cut.html",
         tags: [
           "Python",
           "Google Gemini API",
-          "Groq API (Llama 3.3)",
+          "Groq (Llama 3.3)",
           "WhisperX Large-v3",
           "FFmpeg",
           "Pydub",
           "Premiere XML",
-          "Semantic Video Mapping",
           "AI Sound Design",
-          "Multilingual Audio",
         ],
         viewProject: "View Project Details",
       },
@@ -258,3 +255,6 @@ translations = {
     watchOnVimeoBtn: "Watch Full Demo on Vimeo",
   },
 };
+
+// Alias for home.html page
+translations.homePage = translations.indexPage;
