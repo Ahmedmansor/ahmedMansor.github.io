@@ -2,8 +2,6 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="refresh" content="0; url=linker.html" />
-    <script>window.location.replace("linker.html");</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title data-i18n-key="project1Page.pageTitle"></title>
     <link rel="stylesheet" href="style.css" />
@@ -17,6 +15,10 @@
     <link
       href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Montserrat:wght@400;600;700&display=swap"
       rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     />
   </head>
 
@@ -44,6 +46,21 @@
         </div>
         <h1 data-i18n-key="project1Page.headerTitle"></h1>
         <p data-i18n-key="project1Page.headerDescription"></p>
+        <div class="store-buttons-container">
+          <a
+            href="https://play.google.com/store/apps/details?id=com.app.linker.eg&pcampaignid=web_share&pli=1"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="google-play-btn"
+            id="google-play-store-btn"
+          >
+            <i class="fab fa-google-play"></i>
+            <div class="btn-text">
+              <span class="btn-subtext" data-i18n-key="project1Page.playStoreSubtext">GET IT ON / TRY IT LIVE</span>
+              <span class="btn-title" data-i18n-key="project1Page.playStoreTitle">Google Play</span>
+            </div>
+          </a>
+        </div>
       </header>
 
       <main class="project-detail-content">

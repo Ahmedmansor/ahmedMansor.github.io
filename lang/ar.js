@@ -19,7 +19,7 @@ translations = {
         description:
           "منصة متكاملة للرياضيين والمدربين للتواصل وعرض المهارات وتنمية حياتهم المهنية الرياضية.",
         thumbnail: "assets/images/project1-thumbnail.jpg",
-        link: "project1.html",
+        link: "linker.html",
         tags: [
           "Flutter",
           "Firebase",
@@ -43,6 +43,8 @@ translations = {
   },
   // Text specific to the project1.html page
   project1Page: {
+    playStoreSubtext: "جرّب التطبيق مباشرة",
+    playStoreTitle: "Google Play",
     featureNavTitles: [
       "نظام تسجيل دخول وخروج آمن وسهل",
       "تسجيل مستخدم جديد مع تحقق قوي",

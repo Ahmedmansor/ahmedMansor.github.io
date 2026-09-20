@@ -19,7 +19,7 @@ translations = {
         description:
           "An integrated platform for athletes and coaches to connect, showcase skills, and grow their sports careers.",
         thumbnail: "assets/images/project1-thumbnail.jpg",
-        link: "project1.html",
+        link: "linker.html",
         tags: [
           "Flutter",
           "Firebase",
@@ -43,6 +43,8 @@ translations = {
   },
   // Text specific to the project1.html page
   project1Page: {
+    playStoreSubtext: "GET IT ON / TRY IT LIVE",
+    playStoreTitle: "Google Play",
     featureNavTitles: [
       "Secure and Easy Login and Logout System",
       "User Registration with Robust Validation",

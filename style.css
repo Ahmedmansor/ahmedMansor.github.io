@@ -193,18 +193,84 @@ a:hover {
   background: #444;
 }
 
-header {
+#index-page .container {
+  padding-top: 0;
+  overflow: hidden;
+}
+
+#index-page .portfolio-header {
+  margin: 0 -20px 45px -20px;
   text-align: center;
-  margin-bottom: 50px;
+  position: relative;
+}
+
+.portfolio-cover {
+  width: 100%;
+  height: 260px;
+  background-color: #0f172a;
+  background-image: 
+    linear-gradient(180deg, rgba(15, 23, 42, 0.2) 0%, rgba(26, 26, 26, 0.88) 100%),
+    url("assets/images/cover.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding: 18px 24px;
+  box-shadow: inset 0 -20px 35px rgba(0, 0, 0, 0.6);
+}
+
+.portfolio-cover .language-switcher {
+  margin-bottom: 0;
+  height: auto;
+  align-self: flex-start;
+  background: rgba(18, 18, 18, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 6px 10px;
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: inline-flex;
+  align-items: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+}
+
+.portfolio-cover .language-switcher button {
+  padding: 6px 14px;
+  font-size: 0.85em;
+  border-radius: 20px;
+}
+
+.profile-avatar-wrapper {
+  position: relative;
+  display: inline-block;
+  margin-top: -85px; /* Overlaps bottom half of the cover */
+  z-index: 5;
 }
 
 .profile-pic {
-  width: 150px;
-  height: 150px;
+  width: 170px;
+  height: 170px;
   border-radius: 50%;
-  border: 3px solid #03dac6;
+  border: 5px solid #1a1a1a; /* Cutout frame matching container background */
+  box-shadow: 0 0 0 3px #03dac6, 0 12px 32px rgba(0, 0, 0, 0.7);
   object-fit: cover;
   object-position: center top;
+  background-color: #1a1a1a;
+  display: block;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease;
+}
+
+.profile-avatar-wrapper:hover .profile-pic {
+  transform: scale(1.05);
+  box-shadow: 0 0 0 4px #bb86fc, 0 16px 40px rgba(187, 134, 252, 0.4);
+}
+
+.profile-info-header {
+  padding: 0 20px;
 }
 
 header h1 {
@@ -220,10 +286,11 @@ header h2 {
 }
 
 .bio {
-  max-width: 600px;
+  max-width: 650px;
   margin: 15px auto;
   color: #b3b3b3;
   font-size: 1em;
+  line-height: 1.7;
 }
 
 /* ======== 5. Projects Grid & Cards Styles (UPGRADED) ======== */
@@ -395,6 +462,72 @@ main {
   max-width: 700px;
   margin: 0 auto;
   font-size: 1.1em;
+}
+
+/* ======== Google Play CTA Button / Badge ======== */
+.store-buttons-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 28px 0 10px;
+}
+
+.google-play-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 15px;
+  background: linear-gradient(135deg, #222733 0%, #151820 100%);
+  color: #ffffff !important;
+  padding: 12px 28px;
+  border-radius: 14px;
+  border: 1.5px solid rgba(3, 218, 198, 0.45);
+  text-decoration: none !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45), 0 0 15px rgba(3, 218, 198, 0.12);
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+  cursor: pointer;
+}
+
+.google-play-btn:hover {
+  transform: translateY(-4px) scale(1.02);
+  border-color: #03dac6;
+  background: linear-gradient(135deg, #2a3140 0%, #1b1f2b 100%);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.6), 0 0 25px rgba(3, 218, 198, 0.35);
+  color: #ffffff !important;
+}
+
+.google-play-btn i {
+  font-size: 2.2em;
+  color: #03dac6;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.google-play-btn:hover i {
+  transform: scale(1.12);
+  color: #00f5da;
+}
+
+.google-play-btn .btn-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  line-height: 1.25;
+}
+
+.google-play-btn .btn-subtext {
+  font-size: 0.72em;
+  letter-spacing: 0.8px;
+  color: #a0aec0;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-family: "Montserrat", "Cairo", sans-serif;
+}
+
+.google-play-btn .btn-title {
+  font-size: 1.3em;
+  font-weight: 700;
+  color: #ffffff;
+  font-family: "Montserrat", "Cairo", sans-serif;
 }
 
 .project-detail-content {
@@ -617,4 +750,50 @@ html[dir="rtl"] .single-image-container h5 {
 html[dir="rtl"] .portfolio-header h2,
 html[dir="rtl"] main h3 {
   text-align: center;
+}
+
+/* RTL Adjustments for Cover & Google Play CTA */
+html[dir="rtl"] .portfolio-cover {
+  justify-content: flex-start;
+}
+
+html[dir="rtl"] .google-play-btn .btn-text {
+  align-items: flex-end;
+  text-align: right;
+}
+
+/* Mobile Responsiveness for Cover Banner, Profile Avatar & Store Button */
+@media (max-width: 700px) {
+  #index-page .portfolio-header {
+    margin: 0 -20px 35px -20px;
+  }
+  .portfolio-cover {
+    height: 180px;
+    padding: 12px 16px;
+  }
+  .profile-avatar-wrapper {
+    margin-top: -65px;
+  }
+  .profile-pic {
+    width: 130px;
+    height: 130px;
+    border-width: 4px;
+  }
+  .portfolio-cover .language-switcher {
+    padding: 4px 8px;
+  }
+  .portfolio-cover .language-switcher button {
+    padding: 5px 12px;
+    font-size: 0.8em;
+  }
+  .google-play-btn {
+    padding: 10px 20px;
+    gap: 12px;
+  }
+  .google-play-btn i {
+    font-size: 1.8em;
+  }
+  .google-play-btn .btn-title {
+    font-size: 1.15em;
+  }
 }
