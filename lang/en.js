@@ -15,11 +15,15 @@ translations = {
     contactMe: "Contact Me:",
     projectsData: [
       {
+        id: "linker",
         title: "Linker EG",
         bigTitle: "LINKER EG",
         category: "Flutter & Cloud Platform",
+        typeBadge: "Mobile App • iOS & Android",
+        typeBadgeIcon: "fas fa-mobile-screen-button",
+        badgeClass: "mobile-badge",
         description:
-          "An integrated platform for athletes and coaches to connect, showcase skills, and grow their sports careers.",
+          "An integrated cross-platform mobile application for athletes and coaches to connect, showcase skills, and grow their sports careers.",
         thumbnail: "assets/images/project1-thumbnail.jpg",
         link: "linker.html",
         tags: [
@@ -37,11 +41,15 @@ translations = {
         viewProject: "View Project Details",
       },
       {
+        id: "semantic-cut",
         title: "SemanticCut AI",
         bigTitle: "SEMANTIC CUT",
         category: "AI & Automated Pipeline",
+        typeBadge: "AI Automation Engine • Premiere XML",
+        typeBadgeIcon: "fas fa-robot",
+        badgeClass: "automation-badge",
         description:
-          "An intelligent end-to-end Python & AI pipeline that automates viral multilingual short-form video production with Gemini & WhisperX.",
+          "An intelligent end-to-end Python & AI automation pipeline that automates viral multilingual short-form video production with Gemini & WhisperX.",
         thumbnail: "assets/images/semanticcut-thumbnail.jpg",
         link: "semantic-cut.html",
         tags: [

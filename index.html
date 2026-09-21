@@ -230,6 +230,13 @@
           titleTrack.append(titleHTML);
 
           // 2. Rich Project Card Widget
+          const isLinker = project.id === "linker" || index % 2 === 0;
+          const cardClass = isLinker ? "project-card linker-card" : "project-card semanticcut-card";
+          const thumbClass = isLinker ? "linker-thumb" : "automation-thumb";
+          const typeBadgeText = project.typeBadge || (isLinker ? "Mobile App • iOS & Android" : "AI Automation Pipeline");
+          const typeIcon = project.typeBadgeIcon || (isLinker ? "fas fa-mobile-screen-button" : "fas fa-robot");
+          const badgeClass = project.badgeClass || (isLinker ? "mobile-badge" : "automation-badge");
+
           const tagsHTML = project.tags
             ? project.tags.map((tag) => `<span>${tag}</span>`).join("")
             : "";
@@ -237,12 +244,22 @@
 
           const cardHTML = `
             <div class="carousel-item" carousel="item" data-index="${index}">
-              <a href="${project.link}" class="project-card">
-                <div class="project-thumbnail-wrapper">
+              <a href="${project.link}" class="${cardClass}">
+                <div class="project-thumbnail-wrapper ${thumbClass}">
                   <img src="${project.thumbnail}" alt="${project.title}">
+                  <div class="thumbnail-glass-badge ${badgeClass}">
+                    ${!isLinker ? '<span class="pulse-dot"></span>' : ''}
+                    <i class="${typeIcon}"></i>
+                    <span>${typeBadgeText}</span>
+                  </div>
                 </div>
                 <div class="project-info">
-                  ${displayCategory ? `<span class="project-badge">${displayCategory}</span>` : ""}
+                  <div class="project-header-row">
+                    <span class="project-badge ${badgeClass}">
+                      <i class="${typeIcon}"></i> ${typeBadgeText}
+                    </span>
+                    ${displayCategory ? `<span class="project-sub-category">${displayCategory}</span>` : ""}
+                  </div>
                   <h4>${project.title}</h4>
                   <p>${project.description}</p>
                   <div class="tech-tags">${tagsHTML}</div>
@@ -283,8 +300,8 @@
           // progress ranges from 0.0 to 1.0 across the 3 intervals
           let angle = progress * 3 * 90; // 0 to 270 degrees
           let winWidth = window.innerWidth;
-          let rx = Math.round(Math.min(winWidth * 0.38, 520));
-          let rz = 240;
+          let rx = Math.round(Math.min(winWidth * 0.42, 590));
+          let rz = 290;
 
           itemEl.each(function (i) {
             let theta = (i * 90 - angle) % 360;
@@ -297,19 +314,29 @@
 
             let x = rx * sinT;
             let z = rz * (cosT - 1);
-            let rotY = -theta * 0.32; // Tilted gently towards viewer so front is always visible
-            let scale = 1.0 - 0.14 * (1 - cosT);
-            let opacity = cosT > -0.1 ? Math.max(0, Math.pow(Math.max(0, cosT), 0.6)) : 0;
-            let pointerEvents = Math.abs(theta) < 30 ? "auto" : "none";
+            
+            // Subtle 3D elevation so background cards peek out in depth
+            let y = -48 * (1 - cosT) / 2;
+            let rotY = -theta * 0.28; // Tilted towards viewer so front face is always visible
+            let scale = 1.0 - 0.28 * (1 - cosT) / 2; // from 1.0 at front down to 0.72 in the rear
+            
+            // Continuous depth factor: 1.0 at front, 0.5 at sides, 0.0 at back
+            let depthFactor = (cosT + 1) / 2;
+            let opacity = 0.42 + 0.58 * depthFactor; // rear cards stay visible in 3D space!
+            let brightness = 0.5 + 0.5 * depthFactor; // subtle atmospheric lighting in the background
+
+            let isNearCenter = Math.abs(theta) < 32;
 
             $(this).css({
-              transform: `translate3d(${x}px, 0px, ${z}px) rotateY(${rotY}deg) scale(${scale})`,
+              transform: `translate3d(${x}px, ${y}px, ${z}px) rotateY(${rotY}deg) scale(${scale})`,
               opacity: opacity,
-              zIndex: Math.round((cosT + 1) * 10),
-              pointerEvents: pointerEvents
+              filter: `brightness(${brightness})`,
+              zIndex: Math.round(depthFactor * 30) + 1,
+              pointerEvents: "auto",
+              cursor: "pointer"
             });
 
-            if (Math.abs(theta) < 30) {
+            if (isNearCenter) {
               $(this).find(".project-card").addClass("is-active");
             } else {
               $(this).find(".project-card").removeClass("is-active");
@@ -371,10 +398,20 @@
           }
         });
 
-        // Clicking side cards rotates them to center
+        // Clicking handling:
+        // When in line of sight (active / front), clicking opens the project screen!
+        // When clicking side / rear cards, it smoothly rotates that card to the center.
         itemEl.off("click").on("click", function (e) {
           let clickedIndex = $(this).data("index");
-          if (clickedIndex !== activeIndex) {
+          let isCardActive = (clickedIndex === activeIndex) || $(this).find(".project-card").hasClass("is-active");
+
+          if (isCardActive) {
+            e.preventDefault();
+            let targetUrl = $(this).find("a.project-card").attr("href");
+            if (targetUrl) {
+              window.location.href = targetUrl;
+            }
+          } else {
             e.preventDefault();
             scrollToStep(clickedIndex);
           }

@@ -1832,7 +1832,7 @@ html[dir="rtl"] #semanticcut-page .track-row {
 .carousel-section {
   position: relative;
   width: 100%;
-  max-width: 1240px;
+  max-width: 1340px;
   margin: 30px auto;
   background: #000000;
   border-radius: 24px;
@@ -1845,8 +1845,8 @@ html[dir="rtl"] #semanticcut-page .track-row {
 .carousel-viewport {
   width: 100%;
   height: 100vh;
-  min-height: 680px;
-  max-height: 880px;
+  min-height: 740px;
+  max-height: 940px;
   position: relative;
   overflow: hidden;
   background: #000000;
@@ -1916,14 +1916,14 @@ html[dir="rtl"] #semanticcut-page .track-row {
   text-shadow: 0 4px 25px rgba(0, 0, 0, 0.95);
 }
 
-/* 2. 3D Stage (Wide Circular Stage) */
+/* 2. 3D Stage (Wide Circular Stage & Prominent Sizing) */
 .carousel-scene {
   width: 100%;
-  height: 480px;
+  height: 650px;
   display: flex;
   align-items: center;
   justify-content: center;
-  perspective: 1200px;
+  perspective: 1250px;
   perspective-origin: 50% 50%;
   transform-style: preserve-3d;
   z-index: 10;
@@ -1931,8 +1931,8 @@ html[dir="rtl"] #semanticcut-page .track-row {
 }
 
 .carousel-wrap {
-  width: 340px;
-  height: 470px;
+  width: 480px;
+  height: 610px;
   position: relative;
   transform-style: preserve-3d;
   will-change: transform;
@@ -1940,21 +1940,21 @@ html[dir="rtl"] #semanticcut-page .track-row {
 
 @media (max-width: 768px) {
   .carousel-scene {
-    height: 440px;
+    height: 570px;
   }
   .carousel-wrap {
-    width: 290px;
-    height: 430px;
+    width: 380px;
+    height: 540px;
   }
 }
 
 @media (max-width: 480px) {
   .carousel-scene {
-    height: 410px;
+    height: 510px;
   }
   .carousel-wrap {
-    width: 250px;
-    height: 400px;
+    width: 320px;
+    height: 480px;
   }
 }
 
@@ -1975,19 +1975,26 @@ html[dir="rtl"] #semanticcut-page .track-row {
   transform-style: preserve-3d;
   backface-visibility: hidden !important;
   -webkit-backface-visibility: hidden !important;
-  border-radius: 20px;
+  border-radius: 24px;
+  will-change: transform, opacity, filter;
+  transition: box-shadow 0.3s ease;
+  cursor: pointer;
 }
 
-/* Rich Card Widget Aesthetic */
+.carousel-item * {
+  cursor: pointer;
+}
+
+/* Rich Card Widget Aesthetic (Larger & More Prominent) */
 .carousel-item .project-card {
   height: 100%;
   width: 100%;
-  background: rgba(22, 24, 32, 0.96);
+  background: rgba(22, 24, 32, 0.97);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 20px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 25px rgba(3, 218, 198, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 24px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.92), 0 0 25px rgba(3, 218, 198, 0.08);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -1997,40 +2004,151 @@ html[dir="rtl"] #semanticcut-page .track-row {
   pointer-events: auto;
   backface-visibility: hidden !important;
   -webkit-backface-visibility: hidden !important;
+  cursor: pointer;
 }
 
-.carousel-item .project-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(3, 218, 198, 0.6);
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.95), 0 0 35px rgba(3, 218, 198, 0.25);
+.carousel-item .project-card.is-active {
+  cursor: pointer !important;
+  border-color: rgba(3, 218, 198, 0.5);
+  box-shadow: 0 28px 75px rgba(0, 0, 0, 0.95), 0 0 35px rgba(3, 218, 198, 0.2);
 }
 
+.carousel-item .project-card.linker-card.is-active {
+  border-color: rgba(96, 165, 250, 0.6);
+  box-shadow: 0 28px 75px rgba(0, 0, 0, 0.95), 0 0 35px rgba(37, 99, 235, 0.28);
+}
+
+.carousel-item .project-card.is-active:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: #03dac6;
+  box-shadow: 0 34px 90px rgba(0, 0, 0, 0.98), 0 0 50px rgba(3, 218, 198, 0.4);
+}
+
+.carousel-item .project-card.linker-card.is-active:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: #60a5fa;
+  box-shadow: 0 34px 90px rgba(0, 0, 0, 0.98), 0 0 50px rgba(59, 130, 246, 0.5);
+}
+
+/* Thumbnail Wrapper */
 .carousel-item .project-thumbnail-wrapper {
   width: 100%;
-  height: 170px;
+  height: 250px;
   overflow: hidden;
-  background: #181d2d;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
 }
 
-.carousel-item .project-thumbnail-wrapper img {
-  max-width: 100%;
-  max-height: 100%;
+/* 1. Linker EG: Rich Vibrant Blue Thumbnail (Mobile App Showcase) */
+.carousel-item .project-thumbnail-wrapper.linker-thumb {
+  background: radial-gradient(circle at center, #2563eb 0%, #1d4ed8 45%, #0f2b6b 85%, #081642 100%);
+  box-shadow: inset 0 0 35px rgba(37, 99, 235, 0.45);
+}
+
+.carousel-item .project-thumbnail-wrapper.linker-thumb img {
+  max-width: 78%;
+  max-height: 78%;
   object-fit: contain;
-  padding: 12px;
-  filter: drop-shadow(0 0 15px rgba(52, 83, 255, 0.45));
+  padding: 10px;
+  filter: drop-shadow(0 12px 25px rgba(0, 0, 0, 0.65));
   transition: transform 0.4s ease;
 }
 
-.carousel-item .project-card:hover .project-thumbnail-wrapper img {
+.carousel-item .project-card:hover .project-thumbnail-wrapper.linker-thumb img {
   transform: scale(1.08);
 }
 
+/* 2. SemanticCut AI: Full Bleed Cover (Automation AI Engine) */
+.carousel-item .project-thumbnail-wrapper.automation-thumb {
+  background: #0b0f19;
+}
+
+.carousel-item .project-thumbnail-wrapper.automation-thumb img {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: cover !important;
+  padding: 0 !important;
+  transition: transform 0.45s ease;
+}
+
+.carousel-item .project-thumbnail-wrapper.automation-thumb::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(3, 218, 198, 0.08) 0%, rgba(11, 15, 25, 0.25) 50%, rgba(11, 15, 25, 0.85) 100%);
+  pointer-events: none;
+}
+
+.carousel-item .project-card:hover .project-thumbnail-wrapper.automation-thumb img {
+  transform: scale(1.07);
+}
+
+/* Floating Glass Badges on Thumbnails */
+.thumbnail-glass-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 5;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+  letter-spacing: 0.5px;
+}
+
+html[dir="rtl"] .thumbnail-glass-badge {
+  right: auto;
+  left: 12px;
+}
+
+.thumbnail-glass-badge.mobile-badge {
+  background: rgba(10, 25, 66, 0.88);
+  border: 1px solid rgba(96, 165, 250, 0.55);
+  color: #93c5fd;
+}
+
+.thumbnail-glass-badge.automation-badge {
+  background: rgba(11, 20, 26, 0.88);
+  border: 1px solid rgba(3, 218, 198, 0.55);
+  color: #03dac6;
+}
+
+.pulse-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #03dac6;
+  box-shadow: 0 0 8px #03dac6;
+  animation: pulseGlow 1.8s infinite ease-in-out;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 0 8px #03dac6;
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(0.75);
+    box-shadow: 0 0 2px #03dac6;
+  }
+}
+
+/* Card Content Info */
 .carousel-item .project-info {
-  padding: 16px 18px 18px;
+  padding: 24px 28px 28px;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -2041,29 +2159,58 @@ html[dir="rtl"] .carousel-item .project-info {
   text-align: right;
 }
 
+.carousel-item .project-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
 .carousel-item .project-badge {
-  display: inline-block;
-  font-size: 0.72rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
   font-weight: 700;
-  letter-spacing: 1px;
+  letter-spacing: 0.8px;
   text-transform: uppercase;
-  color: #bb86fc;
-  margin-bottom: 5px;
+  padding: 5px 12px;
+  border-radius: 6px;
+}
+
+.carousel-item .project-badge.mobile-badge {
+  color: #60a5fa;
+  background: rgba(37, 99, 235, 0.16);
+  border: 1px solid rgba(96, 165, 250, 0.35);
+}
+
+.carousel-item .project-badge.automation-badge {
+  color: #03dac6;
+  background: rgba(3, 218, 198, 0.14);
+  border: 1px solid rgba(3, 218, 198, 0.35);
+}
+
+.carousel-item .project-sub-category {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #94a3b8;
+  letter-spacing: 0.5px;
 }
 
 .carousel-item .project-info h4 {
-  margin: 0 0 6px;
+  margin: 6px 0 10px;
   color: #ffffff;
-  font-size: 1.25rem;
-  font-weight: 700;
+  font-size: 1.55rem;
+  font-weight: 800;
   line-height: 1.25;
 }
 
 .carousel-item .project-info p {
-  margin: 0 0 10px;
-  font-size: 0.82rem;
-  color: #b3b3b3;
-  line-height: 1.4;
+  margin: 0 0 16px;
+  font-size: 0.95rem;
+  color: #cbd5e1;
+  line-height: 1.55;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -2074,33 +2221,38 @@ html[dir="rtl"] .carousel-item .project-info {
 .carousel-item .tech-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 5px;
-  margin-bottom: 12px;
+  gap: 8px;
+  margin-bottom: 18px;
 }
 
 .carousel-item .tech-tags span {
   background: rgba(3, 218, 198, 0.12);
   color: #03dac6;
-  padding: 3px 8px;
-  border-radius: 10px;
-  font-size: 0.72rem;
+  padding: 6px 13px;
+  border-radius: 14px;
+  font-size: 0.82rem;
   font-weight: 600;
+}
+
+.carousel-item .linker-card .tech-tags span {
+  background: rgba(37, 99, 235, 0.14);
+  color: #93c5fd;
 }
 
 .carousel-item .view-project-btn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   background: #03dac6;
   color: #121212;
-  padding: 7px 16px;
-  border-radius: 8px;
-  font-weight: 700;
-  font-size: 0.8rem;
+  padding: 11px 24px;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 0.92rem;
   margin-top: auto;
   align-self: flex-start;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(3, 218, 198, 0.3);
+  box-shadow: 0 4px 15px rgba(3, 218, 198, 0.35);
 }
 
 html[dir="rtl"] .carousel-item .view-project-btn {
@@ -2110,7 +2262,13 @@ html[dir="rtl"] .carousel-item .view-project-btn {
 .carousel-item .project-card:hover .view-project-btn {
   background: #bb86fc;
   color: #121212;
-  box-shadow: 0 4px 18px rgba(187, 134, 252, 0.4);
+  box-shadow: 0 4px 20px rgba(187, 134, 252, 0.45);
+}
+
+.carousel-item .linker-card:hover .view-project-btn {
+  background: #60a5fa;
+  color: #0a1945;
+  box-shadow: 0 4px 20px rgba(96, 165, 250, 0.45);
 }
 
 /* 3. Lower Controls Zone (Lime-Neon Arrows) */
