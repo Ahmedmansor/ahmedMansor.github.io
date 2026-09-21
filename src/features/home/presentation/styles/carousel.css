@@ -575,6 +575,63 @@ html[dir="rtl"] .carousel-item .view-project-btn i {
 
 /* Responsive Styles */
 @media (max-width: 768px) {
+  /* Mobile GPU Performance & Paint Containment */
+  .carousel-scene {
+    contain: paint layout;
+  }
+
+  .carousel-item {
+    will-change: transform, opacity;
+  }
+
+  /* Ultra-lightweight card styling on mobile (Zero Blur, Zero Repaint bottleneck) */
+  .carousel-item .project-card {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: #11141e !important;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.75) !important;
+  }
+
+  .carousel-item .project-card.is-active {
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.85), 0 0 18px rgba(3, 218, 198, 0.16) !important;
+  }
+
+  .carousel-item .project-card.linker-card.is-active {
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.85), 0 0 18px rgba(37, 99, 235, 0.24) !important;
+  }
+
+  /* Lightweight Badges on Mobile */
+  .thumbnail-glass-badge {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5) !important;
+  }
+
+  .thumbnail-glass-badge.mobile-badge {
+    background: #0d1e46 !important;
+  }
+
+  .thumbnail-glass-badge.automation-badge {
+    background: #0c181c !important;
+  }
+
+  /* Strip continuous keyframe paint animations on mobile */
+  .pulse-dot {
+    animation: none !important;
+  }
+
+  .carousel-title-nav-btn {
+    animation: none !important;
+  }
+
+  .carousel-item .project-thumbnail-wrapper.linker-thumb {
+    box-shadow: none !important;
+  }
+
+  .carousel-item .project-thumbnail-wrapper.linker-thumb img {
+    filter: none !important;
+  }
+
   .carousel-viewport {
     min-height: 720px;
     padding: 18px 12px;

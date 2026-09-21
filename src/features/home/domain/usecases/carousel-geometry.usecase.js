@@ -27,9 +27,10 @@ window.Portfolio.domain.usecases = window.Portfolio.domain.usecases || {};
      * @param {number} params.index - 0-indexed item number
      * @param {number} params.progress - Scroll progress from 0.0 to 1.0
      * @param {number} [params.winWidth] - Current window viewport width
+     * @param {boolean} [params.isMobile] - Whether viewport is mobile device
      * @returns {Object} Spatial CSS properties and active state
      */
-    static calculateCardTransform({ index, progress, winWidth = window.innerWidth }) {
+    static calculateCardTransform({ index, progress, winWidth = window.innerWidth, isMobile = false }) {
       const angle = progress * 3 * 90; // 0 to 270 degrees
       const rx = Math.round(Math.min(winWidth * 0.42, 590));
       const rz = 290;
@@ -57,7 +58,7 @@ window.Portfolio.domain.usecases = window.Portfolio.domain.usecases || {};
       return {
         transform: `translate3d(${x}px, ${y}px, ${z}px) rotateY(${rotY}deg) scale(${scale})`,
         opacity,
-        filter: `brightness(${brightness})`,
+        filter: isMobile ? "" : `brightness(${brightness})`,
         zIndex,
         isNearCenter
       };

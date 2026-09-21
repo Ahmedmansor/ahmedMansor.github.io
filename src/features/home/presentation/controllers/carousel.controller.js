@@ -25,6 +25,7 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
     static init(projects) {
       if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
         gsap.registerPlugin(ScrollTrigger);
+        ScrollTrigger.config({ ignoreMobileResize: true });
       }
 
       // 1. Clean up existing timeline and triggers
@@ -126,6 +127,15 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
       let activeIndex = 0;
       const pinDistance = 2400;
 
+      // Cache card nodes and child references to eliminate DOM traversing during scroll
+      const cardNodes = itemEl.toArray().map((el, i) => ({
+        wrapper: el,
+        card: el.querySelector(".project-card"),
+        index: i,
+        isActive: false,
+        lastZIndex: -1
+      }));
+
       function updateControls(index) {
         activeIndex = index;
         prevBtn.toggleClass("is-disabled", index === 0);
@@ -134,29 +144,41 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
 
       function updateStage(progress) {
         const winWidth = window.innerWidth;
+        const isMobile = winWidth <= 768;
 
-        itemEl.each(function (i) {
+        for (let i = 0; i < cardNodes.length; i++) {
+          const item = cardNodes[i];
           const cardProps = CarouselGeometryUseCase.calculateCardTransform({
-            index: i,
+            index: item.index,
             progress,
-            winWidth
+            winWidth,
+            isMobile
           });
 
-          $(this).css({
-            transform: cardProps.transform,
-            opacity: cardProps.opacity,
-            filter: cardProps.filter,
-            zIndex: cardProps.zIndex,
-            pointerEvents: "auto",
-            cursor: "pointer"
-          });
+          // Ultra-fast direct style assignments (GPU Compositor accelerated)
+          item.wrapper.style.transform = cardProps.transform;
+          item.wrapper.style.opacity = cardProps.opacity;
 
-          if (cardProps.isNearCenter) {
-            $(this).find(".project-card").addClass("is-active");
+          if (isMobile) {
+            // Drop filter on mobile to eliminate rasterization and compositor bottlenecks
+            if (item.wrapper.style.filter) {
+              item.wrapper.style.filter = "";
+            }
           } else {
-            $(this).find(".project-card").removeClass("is-active");
+            item.wrapper.style.filter = cardProps.filter;
           }
-        });
+
+          if (item.lastZIndex !== cardProps.zIndex) {
+            item.wrapper.style.zIndex = cardProps.zIndex;
+            item.lastZIndex = cardProps.zIndex;
+          }
+
+          // Change-detection: only mutate classList when state actually flips
+          if (item.card && item.isActive !== cardProps.isNearCenter) {
+            item.isActive = cardProps.isNearCenter;
+            item.card.classList.toggle("is-active", cardProps.isNearCenter);
+          }
+        }
 
         // Exact title track offset
         const titleItemHeight = CarouselGeometryUseCase.getTitleItemHeight(winWidth);
