@@ -50,7 +50,7 @@ translations = {
         badgeClass: "automation-badge",
         description:
           "An intelligent end-to-end Python & AI automation pipeline that automates viral multilingual short-form video production with Gemini & WhisperX.",
-        thumbnail: "assets/images/semanticcut-thumbnail.webp",
+        thumbnail: "assets/images/semanticcut-thumbnail-en.webp",
         link: "semantic-cut.html",
         tags: [
           "Python",

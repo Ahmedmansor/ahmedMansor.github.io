@@ -31,7 +31,7 @@
       <div class="gallery-item">
         <p class="media-caption"></p>
         <button class="see-more-btn" data-i18n-key="common.seeMore"></button>
-        <video autoplay loop muted playsinline>
+        <video loop muted playsinline preload="none" class="lazy-video">
           <source src="" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
@@ -114,6 +114,8 @@
               <img
                 src="assets/images/all-profiles-comparison.jpg"
                 alt="Side-by-side comparison"
+                loading="lazy"
+                decoding="async"
               />
               <div class="zoom-magnifier-badge">
                 <i class="fas fa-magnifying-glass-plus"></i>
@@ -185,6 +187,8 @@
             src="assets/images/all-profiles-comparison.jpg"
             alt="All Profiles Full Comparison"
             class="lightbox-image"
+            loading="lazy"
+            decoding="async"
           />
         </div>
         <p class="lightbox-caption" data-i18n-key="project1Page.lightboxHint">

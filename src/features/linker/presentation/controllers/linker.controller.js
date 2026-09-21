@@ -65,6 +65,9 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
 
         // Smooth lightweight scroll reveal
         this.setupScrollReveal();
+
+        // Smart Video Lazy Loading & Auto-Play/Pause Observer
+        this.setupVideoLazyLoading();
       } catch (err) {
         console.error("Failed to load Linker page language:", err);
       }
@@ -213,20 +216,17 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
           itemDiv.appendChild(seeMoreBtn);
         }
 
-        // Video
+        // Video with Smart Lazy Loading
         if (itemData.videoSrc) {
           const video = document.createElement("video");
-          video.autoplay = true;
           video.loop = true;
           video.muted = true;
           video.playsInline = true;
+          video.preload = "none";
+          video.className = "lazy-video";
+          video.setAttribute("data-src", itemData.videoSrc);
 
-          const source = document.createElement("source");
-          source.src = itemData.videoSrc;
-          source.type = "video/mp4";
-
-          video.appendChild(source);
-          video.innerHTML += "Your browser does not support the video tag.";
+          video.innerHTML = "Your browser does not support the video tag.";
           itemDiv.appendChild(video);
         }
 
@@ -338,6 +338,64 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
         if (e.key === "Escape" && modal.classList.contains("is-open")) {
           closeModal();
         }
+      });
+    }
+
+    /**
+     * Smart Video Lazy Loading & Hardware Decoder Optimization:
+     * - Only loads video stream (src) when within 250px of the viewport
+     * - Automatically pauses videos when off-screen to free hardware decoder slots and conserve RAM/battery
+     * - Automatically resumes playing when back in view
+     */
+    static setupVideoLazyLoading() {
+      const lazyVideos = document.querySelectorAll("video.lazy-video");
+      if (!lazyVideos.length) return;
+
+      if (!("IntersectionObserver" in window)) {
+        lazyVideos.forEach((video) => {
+          if (video.dataset.src && !video.getAttribute("src")) {
+            video.src = video.dataset.src;
+            video.load();
+            video.play().catch(() => {});
+          }
+        });
+        return;
+      }
+
+      if (this._videoObserver) {
+        this._videoObserver.disconnect();
+      }
+
+      this._videoObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            const video = entry.target;
+            if (entry.isIntersecting) {
+              if (video.dataset.src && !video.getAttribute("src")) {
+                video.src = video.dataset.src;
+                video.load();
+              }
+              const playPromise = video.play();
+              if (playPromise !== undefined) {
+                playPromise.catch(() => {
+                  video.muted = true;
+                });
+              }
+            } else {
+              if (!video.paused && video.getAttribute("src")) {
+                video.pause();
+              }
+            }
+          });
+        },
+        {
+          rootMargin: "250px 0px 250px 0px",
+          threshold: 0.05
+        }
+      );
+
+      lazyVideos.forEach((video) => {
+        this._videoObserver.observe(video);
       });
     }
 

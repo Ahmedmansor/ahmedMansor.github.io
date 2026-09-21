@@ -326,6 +326,13 @@ html[dir="rtl"] .see-more-btn {
   border: 1px solid #444444;
   display: block;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  background: #11141e;
+}
+
+video.lazy-video {
+  background-color: #11141e;
+  min-height: 220px;
+  transition: opacity 0.3s ease;
 }
 
 /* Side by Side Comparison */

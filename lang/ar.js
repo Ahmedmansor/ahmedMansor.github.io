@@ -50,7 +50,7 @@ translations = {
         badgeClass: "automation-badge",
         description:
           "منظومة أتمتة ذكية متطورة (Python & AI) تختصر ساعات المونتاج إلى دقائق، وتقوم بصناعة فيديوهات قصيرة بـ 4 لغات مع مطابقة دلالية للمشاهد عبر Gemini وبناء مشاريع Premiere XML تلقائياً.",
-        thumbnail: "assets/images/semanticcut-thumbnail.webp",
+        thumbnail: "assets/images/semanticcut-thumbnail-ar.webp",
         link: "semantic-cut.html",
         tags: [
           "Python",
