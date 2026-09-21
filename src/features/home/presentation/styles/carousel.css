@@ -6,13 +6,13 @@
 .carousel-section {
   position: relative;
   width: 100%;
-  max-width: 1340px;
-  margin: 30px auto;
+  max-width: 100%;
+  margin: 0 auto;
   background: #000000;
-  border-radius: 24px;
+  border-radius: 0;
   overflow: hidden;
   z-index: 10;
-  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.7);
+  box-shadow: none;
 }
 
 /* Pinned Viewport Container */
@@ -566,6 +566,7 @@ html[dir="rtl"] .carousel-item .view-project-btn i {
   justify-content: center;
   gap: 16px;
   z-index: 25;
+  direction: ltr !important;
 }
 
 .carousel-arrow-btn {

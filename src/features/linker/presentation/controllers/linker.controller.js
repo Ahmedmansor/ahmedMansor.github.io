@@ -39,7 +39,7 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
         onLanguageChange: (lang) => this.switchLanguage(lang)
       });
 
-      this.setupMobileSwipers();
+      this.setupImageLightbox();
       await this.switchLanguage(activeLang);
     }
 
@@ -63,10 +63,8 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
         this.renderGalleries(pageTranslations, commonTranslations);
         this.applySeeMoreLogic(commonTranslations);
 
-        // Refresh swiper layouts if mobile
-        if (window.innerWidth <= 700) {
-          this.initAllSwipersOnMobile();
-        }
+        // Smooth lightweight scroll reveal
+        this.setupScrollReveal();
       } catch (err) {
         console.error("Failed to load Linker page language:", err);
       }
@@ -269,35 +267,82 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
     }
 
     /**
-     * Initializes mobile Swiper instances
+     * Sets up smooth, lightweight scroll reveal animation for gallery items
      */
-    static initAllSwipersOnMobile() {
-      if (window.innerWidth <= 700 && typeof Swiper !== "undefined") {
-        window.swipers = window.swipers || {};
-        SWIPER_GALLERY_IDS.forEach((id) => {
-          const el = document.getElementById(id);
-          if (el && el.classList.contains("swiper-container") && !window.swipers[id]) {
-            window.swipers[id] = new Swiper(`#${id}.swiper-container`, {
-              slidesPerView: "auto",
-              spaceBetween: 16,
-              pagination: {
-                el: `#${id} .swiper-pagination`,
-                clickable: true
-              },
-              navigation: {
-                nextEl: `#${id} .swiper-button-next`,
-                prevEl: `#${id} .swiper-button-prev`
-              },
-              loop: false,
-              watchOverflow: true
-            });
-          }
-        });
+    static setupScrollReveal() {
+      const items = document.querySelectorAll(".gallery-item");
+      if (!items.length) return;
+
+      if (!("IntersectionObserver" in window)) {
+        items.forEach((item) => item.classList.add("is-revealed"));
+        return;
       }
+
+      const observer = new IntersectionObserver(
+        (entries, obs) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-revealed");
+              obs.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1, rootMargin: "0px 0px -30px 0px" }
+      );
+
+      items.forEach((item) => {
+        const rect = item.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          item.classList.add("is-revealed");
+        } else {
+          observer.observe(item);
+        }
+      });
     }
 
     /**
-     * Destroys all mobile Swiper instances
+     * Initializes image lightbox zoom interaction for comparison graphic
+     */
+    static setupImageLightbox() {
+      const trigger = document.getElementById("comparison-zoom-wrapper");
+      const modal = document.getElementById("image-lightbox-modal");
+      const closeBtn = document.getElementById("lightbox-close-btn");
+      const overlay = document.getElementById("lightbox-overlay");
+
+      if (!trigger || !modal) return;
+
+      const openModal = () => {
+        modal.classList.add("is-open");
+        modal.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+      };
+
+      const closeModal = () => {
+        modal.classList.remove("is-open");
+        modal.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
+      };
+
+      trigger.onclick = openModal;
+      trigger.onkeydown = (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          openModal();
+        }
+      };
+
+      if (closeBtn) closeBtn.onclick = closeModal;
+      if (overlay) overlay.onclick = closeModal;
+
+      window.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && modal.classList.contains("is-open")) {
+          closeModal();
+        }
+      });
+    }
+
+    /**
+     * Destroys all mobile Swiper instances if any
      */
     static destroyAllSwipers() {
       if (window.swipers) {
@@ -308,25 +353,6 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
           }
         });
       }
-    }
-
-    /**
-     * Binds responsive Swiper listeners
-     */
-    static setupMobileSwipers() {
-      if (document.readyState === "loading") {
-        window.addEventListener("DOMContentLoaded", () => this.initAllSwipersOnMobile());
-      } else {
-        this.initAllSwipersOnMobile();
-      }
-
-      window.addEventListener("resize", () => {
-        if (window.innerWidth > 700) {
-          this.destroyAllSwipers();
-        } else {
-          this.initAllSwipersOnMobile();
-        }
-      });
     }
   }
 

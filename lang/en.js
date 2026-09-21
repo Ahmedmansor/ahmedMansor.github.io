@@ -96,6 +96,8 @@ translations = {
       "UI Across All Roles:<br />Guest, Player, and Coach",
     feature3ComparisonDescription:
       "This image provides a clear comparison of the three core views<br />the exploratory Guest interface, the simple Player profile, and the rich Coach profile.",
+    tapToZoom: "Tap to Zoom & Inspect Details",
+    lightboxHint: "High-resolution comparison of Guest, Player & Coach roles • Tap ✕ or outside to close",
     feature4Title: "🔎 4- Advanced Search & Multi-Factor Filtering",
     feature4Description:
       "To empower users, the app includes a powerful search function to find coaches by name, complemented by a multi-layered filtering system. Users can refine results by sport, location, age group, and skill level, making it simple to find the perfect match.",

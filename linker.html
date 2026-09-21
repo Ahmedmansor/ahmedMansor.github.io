@@ -110,10 +110,16 @@
           <div class="side-by-side-container">
             <h5 data-i18n-key="project1Page.feature3ComparisonTitle"></h5>
             <p data-i18n-key="project1Page.feature3ComparisonDescription"></p>
-            <img
-              src="assets/images/all-profiles-comparison.jpg"
-              alt="Side-by-side comparison"
-            />
+            <div class="zoomable-media-wrapper" id="comparison-zoom-wrapper" role="button" tabindex="0">
+              <img
+                src="assets/images/all-profiles-comparison.jpg"
+                alt="Side-by-side comparison"
+              />
+              <div class="zoom-magnifier-badge">
+                <i class="fas fa-magnifying-glass-plus"></i>
+                <span data-i18n-key="project1Page.tapToZoom">Tap to Zoom</span>
+              </div>
+            </div>
           </div>
         </div>
         <div class="feature-spotlight" id="feature4">
@@ -165,6 +171,26 @@
         class="back-to-home-link"
         data-i18n-key="common.backToHome"
       ></a>
+    </div>
+
+    <!-- Image Lightbox Modal for Full-Resolution Mobile & Desktop Inspection -->
+    <div class="image-lightbox-modal" id="image-lightbox-modal" aria-hidden="true" role="dialog">
+      <div class="lightbox-overlay" id="lightbox-overlay"></div>
+      <div class="lightbox-container">
+        <button class="lightbox-close-btn" id="lightbox-close-btn" aria-label="Close Preview">
+          <i class="fas fa-times"></i>
+        </button>
+        <div class="lightbox-scroll-area">
+          <img
+            src="assets/images/all-profiles-comparison.jpg"
+            alt="All Profiles Full Comparison"
+            class="lightbox-image"
+          />
+        </div>
+        <p class="lightbox-caption" data-i18n-key="project1Page.lightboxHint">
+          High-resolution comparison of Guest, Player & Coach roles • Tap ✕ or outside to close
+        </p>
+      </div>
     </div>
 
     <!-- Swiper JS -->
