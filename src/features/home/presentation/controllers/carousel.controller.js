@@ -83,16 +83,13 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
             <a href="${project.link}" class="${cardClass}">
               <div class="project-thumbnail-wrapper ${thumbClass}">
                 <img src="${project.thumbnail}" alt="${project.title}">
-                <div class="thumbnail-glass-badge ${badgeClass}">
-                  ${!isLinker ? '<span class="pulse-dot"></span>' : ""}
-                  <i class="${typeIcon}"></i>
-                  <span>${typeBadgeText}</span>
-                </div>
               </div>
               <div class="project-info">
                 <div class="project-header-row">
                   <span class="project-badge ${badgeClass}">
-                    <i class="${typeIcon}"></i> ${typeBadgeText}
+                    <span class="pulse-dot ${isLinker ? "linker-dot" : ""}"></span>
+                    <i class="${typeIcon}"></i>
+                    <span>${typeBadgeText}</span>
                   </span>
                   ${displayCategory ? `<span class="project-sub-category">${displayCategory}</span>` : ""}
                 </div>
@@ -192,6 +189,8 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
       updateStage(0);
       updateControls(0);
 
+      const isMobile = window.innerWidth <= 768;
+
       // GSAP ScrollTrigger Timeline
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -199,8 +198,8 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
           start: "top top",
           end: `+=${pinDistance}`,
           pin: true,
-          scrub: 0.6,
-          anticipatePin: 1,
+          scrub: isMobile ? true : 0.6,
+          anticipatePin: isMobile ? 0 : 1,
           invalidateOnRefresh: true,
           onUpdate: (self) => {
             updateStage(self.progress);

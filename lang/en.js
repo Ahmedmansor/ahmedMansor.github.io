@@ -18,8 +18,8 @@ translations = {
         id: "linker",
         title: "Linker EG",
         bigTitle: "LINKER EG",
-        category: "Flutter & Cloud Platform",
-        typeBadge: "Mobile App • iOS & Android",
+        category: "Flutter",
+        typeBadge: "Mobile App",
         typeBadgeIcon: "fas fa-mobile-screen-button",
         badgeClass: "mobile-badge",
         description:
@@ -45,12 +45,12 @@ translations = {
         title: "SemanticCut AI",
         bigTitle: "SEMANTIC CUT",
         category: "AI & Automated Pipeline",
-        typeBadge: "AI Automation Engine • Premiere XML",
+        typeBadge: "AI Automation",
         typeBadgeIcon: "fas fa-robot",
         badgeClass: "automation-badge",
         description:
           "An intelligent end-to-end Python & AI automation pipeline that automates viral multilingual short-form video production with Gemini & WhisperX.",
-        thumbnail: "assets/images/semanticcut-thumbnail.jpg",
+        thumbnail: "assets/images/semanticcut-thumbnail.webp",
         link: "semantic-cut.html",
         tags: [
           "Python",
@@ -205,7 +205,6 @@ translations = {
         videoSrc: "assets/videos/linker-players-Joined.mp4",
         caption:
           "<strong>State Synchronization:</strong><br>Providing immediate confirmation for the coach, the session view is dynamically updated the moment a player enrolls. This real-time data handling ensures coaches always have an up-to-date roster of participants.",
-    
       },
     ],
     staticImageData: {
@@ -218,7 +217,8 @@ translations = {
   // Text specific to the semantic-cut.html page
   semanticCutPage: {
     pageTitle: "Project Details: SemanticCut AI",
-    headerTitle: "SemanticCut AI: Automated Multilingual Video Production Pipeline",
+    headerTitle:
+      "SemanticCut AI: Automated Multilingual Video Production Pipeline",
     headerSubtitle: "Intelligent End-to-End AI Video Engineering System",
     headerDescription:
       "A cutting-edge Python & AI automation pipeline that cuts hours of manual video editing into minutes. It ingests raw episode video footage and a summarized text script, automatically producing high-retention multilingual short-form videos (Shorts/Reels) in 4 languages: English, Arabic, Spanish, and Portuguese.",

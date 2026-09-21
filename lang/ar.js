@@ -18,8 +18,8 @@ translations = {
         id: "linker",
         title: "Linker EG",
         bigTitle: "LINKER EG",
-        category: "تطبيقات فلاتر والأنظمة السحابية",
-        typeBadge: "تطبيق جوال • iOS & Android",
+        category: "تطبيقات فلاتر",
+        typeBadge: "تطبيق جوال",
         typeBadgeIcon: "fas fa-mobile-screen-button",
         badgeClass: "mobile-badge",
         description:
@@ -45,12 +45,12 @@ translations = {
         title: "SemanticCut AI",
         bigTitle: "SEMANTIC CUT",
         category: "الذكاء الاصطناعي وهندسة الفيديو",
-        typeBadge: "منظومة أتمتة وذكاء اصطناعي • Premiere XML",
+        typeBadge: "أتمتة ذكاء اصطناعي",
         typeBadgeIcon: "fas fa-robot",
         badgeClass: "automation-badge",
         description:
           "منظومة أتمتة ذكية متطورة (Python & AI) تختصر ساعات المونتاج إلى دقائق، وتقوم بصناعة فيديوهات قصيرة بـ 4 لغات مع مطابقة دلالية للمشاهد عبر Gemini وبناء مشاريع Premiere XML تلقائياً.",
-        thumbnail: "assets/images/semanticcut-thumbnail.jpg",
+        thumbnail: "assets/images/semanticcut-thumbnail.webp",
         link: "semantic-cut.html",
         tags: [
           "Python",
