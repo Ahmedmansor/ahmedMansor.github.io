@@ -1,0 +1,334 @@
+/**
+ * @file linker.controller.js
+ * @description Page Controller for the Linker EG Project Details Page (linker.html).
+ * Part of Clean Architecture (Presentation Layer Controller).
+ */
+
+window.Portfolio = window.Portfolio || {};
+window.Portfolio.presentation = window.Portfolio.presentation || {};
+window.Portfolio.presentation.controllers = window.Portfolio.presentation.controllers || {};
+
+(function (exports) {
+  "use strict";
+
+  const LanguageRepository = window.Portfolio.data.repositories.LanguageRepository;
+  const LocalizationUseCase = window.Portfolio.domain.usecases.LocalizationUseCase;
+  const LanguageSwitcherComponent = window.Portfolio.presentation.components.LanguageSwitcherComponent;
+
+  const SWIPER_GALLERY_IDS = [
+    "login-gallery",
+    "registration-gallery",
+    "profiles-gallery",
+    "search-filter-gallery",
+    "become-coach-gallery",
+    "session-gallery"
+  ];
+
+  const CHARACTER_LIMIT = 110;
+  let scrollListenerAttached = false;
+
+  class LinkerController {
+    /**
+     * Initializes the Linker detail page
+     */
+    static async init() {
+      const activeLang = LanguageRepository.getActiveLanguage();
+
+      LanguageSwitcherComponent.init({
+        initialLang: activeLang,
+        onLanguageChange: (lang) => this.switchLanguage(lang)
+      });
+
+      this.setupMobileSwipers();
+      await this.switchLanguage(activeLang);
+    }
+
+    /**
+     * Switches language and re-renders nav, galleries, and text
+     * @param {string} lang
+     */
+    static async switchLanguage(lang) {
+      try {
+        const translations = await LanguageRepository.loadLanguage(lang);
+        const { pageTranslations, commonTranslations } = LocalizationUseCase.translateDOM(
+          translations,
+          "project1-page"
+        );
+
+        // Rebuild feature navigation with translated titles
+        this.buildFeatureNav(pageTranslations);
+        this.setupFeatureNavLogic();
+
+        // Render all 6 feature galleries
+        this.renderGalleries(pageTranslations, commonTranslations);
+        this.applySeeMoreLogic(commonTranslations);
+
+        // Refresh swiper layouts if mobile
+        if (window.innerWidth <= 700) {
+          this.initAllSwipersOnMobile();
+        }
+      } catch (err) {
+        console.error("Failed to load Linker page language:", err);
+      }
+    }
+
+    /**
+     * Builds sticky feature navigation bar links
+     * @param {Object} pageTranslations
+     */
+    static buildFeatureNav(pageTranslations = {}) {
+      const nav = document.getElementById("feature-nav");
+      if (!nav) return;
+      const ul = nav.querySelector("ul");
+      if (!ul) return;
+
+      ul.innerHTML = "";
+      const titles = pageTranslations.featureNavTitles || [
+        "Secure and Easy Login and Logout System",
+        "User Registration with Robust Validation",
+        "The Complete User Journey: Guest, Player & Coach Views",
+        "Advanced Search & Multi-Factor Filtering",
+        "Full-Circle Application: From Player to Coach",
+        "Core Interaction: Session Creation & Enrollment"
+      ];
+
+      titles.forEach((title, i) => {
+        const li = document.createElement("li");
+        const a = document.createElement("a");
+        a.href = `#feature${i + 1}`;
+        a.setAttribute("data-feature", i + 1);
+        a.textContent = `${i + 1}. ${title}`;
+        li.appendChild(a);
+        ul.appendChild(li);
+      });
+    }
+
+    /**
+     * Attaches smooth scroll and active state highlighting on scroll to feature nav
+     */
+    static setupFeatureNavLogic() {
+      const nav = document.getElementById("feature-nav");
+      if (!nav) return;
+      const navLinks = nav.querySelectorAll("a");
+      const featureSections = Array.from({ length: 6 }, (_, i) =>
+        document.getElementById(`feature${i + 1}`)
+      );
+
+      // Smooth scroll click handler
+      navLinks.forEach((link) => {
+        link.onclick = (e) => {
+          e.preventDefault();
+          const targetId = link.getAttribute("href").replace("#", "");
+          const target = document.getElementById(targetId);
+          if (target) {
+            const navHeight = nav.offsetHeight;
+            const rect = target.getBoundingClientRect();
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const top = rect.top + scrollTop - navHeight - 10;
+            window.scrollTo({ top, behavior: "smooth" });
+          }
+        };
+      });
+
+      // Highlight active nav item on scroll
+      function onScroll() {
+        const navHeight = nav.offsetHeight;
+        let current = 0;
+        featureSections.forEach((section, idx) => {
+          if (section) {
+            const sectionTop = section.getBoundingClientRect().top - navHeight - 20;
+            if (sectionTop <= 0) current = idx;
+          }
+        });
+        navLinks.forEach((link, idx) => {
+          if (idx === current) {
+            link.classList.add("active");
+          } else {
+            link.classList.remove("active");
+          }
+        });
+      }
+
+      if (!scrollListenerAttached) {
+        window.addEventListener("scroll", onScroll);
+        scrollListenerAttached = true;
+      }
+      onScroll();
+    }
+
+    /**
+     * Populates all feature galleries from translation data
+     * @param {Object} pageTranslations
+     * @param {Object} commonTranslations
+     */
+    static renderGalleries(pageTranslations, commonTranslations) {
+      if (!pageTranslations) return;
+
+      const galleryMappings = [
+        { id: "login-gallery", data: pageTranslations.loginGalleryData },
+        { id: "registration-gallery", data: pageTranslations.registrationGalleryData },
+        { id: "profiles-gallery", data: pageTranslations.profilesGalleryData },
+        { id: "search-filter-gallery", data: pageTranslations.searchFilterGalleryData },
+        { id: "become-coach-gallery", data: pageTranslations.becomeCoachGalleryData },
+        { id: "session-gallery", data: pageTranslations.sessionGalleryData }
+      ];
+
+      galleryMappings.forEach(({ id, data }) => {
+        this.createGallery(id, data || [], commonTranslations);
+      });
+    }
+
+    /**
+     * Builds DOM nodes for a single gallery container
+     * @param {string} containerId
+     * @param {Array<Object>} data
+     * @param {Object} commonTranslations
+     */
+    static createGallery(containerId, data, commonTranslations = {}) {
+      const galleryContainer = document.getElementById(containerId);
+      if (!galleryContainer || !data) return;
+
+      const isSwiper = galleryContainer.classList.contains("swiper-container");
+      const wrapper = isSwiper
+        ? galleryContainer.querySelector(".swiper-wrapper")
+        : galleryContainer;
+
+      if (isSwiper && wrapper) wrapper.innerHTML = "";
+      if (!wrapper) return;
+
+      data.forEach((itemData) => {
+        const itemDiv = document.createElement("div");
+        itemDiv.className = isSwiper ? "gallery-item swiper-slide" : "gallery-item";
+
+        // Caption
+        const captionP = document.createElement("p");
+        captionP.className = "media-caption";
+        captionP.innerHTML = itemData.caption;
+        itemDiv.appendChild(captionP);
+
+        // See More button if long text
+        if (captionP.textContent.length > CHARACTER_LIMIT) {
+          const seeMoreBtn = document.createElement("button");
+          seeMoreBtn.className = "see-more-btn";
+          seeMoreBtn.setAttribute("data-i18n-key", "common.seeMore");
+          seeMoreBtn.textContent = commonTranslations.seeMore || "See More";
+          itemDiv.appendChild(seeMoreBtn);
+        }
+
+        // Video
+        if (itemData.videoSrc) {
+          const video = document.createElement("video");
+          video.autoplay = true;
+          video.loop = true;
+          video.muted = true;
+          video.playsInline = true;
+
+          const source = document.createElement("source");
+          source.src = itemData.videoSrc;
+          source.type = "video/mp4";
+
+          video.appendChild(source);
+          video.innerHTML += "Your browser does not support the video tag.";
+          itemDiv.appendChild(video);
+        }
+
+        wrapper.appendChild(itemDiv);
+      });
+    }
+
+    /**
+     * Applies expansion / collapse truncation toggle to gallery item captions
+     * @param {Object} commonTranslations
+     */
+    static applySeeMoreLogic(commonTranslations = {}) {
+      const galleryItems = document.querySelectorAll(".gallery-item");
+      galleryItems.forEach((item) => {
+        const caption = item.querySelector(".media-caption");
+        const button = item.querySelector(".see-more-btn");
+        if (!button) return;
+
+        if (button.hasAttribute("data-listener-added")) return;
+
+        button.style.visibility =
+          caption.textContent.length > CHARACTER_LIMIT ? "visible" : "hidden";
+        caption.classList.remove("truncated");
+
+        if (caption.textContent.length > CHARACTER_LIMIT) {
+          caption.classList.add("truncated");
+        }
+
+        button.addEventListener("click", () => {
+          caption.classList.toggle("truncated");
+          button.textContent = caption.classList.contains("truncated")
+            ? commonTranslations.seeMore || "See More"
+            : commonTranslations.seeLess || "See Less";
+        });
+
+        button.setAttribute("data-listener-added", "true");
+      });
+    }
+
+    /**
+     * Initializes mobile Swiper instances
+     */
+    static initAllSwipersOnMobile() {
+      if (window.innerWidth <= 700 && typeof Swiper !== "undefined") {
+        window.swipers = window.swipers || {};
+        SWIPER_GALLERY_IDS.forEach((id) => {
+          const el = document.getElementById(id);
+          if (el && el.classList.contains("swiper-container") && !window.swipers[id]) {
+            window.swipers[id] = new Swiper(`#${id}.swiper-container`, {
+              slidesPerView: "auto",
+              spaceBetween: 16,
+              pagination: {
+                el: `#${id} .swiper-pagination`,
+                clickable: true
+              },
+              navigation: {
+                nextEl: `#${id} .swiper-button-next`,
+                prevEl: `#${id} .swiper-button-prev`
+              },
+              loop: false,
+              watchOverflow: true
+            });
+          }
+        });
+      }
+    }
+
+    /**
+     * Destroys all mobile Swiper instances
+     */
+    static destroyAllSwipers() {
+      if (window.swipers) {
+        Object.keys(window.swipers).forEach((id) => {
+          if (window.swipers[id]) {
+            window.swipers[id].destroy(true, true);
+            window.swipers[id] = null;
+          }
+        });
+      }
+    }
+
+    /**
+     * Binds responsive Swiper listeners
+     */
+    static setupMobileSwipers() {
+      if (document.readyState === "loading") {
+        window.addEventListener("DOMContentLoaded", () => this.initAllSwipersOnMobile());
+      } else {
+        this.initAllSwipersOnMobile();
+      }
+
+      window.addEventListener("resize", () => {
+        if (window.innerWidth > 700) {
+          this.destroyAllSwipers();
+        } else {
+          this.initAllSwipersOnMobile();
+        }
+      });
+    }
+  }
+
+  exports.LinkerController = LinkerController;
+})(window.Portfolio.presentation.controllers);

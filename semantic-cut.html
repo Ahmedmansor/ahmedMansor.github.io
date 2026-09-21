@@ -293,73 +293,22 @@
       >Back to Home</a>
     </div>
 
-    <!-- Script for Dynamic Localization -->
+    <!-- Feature-First Clean Architecture Scripts -->
+    <!-- 1. Core Layer -->
+    <script src="src/core/domain/usecases/localization.usecase.js"></script>
+    <script src="src/core/data/datasources/storage.datasource.js"></script>
+    <script src="src/core/data/datasources/language.datasource.js"></script>
+    <script src="src/core/data/repositories/language.repository.js"></script>
+    <script src="src/core/presentation/components/language-switcher/language-switcher.component.js"></script>
+
+    <!-- 2. SemanticCut Feature -->
+    <script src="src/features/semantic-cut/presentation/controllers/semantic-cut.controller.js"></script>
+
     <script>
-      let translations = {};
-
-      function translatePage() {
-        if (!translations || Object.keys(translations).length === 0) return;
-        const currentLang = localStorage.getItem("lang") || "en";
-        document.documentElement.lang = currentLang;
-        document.documentElement.dir = currentLang === "ar" ? "rtl" : "ltr";
-
-        const pageKey = "semanticCutPage";
-        const pageTranslations = translations[pageKey] || {};
-
-        document.querySelectorAll("[data-i18n-key]").forEach((element) => {
-          const fullKey = element.getAttribute("data-i18n-key");
-          let value;
-          if (fullKey.startsWith("common.")) {
-            value = translations.common[fullKey.replace("common.", "")];
-          } else {
-            const key = fullKey.replace(pageKey + ".", "");
-            value = key
-              .split(".")
-              .reduce(
-                (obj, k) => (obj && obj[k] !== undefined ? obj[k] : undefined),
-                pageTranslations
-              );
-          }
-          if (value !== undefined) element.innerHTML = value;
-        });
-      }
-
-      function loadLanguage(lang) {
-        const oldScript = document.getElementById("lang-script");
-        if (oldScript) oldScript.remove();
-
-        const script = document.createElement("script");
-        script.id = "lang-script";
-        script.src = `lang/${lang}.js`;
-        script.onload = () => {
-          localStorage.setItem("lang", lang);
-          translatePage();
-        };
-        script.onerror = () =>
-          console.error(`Failed to load language file: ${script.src}`);
-        document.head.appendChild(script);
-      }
-
-      function setActiveLangButton(lang) {
-        const enBtn = document.getElementById("lang-en-btn");
-        const arBtn = document.getElementById("lang-ar-btn");
-        if (enBtn && arBtn) {
-          enBtn.classList.toggle("active", lang === "en");
-          arBtn.classList.toggle("active", lang === "ar");
-        }
-      }
-
-      document.getElementById("lang-en-btn").addEventListener("click", () => {
-        setActiveLangButton("en");
-        loadLanguage("en");
+      // Initialize SemanticCut AI Detail Page via Feature-First Controller
+      document.addEventListener("DOMContentLoaded", () => {
+        window.Portfolio.presentation.controllers.SemanticCutController.init();
       });
-      document.getElementById("lang-ar-btn").addEventListener("click", () => {
-        setActiveLangButton("ar");
-        loadLanguage("ar");
-      });
-
-      setActiveLangButton(localStorage.getItem("lang") || "en");
-      loadLanguage(localStorage.getItem("lang") || "en");
     </script>
   </body>
 </html>

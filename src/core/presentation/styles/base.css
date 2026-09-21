@@ -1,0 +1,73 @@
+/* ========================================================
+   BASE RESETS, GLOBAL LAYOUT & TYPOGRAPHY
+   src/presentation/common/styles/base.css
+   ======================================================== */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  overflow-x: hidden;
+}
+
+body {
+  background-color: var(--bg-body, #121212);
+  color: var(--text-secondary, #e0e0e0);
+  font-family: "Montserrat", "Cairo", sans-serif;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: var(--bg-container, #000000);
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* ======== General Link Styles ======== */
+a {
+  color: var(--accent-teal, #03dac6);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--accent-teal-hover, #03e6b7);
+}
+
+/* Prevent underline on all text inside project-card on hover */
+.project-card:hover,
+.project-card:hover * {
+  text-decoration: none !important;
+}
+
+/* ======== Universal Back to Home Link ======== */
+.back-to-home-link {
+  text-align: center;
+  display: block;
+  margin-top: 60px;
+  padding: 12px 25px;
+  background-color: var(--accent-teal, #03dac6);
+  color: #121212 !important;
+  border-radius: 6px;
+  max-width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+  font-weight: 700;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.back-to-home-link:hover {
+  background-color: var(--accent-teal-hover, #03e6b7);
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(3, 218, 198, 0.4);
+}

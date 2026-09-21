@@ -1,0 +1,27 @@
+/* ========================================================
+   FOOTER COMPONENT STYLES
+   src/presentation/common/components/footer/footer.css
+   ======================================================== */
+
+footer {
+  text-align: center;
+  margin-top: 50px;
+  padding-top: 20px;
+  border-top: 1px solid #333333;
+  font-size: 0.9em;
+  color: #888888;
+}
+
+footer p {
+  margin: 0;
+  line-height: 1.8;
+}
+
+footer a {
+  color: var(--accent-teal, #03dac6);
+  transition: color 0.2s ease;
+}
+
+footer a:hover {
+  color: var(--accent-teal-hover, #03e6b7);
+}

@@ -1,0 +1,43 @@
+/* ========================================================
+   GLOBAL VARIABLES & DESIGN TOKENS
+   src/presentation/common/styles/variables.css
+   ======================================================== */
+
+:root {
+  /* Color Palette */
+  --bg-body: #121212;
+  --bg-container: #000000;
+  --bg-card: #1e1e1e;
+  --bg-card-alt: #1b1e26;
+  --bg-surface: #181c24;
+
+  /* Accent Colors */
+  --accent-teal: #03dac6;
+  --accent-teal-hover: #03e6b7;
+  --accent-purple: #bb86fc;
+  --accent-blue: #2563eb;
+  --accent-blue-light: #60a5fa;
+  --accent-neon: #ccff00;
+  --accent-red: #ef4444;
+
+  /* Text Colors */
+  --text-primary: #ffffff;
+  --text-secondary: #e0e0e0;
+  --text-muted: #b3b3b3;
+  --text-subtle: #94a3b8;
+  --text-dim: #888888;
+
+  /* Borders & Shadows */
+  --border-color: #333333;
+  --border-subtle: rgba(255, 255, 255, 0.12);
+  --shadow-main: 0 8px 30px rgba(0, 0, 0, 0.5);
+
+  /* Typography */
+  --font-primary: "Montserrat", sans-serif;
+  --font-arabic: "Cairo", sans-serif;
+
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-smooth: 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
