@@ -219,18 +219,26 @@
         // Build HTML for each carousel item
         fourProjects.forEach((project, index) => {
           // 1. Moving Title Item (height 120px matching .carousel-title-zone)
+          const isLinker = project.id === "linker" || index % 2 === 0;
           const displayTitle = project.bigTitle || project.title;
           const displayCategory = project.category || "";
+          const viewText = project.viewProject || "View Project Details";
+          const titleBtnClass = isLinker ? "title-btn-linker" : "title-btn-automation";
+
           const titleHTML = `
             <div class="carousel-title-item" data-index="${index}">
               <span class="carousel-title-category">${displayCategory}</span>
-              <h2 class="carousel-title-heading">${displayTitle}</h2>
+              <a href="${project.link}" class="carousel-title-link" aria-label="${viewText} - ${displayTitle}" title="${viewText}">
+                <h2 class="carousel-title-heading">${displayTitle}</h2>
+                <span class="carousel-title-nav-btn ${titleBtnClass}">
+                  <i class="fas fa-arrow-up-right-from-square"></i>
+                </span>
+              </a>
             </div>
           `;
           titleTrack.append(titleHTML);
 
           // 2. Rich Project Card Widget
-          const isLinker = project.id === "linker" || index % 2 === 0;
           const cardClass = isLinker ? "project-card linker-card" : "project-card semanticcut-card";
           const thumbClass = isLinker ? "linker-thumb" : "automation-thumb";
           const typeBadgeText = project.typeBadge || (isLinker ? "Mobile App • iOS & Android" : "AI Automation Pipeline");
@@ -240,7 +248,6 @@
           const tagsHTML = project.tags
             ? project.tags.map((tag) => `<span>${tag}</span>`).join("")
             : "";
-          const viewText = project.viewProject || "View Project Details";
 
           const cardHTML = `
             <div class="carousel-item" carousel="item" data-index="${index}">
@@ -293,7 +300,10 @@
         }
 
         const pinDistance = 2400; // Scroll distance during locked section interaction
-        const titleItemHeight = 120; // Exact height of each title item
+
+        function getTitleItemHeight() {
+          return window.innerWidth <= 480 ? 75 : (window.innerWidth <= 768 ? 80 : 120);
+        }
 
         // Function to position all 4 cards and the title track with 100% mathematical lockstep
         function updateStage(progress) {
@@ -325,7 +335,7 @@
             let opacity = 0.42 + 0.58 * depthFactor; // rear cards stay visible in 3D space!
             let brightness = 0.5 + 0.5 * depthFactor; // subtle atmospheric lighting in the background
 
-            let isNearCenter = Math.abs(theta) < 32;
+            let isNearCenter = Math.abs(theta) < 45;
 
             $(this).css({
               transform: `translate3d(${x}px, ${y}px, ${z}px) rotateY(${rotY}deg) scale(${scale})`,
@@ -344,6 +354,7 @@
           });
 
           // Exact millimeter-accurate synchronized vertical title track translation
+          let titleItemHeight = getTitleItemHeight();
           let titleY = -progress * 3 * titleItemHeight;
           titleTrack[0].style.transform = `translate3d(0px, ${titleY}px, 0px)`;
         }
@@ -399,21 +410,42 @@
         });
 
         // Clicking handling:
-        // When in line of sight (active / front), clicking opens the project screen!
-        // When clicking side / rear cards, it smoothly rotates that card to the center.
+        // 1. Direct click on .view-project-btn ALWAYS navigates immediately!
+        // 2. When in line of sight (active / front), clicking the card opens the project screen!
+        // 3. When clicking side / rear cards (outside action buttons), it smoothly rotates that card to the center.
         itemEl.off("click").on("click", function (e) {
           let clickedIndex = $(this).data("index");
+          let targetUrl = $(this).find("a.project-card").attr("href");
+          let isDirectAction = $(e.target).closest(".view-project-btn").length > 0;
           let isCardActive = (clickedIndex === activeIndex) || $(this).find(".project-card").hasClass("is-active");
+
+          if (isDirectAction) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (targetUrl) {
+              window.location.href = targetUrl;
+            }
+            return;
+          }
 
           if (isCardActive) {
             e.preventDefault();
-            let targetUrl = $(this).find("a.project-card").attr("href");
             if (targetUrl) {
               window.location.href = targetUrl;
             }
           } else {
             e.preventDefault();
             scrollToStep(clickedIndex);
+          }
+        });
+
+        // Ensure clicking anywhere on .carousel-title-link or its button navigates immediately
+        titleTrack.find(".carousel-title-link").off("click").on("click", function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          let targetUrl = $(this).attr("href");
+          if (targetUrl) {
+            window.location.href = targetUrl;
           }
         });
 
