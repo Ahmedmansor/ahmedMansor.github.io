@@ -10,7 +10,7 @@
   overflow: hidden;
   font-family: 'Lato', sans-serif;
   color: #FFF;
-  background: radial-gradient(ellipse at bottom, #0C1116 0%, #090a0f 100%);
+  background: radial-gradient(ellipse at 50% 85%, #0e2038 0%, #07101d 35%, #04070e 70%, #010204 100%);
 }
 
 #stars {
@@ -72,9 +72,9 @@
   width: 160%;
   height: 70%;
   border-radius: 100% / 100%;
-  background: #038bff;
-  -webkit-filter: blur(30px);
-  filter: blur(30px);
+  background: #0088ff;
+  -webkit-filter: blur(28px);
+  filter: blur(28px);
   left: 50%;
   bottom: -20%;
   margin-left: -80%;
@@ -87,10 +87,10 @@
   width: 81.25%;
   height: 70%;
   border-radius: 100% / 100%;
-  background: #51AFFF;
-  -webkit-filter: blur(30px);
-  filter: blur(30px);
-  opacity: 0.6;
+  background: #5bf8ff;
+  -webkit-filter: blur(24px);
+  filter: blur(24px);
+  opacity: 0.72;
   margin-left: 9.375%;
 }
 
@@ -100,10 +100,10 @@
   width: 34%;
   height: 20%;
   border-radius: 650px / 350px;
-  background: #B0DAFF;
-  -webkit-filter: blur(30px);
-  filter: blur(30px);
-  opacity: 0.55;
+  background: #cbf9ff;
+  -webkit-filter: blur(20px);
+  filter: blur(20px);
+  opacity: 0.7;
   left: 50%;
   transform: translateX(-50%);
   margin-left: 0;
@@ -114,10 +114,10 @@
   width: 100%;
   height: 100%;
   border-radius: 100% / 100%;
-  background: #215496;
-  -webkit-filter: blur(200px);
-  filter: blur(200px);
-  opacity: 0.7;
+  background: #0f488f;
+  -webkit-filter: blur(180px);
+  filter: blur(180px);
+  opacity: 0.75;
   top: -10%;
 }
 
@@ -125,12 +125,13 @@
   position: absolute;
   width: 200%;
   height: 100%;
-  background: black;
+  background: radial-gradient(ellipse at 50% 0%, #061324 0%, #030812 50%, #010204 100%);
   border-radius: 100% / 100%;
   left: 50%;
   bottom: -50%;
   margin-left: -100%;
   pointer-events: none;
+  box-shadow: 0 -2px 24px rgba(0, 240, 255, 0.3), 0 -8px 55px rgba(0, 136, 255, 0.2);
 }
 
 #earth:before {
@@ -139,12 +140,15 @@
   width: 100%;
   height: 100%;
   border-radius: 100% / 100%;
-  box-shadow: inset 0px 0px 62px 20px rgba(60, 105, 138, 0.85);
+  box-shadow: inset 0px 4px 55px 12px rgba(0, 240, 255, 0.35), inset 0px 25px 90px 25px rgba(3, 139, 255, 0.2);
+  background-image:
+    radial-gradient(ellipse at 50% 5%, rgba(0, 240, 255, 0.12) 0%, transparent 60%),
+    repeating-linear-gradient(0deg, transparent, transparent 18px, rgba(0, 240, 255, 0.035) 19px, rgba(0, 240, 255, 0.035) 20px);
+  opacity: 0.9;
 }
 
 #earth:after {
-  background: -webkit-linear-gradient(left, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 50%, rgba(0,0,0,1) 100%);
-  background: linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 50%, rgba(0,0,0,1) 100%);
+  background: linear-gradient(to right, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0) 50%, rgba(0,0,0,0.92) 100%);
   content: " ";
   position: absolute;
   width: 100%;
@@ -157,7 +161,7 @@
    -------------------------------------------------------- */
 .space-vessel {
   position: absolute;
-  top: 30%;
+  top: 42%;
   left: 0;
   width: 380px;
   height: 110px;
@@ -240,74 +244,123 @@
 }
 
 /* --------------------------------------------------------
-   4. Scroll-Driven Sequential Typography
+   4. Cyber Code Cursor Typography (Scroll-Scrubbed)
+   -------------------------------------------------------- */
+/* --------------------------------------------------------
+   4. Cyber Code Cursor Typography (Scroll-Scrubbed)
    -------------------------------------------------------- */
 #title {
   position: absolute;
-  font-family: 'Lato', sans-serif;
-  font-weight: 300;
-  top: 36%;
+  top: 29%;
   left: 0;
   right: 0;
-  margin-top: -50px;
-  font-size: clamp(2.2rem, 5.5vw, 5.5rem);
+  margin-top: -30px;
   text-align: center;
   z-index: 10;
   pointer-events: auto;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: clamp(14px, 2vw, 26px);
+  padding: 0 16px;
 }
 
-.title-word {
-  display: inline-block;
-  letter-spacing: clamp(10px, 1.8vw, 20px);
-  padding-left: clamp(10px, 1.8vw, 20px);
-  background: -webkit-linear-gradient(white, rgb(219, 221, 224), #38495a);
+.console-container {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  font-size: clamp(2rem, 5.2vw, 4.6rem);
+  line-height: 1;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Typed Name Text with Ultra-Crisp OLED Cyber Cyan Gradient */
+.cyber-console-text {
+  font-family: 'Orbitron', 'Share Tech Mono', sans-serif;
+  font-weight: 800;
+  font-size: 1em;
+  letter-spacing: clamp(6px, 1.4vw, 15px);
+  padding-left: clamp(6px, 1.4vw, 15px);
+  background: linear-gradient(180deg, #ffffff 32%, #d2f9ff 65%, #00e5ff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-30px);
-  will-change: transform, opacity, letter-spacing;
+  filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.8)) drop-shadow(0 0 24px rgba(0, 140, 255, 0.45));
+  display: inline-block;
+  min-height: 1.15em;
+  white-space: nowrap;
+}
+
+/* Cyber Code Underscore Cursor (Harmonized with Name Typography) */
+.console-underscore {
+  display: inline-block;
+  position: relative;
+  top: -0.06em;
+  margin-left: clamp(8px, 1.2vw, 16px);
+  font-family: 'Orbitron', 'Share Tech Mono', monospace;
+  font-size: 1em;
+  font-weight: 800;
+  background: linear-gradient(180deg, #ffffff 32%, #d2f9ff 65%, #00e5ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.8)) drop-shadow(0 0 24px rgba(0, 140, 255, 0.45));
+  animation: cyberCursorBlink 0.8s steps(2, start) infinite;
+  user-select: none;
+}
+
+.hidden {
+  opacity: 0 !important;
+}
+
+@keyframes cyberCursorBlink {
+  0%, 49% {
+    opacity: 1;
+  }
+  50%, 100% {
+    opacity: 0;
+  }
 }
 
 #subtitle {
   position: absolute;
-  font-family: 'Lato', sans-serif;
-  font-weight: 300;
-  top: 70%;
+  font-family: 'Share Tech Mono', monospace;
+  font-weight: 400;
+  top: 72%;
   left: 0;
   right: 0;
-  font-size: clamp(15px, 1.8vw, 22px);
+  font-size: clamp(12px, 1.4vw, 17px);
   text-align: center;
-  letter-spacing: 6px;
+  letter-spacing: clamp(4px, 0.8vw, 8px);
   z-index: 10;
   pointer-events: auto;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
 }
 
 #subtitle .sub-word {
-  color: rgb(216, 216, 216);
+  color: #d8ecf8;
   display: inline-block;
   opacity: 0;
   visibility: hidden;
   transform: translateY(18px);
   will-change: transform, opacity;
+  text-shadow: 0 0 10px rgba(0, 229, 255, 0.45);
 }
 
 #subtitle .sub-tag {
-  color: #4da2ff;
-  font-weight: 400;
-  font-size: 0.85em;
+  color: #00f0ff;
+  font-weight: 700;
+  font-size: 0.9em;
   opacity: 0;
   visibility: hidden;
   transform: translateY(18px);
-  letter-spacing: 3px;
+  letter-spacing: 4px;
+  text-shadow: 0 0 12px #00f0ff, 0 0 24px rgba(0, 240, 255, 0.7);
 }
 
 @keyframes animStar {

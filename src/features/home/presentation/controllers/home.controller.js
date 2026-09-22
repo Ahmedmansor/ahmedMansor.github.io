@@ -59,10 +59,10 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
 
     /**
      * Initializes the Pinned GSAP ScrollTrigger Sequence for Space Hero:
-     * - Pins hero stage for a crisp, cinematic scroll duration (~120vh).
-     * - Step 1: "AHMED" enters with letter-spacing tracking.
-     * - Step 2: "MANSOUR" enters alongside it.
-     * - Step 3: Subtitle ("SOFTWARE", "ENGINEER", "[ FLUTTER & AI ]") reveals.
+     * - Pins hero stage for a crisp, cinematic scroll duration (~180vh).
+     * - Step 1: Cyber Console box activates with neon glow and blinking underscore cursor.
+     * - Step 2: "AHMED MANSOUR" is typed character-by-character synchronized with scroll (scrubbed).
+     * - Step 3: Subtitle ("SOFTWARE", "ENGINEER", "[ FLUTTER & AI ]") reveals sequentially.
      * - Step 4: Futuristic spaceship probe swoops across the curved Earth horizon.
      * - Unpins cleanly into the side-by-side About Me / Profile separator.
      */
@@ -70,19 +70,25 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
       if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") return;
 
       const heroWrapper = document.getElementById("space-hero-pin-wrapper");
-      const titleFirst = document.querySelector(".title-first");
-      const titleLast = document.querySelector(".title-last");
+      const titleWrapper = document.getElementById("title");
+      const consoleBox = document.getElementById("console-box");
+      const consoleTextEl = document.getElementById("text");
       const subWords = document.querySelectorAll("#subtitle .sub-word, #subtitle .sub-tag");
       const spaceship = document.getElementById("space-vessel");
       const horizon = document.getElementById("horizon");
 
-      if (!heroWrapper || !titleFirst || !titleLast) return;
+      if (!heroWrapper || !titleWrapper || !consoleTextEl) return;
 
       gsap.registerPlugin(ScrollTrigger);
 
-      // Force initial hidden states strictly with autoAlpha to ensure clean startup
-      gsap.set(titleFirst, { autoAlpha: 0, y: -40, letterSpacing: "clamp(6px, 1.2vw, 14px)" });
-      gsap.set(titleLast, { autoAlpha: 0, y: -40, letterSpacing: "clamp(6px, 1.2vw, 14px)" });
+      const fullText = "AHMED MANSOUR";
+
+      // Initial clean state: empty text ready for scroll typing
+      consoleTextEl.textContent = "";
+
+      // Ensure title wrapper is visible with clean initial state
+      gsap.set(titleWrapper, { autoAlpha: 1 });
+
       if (subWords.length > 0) {
         gsap.set(subWords, { autoAlpha: 0, y: 22 });
       }
@@ -102,23 +108,17 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
         }
       });
 
-      // Step 1: AHMED reveals smoothly as user scrolls
-      heroTl.to(titleFirst, {
-        autoAlpha: 1,
-        y: 0,
-        letterSpacing: "clamp(12px, 2vw, 24px)",
-        duration: 0.24,
-        ease: "power2.out"
+      // Step 1: Scroll-Driven Character-by-Character Typing (Scrubbed forward & backward)
+      const typingTracker = { length: 0 };
+      heroTl.to(typingTracker, {
+        length: fullText.length,
+        duration: 0.44,
+        ease: "none",
+        onUpdate: () => {
+          const currentCount = Math.min(fullText.length, Math.floor(typingTracker.length + 0.1));
+          consoleTextEl.textContent = fullText.slice(0, currentCount);
+        }
       }, 0.06);
-
-      // Step 2: MANSOUR reveals right after it
-      heroTl.to(titleLast, {
-        autoAlpha: 1,
-        y: 0,
-        letterSpacing: "clamp(12px, 2vw, 24px)",
-        duration: 0.24,
-        ease: "power2.out"
-      }, 0.26);
 
       // Step 3: Subtitle words emerge sequentially ("SOFTWARE", "ENGINEER", "[ FLUTTER & AI ]")
       if (subWords.length > 0) {
@@ -128,7 +128,7 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
           stagger: 0.08,
           duration: 0.22,
           ease: "power2.out"
-        }, 0.46);
+        }, 0.52);
       }
 
       // Step 4: Spaceship flies majestically across the curved horizon
@@ -137,15 +137,15 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
           autoAlpha: 1,
           duration: 0.08,
           ease: "power1.in"
-        }, 0.58)
+        }, 0.62)
         .to(spaceship, {
           x: window.innerWidth + 450,
           y: 20,
           rotation: -6,
           scale: 1.05,
-          duration: 0.42,
+          duration: 0.38,
           ease: "power1.inOut"
-        }, 0.58);
+        }, 0.62);
       }
 
       // Step 5: Atmospheric subtle tilt
@@ -155,7 +155,7 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
           scale: 1.025,
           duration: 0.45,
           ease: "sine.inOut"
-        }, 0.55);
+        }, 0.60);
       }
     }
 
