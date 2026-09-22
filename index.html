@@ -158,53 +158,159 @@
       </header>
     </div>
 
-    <!-- 2. Profile & Bio Separator Section (Side-by-Side Clean Architecture) -->
+    <!-- 2. Cyberpunk Code IDE & Biometric Hologram Avatar Section -->
     <section class="about-me-section" id="about-section">
-      <div class="about-container">
-        <!-- Left: Avatar Column -->
-        <div class="about-avatar-col">
-          <div class="about-avatar-card">
-            <div class="avatar-glow-ring"></div>
-            <img src="assets/images/profile-pic.jpg" alt="Ahmed Mansour" class="about-avatar-img" />
-            <div class="status-badge">
-              <span class="status-pulse"></span>
-              <span class="status-text">Available for Projects</span>
-            </div>
+      <div class="cyber-about-wrapper">
+        <!-- 3D Perspective Retro Grid Floor -->
+        <div class="cyber-grid-floor" aria-hidden="true"></div>
+
+        <!-- Section Header HUD -->
+        <div class="cyber-section-header">
+          <div class="cyber-tag-badge">
+            <i class="fas fa-terminal"></i>
+            <span>&lt;ABOUT_ME /&gt;</span>
+          </div>
+          <div class="cyber-header-telemetry">
+            <span class="hud-bracket">&gt;</span> [SYS.OPERATOR: AHMED MANSOUR // LEVEL: LEAD]
           </div>
         </div>
 
-        <!-- Right: Bio & Info Column -->
-        <div class="about-info-col">
-          <div class="about-section-tag">
-            <i class="fas fa-terminal"></i> &lt;ABOUT ME /&gt;
-          </div>
-          <h2 class="about-title" data-i18n-key="indexPage.name">Ahmed Mohamed Mansour</h2>
-          <h3 class="about-subtitle" data-i18n-key="indexPage.jobTitle">Flutter & Mobile Systems Engineer</h3>
-          <p class="about-bio-text" data-i18n-key="indexPage.bio">
-            Flutter Developer skilled in building responsive, high-performance mobile applications for both iOS and Android platforms. Proficient in Dart and Flutter, with a proven ability to deliver visually appealing and feature-rich apps. Regularly leverage AI tools to accelerate code writing and enhance problem-solving efficiency.
-          </p>
+        <!-- Main Cyber Dual Grid -->
+        <div class="cyber-about-grid">
+          
+          <!-- 1. Left: Biometric Hologram ID Card -->
+          <div class="biometric-card-wrapper">
+            <div class="biometric-card">
+              <!-- Corner HUD Brackets -->
+              <div class="hud-corner hud-corner-tl"></div>
+              <div class="hud-corner hud-corner-tr"></div>
+              <div class="hud-corner hud-corner-bl"></div>
+              <div class="hud-corner hud-corner-br"></div>
 
-          <!-- Tech Stack Badges -->
-          <div class="about-tech-stack">
-            <span class="tech-chip"><i class="fab fa-flutter"></i> Flutter</span>
-            <span class="tech-chip"><i class="fas fa-code"></i> Dart</span>
-            <span class="tech-chip"><i class="fas fa-cubes"></i> Bloc / Clean Arch</span>
-            <span class="tech-chip"><i class="fas fa-bolt"></i> Supabase / Firebase</span>
-            <span class="tech-chip"><i class="fas fa-brain"></i> AI Automations</span>
+              <!-- Animated Laser Scanline Beam -->
+              <div class="bio-scanline-beam"></div>
+
+              <!-- Image Frame -->
+              <div class="bio-img-container">
+                <img src="assets/images/profile-cyber.webp" alt="Ahmed Mansour - Lead Flutter Engineer" class="bio-avatar-img" />
+                <div class="bio-grid-overlay"></div>
+              </div>
+
+              <!-- Biometric Telemetry Meta Footer -->
+              <div class="bio-meta-footer">
+                <div class="bio-id-row">
+                  <span class="bio-label">OPERATOR:</span>
+                  <span class="bio-val">AHMED_MANSOUR</span>
+                </div>
+                <div class="bio-id-row">
+                  <span class="bio-label">STATUS:</span>
+                  <span class="bio-val bio-status-active">
+                    <span class="bio-pulse-dot"></span> AVAILABLE FOR PROJECTS
+                  </span>
+                </div>
+                <div class="bio-id-row">
+                  <span class="bio-label">SPECIALTY:</span>
+                  <span class="bio-val">FLUTTER &amp; AI SYSTEMS</span>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <!-- Social Quick Links -->
-          <div class="about-social-links">
-            <a href="https://github.com/Ahmedmansor" target="_blank" rel="noopener noreferrer" class="about-social-btn" aria-label="GitHub">
-              <i class="fab fa-github"></i> <span>GitHub</span>
-            </a>
-            <a href="https://www.linkedin.com/in/ahmed-mansour-34138a202/" target="_blank" rel="noopener noreferrer" class="about-social-btn" aria-label="LinkedIn">
-              <i class="fab fa-linkedin"></i> <span>LinkedIn</span>
-            </a>
-            <a href="mailto:ahmedmansor408@gmail.com" class="about-social-btn contact-accent-btn" aria-label="Email">
-              <i class="fas fa-envelope"></i> <span data-i18n-key="common.contactMe">Contact Me</span>
-            </a>
+          <!-- 2. Right: Cyberpunk Code IDE Window -->
+          <div class="cyber-ide-container">
+            <!-- IDE Window Header -->
+            <div class="ide-window-header">
+              <div class="ide-dots">
+                <span class="dot dot-close" title="Close"></span>
+                <span class="dot dot-min" title="Minimize"></span>
+                <span class="dot dot-max" title="Maximize"></span>
+              </div>
+
+              <!-- File Tabs -->
+              <div class="ide-tabs">
+                <button class="ide-tab active" data-tab="dart" id="tab-dart" type="button">
+                  <i class="fab fa-flutter ide-tab-icon"></i>
+                  <span>ahmed_mansour.dart</span>
+                </button>
+                <button class="ide-tab" data-tab="json" id="tab-json" type="button">
+                  <i class="fas fa-file-code ide-tab-icon"></i>
+                  <span>skills_matrix.json</span>
+                </button>
+              </div>
+
+              <!-- Run Code Action Button -->
+              <div class="ide-actions">
+                <button class="ide-run-btn" id="ide-run-btn" type="button" title="Execute Code">
+                  <i class="fas fa-play"></i>
+                  <span>RUN CODE</span>
+                  <span class="run-glow"></span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Code Editor Workspace -->
+            <div class="ide-editor-body" id="ide-editor-body">
+              <div class="ide-gutter" id="ide-gutter">
+                <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+                <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+                <span>11</span><span>12</span><span>13</span><span>14</span><span>15</span>
+              </div>
+              <div class="ide-code-scroll">
+                <!-- Pre code blocks for Dart & JSON tabs -->
+                <pre class="ide-code-content active" id="code-dart"><code><span class="cm-kw">class</span> <span class="cm-cls">AhmedMansour</span> <span class="cm-kw">extends</span> <span class="cm-cls">SoftwareEngineer</span> {
+  <span class="cm-kw">final</span> <span class="cm-cls">String</span> role = <span class="cm-str">"Flutter &amp; Mobile Systems Engineer"</span>;
+  <span class="cm-kw">final</span> <span class="cm-cls">String</span> location = <span class="cm-str">"Cairo, Egypt (UTC+2)"</span>;
+  <span class="cm-kw">final</span> <span class="cm-cls">Status</span> status = <span class="cm-cls">Status</span>.<span class="cm-prop">availableForProjects</span>;
+
+  <span class="cm-kw">final</span> <span class="cm-cls">List</span>&lt;<span class="cm-cls">String</span>&gt; coreStack = [
+    <span class="cm-str">"Flutter"</span>, <span class="cm-str">"Dart"</span>, <span class="cm-str">"Bloc"</span>, <span class="cm-str">"Clean Arch"</span>,
+    <span class="cm-str">"Supabase"</span>, <span class="cm-str">"Firebase"</span>, <span class="cm-str">"AI Automations"</span>
+  ];
+
+  <span class="cm-cls">Future</span>&lt;<span class="cm-kw">void</span>&gt; <span class="cm-fn">executeMission</span>() <span class="cm-kw">async</span> {
+    <span class="cm-cmt">// 🚀 Architecting high-performance, reactive iOS &amp; Android apps</span>
+    <span class="cm-cmt">// ⚡ Leveraging cutting-edge AI pipelines to accelerate delivery</span>
+    <span class="cm-kw">await</span> <span class="cm-fn">deployMobileApp</span>(quality: <span class="cm-cls">Standard</span>.<span class="cm-prop">productionGrade</span>);
+  }
+}</code></pre>
+
+                <pre class="ide-code-content" id="code-json"><code>{
+  <span class="cm-str">"engineer"</span>: <span class="cm-str">"Ahmed Mansour"</span>,
+  <span class="cm-str">"role"</span>: <span class="cm-str">"Flutter &amp; Mobile Systems Engineer"</span>,
+  <span class="cm-str">"technologies"</span>: {
+    <span class="cm-str">"mobile"</span>: [<span class="cm-str">"Flutter"</span>, <span class="cm-str">"Dart SDK"</span>],
+    <span class="cm-str">"architecture"</span>: [<span class="cm-str">"Clean Architecture"</span>, <span class="cm-str">"BLoC"</span>, <span class="cm-str">"Repository Pattern"</span>],
+    <span class="cm-str">"cloud_backend"</span>: [<span class="cm-str">"Supabase"</span>, <span class="cm-str">"Firebase"</span>, <span class="cm-str">"REST APIs"</span>],
+    <span class="cm-str">"ai_workflows"</span>: [<span class="cm-str">"Code Acceleration"</span>, <span class="cm-str">"Automations"</span>]
+  },
+  <span class="cm-str">"availability"</span>: <span class="cm-str">"Ready for mission deployment"</span>
+}</code></pre>
+              </div>
+            </div>
+
+            <!-- Interactive Terminal Drawer -->
+            <div class="ide-terminal-drawer" id="ide-terminal-drawer">
+              <div class="terminal-header">
+                <div class="term-title">
+                  <i class="fas fa-terminal"></i>
+                  <span>DEBUG CONSOLE &bull; zsh / flutter</span>
+                </div>
+                <div class="term-status" id="term-status">[STANDBY]</div>
+              </div>
+              <div class="terminal-body" id="terminal-output">
+                <div class="term-line prompt-line">$ flutter run -d production --profile</div>
+                <div class="term-line dim-line">// Click [ ▶ RUN CODE ] to compile Ahmed's profile</div>
+              </div>
+            </div>
+
+            <!-- IDE Status Bar -->
+            <div class="ide-status-bar">
+              <div class="status-item"><i class="fas fa-code-branch"></i> <span>git:(main)</span></div>
+              <div class="status-item"><i class="fas fa-check-circle"></i> <span>0 Errors, 0 Warnings</span></div>
+              <div class="status-item status-right"><span>Dart 3.x &bull; UTF-8</span></div>
+            </div>
           </div>
+
         </div>
       </div>
     </section>

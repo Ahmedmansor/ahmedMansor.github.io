@@ -579,252 +579,666 @@
 }
 
 /* --------------------------------------------------------
-   6. About Me & Profile Separator Section (Side-by-Side)
+   6. Cyberpunk Code IDE & Biometric Hologram Avatar Section
    -------------------------------------------------------- */
 .about-me-section {
   width: 100%;
   background: #000000;
-  padding: 90px 24px 80px;
+  padding: 100px 24px 90px;
   position: relative;
   z-index: 15;
   border-top: none;
-  border-bottom: 1px solid rgba(77, 162, 255, 0.08);
-}
-
-.about-container {
-  max-width: 1040px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 300px 1fr;
-  gap: 50px;
-  align-items: center;
-  background: rgba(12, 17, 26, 0.72);
-  border: 1px solid rgba(77, 162, 255, 0.2);
-  border-radius: 24px;
-  padding: 45px 50px;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 120, 255, 0.05);
-  position: relative;
+  border-bottom: 1px solid rgba(0, 240, 255, 0.12);
   overflow: hidden;
 }
 
-/* Sci-fi corner brackets on the card */
-.about-container::before {
-  content: "";
+/* 3D Perspective Retro Cyber Grid Floor (Calm & Elegant Synthwave) */
+.cyber-grid-floor {
   position: absolute;
-  top: 12px;
-  left: 12px;
-  width: 18px;
-  height: 18px;
-  border-top: 2px solid #4da2ff;
-  border-left: 2px solid #4da2ff;
-  opacity: 0.7;
+  bottom: 0;
+  left: -25%;
+  width: 150%;
+  height: 380px;
+  background-image:
+    linear-gradient(90deg, rgba(0, 240, 255, 0.16) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(0, 240, 255, 0.16) 1px, transparent 1px);
+  background-size: 56px 56px;
+  background-position: center bottom;
+  transform: perspective(180px) rotateX(62deg);
+  transform-origin: 50% 100%;
+  pointer-events: none;
+  z-index: 1;
+  mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.35) 45%, transparent 88%);
+  -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.35) 45%, transparent 88%);
 }
 
-.about-container::after {
-  content: "";
-  position: absolute;
-  bottom: 12px;
-  right: 12px;
-  width: 18px;
-  height: 18px;
-  border-bottom: 2px solid #4da2ff;
-  border-right: 2px solid #4da2ff;
-  opacity: 0.7;
-}
-
-/* Avatar Column */
-.about-avatar-col {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.about-avatar-card {
+.cyber-about-wrapper {
+  max-width: 1140px;
+  margin: 0 auto;
   position: relative;
-  width: 215px;
-  height: 215px;
-  margin-top: 14px;
+  z-index: 2;
 }
 
-.avatar-glow-ring {
-  position: absolute;
-  inset: -8px;
-  border-radius: 50%;
-  border: 1.5px dashed rgba(77, 162, 255, 0.45);
-  animation: ringRotate 30s linear infinite;
-}
-
-@keyframes ringRotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-.about-avatar-img {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-  object-position: center 15%;
-  border: 4px solid #000000;
-  box-shadow: 0 0 0 2px rgba(77, 162, 255, 0.5), 0 16px 36px rgba(0, 0, 0, 0.9);
-  display: block;
-}
-
-.status-badge {
-  position: absolute;
-  bottom: -18px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(6, 12, 20, 0.96);
-  border: 1px solid rgba(0, 230, 150, 0.55);
-  border-radius: 20px;
-  padding: 5px 15px;
+/* Section Header HUD */
+.cyber-section-header {
   display: flex;
   align-items: center;
-  gap: 8px;
-  white-space: nowrap;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.85);
-  z-index: 5;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  padding: 0 4px;
 }
 
-.status-pulse {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #00e696;
-  box-shadow: 0 0 8px #00e696;
-  animation: pulseBeacon 2s ease-in-out infinite;
-}
-
-@keyframes pulseBeacon {
-  0%, 100% { transform: scale(1); opacity: 0.8; }
-  50% { transform: scale(1.3); opacity: 1; }
-}
-
-.status-text {
-  font-size: 11px;
-  color: #b5e6d0;
-  font-family: monospace, sans-serif;
-  letter-spacing: 1px;
-}
-
-/* Info Column */
-.about-info-col {
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-.about-section-tag {
+.cyber-tag-badge {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  font-family: monospace, sans-serif;
-  font-size: 12px;
-  letter-spacing: 2px;
-  color: #4da2ff;
-  margin-bottom: 10px;
-}
-
-.about-title {
-  margin: 0;
-  font-family: 'Lato', 'Montserrat', 'Cairo', sans-serif;
-  font-size: 2.1rem;
+  gap: 10px;
+  background: rgba(0, 240, 255, 0.08);
+  border: 1px solid rgba(0, 240, 255, 0.35);
+  padding: 7px 16px;
+  border-radius: 4px;
+  font-family: 'Share Tech Mono', 'Fira Code', monospace;
+  font-size: 0.9rem;
   font-weight: 700;
-  color: #ffffff;
+  color: #00f0ff;
+  letter-spacing: 2px;
+  box-shadow: 0 0 16px rgba(0, 240, 255, 0.15), inset 0 0 10px rgba(0, 240, 255, 0.05);
 }
 
-.about-subtitle {
-  margin: 6px 0 16px;
-  font-family: 'Lato', 'Montserrat', 'Cairo', sans-serif;
-  font-size: 1.15rem;
-  font-weight: 400;
-  color: #8bbce8;
+.cyber-tag-badge i {
+  color: #00f0ff;
+  font-size: 0.95rem;
+}
+
+.cyber-header-telemetry {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.82rem;
+  color: #648cae;
+  letter-spacing: 1.5px;
+}
+
+.cyber-header-telemetry .hud-bracket {
+  color: #00f0ff;
+  font-weight: bold;
+}
+
+/* Main Cyber Dual Grid */
+.cyber-about-grid {
+  display: grid;
+  grid-template-columns: 310px 1fr;
+  gap: 36px;
+  align-items: stretch;
+}
+
+/* ========================================================
+   A. Biometric Hologram ID Card (Left Column)
+   ======================================================== */
+.biometric-card-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.biometric-card {
+  position: relative;
+  background: rgba(6, 12, 20, 0.88);
+  border: 1px solid rgba(0, 240, 255, 0.35);
+  border-radius: 4px;
+  clip-path: polygon(
+    0 16px, 16px 0,
+    calc(100% - 16px) 0, 100% 16px,
+    100% calc(100% - 16px), calc(100% - 16px) 100%,
+    16px 100%, 0 calc(100% - 16px)
+  );
+  box-shadow: 
+    0 16px 40px rgba(0, 0, 0, 0.9),
+    0 0 25px rgba(0, 240, 255, 0.12),
+    inset 0 0 24px rgba(0, 240, 255, 0.04);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Corner HUD Brackets */
+.hud-corner {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: #00f0ff;
+  border-style: solid;
+  z-index: 10;
+  pointer-events: none;
+  opacity: 0.9;
+}
+.hud-corner-tl { top: 6px; left: 6px; border-width: 2px 0 0 2px; }
+.hud-corner-tr { top: 6px; right: 6px; border-width: 2px 2px 0 0; }
+.hud-corner-bl { bottom: 6px; left: 6px; border-width: 0 0 2px 2px; }
+.hud-corner-br { bottom: 6px; right: 6px; border-width: 0 2px 2px 0; }
+
+/* Animated Laser Scanline Beam */
+.bio-scanline-beam {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2.5px;
+  background: linear-gradient(90deg, transparent, #00f0ff 25%, #ffffff 50%, #00f0ff 75%, transparent);
+  box-shadow: 0 0 10px #00f0ff, 0 0 20px #00f0ff;
+  opacity: 0.85;
+  z-index: 6;
+  animation: bioLaserScan 4.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes bioLaserScan {
+  0% { transform: translateY(0); opacity: 0; }
+  10% { opacity: 0.9; }
+  85% { opacity: 0.9; }
+  100% { transform: translateY(340px); opacity: 0; }
+}
+
+/* Image Container */
+.bio-img-container {
+  position: relative;
+  width: 100%;
+  height: 330px;
+  background: #040810;
+  overflow: hidden;
+}
+
+.bio-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 18%;
+  display: block;
+  transition: transform 0.5s ease, filter 0.5s ease;
+}
+
+.biometric-card:hover .bio-avatar-img {
+  transform: scale(1.025);
+}
+
+.bio-grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(0, 240, 255, 0.035) 0px 1px,
+    transparent 1px 3px
+  );
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Biometric Telemetry Meta Footer */
+.bio-meta-footer {
+  padding: 18px 20px 22px;
+  background: rgba(4, 9, 16, 0.96);
+  border-top: 1px solid rgba(0, 240, 255, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  flex-grow: 1;
+  justify-content: center;
+}
+
+.bio-id-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Share Tech Mono', 'Fira Code', monospace;
+  font-size: 0.78rem;
   letter-spacing: 1px;
 }
 
-.about-bio-text {
-  margin: 0 0 22px;
-  color: #9ab0c8;
-  font-size: 0.96rem;
-  line-height: 1.7;
+.bio-label {
+  color: #55799b;
+  font-weight: bold;
 }
 
-/* Tech Chips */
-.about-tech-stack {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 24px;
+.bio-val {
+  color: #c5e2ff;
+  font-weight: 600;
 }
 
-.tech-chip {
-  background: rgba(18, 28, 42, 0.7);
-  border: 1px solid rgba(77, 162, 255, 0.22);
-  border-radius: 8px;
-  padding: 6px 14px;
-  font-size: 0.85rem;
-  color: #d0e4f7;
+.bio-status-active {
+  color: #00e696;
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-family: 'Lato', 'Montserrat', sans-serif;
+  text-shadow: 0 0 8px rgba(0, 230, 150, 0.4);
 }
 
-.tech-chip i {
-  color: #4da2ff;
+.bio-pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #00e696;
+  box-shadow: 0 0 8px #00e696;
+  animation: cyberDotPulse 1.8s ease-in-out infinite;
 }
 
-/* Social Buttons */
-.about-social-links {
+/* ========================================================
+   B. Cyberpunk Code IDE (Right Column)
+   ======================================================== */
+.cyber-ide-container {
+  background: rgba(5, 10, 18, 0.92);
+  border: 1px solid rgba(0, 240, 255, 0.28);
+  border-radius: 8px;
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.95),
+    0 0 35px rgba(0, 240, 255, 0.08),
+    inset 0 0 30px rgba(0, 150, 255, 0.03);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  overflow: hidden;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  position: relative;
+}
+
+/* IDE Window Top Header */
+.ide-window-header {
+  height: 48px;
+  background: #050a12;
+  border-bottom: 1px solid rgba(0, 240, 255, 0.16);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
   gap: 14px;
 }
 
-.about-social-btn {
-  background: rgba(14, 21, 32, 0.85);
-  border: 1px solid rgba(77, 162, 255, 0.3);
-  color: #ffffff;
-  padding: 10px 18px;
-  border-radius: 10px;
-  text-decoration: none;
-  font-size: 0.9rem;
+/* Traffic Light Dots */
+.ide-dots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 60px;
+}
+
+.ide-dots .dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  display: inline-block;
+  opacity: 0.85;
+}
+.dot-close { background: #ff4d6d; box-shadow: 0 0 6px rgba(255, 77, 109, 0.6); }
+.dot-min   { background: #ffd166; box-shadow: 0 0 6px rgba(255, 209, 102, 0.6); }
+.dot-max   { background: #00f0ff; box-shadow: 0 0 6px rgba(0, 240, 255, 0.6); }
+
+/* File Tabs */
+.ide-tabs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-grow: 1;
+}
+
+.ide-tab {
+  background: transparent;
+  border: 1px solid transparent;
+  color: #5d7e9e;
+  font-family: 'Share Tech Mono', 'Fira Code', monospace;
+  font-size: 0.82rem;
+  letter-spacing: 0.5px;
+  padding: 7px 14px;
+  border-radius: 4px;
+  cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
 }
 
-.about-social-btn:hover {
-  background: rgba(77, 162, 255, 0.2);
-  border-color: #4da2ff;
+.ide-tab:hover {
+  color: #aed5fc;
+  background: rgba(0, 240, 255, 0.04);
+}
+
+.ide-tab.active {
+  background: rgba(12, 22, 36, 0.9);
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  border-bottom: 2px solid #00f0ff;
+  color: #e0f2fe;
+  box-shadow: 0 0 14px rgba(0, 240, 255, 0.12);
+}
+
+.ide-tab-icon {
+  font-size: 0.88rem;
+}
+.ide-tab.active .ide-tab-icon {
+  color: #00f0ff;
+}
+
+/* Action Bar: Run Code Button */
+.ide-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ide-run-btn {
+  background: linear-gradient(135deg, rgba(0, 240, 255, 0.15) 0%, rgba(77, 162, 255, 0.22) 100%);
+  border: 1px solid #00f0ff;
+  color: #00f0ff;
+  font-family: 'Share Tech Mono', 'Orbitron', monospace;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  padding: 6px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.25), inset 0 0 8px rgba(0, 240, 255, 0.1);
+}
+
+.ide-run-btn:hover {
+  background: linear-gradient(135deg, rgba(0, 240, 255, 0.3) 0%, rgba(77, 162, 255, 0.4) 100%);
+  box-shadow: 0 0 25px rgba(0, 240, 255, 0.5), inset 0 0 12px rgba(0, 240, 255, 0.25);
+  transform: translateY(-1px);
   color: #ffffff;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 140, 255, 0.3);
 }
 
-.about-social-btn.contact-accent-btn {
-  background: linear-gradient(135deg, rgba(77, 162, 255, 0.3) 0%, rgba(0, 100, 220, 0.4) 100%);
-  border-color: rgba(77, 162, 255, 0.6);
+.ide-run-btn:active {
+  transform: translateY(1px);
 }
 
-/* Responsive adjustment for About section */
-@media (max-width: 860px) {
-  .about-container {
+.ide-run-btn i {
+  font-size: 0.72rem;
+  color: #00f0ff;
+}
+.ide-run-btn:hover i {
+  color: #ffffff;
+}
+
+/* Editor Workspace Body */
+.ide-editor-body {
+  display: flex;
+  position: relative;
+  background: #03070e;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.015) 0px 2px,
+    transparent 2px 4px
+  );
+  padding: 20px 16px 24px;
+  min-height: 310px;
+  overflow: hidden;
+}
+
+/* Synthwave internal 3D perspective floor grid inside the IDE */
+.ide-editor-body::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: -15%;
+  width: 130%;
+  height: 120px;
+  background-image:
+    linear-gradient(90deg, rgba(0, 240, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(0, 240, 255, 0.08) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: center bottom;
+  transform: perspective(100px) rotateX(58deg);
+  transform-origin: center bottom;
+  pointer-events: none;
+  z-index: 1;
+  mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 100%);
+}
+
+/* Line Numbers Gutter */
+.ide-gutter {
+  display: flex;
+  flex-direction: column;
+  padding-right: 18px;
+  margin-right: 18px;
+  border-right: 1px solid rgba(0, 240, 255, 0.12);
+  user-select: none;
+  position: relative;
+  z-index: 2;
+}
+
+.ide-gutter span {
+  font-family: 'Share Tech Mono', 'Fira Code', monospace;
+  font-size: 0.88rem;
+  line-height: 1.68;
+  color: #314d69;
+  text-align: right;
+  min-width: 20px;
+}
+
+/* Code Content Area */
+.ide-code-scroll {
+  flex-grow: 1;
+  overflow-x: auto;
+  position: relative;
+  z-index: 2;
+}
+
+.ide-code-content {
+  margin: 0;
+  display: none;
+  font-family: 'Fira Code', Consolas, 'Courier New', monospace;
+  font-size: 0.92rem;
+  line-height: 1.68;
+  color: #b8cee5;
+  white-space: pre;
+}
+
+.ide-code-content.active {
+  display: block;
+}
+
+/* Code Syntax Tokens (Strict Palette Harmony) */
+.cm-kw {
+  color: #00f0ff;
+  font-weight: 600;
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.45);
+}
+
+.cm-cls {
+  color: #4da2ff;
+  font-weight: 600;
+  text-shadow: 0 0 8px rgba(77, 162, 255, 0.4);
+}
+
+.cm-fn {
+  color: #61e2ff;
+  font-weight: 500;
+}
+
+.cm-str {
+  color: #2bc7b9;
+  text-shadow: 0 0 6px rgba(43, 199, 185, 0.35);
+}
+
+.cm-prop {
+  color: #9cdcfe;
+}
+
+.cm-cmt {
+  color: #4c6c8d;
+  font-style: italic;
+}
+
+/* ========================================================
+   C. Interactive Terminal Drawer (Bottom Drawer)
+   ======================================================== */
+.ide-terminal-drawer {
+  max-height: 0;
+  overflow: hidden;
+  background: #02050a;
+  border-top: 1px solid transparent;
+  transition: max-height 0.42s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+}
+
+.ide-terminal-drawer.open {
+  max-height: 220px;
+  border-top-color: rgba(0, 240, 255, 0.28);
+}
+
+.terminal-header {
+  height: 32px;
+  background: #060b13;
+  border-bottom: 1px solid rgba(0, 240, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+}
+
+.term-title {
+  color: #00f0ff;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.term-status {
+  color: #00e696;
+}
+
+.terminal-body {
+  padding: 14px 18px;
+  font-family: 'Fira Code', 'Share Tech Mono', monospace;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+.term-line {
+  margin-bottom: 4px;
+}
+.prompt-line {
+  color: #00f0ff;
+}
+.dim-line {
+  color: #4b6b8b;
+  font-style: italic;
+}
+.term-line.info-line {
+  color: #72a4d4;
+}
+.term-line.success-line {
+  color: #00e696;
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(0, 230, 150, 0.4);
+}
+.term-line.accent-line {
+  color: #ffd166;
+}
+
+/* ========================================================
+   D. IDE Status Bar (Footer)
+   ======================================================== */
+.ide-status-bar {
+  height: 28px;
+  background: #03070d;
+  border-top: 1px solid rgba(0, 240, 255, 0.12);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 18px;
+  font-family: 'Share Tech Mono', 'Fira Code', monospace;
+  font-size: 0.72rem;
+  color: #55799b;
+  letter-spacing: 0.5px;
+}
+
+.status-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.status-item i {
+  color: #00f0ff;
+  font-size: 0.75rem;
+}
+
+.status-right {
+  margin-left: auto;
+  color: #6e93b8;
+}
+
+/* ========================================================
+   E. Responsive Adjustments
+   ======================================================== */
+@media (max-width: 960px) {
+  .cyber-about-grid {
     grid-template-columns: 1fr;
-    text-align: center;
-    padding: 35px 24px;
-    gap: 30px;
+    gap: 28px;
   }
-  .about-info-col {
-    text-align: center;
-    align-items: center;
+
+  .biometric-card-wrapper {
+    max-width: 360px;
+    margin: 0 auto;
+    width: 100%;
   }
-  .about-tech-stack,
-  .about-social-links {
-    justify-content: center;
+
+  .bio-img-container {
+    height: 300px;
+  }
+
+  .cyber-section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
   }
 }
+
+@media (max-width: 600px) {
+  .about-me-section {
+    padding: 70px 16px 60px;
+  }
+
+  .ide-window-header {
+    height: auto;
+    padding: 10px 12px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .ide-dots {
+    order: 1;
+  }
+
+  .ide-actions {
+    order: 2;
+    margin-left: auto;
+  }
+
+  .ide-tabs {
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .ide-editor-body {
+    padding: 14px 10px 18px;
+  }
+
+  .ide-gutter {
+    padding-right: 10px;
+    margin-right: 10px;
+  }
+
+  .ide-code-content {
+    font-size: 0.82rem;
+  }
+}
+

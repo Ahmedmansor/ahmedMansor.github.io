@@ -47,6 +47,9 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
       // Initialize Pinned Scroll-Driven Space Hero Sequence
       this.setupSpaceHeroScrollSequence();
 
+      // Initialize Cyberpunk Code IDE & Biometric Hologram section
+      this.setupCyberAboutSection();
+
       // Setup smooth navigation to projects
       this.setupProjectsNavLink();
 
@@ -265,6 +268,140 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
           ticking = true;
         }
       }, { passive: true });
+    }
+
+    /**
+     * Initializes the Cyberpunk Code IDE & Biometric Hologram section:
+     * - ScrollTrigger reveal of Biometric Card & IDE Window with subtle cyber entrance
+     * - Tab switching between Dart and JSON files with synced line numbers
+     * - Interactive "▶ RUN CODE" compiler simulation with terminal output drawer
+     */
+    static setupCyberAboutSection() {
+      const aboutSection = document.getElementById("about-section");
+      const bioCard = document.querySelector(".biometric-card");
+      const ideContainer = document.querySelector(".cyber-ide-container");
+      const runBtn = document.getElementById("ide-run-btn");
+      const terminalDrawer = document.getElementById("ide-terminal-drawer");
+      const terminalOutput = document.getElementById("terminal-output");
+      const termStatus = document.getElementById("term-status");
+      const tabDart = document.getElementById("tab-dart");
+      const tabJson = document.getElementById("tab-json");
+      const codeDart = document.getElementById("code-dart");
+      const codeJson = document.getElementById("code-json");
+      const ideGutter = document.getElementById("ide-gutter");
+
+      if (!aboutSection) return;
+
+      // 1. Sync line numbers helper
+      const updateLineNumbers = (lineCount) => {
+        if (!ideGutter) return;
+        let spans = "";
+        for (let i = 1; i <= lineCount; i++) {
+          spans += `<span>${i}</span>`;
+        }
+        ideGutter.innerHTML = spans;
+      };
+
+      // Set initial line numbers (15 lines for Dart code)
+      updateLineNumbers(15);
+
+      // 2. Tab switching logic
+      if (tabDart && tabJson && codeDart && codeJson) {
+        tabDart.addEventListener("click", () => {
+          tabDart.classList.add("active");
+          tabJson.classList.remove("active");
+          codeDart.classList.add("active");
+          codeJson.classList.remove("active");
+          updateLineNumbers(15);
+        });
+
+        tabJson.addEventListener("click", () => {
+          tabJson.classList.add("active");
+          tabDart.classList.remove("active");
+          codeJson.classList.add("active");
+          codeDart.classList.remove("active");
+          updateLineNumbers(11);
+        });
+      }
+
+      // 3. Interactive "RUN CODE" Button logic
+      let isCompiling = false;
+      if (runBtn && terminalDrawer && terminalOutput) {
+        runBtn.addEventListener("click", () => {
+          // Open terminal drawer if closed
+          terminalDrawer.classList.add("open");
+
+          if (isCompiling) return;
+          isCompiling = true;
+
+          if (termStatus) {
+            termStatus.textContent = "[COMPILING...]";
+            termStatus.style.color = "#ffd166";
+          }
+
+          // Initial compile log state
+          terminalOutput.innerHTML = `
+            <div class="term-line prompt-line">$ flutter run -d production --profile</div>
+            <div class="term-line info-line"><i class="fas fa-cog fa-spin"></i> Initializing Dart VM & Clean Architecture kernel...</div>
+          `;
+
+          // Step 1: Resolving dependencies
+          setTimeout(() => {
+            const line1 = document.createElement("div");
+            line1.className = "term-line info-line";
+            line1.innerHTML = `[SYS] Resolving dependencies: flutter_bloc, supabase_flutter, get_it... <span style="color:#00e696;">[OK]</span>`;
+            terminalOutput.appendChild(line1);
+          }, 500);
+
+          // Step 2: AI Pipelines & State Management
+          setTimeout(() => {
+            const line2 = document.createElement("div");
+            line2.className = "term-line info-line";
+            line2.innerHTML = `[SYS] Compiling Reactive BLoCs & AI Automation Pipelines... <span style="color:#00e696;">[OK]</span>`;
+            terminalOutput.appendChild(line2);
+          }, 1000);
+
+          // Step 3: Build Successful Finish
+          setTimeout(() => {
+            const line3 = document.createElement("div");
+            line3.className = "term-line success-line";
+            line3.innerHTML = `[BUILD SUCCESSFUL] 🚀 Ahmed Mansour is compiled and ready for deployment!`;
+            terminalOutput.appendChild(line3);
+
+            const line4 = document.createElement("div");
+            line4.className = "term-line accent-line";
+            line4.innerHTML = `&gt; High-performance mobile applications initialized (0.42s).`;
+            terminalOutput.appendChild(line4);
+
+            if (termStatus) {
+              termStatus.textContent = "[READY]";
+              termStatus.style.color = "#00e696";
+            }
+            terminalOutput.scrollTop = terminalOutput.scrollHeight;
+            isCompiling = false;
+          }, 1500);
+        });
+      }
+
+      // 4. GSAP ScrollTrigger Entrance Animation
+      if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
+        gsap.registerPlugin(ScrollTrigger);
+
+        if (bioCard && ideContainer) {
+          gsap.from([bioCard, ideContainer], {
+            scrollTrigger: {
+              trigger: aboutSection,
+              start: "top 80%",
+              toggleActions: "play none none none"
+            },
+            y: 35,
+            autoAlpha: 0,
+            duration: 0.85,
+            stagger: 0.16,
+            ease: "power2.out"
+          });
+        }
+      }
     }
 
     /**
