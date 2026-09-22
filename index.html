@@ -6,7 +6,16 @@
     <title data-i18n-key="indexPage.pageTitle">
       Home | Ahmed Mansour - Flutter Developer Portfolio
     </title>
+    <!-- Direct Core & Feature Stylesheets (Eliminates @import FOUC) -->
+    <link rel="stylesheet" href="src/core/presentation/styles/variables.css" />
+    <link rel="stylesheet" href="src/core/presentation/styles/base.css" />
+    <link rel="stylesheet" href="src/core/presentation/components/appbar/appbar.css" />
+    <link rel="stylesheet" href="src/core/presentation/components/language-switcher/language-switcher.css" />
+    <link rel="stylesheet" href="src/core/presentation/components/footer/footer.css" />
+    <link rel="stylesheet" href="src/features/home/presentation/styles/home-header.css" />
+    <link rel="stylesheet" href="src/features/home/presentation/styles/carousel.css" />
     <link rel="stylesheet" href="style.css" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
@@ -32,11 +41,36 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <!-- jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <!-- Initial Localization Dictionary (Synchronous) -->
+    <script src="lang/en.js" id="lang-script"></script>
   </head>
 
   <body id="home-page">
-    <!-- Global Sticky App Bar -->
-    <header id="appbar-container"></header>
+    <!-- Cyberpunk System Boot Preloader -->
+    <div id="cyber-preloader" class="cyber-preloader" aria-hidden="true">
+      <div class="preloader-content">
+        <div class="preloader-header">
+          <span class="preloader-tag">&gt; [SYS.BOOT // OPERATOR: AHMED_MANSOUR]</span>
+          <span class="preloader-status" id="preloader-status">INITIALIZING</span>
+        </div>
+        
+        <div class="preloader-progress-track">
+          <div class="preloader-progress-bar" id="preloader-progress-bar">
+            <span class="preloader-progress-glow"></span>
+          </div>
+        </div>
+
+        <div class="preloader-footer">
+          <span class="preloader-log" id="preloader-log">INITIALIZING QUANTUM PROTOCOLS...</span>
+          <span class="preloader-counter" id="preloader-counter">000%</span>
+        </div>
+      </div>
+      <div class="preloader-grid-bg"></div>
+    </div>
+
+    <!-- Global Sticky App Bar (Starts hidden on Hero) -->
+    <header id="appbar-container" class="appbar appbar-hero-hidden"></header>
 
     <div class="container header-container" id="space-hero-pin-wrapper">
       <header class="portfolio-header">
@@ -190,9 +224,12 @@
               <!-- Animated Laser Scanline Beam -->
               <div class="bio-scanline-beam"></div>
 
-              <!-- Image Frame -->
-              <div class="bio-img-container">
-                <img src="assets/images/profile-cyber.webp" alt="Ahmed Mansour - Lead Flutter Engineer" class="bio-avatar-img" />
+              <!-- 3D Parallax Image Frame -->
+              <div class="bio-img-container" id="bio-parallax-container">
+                <!-- Layer 1: Background Cyber Station -->
+                <img src="assets/images/profile-cyber-bg.webp" alt="Cyber Station Background" class="bio-layer bio-layer-bg" id="bio-layer-bg" />
+                <!-- Layer 2: Foreground Person Cutout -->
+                <img src="assets/images/profile-cyber-person.webp" alt="Ahmed Mansour - Lead Flutter Engineer" class="bio-layer bio-layer-person" id="bio-layer-person" />
                 <div class="bio-grid-overlay"></div>
               </div>
 
@@ -253,7 +290,7 @@
               <div class="ide-gutter" id="ide-gutter">
                 <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
                 <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
-                <span>11</span><span>12</span><span>13</span><span>14</span><span>15</span>
+                <span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span>
               </div>
               <div class="ide-code-scroll">
                 <!-- Pre code blocks for Dart & JSON tabs -->
@@ -307,7 +344,7 @@
             <div class="ide-status-bar">
               <div class="status-item"><i class="fas fa-code-branch"></i> <span>git:(main)</span></div>
               <div class="status-item"><i class="fas fa-check-circle"></i> <span>0 Errors, 0 Warnings</span></div>
-              <div class="status-item status-right"><span>Dart 3.x &bull; UTF-8</span></div>
+              <div class="status-item status-right"><span id="ide-status-lang">Dart 3.x &bull; UTF-8</span></div>
             </div>
           </div>
 

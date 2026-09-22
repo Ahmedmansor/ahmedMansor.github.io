@@ -46,7 +46,8 @@ window.Portfolio.presentation.components = window.Portfolio.presentation.compone
      */
     static init(target = "#appbar-container") {
       const container = typeof target === "string" ? document.querySelector(target) : target;
-      if (!container) return;
+      if (!container || container.dataset.initialized === "true") return;
+      container.dataset.initialized = "true";
       container.classList.add("appbar");
       container.innerHTML = this.getTemplate();
     }

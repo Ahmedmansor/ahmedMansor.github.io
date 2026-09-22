@@ -20,43 +20,146 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
 
   class HomeController {
     /**
+     * Drives the Cyberpunk System Boot Preloader animation:
+     * - Animates progress bar from 0% to 100% in ~750ms
+     * - Sequentially updates system telemetry logs
+     * - Fades out seamlessly with GSAP once all components & ScrollTriggers are ready
+     */
+    static runCyberBootSequence() {
+      return new Promise((resolve) => {
+        const preloader = document.getElementById("cyber-preloader");
+        const progressBar = document.getElementById("preloader-progress-bar");
+        const counterEl = document.getElementById("preloader-counter");
+        const logEl = document.getElementById("preloader-log");
+        const statusEl = document.getElementById("preloader-status");
+
+        if (!preloader || !progressBar || !counterEl) {
+          resolve();
+          return;
+        }
+
+        const logs = [
+          { at: 15, text: "CALIBRATING QUANTUM SENSORS..." },
+          { at: 40, text: "MOUNTING FLUTTER & AI ENGINE..." },
+          { at: 70, text: "LINKING BIOMETRIC TELEMETRY..." },
+          { at: 90, text: "SYNCHRONIZING ORBITAL STAGE..." },
+          { at: 100, text: "[STATUS: ALL SYSTEMS NOMINAL // READY]" }
+        ];
+
+        const duration = 750; // Crisp 750ms duration
+        const startTime = performance.now();
+
+        const updatePreloader = (now) => {
+          const elapsed = now - startTime;
+          const progress = Math.min(100, Math.floor((elapsed / duration) * 100));
+
+          progressBar.style.width = `${progress}%`;
+          counterEl.textContent = `${String(progress).padStart(3, "0")}%`;
+
+          for (let i = logs.length - 1; i >= 0; i--) {
+            if (progress >= logs[i].at) {
+              if (logEl && logEl.textContent !== logs[i].text) {
+                logEl.textContent = logs[i].text;
+              }
+              break;
+            }
+          }
+
+          if (progress >= 100) {
+            if (statusEl) {
+              statusEl.textContent = "ONLINE";
+              statusEl.style.color = "#00e696";
+            }
+            if (logEl) {
+              logEl.style.color = "#00f0ff";
+            }
+
+            // Smooth holographic GSAP fade-out
+            setTimeout(() => {
+              if (typeof gsap !== "undefined") {
+                gsap.to(preloader, {
+                  autoAlpha: 0,
+                  duration: 0.45,
+                  ease: "power2.inOut",
+                  onComplete: () => {
+                    preloader.remove();
+                    resolve();
+                  }
+                });
+              } else {
+                preloader.style.opacity = "0";
+                preloader.style.pointerEvents = "none";
+                setTimeout(() => {
+                  preloader.remove();
+                  resolve();
+                }, 450);
+              }
+            }, 120);
+          } else {
+            requestAnimationFrame(updatePreloader);
+          }
+        };
+
+        requestAnimationFrame(updatePreloader);
+      });
+    }
+
+    /**
      * Initializes the Home page
      */
     static async init() {
+      // 1. Force manual scroll restoration so browser never restores scroll into unpinned DOM
+      if ("scrollRestoration" in history) {
+        history.scrollRestoration = "manual";
+      }
+      window.scrollTo(0, 0);
+
       const activeLang = LanguageRepository.getActiveLanguage();
 
-      // Initialize universal Floating App Bar
+      // 2. Start Cyberpunk Boot Sequence concurrently
+      const bootPromise = this.runCyberBootSequence();
+
+      // 3. Initialize universal Floating App Bar (starts with appbar-hero-hidden in HTML)
       if (AppbarComponent) {
         AppbarComponent.init("#appbar-container");
       }
 
-      // Initialize switcher UI
+      // 4. Initialize switcher UI
       LanguageSwitcherComponent.init({
         initialLang: activeLang,
         onLanguageChange: (lang) => this.switchLanguage(lang)
       });
 
-      // Initialize universal Footer & Social Contact Dock
+      // 5. Initialize universal Footer & Social Contact Dock
       if (FooterComponent) {
         FooterComponent.init("#footer-container");
       }
 
-      // Initialize Smart Floating App Bar auto-hide and scroll reveal (Solution 1)
+      // 6. Initialize Smart Floating App Bar auto-hide and scroll reveal
       this.setupSmartAppBar();
 
-      // Initialize Pinned Scroll-Driven Space Hero Sequence
+      // 7. Initialize Pinned Scroll-Driven Space Hero Sequence (Section 1 - Top)
       this.setupSpaceHeroScrollSequence();
 
-      // Initialize Cyberpunk Code IDE & Biometric Hologram section
+      // 8. Initialize Cyberpunk Code IDE & Biometric Hologram section (Section 2 - Middle)
       this.setupCyberAboutSection();
 
-      // Setup smooth navigation to projects
-      this.setupProjectsNavLink();
-
-      // Load initial language
+      // 9. Load initial language & render Carousel 3D cards (Section 3 - Bottom)
       await this.switchLanguage(activeLang);
 
-      // Handle direct landing with hash (#projects-carousel-section)
+      // 10. Setup smooth navigation to projects
+      this.setupProjectsNavLink();
+
+      // 11. Sort and recalibrate all GSAP ScrollTriggers in DOM order
+      if (typeof ScrollTrigger !== "undefined") {
+        ScrollTrigger.sort();
+        ScrollTrigger.refresh();
+      }
+
+      // 12. Await boot animation completion before resolving
+      await bootPromise;
+
+      // 13. Handle direct landing with hash (#projects-carousel-section)
       this.handleHashNavigation();
     }
 
@@ -204,6 +307,13 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
           CarouselController.scrollToCarousel(0);
         }
       });
+
+      // Clear lingering hash when scrolling back up into the hero
+      window.addEventListener("scroll", () => {
+        if (window.scrollY < 400 && window.location.hash === "#projects-carousel-section") {
+          history.replaceState(null, "", window.location.pathname);
+        }
+      }, { passive: true });
     }
 
     /**
@@ -212,6 +322,10 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
      */
     static handleHashNavigation() {
       if (window.location.hash === "#projects-carousel-section") {
+        if (window.scrollY === 0) {
+          history.replaceState(null, "", window.location.pathname);
+          return;
+        }
         setTimeout(() => {
           CarouselController.scrollToCarousel(0);
         }, 200);
@@ -289,12 +403,20 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
       const codeDart = document.getElementById("code-dart");
       const codeJson = document.getElementById("code-json");
       const ideGutter = document.getElementById("ide-gutter");
+      const statusLang = document.getElementById("ide-status-lang");
 
       if (!aboutSection) return;
 
-      // 1. Sync line numbers helper
-      const updateLineNumbers = (lineCount) => {
-        if (!ideGutter) return;
+      // 1. Sync line numbers helper dynamically based on code element
+      const updateLineNumbersForElement = (codeEl) => {
+        if (!ideGutter || !codeEl) return;
+        const text = codeEl.textContent || "";
+        const lines = text.split("\n");
+        // Trim trailing empty line if pre ends with newline
+        if (lines.length > 0 && lines[lines.length - 1].trim() === "") {
+          lines.pop();
+        }
+        const lineCount = Math.max(lines.length, 1);
         let spans = "";
         for (let i = 1; i <= lineCount; i++) {
           spans += `<span>${i}</span>`;
@@ -302,8 +424,8 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
         ideGutter.innerHTML = spans;
       };
 
-      // Set initial line numbers (15 lines for Dart code)
-      updateLineNumbers(15);
+      // Set initial line numbers dynamically for Dart code
+      updateLineNumbersForElement(codeDart);
 
       // 2. Tab switching logic
       if (tabDart && tabJson && codeDart && codeJson) {
@@ -312,7 +434,8 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
           tabJson.classList.remove("active");
           codeDart.classList.add("active");
           codeJson.classList.remove("active");
-          updateLineNumbers(15);
+          updateLineNumbersForElement(codeDart);
+          if (statusLang) statusLang.innerHTML = "Dart 3.x &bull; UTF-8";
         });
 
         tabJson.addEventListener("click", () => {
@@ -320,7 +443,8 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
           tabDart.classList.remove("active");
           codeJson.classList.add("active");
           codeDart.classList.remove("active");
-          updateLineNumbers(11);
+          updateLineNumbersForElement(codeJson);
+          if (statusLang) statusLang.innerHTML = "JSON &bull; UTF-8";
         });
       }
 
@@ -392,15 +516,93 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
             scrollTrigger: {
               trigger: aboutSection,
               start: "top 80%",
-              toggleActions: "play none none none"
+              toggleActions: "play none none none",
             },
             y: 35,
             autoAlpha: 0,
             duration: 0.85,
             stagger: 0.16,
-            ease: "power2.out"
+            ease: "power2.out",
+            clearProps: "transform",
           });
         }
+      }
+
+      // 5. 3D Mouse Parallax & Depth Tilt on Biometric Avatar Card
+      const layerBg = document.getElementById("bio-layer-bg");
+      const layerPerson = document.getElementById("bio-layer-person");
+
+      if (bioCard && layerBg && layerPerson) {
+        let rafId = null;
+        let targetX = 0;
+        let targetY = 0;
+        let targetZ = 0; // Smooth 3D depth pop
+        let currentX = 0;
+        let currentY = 0;
+        let currentZ = 0;
+
+        const updateParallax = () => {
+          // Continuous physics lerp for all 3 axes
+          currentX += (targetX - currentX) * 0.085;
+          currentY += (targetY - currentY) * 0.085;
+          currentZ += (targetZ - currentZ) * 0.085;
+
+          // 1. Background layer moves opposite to mouse (depth)
+          layerBg.style.transform = `scale(1.14) translate3d(${-currentX * 14}px, ${-currentY * 14}px, 0)`;
+
+          // 2. Person layer moves with mouse & floats forward in 3D smoothly
+          layerPerson.style.transform = `translate3d(${currentX * 16}px, ${currentY * 16}px, ${currentZ}px)`;
+
+          // 3. Card 3D tilt
+          bioCard.style.transform = `perspective(900px) rotateY(${currentX * 5.5}deg) rotateX(${-currentY * 5.5}deg)`;
+
+          const isMoving =
+            Math.abs(targetX - currentX) > 0.0005 ||
+            Math.abs(targetY - currentY) > 0.0005 ||
+            Math.abs(targetZ - currentZ) > 0.01;
+
+          if (isMoving) {
+            rafId = requestAnimationFrame(updateParallax);
+          } else {
+            // Settle smoothly to exact rest state with zero abrupt jump
+            currentX = targetX;
+            currentY = targetY;
+            currentZ = targetZ;
+            layerBg.style.transform = `scale(1.14) translate3d(${-currentX * 14}px, ${-currentY * 14}px, 0)`;
+            layerPerson.style.transform = `translate3d(${currentX * 16}px, ${currentY * 16}px, ${currentZ}px)`;
+            bioCard.style.transform = `perspective(900px) rotateY(${currentX * 5.5}deg) rotateX(${-currentY * 5.5}deg)`;
+            rafId = null;
+          }
+        };
+
+        bioCard.addEventListener("mouseenter", () => {
+          targetZ = 20; // Smoothly lift forward in 3D
+          if (!rafId) {
+            rafId = requestAnimationFrame(updateParallax);
+          }
+        });
+
+        bioCard.addEventListener("mousemove", (e) => {
+          const rect = bioCard.getBoundingClientRect();
+          // Normalize coordinates: -1 to +1
+          targetX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+          targetY = ((e.clientY - rect.top) / rect.height) * 2 - 1;
+          targetZ = 20;
+
+          if (!rafId) {
+            rafId = requestAnimationFrame(updateParallax);
+          }
+        });
+
+        bioCard.addEventListener("mouseleave", () => {
+          // Smoothly glide everything back to resting position (0, 0, 0)
+          targetX = 0;
+          targetY = 0;
+          targetZ = 0;
+          if (!rafId) {
+            rafId = requestAnimationFrame(updateParallax);
+          }
+        });
       }
     }
 
