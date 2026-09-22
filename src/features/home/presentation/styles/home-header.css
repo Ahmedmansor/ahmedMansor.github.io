@@ -149,7 +149,7 @@ header h2 {
 
 #home-page footer {
   margin-top: 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: none;
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;

@@ -27,23 +27,7 @@
 
   <body id="home-page">
     <!-- Global Sticky App Bar -->
-    <header class="appbar">
-      <div class="appbar-inner">
-        <a href="index.html" class="appbar-brand" title="Home">
-          <span class="hud-status-dot" aria-hidden="true"></span>
-          <span class="brand-tag">&lt;</span><span class="brand-name">ahmedMansour</span><span class="brand-tag"> /&gt;</span>
-        </a>
-        <nav class="appbar-nav">
-          <a href="#projects-carousel-section" class="appbar-link" data-i18n-key="common.navProjects">Projects</a>
-        </nav>
-        <div class="appbar-actions">
-          <div class="language-switcher">
-            <button id="lang-en-btn">English</button>
-            <button id="lang-ar-btn">العربية</button>
-          </div>
-        </div>
-      </div>
-    </header>
+    <header id="appbar-container"></header>
 
     <div class="container header-container">
       <header class="portfolio-header">
@@ -61,23 +45,6 @@
           <p class="bio" data-i18n-key="indexPage.bio">
             Flutter Developer skilled in building responsive, high-performance mobile applications for both iOS and Android platforms.
           </p>
-          <div class="social-links">
-            <a
-              href="https://github.com/Ahmedmansor"
-              target="_blank"
-              title="GitHub"
-              ><i class="fab fa-github"></i
-            ></a>
-            <a
-              href="https://linkedin.com/in/ahmed-mansour-343716209"
-              target="_blank"
-              title="LinkedIn"
-              ><i class="fab fa-linkedin"></i
-            ></a>
-            <a href="mailto:ahmedmansour70000@gmail.com" title="Email"
-              ><i class="fas fa-envelope"></i
-            ></a>
-          </div>
         </div>
       </header>
     </div>
@@ -116,23 +83,7 @@
     </section>
 
     <div class="container footer-container">
-      <footer>
-        <p style="text-align: center">
-          <span data-i18n-key="indexPage.contactMe"></span>
-          <a href="mailto:ahmedmansour70000@gmail.com"
-            >ahmedmansour70000@gmail.com</a
-          >
-          &nbsp;|&nbsp;
-          <a
-            href="https://wa.me/201000872150"
-            target="_blank"
-            title="WhatsApp"
-            style="color: #25d366; font-weight: bold"
-          >
-            <i class="fab fa-whatsapp"></i> WhatsApp
-          </a>
-        </p>
-      </footer>
+      <footer id="footer-container"></footer>
     </div>
 
     <!-- Feature-First Clean Architecture Scripts -->
@@ -142,6 +93,8 @@
     <script src="src/core/data/datasources/language.datasource.js"></script>
     <script src="src/core/data/repositories/language.repository.js"></script>
     <script src="src/core/presentation/components/language-switcher/language-switcher.component.js"></script>
+    <script src="src/core/presentation/components/appbar/appbar.component.js"></script>
+    <script src="src/core/presentation/components/footer/footer.component.js"></script>
 
     <!-- 2. Home Feature -->
     <script src="src/features/home/domain/models/project.model.js"></script>

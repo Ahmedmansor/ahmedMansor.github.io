@@ -24,23 +24,7 @@
 
   <body id="project1-page">
     <!-- Global Sticky App Bar -->
-    <header class="appbar">
-      <div class="appbar-inner">
-        <a href="index.html" class="appbar-brand" title="Home">
-          <span class="hud-status-dot" aria-hidden="true"></span>
-          <span class="brand-tag">&lt;</span><span class="brand-name">ahmedMansour</span><span class="brand-tag"> /&gt;</span>
-        </a>
-        <nav class="appbar-nav">
-          <a href="index.html#projects-carousel-section" class="appbar-link active" data-i18n-key="common.navProjects">Projects</a>
-        </nav>
-        <div class="appbar-actions">
-          <div class="language-switcher">
-            <button id="lang-en-btn">English</button>
-            <button id="lang-ar-btn">العربية</button>
-          </div>
-        </div>
-      </div>
-    </header>
+    <header id="appbar-container"></header>
 
     <!-- Sticky Feature Navigation Bar -->
     <nav class="feature-nav" id="feature-nav">
@@ -183,11 +167,10 @@
         </div>
       </main>
 
-      <a
-        href="index.html"
-        class="back-to-home-link"
-        data-i18n-key="common.backToHome"
-      ></a>
+      <!-- Universal Footer Contact Dock -->
+      <div class="container footer-container">
+        <footer id="footer-container"></footer>
+      </div>
     </div>
 
     <!-- Image Lightbox Modal for Full-Resolution Mobile & Desktop Inspection -->
@@ -222,6 +205,8 @@
     <script src="src/core/data/datasources/language.datasource.js"></script>
     <script src="src/core/data/repositories/language.repository.js"></script>
     <script src="src/core/presentation/components/language-switcher/language-switcher.component.js"></script>
+    <script src="src/core/presentation/components/appbar/appbar.component.js"></script>
+    <script src="src/core/presentation/components/footer/footer.component.js"></script>
 
     <!-- 2. Linker Feature -->
     <script src="src/features/linker/presentation/controllers/linker.controller.js"></script>

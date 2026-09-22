@@ -6,8 +6,8 @@
 footer {
   text-align: center;
   margin-top: 50px;
-  padding-top: 20px;
-  border-top: 1px solid var(--border-color);
+  padding: 24px 0 36px;
+  border-top: none;
   font-size: 0.9em;
   color: var(--text-dim);
 }
@@ -15,6 +15,133 @@ footer {
 footer p {
   margin: 0;
   line-height: 1.8;
+}
+
+.footer-contact-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.footer-contact-header {
+  margin-bottom: 24px;
+}
+
+.footer-contact-header .contact-label {
+  font-weight: 700;
+  color: var(--text-primary, #ffffff);
+  font-size: 1.15rem;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  font-family: "Montserrat", "Cairo", sans-serif;
+  text-shadow: 0 0 16px rgba(0, 240, 255, 0.35);
+}
+
+/* Cyberpunk Neon Laser Divider (Same length as footer container) */
+.footer-neon-divider {
+  width: 100%;
+  height: 1.5px;
+  margin: 0 0 28px 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0, 240, 255, 0.3) 12%,
+    var(--color-primary, #00f0ff) 45%,
+    var(--color-secondary, #a855f7) 65%,
+    rgba(168, 85, 247, 0.3) 88%,
+    transparent 100%
+  );
+  box-shadow: 0 0 14px rgba(0, 240, 255, 0.5), 0 0 5px rgba(168, 85, 247, 0.3);
+  border: none;
+}
+
+.footer-social-icons {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.footer-contact-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1),
+              background 0.25s ease,
+              border-color 0.25s ease,
+              box-shadow 0.25s ease,
+              color 0.25s ease;
+  vertical-align: middle;
+}
+
+/* 1. GitHub Button */
+.footer-contact-btn.github-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1.5px solid rgba(255, 255, 255, 0.28);
+  color: #f1f5f9;
+  box-shadow: 0 0 14px rgba(255, 255, 255, 0.12), inset 0 0 8px rgba(255, 255, 255, 0.06);
+}
+
+.footer-contact-btn.github-btn:hover {
+  background: #ffffff;
+  color: #07070a;
+  border-color: #ffffff;
+  transform: translateY(-3px) scale(1.12);
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.85), inset 0 0 10px rgba(255, 255, 255, 0.35);
+}
+
+/* 2. LinkedIn Button */
+.footer-contact-btn.linkedin-btn {
+  background: rgba(14, 165, 233, 0.1);
+  border: 1.5px solid rgba(14, 165, 233, 0.42);
+  color: #38bdf8;
+  box-shadow: 0 0 14px rgba(14, 165, 233, 0.18), inset 0 0 8px rgba(14, 165, 233, 0.08);
+}
+
+.footer-contact-btn.linkedin-btn:hover {
+  background: #0ea5e9;
+  color: #07070a;
+  border-color: #ffffff;
+  transform: translateY(-3px) scale(1.12);
+  box-shadow: 0 0 25px rgba(14, 165, 233, 0.85), inset 0 0 10px rgba(255, 255, 255, 0.35);
+}
+
+/* 3. Gmail Icon Button */
+.footer-contact-btn.email-btn {
+  background: rgba(0, 240, 255, 0.1);
+  border: 1.5px solid rgba(0, 240, 255, 0.42);
+  color: var(--color-primary, #00f0ff);
+  box-shadow: 0 0 14px rgba(0, 240, 255, 0.2), inset 0 0 8px rgba(0, 240, 255, 0.08);
+}
+
+.footer-contact-btn.email-btn:hover {
+  background: var(--color-primary, #00f0ff);
+  color: #07070a;
+  border-color: #ffffff;
+  transform: translateY(-3px) scale(1.12);
+  box-shadow: 0 0 25px rgba(0, 240, 255, 0.85), inset 0 0 10px rgba(255, 255, 255, 0.35);
+}
+
+/* 4. WhatsApp Button */
+.footer-contact-btn.whatsapp-btn {
+  background: rgba(37, 211, 102, 0.1);
+  border: 1.5px solid rgba(37, 211, 102, 0.42);
+  color: #25d366;
+  box-shadow: 0 0 14px rgba(37, 211, 102, 0.18), inset 0 0 8px rgba(37, 211, 102, 0.08);
+}
+
+.footer-contact-btn.whatsapp-btn:hover {
+  background: #25d366;
+  color: #07070a;
+  border-color: #ffffff;
+  transform: translateY(-3px) scale(1.12);
+  box-shadow: 0 0 25px rgba(37, 211, 102, 0.85), inset 0 0 10px rgba(255, 255, 255, 0.35);
 }
 
 footer a {

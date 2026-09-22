@@ -13,7 +13,9 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
 
   const LanguageRepository = window.Portfolio.data.repositories.LanguageRepository;
   const LocalizationUseCase = window.Portfolio.domain.usecases.LocalizationUseCase;
+  const AppbarComponent = window.Portfolio.presentation.components.AppbarComponent;
   const LanguageSwitcherComponent = window.Portfolio.presentation.components.LanguageSwitcherComponent;
+  const FooterComponent = window.Portfolio.presentation.components.FooterComponent;
 
   class SemanticCutController {
     /**
@@ -22,10 +24,20 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
     static async init() {
       const activeLang = LanguageRepository.getActiveLanguage();
 
+      // Initialize universal Floating App Bar
+      if (AppbarComponent) {
+        AppbarComponent.init("#appbar-container");
+      }
+
       LanguageSwitcherComponent.init({
         initialLang: activeLang,
         onLanguageChange: (lang) => this.switchLanguage(lang)
       });
+
+      // Initialize universal Footer & Social Contact Dock
+      if (FooterComponent) {
+        FooterComponent.init("#footer-container");
+      }
 
       await this.switchLanguage(activeLang);
     }

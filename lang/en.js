@@ -7,6 +7,7 @@ translations = {
     navHome: "Home",
     navProjects: "Projects",
     navSkills: "Skills",
+    contactMe: "Contact Me",
   },
   // Text specific to the index.html / home.html page
   indexPage: {
@@ -15,7 +16,7 @@ translations = {
     jobTitle: "Flutter Mobile Developer",
     bio: "Flutter Developer skilled in building responsive, high-performance mobile applications for both iOS and Android platforms. Proficient in Dart and Flutter, with a proven ability to deliver visually appealing and feature-rich apps. Regularly leverage AI tools to accelerate code writing and enhance problem-solving efficiency.",
     projectsTitle: "Featured Projects",
-    contactMe: "Contact Me:",
+    contactMe: "Contact Me",
     projectsData: [
       {
         id: "linker",
@@ -47,7 +48,7 @@ translations = {
         id: "semantic-cut",
         title: "SemanticCut AI",
         bigTitle: "SEMANTIC CUT",
-        category: "AI & Automated Pipeline",
+        category: "Python & AI Automation",
         typeBadge: "AI Automation",
         typeBadgeIcon: "fas fa-robot",
         badgeClass: "automation-badge",

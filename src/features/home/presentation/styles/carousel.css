@@ -108,72 +108,163 @@
   transition: color 0.3s ease, text-shadow 0.3s ease;
 }
 
+/* ========================================================
+   TITLE LAUNCH ICON BUTTON - CYBERPUNK FAST LASER PULSE
+   Ultra-catchy, high-speed 60fps GPU rotating beam & sonar radar
+   ======================================================== */
 .carousel-title-nav-btn {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
-  background: rgba(3, 218, 198, 0.12);
-  border: 1.5px solid var(--accent-teal, #03dac6);
-  color: var(--accent-teal, #03dac6);
-  font-size: 1.1rem;
+  background: radial-gradient(circle, rgba(0, 240, 255, 0.22) 0%, rgba(14, 16, 24, 0.95) 85%);
+  border: 1.5px solid rgba(0, 240, 255, 0.7);
+  color: #ffffff;
+  font-size: 1.15rem;
   flex-shrink: 0;
   cursor: pointer;
   pointer-events: auto;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 0 16px rgba(3, 218, 198, 0.35);
-  animation: titleNavPulse 2.5s infinite ease-in-out;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              background 0.3s ease,
+              border-color 0.3s ease,
+              box-shadow 0.3s ease;
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.5), inset 0 0 12px rgba(0, 240, 255, 0.3);
+  z-index: 2;
+  will-change: transform;
 }
 
-@keyframes titleNavPulse {
-  0%, 100% {
-    box-shadow: 0 0 10px rgba(3, 218, 198, 0.25);
-    transform: scale(1);
+/* Fast Rotating Laser Orbit Beam */
+.carousel-title-nav-btn::before {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  padding: 2.5px;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 200deg,
+    rgba(0, 240, 255, 0.35) 260deg,
+    var(--color-primary, #00f0ff) 325deg,
+    #ffffff 360deg
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  animation: laserOrbitFast 1.8s linear infinite;
+  will-change: transform;
+}
+
+/* Expanding Radar Sonar Ripple Wave */
+.carousel-title-nav-btn::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-primary, #00f0ff);
+  pointer-events: none;
+  animation: laserRadarPulse 2s cubic-bezier(0.1, 0.8, 0.2, 1) infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes laserOrbitFast {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes laserRadarPulse {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.9;
+    box-shadow: 0 0 14px var(--color-primary, #00f0ff);
   }
   50% {
-    box-shadow: 0 0 24px rgba(3, 218, 198, 0.7);
-    transform: scale(1.08);
+    transform: scale(1.42);
+    opacity: 0.35;
+    box-shadow: 0 0 26px var(--color-primary, #00f0ff);
+  }
+  100% {
+    transform: scale(1.68);
+    opacity: 0;
+    box-shadow: 0 0 0px transparent;
   }
 }
 
+/* Linker Variant: Electric Blue & Neon Violet Laser */
 .carousel-title-nav-btn.title-btn-linker {
-  background: rgba(37, 99, 235, 0.16);
-  border-color: #60a5fa;
-  color: #93c5fd;
-  box-shadow: 0 0 16px rgba(96, 165, 250, 0.35);
-  animation: titleNavPulseLinker 2.5s infinite ease-in-out;
+  background: radial-gradient(circle, rgba(96, 165, 250, 0.22) 0%, rgba(14, 16, 24, 0.95) 85%);
+  border-color: rgba(96, 165, 250, 0.75);
+  box-shadow: 0 0 20px rgba(96, 165, 250, 0.5), inset 0 0 12px rgba(96, 165, 250, 0.3);
 }
 
-@keyframes titleNavPulseLinker {
-  0%, 100% {
-    box-shadow: 0 0 10px rgba(96, 165, 250, 0.25);
-    transform: scale(1);
+.carousel-title-nav-btn.title-btn-linker::before {
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 200deg,
+    rgba(168, 85, 247, 0.45) 250deg,
+    #60a5fa 320deg,
+    #ffffff 360deg
+  );
+}
+
+.carousel-title-nav-btn.title-btn-linker::after {
+  border-color: #60a5fa;
+  animation: laserRadarPulseLinker 2s cubic-bezier(0.1, 0.8, 0.2, 1) infinite;
+}
+
+@keyframes laserRadarPulseLinker {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.9;
+    box-shadow: 0 0 14px rgba(96, 165, 250, 0.85);
   }
   50% {
-    box-shadow: 0 0 24px rgba(96, 165, 250, 0.7);
-    transform: scale(1.08);
+    transform: scale(1.42);
+    opacity: 0.35;
+    box-shadow: 0 0 26px rgba(168, 85, 247, 0.85);
+  }
+  100% {
+    transform: scale(1.68);
+    opacity: 0;
+    box-shadow: 0 0 0px transparent;
   }
 }
 
+/* Hover & Focus State: Turbo Launch Mode */
 .carousel-title-link:hover .carousel-title-heading {
-  color: var(--accent-teal, #03dac6);
-  text-shadow: 0 4px 30px rgba(3, 218, 198, 0.5);
+  color: var(--color-primary, #00f0ff);
+  text-shadow: 0 4px 30px rgba(0, 240, 255, 0.55);
+}
+
+.carousel-title-link:hover .carousel-title-nav-btn {
+  transform: scale(1.15);
+}
+
+.carousel-title-link:hover .carousel-title-nav-btn::before {
+  animation-duration: 0.75s;
 }
 
 .carousel-title-link:hover .title-btn-automation.carousel-title-nav-btn {
-  background: var(--accent-teal, #03dac6);
-  color: #121212;
-  transform: scale(1.18) rotate(6deg);
-  box-shadow: 0 0 30px rgba(3, 218, 198, 0.9);
+  background: var(--color-primary, #00f0ff);
+  color: #07070a;
+  border-color: #ffffff;
+  box-shadow: 0 0 35px rgba(0, 240, 255, 0.95), 0 0 65px rgba(0, 240, 255, 0.5);
 }
 
 .carousel-title-link:hover .title-btn-linker.carousel-title-nav-btn {
   background: #60a5fa;
-  color: #081642;
-  transform: scale(1.18) rotate(6deg);
-  box-shadow: 0 0 30px rgba(96, 165, 250, 0.9);
+  color: #07070a;
+  border-color: #ffffff;
+  box-shadow: 0 0 35px rgba(96, 165, 250, 0.95), 0 0 65px rgba(168, 85, 247, 0.5);
 }
 
 html[dir="rtl"] .carousel-title-nav-btn i {
@@ -245,16 +336,17 @@ html[dir="rtl"] .carousel-title-nav-btn i {
   text-decoration: none;
   color: #e0e0e0;
   transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-  pointer-events: auto;
+  pointer-events: none;
   backface-visibility: hidden !important;
   -webkit-backface-visibility: hidden !important;
-  cursor: pointer;
+  cursor: default;
 }
 
 .carousel-item .project-card.is-active {
+  pointer-events: auto;
   cursor: pointer !important;
-  border-color: rgba(3, 218, 198, 0.5);
-  box-shadow: 0 28px 75px rgba(0, 0, 0, 0.95), 0 0 35px rgba(3, 218, 198, 0.2);
+  border-color: rgba(0, 240, 255, 0.5);
+  box-shadow: 0 28px 75px rgba(0, 0, 0, 0.95), 0 0 35px rgba(0, 240, 255, 0.18);
 }
 
 .carousel-item .project-card.linker-card.is-active {
@@ -262,16 +354,79 @@ html[dir="rtl"] .carousel-title-nav-btn i {
   box-shadow: 0 28px 75px rgba(0, 0, 0, 0.95), 0 0 35px rgba(37, 99, 235, 0.28);
 }
 
+/* ========================================================
+   ACTIVE CARD CLOCKWISE NEON LASER BEAM
+   Smooth Easy-Ease Cinematic Motion (After Effects curve)
+   Single continuous head orbiting clockwise around card perimeter
+   ======================================================== */
+@property --beam-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes borderBeamClockwise {
+  0% {
+    --beam-angle: 0deg;
+  }
+  100% {
+    --beam-angle: 360deg;
+  }
+}
+
+/* Flowing Clockwise Neon Laser Beam on Active Card */
+.carousel-item .project-card.is-active::before {
+  content: "";
+  position: absolute;
+  inset: -1.5px;
+  border-radius: inherit;
+  padding: 2px;
+  background: conic-gradient(
+    from var(--beam-angle) at 50% 50%,
+    transparent 0deg,
+    transparent 270deg,
+    rgba(0, 240, 255, 0.45) 305deg,
+    var(--color-primary, #00f0ff) 338deg,
+    #ffffff 356deg,
+    transparent 360deg
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  animation: borderBeamClockwise 4.2s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  opacity: 0.92;
+  z-index: 10;
+  will-change: --beam-angle;
+}
+
+.carousel-item .project-card.linker-card.is-active::before {
+  background: conic-gradient(
+    from var(--beam-angle) at 50% 50%,
+    transparent 0deg,
+    transparent 270deg,
+    rgba(168, 85, 247, 0.45) 300deg,
+    #60a5fa 335deg,
+    #ffffff 356deg,
+    transparent 360deg
+  );
+}
+
 .carousel-item .project-card.is-active:hover {
   transform: translateY(-8px) scale(1.02);
-  border-color: var(--accent-teal, #03dac6);
-  box-shadow: 0 34px 90px rgba(0, 0, 0, 0.98), 0 0 50px rgba(3, 218, 198, 0.4);
+  border-color: var(--color-primary, #00f0ff);
+  box-shadow: 0 34px 90px rgba(0, 0, 0, 0.98), 0 0 50px rgba(0, 240, 255, 0.4);
 }
 
 .carousel-item .project-card.linker-card.is-active:hover {
   transform: translateY(-8px) scale(1.02);
   border-color: #60a5fa;
   box-shadow: 0 34px 90px rgba(0, 0, 0, 0.98), 0 0 50px rgba(59, 130, 246, 0.5);
+}
+
+.carousel-item .project-card.is-active:hover::before {
+  animation-duration: 2.4s;
+  opacity: 1;
 }
 
 /* Thumbnail Wrapper */
@@ -410,6 +565,7 @@ html[dir="rtl"] .carousel-item .project-info {
   justify-content: space-between;
   gap: 8px;
   margin-bottom: 8px;
+  min-width: 0;
 }
 
 .carousel-item .project-badge {
@@ -424,6 +580,9 @@ html[dir="rtl"] .carousel-item .project-info {
   border-radius: 20px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  white-space: nowrap;
+  flex-shrink: 0;
+  max-width: 100%;
 }
 
 .carousel-item .project-badge.mobile-badge {
@@ -468,6 +627,11 @@ html[dir="rtl"] .carousel-item .project-info {
   font-weight: 600;
   color: #94a3b8;
   letter-spacing: 0.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  text-align: end;
 }
 
 .carousel-item .project-info h4 {
@@ -643,10 +807,6 @@ html[dir="rtl"] .carousel-item .view-project-btn i {
     animation: none !important;
   }
 
-  .carousel-title-nav-btn {
-    animation: none !important;
-  }
-
   .carousel-item .project-thumbnail-wrapper.linker-thumb {
     box-shadow: none !important;
   }
@@ -685,9 +845,9 @@ html[dir="rtl"] .carousel-item .view-project-btn i {
     gap: 12px;
   }
   .carousel-title-nav-btn {
-    width: 38px;
-    height: 38px;
-    font-size: 0.95rem;
+    width: 42px;
+    height: 42px;
+    font-size: 1.05rem;
   }
   .carousel-item .project-thumbnail-wrapper {
     height: 195px;
@@ -749,9 +909,9 @@ html[dir="rtl"] .carousel-item .view-project-btn i {
     gap: 10px;
   }
   .carousel-title-nav-btn {
-    width: 32px;
-    height: 32px;
-    font-size: 0.8rem;
+    width: 38px;
+    height: 38px;
+    font-size: 0.95rem;
   }
   .carousel-item .project-thumbnail-wrapper {
     height: 180px;
@@ -765,15 +925,18 @@ html[dir="rtl"] .carousel-item .view-project-btn i {
   }
   .carousel-item .project-header-row {
     margin-bottom: 6px;
+    justify-content: flex-start;
   }
   .carousel-item .project-badge {
     font-size: 0.72rem;
-    padding: 5px 12px;
+    padding: 5px 11px;
     border-radius: 16px;
     gap: 6px;
+    white-space: nowrap;
+    flex-shrink: 0;
   }
   .carousel-item .project-sub-category {
-    font-size: 0.7rem;
+    display: none; /* Hide redundant category on small mobile cards so badge fits beautifully without wrapping */
   }
   .carousel-item .project-info h4 {
     font-size: 1.25rem;

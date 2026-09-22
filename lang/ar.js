@@ -7,6 +7,7 @@ translations = {
     navHome: "الرئيسية",
     navProjects: "المشاريع",
     navSkills: "المهارات",
+    contactMe: "تواصل معي",
   },
   // Text specific to the index.html / home.html page
   indexPage: {
@@ -15,7 +16,7 @@ translations = {
     jobTitle: "مطور تطبيقات فلاتر",
     bio: "مطور فلاتر متخصص في بناء تطبيقات جوال عالية الأداء ومتجاوبة لمنصتي iOS و Android. أمتلك خبرة مثبتة في Dart و Flutter لتقديم تطبيقات جذابة بصريًا وغنية بالميزات. أستفيد بانتظام من أدوات الذكاء الاصطناعي لتسريع كتابة الكود وتعزيز كفاءة حل المشكلات.",
     projectsTitle: "المشاريع المميزة",
-    contactMe: "تواصل معي:",
+    contactMe: "تواصل معي",
     projectsData: [
       {
         id: "linker",
