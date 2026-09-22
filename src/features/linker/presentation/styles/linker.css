@@ -8,11 +8,11 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  background: #181818;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.18);
+  background: var(--bg-card);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
   padding: 0;
   margin-bottom: 30px;
-  border-bottom: 2px solid var(--accent-teal, #03dac6);
+  border-bottom: 2px solid var(--color-primary);
 }
 
 .feature-nav ul {
@@ -41,7 +41,7 @@
   width: 100%;
   min-height: 60px;
   padding: 14px 18px;
-  color: #e0e0e0;
+  color: var(--text-secondary);
   font-weight: 600;
   font-family: "Montserrat", "Cairo", sans-serif;
   font-size: 1em;
@@ -56,9 +56,9 @@
 
 .feature-nav a.active,
 .feature-nav a:hover {
-  color: var(--accent-teal, #03dac6);
-  background: #232323;
-  border-bottom: 3px solid var(--accent-teal, #03dac6);
+  color: var(--color-primary);
+  background: var(--vulcan-900);
+  border-bottom: 3px solid var(--color-primary);
 }
 
 @media (max-width: 900px) {
@@ -91,11 +91,11 @@ html[dir="rtl"] .feature-nav a {
   text-align: center;
   margin-bottom: 40px;
   padding-bottom: 25px;
-  border-bottom: 1px solid #333333;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .project-detail-header h1 {
-  color: var(--accent-purple, #bb86fc);
+  color: var(--color-secondary);
   font-size: clamp(1.6rem, 3.2vw, 2.35rem);
   line-height: 1.32;
   max-width: 920px;
@@ -108,7 +108,7 @@ html[dir="rtl"] .feature-nav a {
 }
 
 .project-detail-header p {
-  color: #b3b3b3;
+  color: var(--text-muted);
   max-width: 780px;
   margin: 0 auto;
   font-size: 1.05em;
@@ -127,34 +127,34 @@ html[dir="rtl"] .feature-nav a {
   display: inline-flex;
   align-items: center;
   gap: 15px;
-  background: linear-gradient(135deg, #222733 0%, #151820 100%);
+  background: linear-gradient(135deg, var(--vulcan-900) 0%, var(--woodsmoke-950) 100%);
   color: #ffffff !important;
   padding: 12px 28px;
   border-radius: 14px;
-  border: 1.5px solid rgba(3, 218, 198, 0.45);
+  border: 1.5px solid var(--border-color);
   text-decoration: none !important;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45), 0 0 15px rgba(3, 218, 198, 0.12);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45), 0 0 15px rgba(0, 240, 255, 0.15);
   transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease;
   cursor: pointer;
 }
 
 .google-play-btn:hover {
   transform: translateY(-4px) scale(1.02);
-  border-color: var(--accent-teal, #03dac6);
-  background: linear-gradient(135deg, #2a3140 0%, #1b1f2b 100%);
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.6), 0 0 25px rgba(3, 218, 198, 0.35);
+  border-color: var(--color-primary);
+  background: linear-gradient(135deg, var(--vulcan-800) 0%, var(--vulcan-950) 100%);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.6), var(--shadow-neon-cyan);
   color: #ffffff !important;
 }
 
 .google-play-btn i {
   font-size: 2.2em;
-  color: var(--accent-teal, #03dac6);
+  color: var(--color-primary);
   transition: transform 0.3s ease, color 0.3s ease;
 }
 
 .google-play-btn:hover i {
   transform: scale(1.12);
-  color: #00f5da;
+  color: var(--cyan-300);
 }
 
 .google-play-btn .btn-text {
@@ -168,7 +168,7 @@ html[dir="rtl"] .feature-nav a {
 .google-play-btn .btn-subtext {
   font-size: 0.72em;
   letter-spacing: 0.8px;
-  color: #a0aec0;
+  color: var(--text-subtle);
   text-transform: uppercase;
   font-weight: 600;
   font-family: "Montserrat", "Cairo", sans-serif;
@@ -205,16 +205,16 @@ html[dir="rtl"] .google-play-btn .btn-text {
 }
 
 .feature-spotlight {
-  background-color: #1e1e1e;
+  background-color: var(--bg-card);
   padding: 30px;
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
   margin: 40px 0;
-  border: 1px solid #333333;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-main);
 }
 
 .feature-spotlight h4 {
-  color: var(--accent-teal, #03dac6);
+  color: var(--color-primary);
   font-size: 1.8em;
   margin-bottom: 20px;
   font-family: "Montserrat", "Cairo", sans-serif;
@@ -222,7 +222,7 @@ html[dir="rtl"] .google-play-btn .btn-text {
 }
 
 .feature-description {
-  color: #b3b3b3;
+  color: var(--text-muted);
   font-size: 1em;
   margin-bottom: 30px;
   line-height: 1.7;
@@ -274,7 +274,7 @@ html[dir="ltr"] .feature-spotlight li {
   min-height: 4.5em;
   position: relative;
   line-height: 1.5;
-  color: #c0c0c0;
+  color: var(--text-secondary);
   font-size: 0.95em;
   margin-bottom: 15px;
 }
@@ -289,7 +289,7 @@ html[dir="ltr"] .feature-spotlight li {
 .see-more-btn {
   background: none;
   border: none;
-  color: var(--accent-teal, #03dac6);
+  color: var(--color-primary);
   font-weight: bold;
   cursor: pointer;
   padding: 5px 0;
@@ -322,15 +322,15 @@ html[dir="rtl"] .see-more-btn {
   width: 100%;
   height: auto;
   max-width: 100%;
-  border-radius: 8px;
-  border: 1px solid #444444;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
   display: block;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  background: #11141e;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+  background: var(--vulcan-900);
 }
 
 video.lazy-video {
-  background-color: #11141e;
+  background-color: var(--vulcan-900);
   min-height: 220px;
   transition: opacity 0.3s ease;
 }
@@ -339,7 +339,7 @@ video.lazy-video {
 .side-by-side-container {
   margin-top: 40px;
   padding-top: 30px;
-  border-top: 1px solid #444444;
+  border-top: 1px solid var(--border-color);
   text-align: center;
 }
 
@@ -352,16 +352,16 @@ video.lazy-video {
 
 .side-by-side-container p {
   font-size: 1em;
-  color: #b3b3b3;
+  color: var(--text-muted);
   max-width: 600px;
   margin: 0 auto 20px auto;
 }
 
 .side-by-side-container img {
   max-width: 100%;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
   display: block;
 }
 
@@ -370,7 +370,7 @@ video.lazy-video {
   position: relative;
   display: inline-block;
   cursor: pointer;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   overflow: hidden;
   max-width: 100%;
   margin: 10px auto 0;
@@ -379,7 +379,7 @@ video.lazy-video {
 
 .zoomable-media-wrapper:hover {
   transform: translateY(-3px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6), 0 0 18px rgba(3, 218, 198, 0.2);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6), var(--shadow-neon-cyan);
 }
 
 /* Floating Magnifier Glass Badge */
@@ -387,11 +387,11 @@ video.lazy-video {
   position: absolute;
   bottom: 14px;
   right: 14px;
-  background: rgba(14, 18, 26, 0.9);
+  background: rgba(18, 19, 28, 0.9);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1.5px solid var(--accent-teal, #03dac6);
-  color: var(--accent-teal, #03dac6);
+  border: 1.5px solid var(--color-primary);
+  color: var(--color-primary);
   padding: 8px 16px;
   border-radius: 30px;
   font-size: 0.82rem;
@@ -399,7 +399,7 @@ video.lazy-video {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7), 0 0 14px rgba(3, 218, 198, 0.35);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7), 0 0 14px rgba(0, 240, 255, 0.35);
   transition: all 0.25s ease;
   pointer-events: none;
   font-family: "Montserrat", "Cairo", sans-serif;
@@ -411,10 +411,10 @@ html[dir="rtl"] .zoom-magnifier-badge {
 }
 
 .zoomable-media-wrapper:hover .zoom-magnifier-badge {
-  background: var(--accent-teal, #03dac6);
-  color: #121212;
+  background: var(--color-primary);
+  color: var(--woodsmoke-950);
   transform: scale(1.06);
-  box-shadow: 0 4px 25px rgba(3, 218, 198, 0.75);
+  box-shadow: 0 4px 25px rgba(0, 240, 255, 0.75);
 }
 
 /* Fullscreen Image Lightbox Modal */
@@ -438,7 +438,7 @@ html[dir="rtl"] .zoom-magnifier-badge {
 .lightbox-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.94);
+  background: rgba(7, 7, 10, 0.94);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   cursor: pointer;
@@ -480,8 +480,8 @@ html[dir="rtl"] .lightbox-close-btn {
 }
 
 .lightbox-close-btn:hover {
-  background: var(--accent-teal, #03dac6);
-  color: #121212;
+  background: var(--color-primary);
+  color: var(--woodsmoke-950);
   transform: scale(1.1);
 }
 
@@ -489,10 +489,10 @@ html[dir="rtl"] .lightbox-close-btn {
   overflow: auto;
   max-width: 100%;
   max-height: 82vh;
-  border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.95);
-  background: #0d1117;
+  background: var(--woodsmoke-950);
   touch-action: pan-x pan-y pinch-zoom;
 }
 
@@ -504,7 +504,7 @@ html[dir="rtl"] .lightbox-close-btn {
 }
 
 .lightbox-caption {
-  color: #94a3b8;
+  color: var(--text-subtle);
   font-size: 0.88rem;
   margin-top: 14px;
   text-align: center;

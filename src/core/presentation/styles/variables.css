@@ -1,42 +1,135 @@
 /* ========================================================
    GLOBAL VARIABLES & DESIGN TOKENS
-   src/presentation/common/styles/variables.css
+   src/core/presentation/styles/variables.css
+   Feature-First Clean Architecture Theme System
    ======================================================== */
 
 :root {
-  /* Color Palette */
-  --bg-body: #121212;
-  --bg-container: #000000;
-  --bg-card: #1e1e1e;
-  --bg-card-alt: #1b1e26;
-  --bg-surface: #181c24;
+  /* ======================================================
+     1. COLOR SCALES (Base Palettes)
+     ====================================================== */
 
-  /* Accent Colors */
-  --accent-teal: #03dac6;
-  --accent-teal-hover: #03e6b7;
-  --accent-purple: #bb86fc;
-  --accent-blue: #2563eb;
-  --accent-blue-light: #60a5fa;
-  --accent-neon: #ccff00;
+  /* Woodsmoke Scale (Dark Background & Base Tones) */
+  --woodsmoke-50: #f6f6f9;
+  --woodsmoke-100: #ececf2;
+  --woodsmoke-200: #d4d5e3;
+  --woodsmoke-300: #afb1ca;
+  --woodsmoke-400: #8387ad;
+  --woodsmoke-500: #636794;
+  --woodsmoke-600: #4f527a;
+  --woodsmoke-700: #414363;
+  --woodsmoke-800: #383954;
+  --woodsmoke-900: #323348;
+  --woodsmoke-950: #07070a; /* Main Deep Black Body */
+
+  /* Vulcan Scale (Card Surfaces & Elevation Layers) */
+  --vulcan-50: #f5f6fa;
+  --vulcan-100: #ebecf3;
+  --vulcan-200: #d2d5e5;
+  --vulcan-300: #abb1ce;
+  --vulcan-400: #7e88b2;
+  --vulcan-500: #5e6999;
+  --vulcan-600: #4a527f;
+  --vulcan-700: #3d4367;
+  --vulcan-800: #353a57; /* Borders & Dividers */
+  --vulcan-900: #30334a; /* Card Hover / Elevated Surface */
+  --vulcan-950: #12131c; /* Main Card Surface */
+
+  /* Cyan / Aqua Scale (Primary Cyberpunk Accent) */
+  --cyan-50: #eaffff;
+  --cyan-100: #cbfeff;
+  --cyan-200: #9efcff;
+  --cyan-300: #5bf8ff; /* Soft Cyan Glow */
+  --cyan-400: #00f0ff; /* Electric Neon Cyan - Primary Accent */
+  --cyan-500: #00d4e5; /* Primary Hover State */
+  --cyan-600: #00a9c0;
+  --cyan-700: #03859b;
+  --cyan-800: #0d6a7d;
+  --cyan-900: #105769;
+  --cyan-950: #033a49;
+
+  /* Amethyst / Violet Scale (Secondary Cyberpunk Accent) */
+  --amethyst-50: #faf5ff;
+  --amethyst-100: #f3e8ff;
+  --amethyst-200: #e9d5ff;
+  --amethyst-300: #d8b4fe;
+  --amethyst-400: #c084fc; /* Violet Glow */
+  --amethyst-500: #a855f7; /* Neon Violet - Secondary Accent */
+  --amethyst-600: #9333ea; /* Secondary Hover State */
+  --amethyst-700: #7e22ce;
+  --amethyst-800: #6b21a8;
+  --amethyst-900: #581c87;
+  --amethyst-950: #3b0764;
+
+  /* ======================================================
+     2. SEMANTIC THEME TOKENS (Equivalent to Flutter ThemeData)
+     ====================================================== */
+
+  /* Backgrounds & Surfaces */
+  --bg-body: var(--woodsmoke-950);
+  --bg-container: #030305;
+  --bg-card: var(--vulcan-950);
+  --bg-card-alt: var(--vulcan-900);
+  --bg-surface: var(--vulcan-950);
+
+  /* Primary & Secondary Accents */
+  --color-primary: var(--cyan-400);
+  --color-primary-hover: var(--cyan-500);
+  --color-secondary: var(--amethyst-500);
+  --color-secondary-hover: var(--amethyst-600);
+
+  /* Legacy & Cross-Feature Aliases (Full Backward-Compatibility) */
+  --accent-teal: var(--cyan-400);
+  --accent-teal-hover: var(--cyan-500);
+  --accent-purple: var(--amethyst-500);
+  --accent-blue: var(--cyan-600);
+  --accent-blue-light: var(--cyan-300);
+  --accent-neon: var(--cyan-400);
   --accent-red: #ef4444;
 
-  /* Text Colors */
+  /* Text Hierarchy */
   --text-primary: #ffffff;
-  --text-secondary: #e0e0e0;
-  --text-muted: #b3b3b3;
-  --text-subtle: #94a3b8;
-  --text-dim: #888888;
+  --text-secondary: var(--woodsmoke-100);
+  --text-muted: var(--woodsmoke-300);
+  --text-subtle: var(--woodsmoke-400);
+  --text-dim: var(--woodsmoke-500);
 
   /* Borders & Shadows */
-  --border-color: #333333;
+  --border-color: var(--vulcan-800);
   --border-subtle: rgba(255, 255, 255, 0.12);
-  --shadow-main: 0 8px 30px rgba(0, 0, 0, 0.5);
+  --shadow-main: 0 8px 30px rgba(0, 0, 0, 0.7);
+  --shadow-neon-cyan: 0 0 20px rgba(0, 240, 255, 0.4);
+  --shadow-neon-purple: 0 0 20px rgba(168, 85, 247, 0.4);
 
-  /* Typography */
+  /* ======================================================
+     3. SPACING TOKENS (Equivalent to Gap / EdgeInsets in Flutter)
+     ====================================================== */
+  --space-3xs: 2px;
+  --space-2xs: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+
+  /* ======================================================
+     4. RADIUS TOKENS (Border Radius)
+     ====================================================== */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* ======================================================
+     5. TYPOGRAPHY & TRANSITIONS
+     ====================================================== */
   --font-primary: "Montserrat", sans-serif;
   --font-arabic: "Cairo", sans-serif;
 
-  /* Transitions */
   --transition-fast: 0.2s ease;
   --transition-normal: 0.3s ease;
   --transition-smooth: 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);

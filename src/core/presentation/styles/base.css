@@ -29,19 +29,20 @@ body {
   max-width: 1200px;
   margin: 40px auto;
   padding: 20px;
-  background-color: var(--bg-container, #000000);
-  border-radius: 12px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+  background-color: var(--bg-container);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-main);
 }
 
 /* ======== General Link Styles ======== */
 a {
-  color: var(--accent-teal, #03dac6);
+  color: var(--color-primary);
   text-decoration: none;
 }
 
 a:hover {
-  color: var(--accent-teal-hover, #03e6b7);
+  color: var(--color-primary-hover);
 }
 
 /* Prevent underline on all text inside project-card on hover */
@@ -56,18 +57,19 @@ a:hover {
   display: block;
   margin-top: 60px;
   padding: 12px 25px;
-  background-color: var(--accent-teal, #03dac6);
-  color: #121212 !important;
-  border-radius: 6px;
+  background-color: var(--color-primary);
+  color: var(--woodsmoke-950) !important;
+  border-radius: var(--radius-sm);
   max-width: 200px;
   margin-left: auto;
   margin-right: auto;
   font-weight: 700;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
 }
 
 .back-to-home-link:hover {
-  background-color: var(--accent-teal-hover, #03e6b7);
+  background-color: var(--color-primary-hover);
   text-decoration: none;
-  box-shadow: 0 4px 15px rgba(3, 218, 198, 0.4);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-neon-cyan);
 }

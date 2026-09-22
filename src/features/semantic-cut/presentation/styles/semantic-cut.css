@@ -12,9 +12,9 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: rgba(3, 218, 198, 0.12);
-  color: var(--accent-teal, #03dac6);
-  border: 1px solid rgba(3, 218, 198, 0.3);
+  background: rgba(0, 240, 255, 0.12);
+  color: var(--color-primary);
+  border: 1px solid rgba(0, 240, 255, 0.3);
   padding: 6px 16px;
   border-radius: 20px;
   font-size: 0.85em;
@@ -24,7 +24,7 @@
 }
 
 .project-subtitle {
-  color: var(--accent-purple, #bb86fc);
+  color: var(--color-secondary);
   font-size: clamp(1.05rem, 1.8vw, 1.25rem);
   line-height: 1.45;
   font-weight: 600;
@@ -33,7 +33,7 @@
 }
 
 .project-main-desc {
-  color: #c4c4c4;
+  color: var(--text-secondary);
   max-width: 850px;
   margin: 0 auto;
   font-size: 1.05em;
@@ -53,10 +53,10 @@
 
 .ps-card {
   padding: 26px;
-  border-radius: 14px;
-  background: #1b1e26;
-  border: 1px solid #333333;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-main);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   position: relative;
 }
@@ -67,22 +67,22 @@
 
 .problem-card {
   border-left: 4px solid var(--accent-red, #ef4444);
-  background: linear-gradient(135deg, rgba(239, 68, 68, 0.08) 0%, #1a1c23 100%);
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.08) 0%, var(--vulcan-950) 100%);
 }
 
 .solution-card {
-  border-left: 4px solid var(--accent-teal, #03dac6);
-  background: linear-gradient(135deg, rgba(3, 218, 198, 0.08) 0%, #1a1c23 100%);
+  border-left: 4px solid var(--color-primary);
+  background: linear-gradient(135deg, rgba(0, 240, 255, 0.08) 0%, var(--vulcan-950) 100%);
 }
 
 html[dir="rtl"] .problem-card {
-  border-left: 1px solid #333333;
+  border-left: 1px solid var(--border-color);
   border-right: 4px solid var(--accent-red, #ef4444);
 }
 
 html[dir="rtl"] .solution-card {
-  border-left: 1px solid #333333;
-  border-right: 4px solid var(--accent-teal, #03dac6);
+  border-left: 1px solid var(--border-color);
+  border-right: 4px solid var(--color-primary);
 }
 
 .ps-icon {
@@ -95,7 +95,7 @@ html[dir="rtl"] .solution-card {
 }
 
 .solution-card .ps-icon {
-  color: var(--accent-teal, #03dac6);
+  color: var(--color-primary);
 }
 
 .ps-card h3 {
@@ -106,7 +106,7 @@ html[dir="rtl"] .solution-card {
 
 .ps-card p {
   font-size: 0.98em;
-  color: #b0b8c4;
+  color: var(--text-muted);
   line-height: 1.7;
 }
 
@@ -128,11 +128,11 @@ html[dir="rtl"] .solution-card {
 }
 
 .section-title i {
-  color: var(--accent-teal, #03dac6);
+  color: var(--color-primary);
 }
 
 .section-subtext {
-  color: #a0aec0;
+  color: var(--text-subtle);
   font-size: 1em;
   margin-bottom: 25px;
 }
@@ -148,11 +148,11 @@ html[dir="rtl"] .solution-card {
   justify-content: center;
   flex-wrap: wrap;
   gap: 12px;
-  background: #181c24;
+  background: var(--bg-card);
   padding: 16px 24px;
-  border-radius: 12px;
-  border: 1px solid #2e3846;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
 }
 
 .tech-pill-badge {
@@ -161,23 +161,23 @@ html[dir="rtl"] .solution-card {
   gap: 7px;
   padding: 6px 14px;
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border-subtle);
   border-radius: 20px;
   font-size: 0.9em;
   font-weight: 600;
-  color: #e2e8f0;
+  color: var(--text-secondary);
   transition: all 0.25s ease;
 }
 
 .tech-pill-badge:hover {
   transform: translateY(-2px);
-  background: rgba(3, 218, 198, 0.15);
-  border-color: var(--accent-teal, #03dac6);
-  color: var(--accent-teal, #03dac6);
+  background: rgba(0, 240, 255, 0.15);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
 }
 
 .tech-pill-badge i {
-  color: var(--accent-teal, #03dac6);
+  color: var(--color-primary);
 }
 
 .tech-pill-badge.python i {
@@ -185,7 +185,7 @@ html[dir="rtl"] .solution-card {
 }
 
 .tech-pill-badge.gemini i {
-  color: var(--accent-purple, #bb86fc);
+  color: var(--color-secondary);
 }
 
 .tech-pill-badge.groq i {
@@ -193,7 +193,7 @@ html[dir="rtl"] .solution-card {
 }
 
 .tech-pill-divider {
-  color: #475569;
+  color: var(--vulcan-700);
   font-weight: bold;
 }
 
@@ -208,9 +208,9 @@ html[dir="rtl"] .solution-card {
   height: 0;
   overflow: hidden;
   border-radius: 16px;
-  border: 2px solid #2a3342;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7), 0 0 30px rgba(3, 218, 198, 0.12);
-  background: #000000;
+  border: 2px solid var(--border-color);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7), var(--shadow-neon-cyan);
+  background: var(--woodsmoke-950);
 }
 
 .video-responsive-wrapper iframe {
@@ -228,11 +228,11 @@ html[dir="rtl"] .solution-card {
 }
 
 .flowchart-card {
-  background: #151820;
-  border: 1px solid #2a3342;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
   border-radius: 16px;
   padding: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  box-shadow: var(--shadow-main);
 }
 
 .flowchart-actions {
@@ -250,10 +250,10 @@ html[dir="rtl"] .flowchart-actions {
   align-items: center;
   gap: 8px;
   padding: 8px 18px;
-  background: #232a36;
-  color: var(--accent-teal, #03dac6) !important;
-  border: 1px solid var(--accent-teal, #03dac6);
-  border-radius: 8px;
+  background: var(--vulcan-900);
+  color: var(--color-primary) !important;
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-sm);
   font-weight: 600;
   font-size: 0.9em;
   transition: all 0.3s ease;
@@ -261,9 +261,9 @@ html[dir="rtl"] .flowchart-actions {
 }
 
 .diagram-btn:hover {
-  background: var(--accent-teal, #03dac6);
-  color: #121212 !important;
-  box-shadow: 0 0 15px rgba(3, 218, 198, 0.4);
+  background: var(--color-primary);
+  color: var(--woodsmoke-950) !important;
+  box-shadow: var(--shadow-neon-cyan);
 }
 
 .flowchart-img-scroll {
@@ -280,8 +280,8 @@ html[dir="rtl"] .flowchart-actions {
   display: block;
   border: none;
   border-radius: 12px;
-  background: #0d121c;
-  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6), 0 0 25px rgba(14, 165, 233, 0.08);
+  background: var(--woodsmoke-950);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6), 0 0 25px rgba(0, 240, 255, 0.08);
 }
 
 .flowchart-svg-img {
@@ -311,7 +311,7 @@ html[dir="rtl"] .flowchart-actions {
 }
 
 .deep-dive-intro {
-  color: #c4c4c4;
+  color: var(--text-muted);
   font-size: 1.1em;
   max-width: 750px;
   margin: 0 auto 35px;
@@ -325,17 +325,17 @@ html[dir="rtl"] .flowchart-actions {
 }
 
 .stage-card {
-  background: #1b1e26;
-  border: 1px solid #2e3846;
-  border-radius: 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
   padding: 28px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+  box-shadow: var(--shadow-main);
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .stage-card.highlight-card {
-  border-color: rgba(3, 218, 198, 0.6);
-  box-shadow: 0 8px 25px rgba(3, 218, 198, 0.12);
+  border-color: var(--color-primary);
+  box-shadow: 0 8px 25px rgba(0, 240, 255, 0.18);
 }
 
 .stage-card-header {
@@ -349,9 +349,9 @@ html[dir="rtl"] .flowchart-actions {
   font-size: 2em;
   font-weight: 800;
   font-family: "Montserrat", "Cairo", sans-serif;
-  color: var(--accent-teal, #03dac6);
+  color: var(--color-primary);
   line-height: 1;
-  background: linear-gradient(135deg, #03dac6, #bb86fc);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -361,7 +361,7 @@ html[dir="rtl"] .flowchart-actions {
   font-size: 0.72em;
   font-weight: 700;
   letter-spacing: 0.8px;
-  color: var(--accent-teal, #03dac6);
+  color: var(--color-primary);
   text-transform: uppercase;
   margin-bottom: 4px;
 }
@@ -374,7 +374,7 @@ html[dir="rtl"] .flowchart-actions {
 }
 
 .stage-card-body {
-  color: #b0b8c4;
+  color: var(--text-muted);
   font-size: 1em;
   line-height: 1.8;
   margin-bottom: 18px;
@@ -387,9 +387,9 @@ html[dir="rtl"] .flowchart-actions {
 }
 
 .stage-tech-pills span {
-  background: #13161c;
-  color: #94a3b8;
-  border: 1px solid #2a3342;
+  background: var(--vulcan-900);
+  color: var(--text-subtle);
+  border: 1px solid var(--border-color);
   padding: 5px 12px;
   border-radius: 6px;
   font-size: 0.82em;
@@ -397,7 +397,7 @@ html[dir="rtl"] .flowchart-actions {
 }
 
 .stage-tech-pills span code {
-  color: var(--accent-teal, #03dac6);
+  color: var(--color-primary);
 }
 
 .stage-subgrid {
@@ -408,14 +408,14 @@ html[dir="rtl"] .flowchart-actions {
 }
 
 .stage-subcard {
-  background: #13161c;
-  border: 1px solid #2a3342;
+  background: var(--vulcan-900);
+  border: 1px solid var(--border-color);
   border-radius: 10px;
   padding: 16px;
 }
 
 .stage-subcard h5 {
-  color: var(--accent-teal, #03dac6);
+  color: var(--color-primary);
   font-size: 1em;
   margin-bottom: 8px;
   display: flex;
@@ -424,7 +424,7 @@ html[dir="rtl"] .flowchart-actions {
 }
 
 .stage-subcard p {
-  color: #94a3b8;
+  color: var(--text-subtle);
   font-size: 0.88em;
   line-height: 1.6;
   margin: 0;
@@ -442,10 +442,10 @@ html[dir="rtl"] .flowchart-actions {
   display: flex;
   align-items: center;
   gap: 14px;
-  background: #13161c;
+  background: var(--vulcan-900);
   padding: 10px 16px;
   border-radius: 8px;
-  border: 1px solid #2a3342;
+  border: 1px solid var(--border-color);
 }
 
 .track-badge {
@@ -467,12 +467,12 @@ html[dir="rtl"] .flowchart-actions {
 }
 
 .track-desc {
-  color: #cbd5e1;
+  color: var(--text-secondary);
   font-size: 0.92em;
 }
 
 .track-desc code {
-  color: var(--accent-teal, #03dac6);
+  color: var(--color-primary);
 }
 
 /* Explainer Video Showcase Card */
@@ -484,12 +484,12 @@ html[dir="rtl"] .flowchart-actions {
   display: grid;
   grid-template-columns: 320px 1fr;
   gap: 30px;
-  background: #181c24;
-  border: 1.5px solid #2e3846;
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-color);
   border-radius: 16px;
   padding: 24px;
   align-items: center;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--shadow-main);
 }
 
 .explainer-thumb-wrapper {
@@ -532,15 +532,15 @@ html[dir="rtl"] .flowchart-actions {
 .play-pulse-circle {
   width: 60px;
   height: 60px;
-  background: var(--accent-teal, #03dac6);
+  background: var(--color-primary);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #121212;
+  color: var(--woodsmoke-950);
   font-size: 1.4em;
   padding-left: 4px;
-  box-shadow: 0 0 25px rgba(3, 218, 198, 0.6);
+  box-shadow: var(--shadow-neon-cyan);
   transition: transform 0.3s ease;
 }
 
@@ -555,7 +555,7 @@ html[dir="rtl"] .flowchart-actions {
 }
 
 .explainer-content p {
-  color: #a0aec0;
+  color: var(--text-muted);
   font-size: 1em;
   line-height: 1.7;
   margin-bottom: 20px;

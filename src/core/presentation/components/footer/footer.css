@@ -7,9 +7,9 @@ footer {
   text-align: center;
   margin-top: 50px;
   padding-top: 20px;
-  border-top: 1px solid #333333;
+  border-top: 1px solid var(--border-color);
   font-size: 0.9em;
-  color: #888888;
+  color: var(--text-dim);
 }
 
 footer p {

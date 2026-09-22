@@ -9,12 +9,12 @@
 }
 
 .language-switcher button {
-  background: #333333;
-  color: #e0e0e0;
-  border: 1px solid #555555;
+  background: var(--vulcan-900);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
   padding: 8px 16px;
   margin: 0 5px;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   font-family: "Montserrat", "Cairo", sans-serif;
   font-weight: bold;
@@ -22,16 +22,17 @@
 }
 
 .language-switcher button:hover {
-  background: #444444;
+  background: var(--vulcan-800);
+  color: #ffffff;
 }
 
 /* Active State */
 .language-switcher button.active {
-  border: 2px solid var(--accent-teal, #03dac6);
-  background: #232323;
-  color: var(--accent-teal, #03dac6);
+  border: 2px solid var(--color-primary);
+  background: var(--vulcan-950);
+  color: var(--color-primary);
   font-weight: bold;
-  box-shadow: 0 0 0 2px rgba(3, 218, 198, 0.2);
+  box-shadow: 0 0 0 2px rgba(0, 240, 255, 0.25);
   transition: background 0.2s, color 0.2s, border 0.2s;
 }
 
