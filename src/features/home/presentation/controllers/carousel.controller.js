@@ -274,6 +274,21 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
       window.addEventListener("resize", CarouselController.handleResize);
     }
 
+    /**
+     * Smoothly scrolls to the 3D Carousel section, syncing with ScrollTrigger start
+     * @param {number} [targetIndex=0] - Card index to scroll to
+     */
+    static scrollToCarousel(targetIndex = 0) {
+      if (currentCarouselTimeline && currentCarouselTimeline.scrollTrigger) {
+        const startY = currentCarouselTimeline.scrollTrigger.start;
+        const targetY = startY + (targetIndex / 3) * 2400;
+        $("html, body").stop().animate({ scrollTop: targetY }, 600);
+      } else {
+        const section = document.getElementById("projects-carousel-section");
+        if (section) section.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+
     static handleResize() {
       clearTimeout(resizeTimeout);
       resizeTimeout = setTimeout(() => {

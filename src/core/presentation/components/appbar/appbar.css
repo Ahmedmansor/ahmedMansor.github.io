@@ -1,0 +1,228 @@
+/* ========================================================
+   APP BAR (NAVBAR) COMPONENT STYLES
+   src/core/presentation/components/appbar/appbar.css
+   Modern Cyberpunk Glassmorphic Floating Capsule
+   ======================================================== */
+
+.appbar {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(94%, 960px);
+  z-index: 1000;
+  border-radius: var(--radius-full);
+  background: rgba(14, 16, 24, 0.78);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75), 0 0 25px rgba(0, 240, 255, 0.06);
+  transition: opacity 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+              transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+              border-color 0.3s ease,
+              box-shadow 0.3s ease;
+  overflow: hidden;
+}
+
+/* 1. Cyberpunk Energy Border-Beam (Flowing Laser Glow) */
+.appbar::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    transparent 20%,
+    var(--color-primary) 45%,
+    var(--color-secondary) 65%,
+    transparent 85%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  animation: cyberBeamFlow 6s linear infinite;
+  opacity: 0.85;
+}
+
+@keyframes cyberBeamFlow {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Smart Auto-Hide State for Carousel Immersion */
+.appbar.appbar-hidden {
+  opacity: 0;
+  transform: translate(-50%, -35px);
+  pointer-events: none;
+}
+
+.appbar-inner {
+  position: relative;
+  z-index: 2;
+  padding: 8px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  box-sizing: border-box;
+}
+
+/* 2. Interactive 3D Perspective Tilt on Brand Logo */
+.appbar-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.12rem;
+  font-weight: 800;
+  font-family: "Montserrat", "Cairo", sans-serif;
+  color: #ffffff !important;
+  text-decoration: none !important;
+  letter-spacing: -0.2px;
+  perspective: 600px;
+  transform-style: preserve-3d;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.appbar-brand:hover {
+  transform: perspective(600px) rotateX(10deg) rotateY(-8deg) translateZ(8px);
+}
+
+.appbar-brand .brand-name {
+  color: #ffffff;
+  transition: text-shadow 0.3s ease, color 0.3s ease;
+}
+
+.appbar-brand:hover .brand-name {
+  text-shadow: 0 0 12px rgba(0, 240, 255, 0.7), 0 0 24px rgba(168, 85, 247, 0.4);
+}
+
+.appbar-brand .brand-tag {
+  color: var(--color-primary);
+  font-weight: 900;
+  font-family: monospace;
+  font-size: 1.25rem;
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+  transition: transform 0.3s ease;
+}
+
+.appbar-brand:hover .brand-tag {
+  transform: scale(1.15);
+}
+
+/* 3. Cyber HUD Status Indicator (Radar Pulsing Dot) */
+.hud-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  box-shadow: 0 0 8px var(--color-primary), 0 0 16px var(--color-primary);
+  position: relative;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.hud-status-dot::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-primary);
+  opacity: 0.8;
+  animation: hudRadarPulse 2.2s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+}
+
+@keyframes hudRadarPulse {
+  0% {
+    transform: scale(0.6);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+/* Center Navigation Link */
+.appbar-nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.appbar-link {
+  color: var(--text-secondary) !important;
+  text-decoration: none !important;
+  font-size: 0.92rem;
+  font-weight: 600;
+  font-family: "Montserrat", "Cairo", sans-serif;
+  padding: 6px 16px;
+  border-radius: var(--radius-full);
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+.appbar-link:hover {
+  color: var(--color-primary) !important;
+  background: rgba(0, 240, 255, 0.1);
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.2);
+}
+
+.appbar-link.active {
+  color: var(--color-primary) !important;
+  background: var(--vulcan-900);
+  border: 1px solid var(--border-color);
+}
+
+/* Right Actions (Language Switcher) */
+.appbar-actions {
+  display: flex;
+  align-items: center;
+}
+
+/* Adjustments for project pages top spacing */
+body#project1-page,
+body#semanticcut-page {
+  padding-top: 24px;
+}
+
+/* Responsive Mobile Adjustments */
+@media (max-width: 768px) {
+  .appbar {
+    top: 10px;
+    width: 95%;
+  }
+
+  .appbar-inner {
+    padding: 6px 14px;
+    gap: 8px;
+  }
+
+  .appbar-brand {
+    font-size: 0.95rem;
+  }
+
+  .appbar-link {
+    font-size: 0.82rem;
+    padding: 4px 10px;
+  }
+}
+
+@media (max-width: 440px) {
+  .appbar-brand .brand-name {
+    display: none;
+  }
+}

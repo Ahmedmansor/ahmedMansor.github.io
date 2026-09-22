@@ -5,6 +5,7 @@
 /* 1. Core - Tokens, Base Layout & Common Components */
 @import url("src/core/presentation/styles/variables.css");
 @import url("src/core/presentation/styles/base.css");
+@import url("src/core/presentation/components/appbar/appbar.css");
 @import url("src/core/presentation/components/language-switcher/language-switcher.css");
 @import url("src/core/presentation/components/footer/footer.css");
 

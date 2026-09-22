@@ -4,6 +4,9 @@ translations = {
     seeMore: "See More",
     seeLess: "See Less",
     backToHome: "Back to Home",
+    navHome: "Home",
+    navProjects: "Projects",
+    navSkills: "Skills",
   },
   // Text specific to the index.html / home.html page
   indexPage: {

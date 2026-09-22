@@ -1,70 +1,67 @@
 /* ========================================================
    LANGUAGE SWITCHER COMPONENT STYLES
-   src/presentation/common/components/language-switcher/language-switcher.css
+   src/core/presentation/components/language-switcher/language-switcher.css
+   Universal Glassmorphic Widget
    ======================================================== */
 
 .language-switcher {
-  text-align: center;
-  margin-bottom: 30px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(18, 19, 28, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  padding: 4px 6px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  z-index: 10;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.language-switcher:hover {
+  border-color: rgba(0, 240, 255, 0.35);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 10px rgba(0, 240, 255, 0.15);
 }
 
 .language-switcher button {
-  background: var(--vulcan-900);
-  color: var(--text-secondary);
-  border: 1px solid var(--border-color);
-  padding: 8px 16px;
-  margin: 0 5px;
-  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid transparent;
+  padding: 5px 14px;
+  margin: 0;
+  border-radius: var(--radius-full);
   cursor: pointer;
   font-family: "Montserrat", "Cairo", sans-serif;
-  font-weight: bold;
-  transition: background-color 0.3s ease, border-color 0.2s ease, color 0.2s ease;
+  font-size: 0.84rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.2;
 }
 
 .language-switcher button:hover {
-  background: var(--vulcan-800);
   color: #ffffff;
+  background: rgba(255, 255, 255, 0.06);
 }
 
 /* Active State */
 .language-switcher button.active {
-  border: 2px solid var(--color-primary);
-  background: var(--vulcan-950);
+  border: 1px solid var(--color-primary);
+  background: var(--vulcan-900);
   color: var(--color-primary);
-  font-weight: bold;
-  box-shadow: 0 0 0 2px rgba(0, 240, 255, 0.25);
-  transition: background 0.2s, color 0.2s, border 0.2s;
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.28);
 }
 
-/* Glassmorphic Cover Variant (Home Header) */
-.portfolio-cover .language-switcher {
-  margin-bottom: 0;
-  height: auto;
-  align-self: flex-start;
-  background: rgba(18, 18, 18, 0.65);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  padding: 6px 10px;
-  border-radius: 30px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  display: inline-flex;
-  align-items: center;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-  z-index: 10;
-}
-
-.portfolio-cover .language-switcher button {
-  padding: 6px 14px;
-  font-size: 0.85em;
-  border-radius: 20px;
-}
-
-@media (max-width: 700px) {
-  .portfolio-cover .language-switcher {
-    padding: 4px 8px;
+@media (max-width: 600px) {
+  .language-switcher {
+    padding: 3px 5px;
   }
-  .portfolio-cover .language-switcher button {
-    padding: 5px 12px;
-    font-size: 0.8em;
+  .language-switcher button {
+    padding: 4px 10px;
+    font-size: 0.78rem;
   }
 }

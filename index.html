@@ -26,14 +26,28 @@
   </head>
 
   <body id="home-page">
-    <div class="container header-container">
-      <header class="portfolio-header">
-        <div class="portfolio-cover">
+    <!-- Global Sticky App Bar -->
+    <header class="appbar">
+      <div class="appbar-inner">
+        <a href="index.html" class="appbar-brand" title="Home">
+          <span class="hud-status-dot" aria-hidden="true"></span>
+          <span class="brand-tag">&lt;</span><span class="brand-name">ahmedMansour</span><span class="brand-tag"> /&gt;</span>
+        </a>
+        <nav class="appbar-nav">
+          <a href="#projects-carousel-section" class="appbar-link" data-i18n-key="common.navProjects">Projects</a>
+        </nav>
+        <div class="appbar-actions">
           <div class="language-switcher">
             <button id="lang-en-btn">English</button>
             <button id="lang-ar-btn">العربية</button>
           </div>
         </div>
+      </div>
+    </header>
+
+    <div class="container header-container">
+      <header class="portfolio-header">
+        <div class="portfolio-cover"></div>
         <div class="profile-avatar-wrapper">
           <img
             src="assets/images/profile-pic.jpg"

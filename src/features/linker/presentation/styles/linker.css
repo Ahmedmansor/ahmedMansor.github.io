@@ -6,7 +6,7 @@
 /* ======== Sticky Feature Navigation Bar ======== */
 .feature-nav {
   position: sticky;
-  top: 0;
+  top: 54px;
   z-index: 100;
   background: var(--bg-card);
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);

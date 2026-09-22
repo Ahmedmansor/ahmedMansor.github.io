@@ -4,6 +4,9 @@ translations = {
     seeMore: "عرض المزيد",
     seeLess: "عرض أقل",
     backToHome: "العودة إلى الرئيسية",
+    navHome: "الرئيسية",
+    navProjects: "المشاريع",
+    navSkills: "المهارات",
   },
   // Text specific to the index.html / home.html page
   indexPage: {
