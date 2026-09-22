@@ -96,6 +96,17 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
         gsap.set(spaceship, { autoAlpha: 0, x: -450, y: 160, rotation: 16, scale: 0.75 });
       }
 
+      // Smooth scroll click on cyber scroll indicator
+      const scrollIndicator = document.getElementById("cyber-scroll-indicator");
+      if (scrollIndicator) {
+        scrollIndicator.addEventListener("click", () => {
+          const aboutSection = document.getElementById("about-section");
+          if (aboutSection) {
+            aboutSection.scrollIntoView({ behavior: "smooth" });
+          }
+        });
+      }
+
       // Create Pinned Scrub Timeline with generous scroll travel (+180vh)
       const heroTl = gsap.timeline({
         scrollTrigger: {
@@ -107,6 +118,16 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
           anticipatePin: 1
         }
       });
+
+      // Fade out scroll indicator immediately on initial scroll
+      if (scrollIndicator) {
+        heroTl.to(scrollIndicator, {
+          autoAlpha: 0,
+          y: 10,
+          duration: 0.12,
+          ease: "power1.out"
+        }, 0.01);
+      }
 
       // Step 1: Scroll-Driven Character-by-Character Typing (Scrubbed forward & backward)
       const typingTracker = { length: 0 };
