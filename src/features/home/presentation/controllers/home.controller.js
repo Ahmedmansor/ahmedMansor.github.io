@@ -44,6 +44,9 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
       // Initialize Smart Floating App Bar auto-hide and scroll reveal (Solution 1)
       this.setupSmartAppBar();
 
+      // Initialize Pinned Scroll-Driven Space Hero Sequence
+      this.setupSpaceHeroScrollSequence();
+
       // Setup smooth navigation to projects
       this.setupProjectsNavLink();
 
@@ -52,6 +55,108 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
 
       // Handle direct landing with hash (#projects-carousel-section)
       this.handleHashNavigation();
+    }
+
+    /**
+     * Initializes the Pinned GSAP ScrollTrigger Sequence for Space Hero:
+     * - Pins hero stage for a crisp, cinematic scroll duration (~120vh).
+     * - Step 1: "AHMED" enters with letter-spacing tracking.
+     * - Step 2: "MANSOUR" enters alongside it.
+     * - Step 3: Subtitle ("SOFTWARE", "ENGINEER", "[ FLUTTER & AI ]") reveals.
+     * - Step 4: Futuristic spaceship probe swoops across the curved Earth horizon.
+     * - Unpins cleanly into the side-by-side About Me / Profile separator.
+     */
+    static setupSpaceHeroScrollSequence() {
+      if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") return;
+
+      const heroWrapper = document.getElementById("space-hero-pin-wrapper");
+      const titleFirst = document.querySelector(".title-first");
+      const titleLast = document.querySelector(".title-last");
+      const subWords = document.querySelectorAll("#subtitle .sub-word, #subtitle .sub-tag");
+      const spaceship = document.getElementById("space-vessel");
+      const horizon = document.getElementById("horizon");
+
+      if (!heroWrapper || !titleFirst || !titleLast) return;
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Force initial hidden states strictly with autoAlpha to ensure clean startup
+      gsap.set(titleFirst, { autoAlpha: 0, y: -40, letterSpacing: "clamp(6px, 1.2vw, 14px)" });
+      gsap.set(titleLast, { autoAlpha: 0, y: -40, letterSpacing: "clamp(6px, 1.2vw, 14px)" });
+      if (subWords.length > 0) {
+        gsap.set(subWords, { autoAlpha: 0, y: 22 });
+      }
+      if (spaceship) {
+        gsap.set(spaceship, { autoAlpha: 0, x: -450, y: 160, rotation: 16, scale: 0.75 });
+      }
+
+      // Create Pinned Scrub Timeline with generous scroll travel (+180vh)
+      const heroTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: heroWrapper,
+          start: "top top",
+          end: "+=180%",
+          pin: true,
+          scrub: 0.8,
+          anticipatePin: 1
+        }
+      });
+
+      // Step 1: AHMED reveals smoothly as user scrolls
+      heroTl.to(titleFirst, {
+        autoAlpha: 1,
+        y: 0,
+        letterSpacing: "clamp(12px, 2vw, 24px)",
+        duration: 0.24,
+        ease: "power2.out"
+      }, 0.06);
+
+      // Step 2: MANSOUR reveals right after it
+      heroTl.to(titleLast, {
+        autoAlpha: 1,
+        y: 0,
+        letterSpacing: "clamp(12px, 2vw, 24px)",
+        duration: 0.24,
+        ease: "power2.out"
+      }, 0.26);
+
+      // Step 3: Subtitle words emerge sequentially ("SOFTWARE", "ENGINEER", "[ FLUTTER & AI ]")
+      if (subWords.length > 0) {
+        heroTl.to(subWords, {
+          autoAlpha: 1,
+          y: 0,
+          stagger: 0.08,
+          duration: 0.22,
+          ease: "power2.out"
+        }, 0.46);
+      }
+
+      // Step 4: Spaceship flies majestically across the curved horizon
+      if (spaceship) {
+        heroTl.to(spaceship, {
+          autoAlpha: 1,
+          duration: 0.08,
+          ease: "power1.in"
+        }, 0.58)
+        .to(spaceship, {
+          x: window.innerWidth + 450,
+          y: 20,
+          rotation: -6,
+          scale: 1.05,
+          duration: 0.42,
+          ease: "power1.inOut"
+        }, 0.58);
+      }
+
+      // Step 5: Atmospheric subtle tilt
+      if (horizon) {
+        heroTl.to(horizon, {
+          y: 16,
+          scale: 1.025,
+          duration: 0.45,
+          ease: "sine.inOut"
+        }, 0.55);
+      }
     }
 
     /**
@@ -91,25 +196,28 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
 
     /**
      * Implements Solution 1:
-     * - Hides the floating capsule App Bar when at the top of the page (in Space Hero) for an unobstructed view.
-     * - Smoothly reveals the App Bar when scrolling past the Space Hero (~110px).
+     * - Hides the floating capsule App Bar throughout the Space Hero pinned sequence.
+     * - Smoothly reveals the App Bar only when scrolling past the Space Hero into About Me (#about-section).
      * - Auto-hides when entering the 3D Carousel immersion zone, restoring it when scrolling away.
      */
     static setupSmartAppBar() {
       const appbar = document.querySelector(".appbar");
+      const aboutSection = document.getElementById("about-section");
       const carousel = document.getElementById("projects-carousel-section");
       if (!appbar) return;
 
       const updateAppBarState = () => {
-        const scrollY = window.scrollY || window.pageYOffset;
-
-        // 1. Solution 1: Completely hide at the top in Space Hero
-        if (scrollY < 110) {
-          appbar.classList.add("appbar-hero-hidden");
-          appbar.classList.remove("appbar-hidden");
-          return;
-        } else {
-          appbar.classList.remove("appbar-hero-hidden");
+        // 1. Solution 1: Keep App Bar completely hidden throughout the Space Hero sequence
+        // Reveal only when reaching or passing the About Me section (#about-section)
+        if (aboutSection) {
+          const aboutRect = aboutSection.getBoundingClientRect();
+          if (aboutRect.top > 90) {
+            appbar.classList.add("appbar-hero-hidden");
+            appbar.classList.remove("appbar-hidden");
+            return;
+          } else {
+            appbar.classList.remove("appbar-hero-hidden");
+          }
         }
 
         // 2. Hide when immersed inside the 3D Carousel zone

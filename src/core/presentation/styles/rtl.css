@@ -77,3 +77,13 @@ html[dir="rtl"] .space-subtitle {
   padding-right: 1px;
   direction: rtl;
 }
+
+/* About Section RTL Overrides */
+html[dir="rtl"] .about-info-col {
+  text-align: right;
+}
+
+html[dir="rtl"] .about-social-links,
+html[dir="rtl"] .about-tech-stack {
+  justify-content: flex-start;
+}

@@ -34,7 +34,7 @@
     <!-- Global Sticky App Bar -->
     <header id="appbar-container"></header>
 
-    <div class="container header-container">
+    <div class="container header-container" id="space-hero-pin-wrapper">
       <header class="portfolio-header">
         <div class="space-hero-stage" id="space-hero-stage">
           <div id="stars"></div>
@@ -44,15 +44,153 @@
             <div class="glow"></div>
           </div>
           <div id="earth"></div>
-          <div id="title">AHMED MANSOUR</div>
-          <div id="subtitle">
-            <span>FLUTTER</span>
-            <span>MOBILE</span>
-            <span>DEVELOPER</span>
+
+          <!-- Futuristic Spaceship Probe (Flies on scroll across curved horizon) -->
+          <div id="space-vessel" class="space-vessel" aria-hidden="true">
+            <svg class="spaceship-svg" viewBox="0 0 360 95" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Engine Exhaust Plasma Trail -->
+              <defs>
+                <linearGradient id="thrusterPlasma" x1="50" y1="47" x2="-90" y2="47" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#00f0ff" stop-opacity="1"/>
+                  <stop offset="0.25" stop-color="#0088ff" stop-opacity="0.85"/>
+                  <stop offset="0.65" stop-color="#7000ff" stop-opacity="0.45"/>
+                  <stop offset="1" stop-color="#000000" stop-opacity="0"/>
+                </linearGradient>
+                <linearGradient id="hullMetal" x1="40" y1="20" x2="340" y2="70" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#0e1724"/>
+                  <stop offset="0.5" stop-color="#182538"/>
+                  <stop offset="1" stop-color="#0a1018"/>
+                </linearGradient>
+                <linearGradient id="wingGradient" x1="120" y1="0" x2="220" y2="95" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#0a121d"/>
+                  <stop offset="0.7" stop-color="#142132"/>
+                  <stop offset="1" stop-color="#050a10"/>
+                </linearGradient>
+                <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur stdDeviation="3" result="blur"/>
+                  <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                </filter>
+              </defs>
+
+              <!-- Dual Plasma Ion Exhaust Beams -->
+              <path d="M48 38 L -85 38" stroke="url(#thrusterPlasma)" stroke-width="6" stroke-linecap="round"/>
+              <path d="M48 56 L -85 56" stroke="url(#thrusterPlasma)" stroke-width="6" stroke-linecap="round"/>
+              <path d="M48 47 L -50 47" stroke="#00f0ff" stroke-width="2.5" stroke-linecap="round" opacity="0.9"/>
+
+              <!-- Upper Swept Wing & Fin -->
+              <polygon points="190,32 150,4 100,10 125,35" fill="url(#wingGradient)" stroke="#00d4ff" stroke-width="1.5"/>
+              <line x1="150" y1="4" x2="100" y2="10" stroke="#00f0ff" stroke-width="2" filter="url(#neonGlow)"/>
+              <circle cx="150" cy="4" r="2.5" fill="#00f0ff"/>
+
+              <!-- Lower Swept Wing & Fin -->
+              <polygon points="190,62 150,90 100,84 125,59" fill="url(#wingGradient)" stroke="#00d4ff" stroke-width="1.5"/>
+              <line x1="150" y1="90" x2="100" y2="84" stroke="#00f0ff" stroke-width="2" filter="url(#neonGlow)"/>
+              <circle cx="150" cy="90" r="2.5" fill="#00f0ff"/>
+
+              <!-- Main Aerodynamic Fuselage -->
+              <polygon points="340,47 250,23 90,28 45,36 35,47 45,58 90,66 250,71" fill="url(#hullMetal)" stroke="#4da2ff" stroke-width="2"/>
+
+              <!-- Cyber Armor Facets & Surface Plating -->
+              <polygon points="275,47 230,30 160,33 190,47" fill="#1b2a3f" stroke="#00e5ff" stroke-width="1" opacity="0.75"/>
+              <polygon points="275,47 230,64 160,61 190,47" fill="#1b2a3f" stroke="#00e5ff" stroke-width="1" opacity="0.75"/>
+
+              <!-- Sleek Cockpit Canopy (Cyan Glass) -->
+              <polygon points="295,47 245,36 185,38 215,47 185,56 245,58" fill="#00e5ff" fill-opacity="0.35" stroke="#00f0ff" stroke-width="1.8" filter="url(#neonGlow)"/>
+              <line x1="245" y1="36" x2="215" y2="47" stroke="#ffffff" stroke-width="1" opacity="0.8"/>
+
+              <!-- Cyber Tech Panel Neon Gridlines -->
+              <line x1="180" y1="47" x2="65" y2="47" stroke="#00f0ff" stroke-width="1.5" stroke-dasharray="6 3"/>
+              <line x1="150" y1="37" x2="90" y2="37" stroke="#4da2ff" stroke-width="1" stroke-dasharray="4 2"/>
+              <line x1="150" y1="57" x2="90" y2="57" stroke="#4da2ff" stroke-width="1" stroke-dasharray="4 2"/>
+
+              <!-- Twin Heavy Plasma Thruster Nozzles -->
+              <rect x="36" y="32" width="14" height="12" rx="2" fill="#0b131e" stroke="#00e5ff" stroke-width="1.5"/>
+              <ellipse cx="48" cy="38" rx="4" ry="5.5" fill="#00f0ff"/>
+              <rect x="36" y="50" width="14" height="12" rx="2" fill="#0b131e" stroke="#00e5ff" stroke-width="1.5"/>
+              <ellipse cx="48" cy="56" rx="4" ry="5.5" fill="#00f0ff"/>
+            </svg>
+          </div>
+
+          <!-- Sequential Scroll-Triggered Title -->
+          <div id="title" class="gravity-title">
+            <span class="title-word title-first">AHMED</span>
+            <span class="title-word title-last">MANSOUR</span>
+          </div>
+
+          <!-- Sequential Scroll-Triggered Subtitle -->
+          <div id="subtitle" class="gravity-subtitle">
+            <span class="sub-word sub-software">SOFTWARE</span>
+            <span class="sub-word sub-engineer">ENGINEER</span>
+            <span class="sub-word sub-tag">[ FLUTTER & AI ]</span>
+          </div>
+
+          <!-- Futuristic Cyberpunk HUD Telemetry Terminal Modules -->
+          <div class="hud-telemetry hud-tl">
+            <span class="hud-bracket">&gt;</span> [SYS.CORE: ONLINE // V3.4] <span class="cyber-pulse-dot" title="Core Active"></span>
+          </div>
+          <div class="hud-telemetry hud-tr">
+            <span class="hud-bracket">&gt;</span> [LOC: CAIRO_NODE // 30.04° N]
+          </div>
+          <div class="hud-telemetry hud-bl">
+            <span class="hud-bracket">&gt;</span> [ORBIT: GEO-STATIONARY // 35,786 KM]
+          </div>
+          <div class="hud-telemetry hud-br">
+            <span class="hud-bracket">&gt;</span> [INPUT: SCROLL_TO_DESCEND] <span class="cyber-cursor">█</span>
           </div>
         </div>
       </header>
     </div>
+
+    <!-- 2. Profile & Bio Separator Section (Side-by-Side Clean Architecture) -->
+    <section class="about-me-section" id="about-section">
+      <div class="about-container">
+        <!-- Left: Avatar Column -->
+        <div class="about-avatar-col">
+          <div class="about-avatar-card">
+            <div class="avatar-glow-ring"></div>
+            <img src="assets/images/profile-pic.jpg" alt="Ahmed Mansour" class="about-avatar-img" />
+            <div class="status-badge">
+              <span class="status-pulse"></span>
+              <span class="status-text">Available for Projects</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Bio & Info Column -->
+        <div class="about-info-col">
+          <div class="about-section-tag">
+            <i class="fas fa-terminal"></i> &lt;ABOUT ME /&gt;
+          </div>
+          <h2 class="about-title" data-i18n-key="indexPage.name">Ahmed Mohamed Mansour</h2>
+          <h3 class="about-subtitle" data-i18n-key="indexPage.jobTitle">Flutter & Mobile Systems Engineer</h3>
+          <p class="about-bio-text" data-i18n-key="indexPage.bio">
+            Flutter Developer skilled in building responsive, high-performance mobile applications for both iOS and Android platforms. Proficient in Dart and Flutter, with a proven ability to deliver visually appealing and feature-rich apps. Regularly leverage AI tools to accelerate code writing and enhance problem-solving efficiency.
+          </p>
+
+          <!-- Tech Stack Badges -->
+          <div class="about-tech-stack">
+            <span class="tech-chip"><i class="fab fa-flutter"></i> Flutter</span>
+            <span class="tech-chip"><i class="fas fa-code"></i> Dart</span>
+            <span class="tech-chip"><i class="fas fa-cubes"></i> Bloc / Clean Arch</span>
+            <span class="tech-chip"><i class="fas fa-bolt"></i> Supabase / Firebase</span>
+            <span class="tech-chip"><i class="fas fa-brain"></i> AI Automations</span>
+          </div>
+
+          <!-- Social Quick Links -->
+          <div class="about-social-links">
+            <a href="https://github.com/Ahmedmansor" target="_blank" rel="noopener noreferrer" class="about-social-btn" aria-label="GitHub">
+              <i class="fab fa-github"></i> <span>GitHub</span>
+            </a>
+            <a href="https://www.linkedin.com/in/ahmed-mansour-34138a202/" target="_blank" rel="noopener noreferrer" class="about-social-btn" aria-label="LinkedIn">
+              <i class="fab fa-linkedin"></i> <span>LinkedIn</span>
+            </a>
+            <a href="mailto:ahmedmansor408@gmail.com" class="about-social-btn contact-accent-btn" aria-label="Email">
+              <i class="fas fa-envelope"></i> <span data-i18n-key="common.contactMe">Contact Me</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- 3D GSAP Cylinder Carousel Section (Wide 4-Item Ring & Locked Pin Scroll) -->
     <section class="carousel-section" id="projects-carousel-section" carousel="component">
