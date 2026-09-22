@@ -41,7 +41,7 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
         FooterComponent.init("#footer-container");
       }
 
-      // Initialize Smart Floating App Bar auto-hide on carousel immersion
+      // Initialize Smart Floating App Bar auto-hide and scroll reveal (Solution 1)
       this.setupSmartAppBar();
 
       // Setup smooth navigation to projects
@@ -90,24 +90,47 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
     }
 
     /**
-     * Smoothly auto-hides the floating capsule App Bar when scrolling near the 3D Carousel,
-     * restoring full screen immersion without title collisions, and restores it when scrolling up.
+     * Implements Solution 1:
+     * - Hides the floating capsule App Bar when at the top of the page (in Space Hero) for an unobstructed view.
+     * - Smoothly reveals the App Bar when scrolling past the Space Hero (~110px).
+     * - Auto-hides when entering the 3D Carousel immersion zone, restoring it when scrolling away.
      */
     static setupSmartAppBar() {
       const appbar = document.querySelector(".appbar");
       const carousel = document.getElementById("projects-carousel-section");
-      if (!appbar || !carousel) return;
+      if (!appbar) return;
+
+      const updateAppBarState = () => {
+        const scrollY = window.scrollY || window.pageYOffset;
+
+        // 1. Solution 1: Completely hide at the top in Space Hero
+        if (scrollY < 110) {
+          appbar.classList.add("appbar-hero-hidden");
+          appbar.classList.remove("appbar-hidden");
+          return;
+        } else {
+          appbar.classList.remove("appbar-hero-hidden");
+        }
+
+        // 2. Hide when immersed inside the 3D Carousel zone
+        if (carousel) {
+          const carouselRect = carousel.getBoundingClientRect();
+          if (carouselRect.top <= 140 && carouselRect.bottom > 100) {
+            appbar.classList.add("appbar-hidden");
+          } else {
+            appbar.classList.remove("appbar-hidden");
+          }
+        }
+      };
+
+      // Initial check on page load
+      updateAppBarState();
 
       let ticking = false;
       window.addEventListener("scroll", () => {
         if (!ticking) {
           window.requestAnimationFrame(() => {
-            const carouselRect = carousel.getBoundingClientRect();
-            if (carouselRect.top <= 140 && carouselRect.bottom > 100) {
-              appbar.classList.add("appbar-hidden");
-            } else {
-              appbar.classList.remove("appbar-hidden");
-            }
+            updateAppBarState();
             ticking = false;
           });
           ticking = true;

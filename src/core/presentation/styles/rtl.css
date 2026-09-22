@@ -60,3 +60,20 @@ html[dir="rtl"] .google-play-btn .btn-text {
   align-items: flex-end;
   text-align: right;
 }
+
+/* Space Hero RTL Typography */
+html[dir="rtl"] .space-title {
+  font-family: var(--font-arabic, "Cairo"), sans-serif;
+  letter-spacing: 2px;
+  padding-left: 0;
+  padding-right: 2px;
+  direction: rtl;
+}
+
+html[dir="rtl"] .space-subtitle {
+  font-family: var(--font-arabic, "Cairo"), sans-serif;
+  letter-spacing: 1px;
+  padding-left: 0;
+  padding-right: 1px;
+  direction: rtl;
+}
