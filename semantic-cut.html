@@ -40,8 +40,8 @@
       />
     </noscript>
 
-    <!-- Initial Localization Dictionary (Synchronous) -->
-    <script src="lang/en.js" id="lang-script"></script>
+    <!-- Initial Localization Dictionary (Deferred) -->
+    <script src="lang/en.js" id="lang-script" defer></script>
   </head>
 
   <body id="semanticcut-page">
@@ -194,6 +194,7 @@
           <div class="video-responsive-wrapper">
             <iframe
               src="https://player.vimeo.com/video/1228545439?badge=0&autopause=0&player_id=0&app_id=58479"
+              loading="lazy"
               frameborder="0"
               allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
               allowfullscreen
@@ -398,16 +399,16 @@
 
     <!-- Feature-First Clean Architecture Scripts -->
     <!-- 1. Core Layer -->
-    <script src="src/core/domain/usecases/localization.usecase.js"></script>
-    <script src="src/core/data/datasources/storage.datasource.js"></script>
-    <script src="src/core/data/datasources/language.datasource.js"></script>
-    <script src="src/core/data/repositories/language.repository.js"></script>
-    <script src="src/core/presentation/components/language-switcher/language-switcher.component.js"></script>
-    <script src="src/core/presentation/components/appbar/appbar.component.js"></script>
-    <script src="src/core/presentation/components/footer/footer.component.js"></script>
+    <script defer src="src/core/domain/usecases/localization.usecase.js"></script>
+    <script defer src="src/core/data/datasources/storage.datasource.js"></script>
+    <script defer src="src/core/data/datasources/language.datasource.js"></script>
+    <script defer src="src/core/data/repositories/language.repository.js"></script>
+    <script defer src="src/core/presentation/components/language-switcher/language-switcher.component.js"></script>
+    <script defer src="src/core/presentation/components/appbar/appbar.component.js"></script>
+    <script defer src="src/core/presentation/components/footer/footer.component.js"></script>
 
     <!-- 2. SemanticCut Feature -->
-    <script src="src/features/semantic-cut/presentation/controllers/semantic-cut.controller.js"></script>
+    <script defer src="src/features/semantic-cut/presentation/controllers/semantic-cut.controller.js"></script>
 
     <script>
       // Initialize SemanticCut AI Detail Page via Feature-First Controller
