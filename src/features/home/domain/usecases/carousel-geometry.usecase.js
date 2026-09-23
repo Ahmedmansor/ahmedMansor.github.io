@@ -51,12 +51,12 @@ window.Portfolio.domain.usecases = window.Portfolio.domain.usecases || {};
 
       const depthFactor = (cosT + 1) / 2;
       const opacity = 0.38 + 0.62 * depthFactor;
-      const zIndex = Math.round(depthFactor * 30) + 1;
       const isNearCenter = Math.abs(theta) < 45;
+      const zIndex = isNearCenter ? 10 : (depthFactor > 0.4 ? 5 : 1);
 
       return {
-        transform: `translate3d(${x}px, ${y}px, ${z}px) rotateY(${rotY}deg) scale(${scale})`,
-        opacity,
+        transform: `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, ${z.toFixed(2)}px) rotateY(${rotY.toFixed(2)}deg) scale(${scale.toFixed(3)})`,
+        opacity: Number(opacity.toFixed(3)),
         zIndex,
         isNearCenter
       };

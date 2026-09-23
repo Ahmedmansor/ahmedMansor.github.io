@@ -3,10 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="SemanticCut AI: Automated Multilingual Video Production Pipeline - End-to-end AI video engineering system built by Ahmed Mansour."
+    />
+    <link rel="canonical" href="https://ahmedmansor.github.io/semantic-cut.html" />
     <title data-i18n-key="semanticCutPage.pageTitle">
-      Project Details: SemanticCut AI
+      Project Details: SemanticCut AI | Ahmed Mansour - Flutter Developer
     </title>
-    <link rel="stylesheet" href="style.css" />
+
+    <!-- Direct Core & Feature Stylesheets (Eliminates @import Waterfall & FOUC) -->
+    <link rel="stylesheet" href="src/core/presentation/styles/variables.css" />
+    <link rel="stylesheet" href="src/core/presentation/styles/base.css" />
+    <link rel="stylesheet" href="src/core/presentation/components/appbar/appbar.css" />
+    <link rel="stylesheet" href="src/core/presentation/components/language-switcher/language-switcher.css" />
+    <link rel="stylesheet" href="src/core/presentation/components/footer/footer.css" />
+    <link rel="stylesheet" href="src/features/semantic-cut/presentation/styles/semantic-cut.css" />
+    <link rel="stylesheet" href="src/core/presentation/styles/rtl.css" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,12 +30,39 @@
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      media="print"
+      onload="this.media='all'"
     />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      />
+    </noscript>
+
+    <!-- Initial Localization Dictionary (Synchronous) -->
+    <script src="lang/en.js" id="lang-script"></script>
   </head>
 
   <body id="semanticcut-page">
-    <!-- Global Sticky App Bar -->
-    <header id="appbar-container"></header>
+    <!-- Global Sticky App Bar (Pre-rendered with .appbar to prevent CLS) -->
+    <header id="appbar-container" class="appbar">
+      <div class="appbar-inner">
+        <a href="index.html" class="appbar-brand" title="Home">
+          <span class="hud-status-dot" aria-hidden="true"></span>
+          <span class="brand-tag">&lt;</span><span class="brand-name">ahmedMansour</span><span class="brand-tag"> /&gt;</span>
+        </a>
+        <nav class="appbar-nav">
+          <a href="index.html#projects-carousel-section" class="appbar-link active" data-i18n-key="common.navProjects">Projects</a>
+        </nav>
+        <div class="appbar-actions">
+          <div class="language-switcher">
+            <button id="lang-en-btn">English</button>
+            <button id="lang-ar-btn">العربية</button>
+          </div>
+        </div>
+      </div>
+    </header>
 
     <div class="container">
       <!-- Header Section -->
@@ -42,7 +83,9 @@
         <p
           class="project-main-desc"
           data-i18n-key="semanticCutPage.headerDescription"
-        ></p>
+        >
+          A cutting-edge Python &amp; AI automation pipeline that cuts hours of manual video editing into minutes. It ingests raw episode video footage and a summarized text script, automatically producing high-retention multilingual short-form videos (Shorts/Reels) in 4 languages: English, Arabic, Spanish, and Portuguese.
+        </p>
       </header>
 
       <main class="project-detail-content">
@@ -51,13 +94,17 @@
           <div class="problem-solution-grid">
             <div class="ps-card problem-card">
               <div class="ps-icon"><i class="fas fa-triangle-exclamation"></i></div>
-              <h3 data-i18n-key="semanticCutPage.problemTitle">⚠️ The Problem</h3>
-              <p data-i18n-key="semanticCutPage.problemDescription"></p>
+              <h3 data-i18n-key="semanticCutPage.problemTitle">⚠️ The Challenge / Problem</h3>
+              <p data-i18n-key="semanticCutPage.problemDescription">
+                Manually editing and summarizing cartoon episodes demands hours of tedious work: slicing silences, millisecond subtitle alignment, scouring raw footage for the right scene to match each line, and engineering comedic sound effects.
+              </p>
             </div>
             <div class="ps-card solution-card">
               <div class="ps-icon"><i class="fas fa-wand-magic-sparkles"></i></div>
               <h3 data-i18n-key="semanticCutPage.solutionTitle">💡 The Solution</h3>
-              <p data-i18n-key="semanticCutPage.solutionDescription"></p>
+              <p data-i18n-key="semanticCutPage.solutionDescription">
+                This system converts raw episode footage + a summarized text script into an authentic, multi-track Adobe Premiere Pro project (XML) with a single command. It harnesses Google Gemini for conversational context understanding and semantic scene matching (Semantic Video Mapping), generates voiceovers in 4 languages, extracts millisecond-accurate synchronized captions via WhisperX, and overlays comedic sound effects automatically (AI SFX). The result? Viral-ready content with near-zero human intervention.
+              </p>
             </div>
           </div>
         </section>
@@ -66,7 +113,7 @@
         <section class="tech-stack-section">
           <h3 class="section-title">
             <i class="fas fa-layer-group"></i>
-            <span data-i18n-key="semanticCutPage.techStackHeading">Tech Stack</span>
+            <span data-i18n-key="semanticCutPage.techStackHeading">Technologies &amp; Architecture Stack</span>
           </h3>
           <div class="tech-stack-single-line">
             <span class="tech-pill-badge python">Python</span>
@@ -90,12 +137,14 @@
           <div class="section-header-centered">
             <h3 class="section-title">
               <i class="fas fa-diagram-project"></i>
-              <span data-i18n-key="semanticCutPage.flowchartHeading">Pipeline Architecture Flowchart</span>
+              <span data-i18n-key="semanticCutPage.flowchartHeading">🗺️ System Architecture &amp; Workflow Pipeline</span>
             </h3>
             <p
               class="section-subtext"
               data-i18n-key="semanticCutPage.flowchartDescription"
-            ></p>
+            >
+              Complete architectural diagram detailing data flow from raw inputs through WhisperX, Google Gemini, and Groq to the final Premiere XML multi-track assembly.
+            </p>
           </div>
 
           <div class="flowchart-card">
@@ -107,7 +156,7 @@
                 class="diagram-btn"
               >
                 <i class="fas fa-up-right-from-square"></i>
-                <span data-i18n-key="semanticCutPage.openFullDiagramBtn">Open Diagram Full Size</span>
+                <span data-i18n-key="semanticCutPage.openFullDiagramBtn">View Full High-Res Diagram</span>
               </a>
             </div>
             <div class="flowchart-img-scroll">
@@ -133,12 +182,14 @@
           <div class="section-header-centered">
             <h3 class="section-title">
               <i class="fas fa-play-circle"></i>
-              <span data-i18n-key="semanticCutPage.demoVideoHeading">Demo Video</span>
+              <span data-i18n-key="semanticCutPage.demoVideoHeading">🎬 Live Demonstration &amp; Output Showcase</span>
             </h3>
             <p
               class="section-subtext"
               data-i18n-key="semanticCutPage.demoVideoDescription"
-            ></p>
+            >
+              Watch the end-to-end automated workflow and the produced short-form content with multi-track Premiere Pro timeline alignment.
+            </p>
           </div>
           <div class="video-responsive-wrapper">
             <iframe
@@ -156,12 +207,14 @@
           <div class="section-header-centered">
             <h3 class="section-title">
               <i class="fas fa-code"></i>
-              <span data-i18n-key="semanticCutPage.deepDiveHeading">Technical Deep Dive</span>
+              <span data-i18n-key="semanticCutPage.deepDiveHeading">🔬 Technical Deep Dive (Hacker Breakdown)</span>
             </h3>
             <p
               class="deep-dive-intro"
               data-i18n-key="semanticCutPage.deepDiveIntro"
-            ></p>
+            >
+              🎬 Core Pipeline Concept: An architectural breakdown of how SemanticCut AI orchestrates audio processing, computer vision reasoning, and timeline XML generation.
+            </p>
           </div>
 
           <div class="pipeline-stages-container">
@@ -171,10 +224,12 @@
                 <span class="stage-number-badge">01</span>
                 <div>
                   <span class="stage-tag">INPUT LAYER</span>
-                  <h4 data-i18n-key="semanticCutPage.stage1Title"></h4>
+                  <h4 data-i18n-key="semanticCutPage.stage1Title">STAGE 1 · Raw Inputs &amp; Ingestion</h4>
                 </div>
               </div>
-              <p class="stage-card-body" data-i18n-key="semanticCutPage.stage1Desc"></p>
+              <p class="stage-card-body" data-i18n-key="semanticCutPage.stage1Desc">
+                The system ingests the raw full-length video file (episode.mp4), text scripts across 4 target languages ([AR], [EN], [ES], [PT]), optional human studio recordings, cartoon sound effects library (bonk, boing, impacts), and the background music bed (BGM.wav).
+              </p>
               <div class="stage-tech-pills">
                 <span><code>episode.mp4</code></span>
                 <span>Scripts [AR] [EN] [ES] [PT]</span>
@@ -189,10 +244,12 @@
                 <span class="stage-number-badge">02</span>
                 <div>
                   <span class="stage-tag">AI TRANSCRIPTION & MAPPING</span>
-                  <h4 data-i18n-key="semanticCutPage.stage2Title"></h4>
+                  <h4 data-i18n-key="semanticCutPage.stage2Title">STAGE 2 · AI Transcription &amp; Phoneme Alignment</h4>
                 </div>
               </div>
-              <p class="stage-card-body" data-i18n-key="semanticCutPage.stage2Desc"></p>
+              <p class="stage-card-body" data-i18n-key="semanticCutPage.stage2Desc">
+                High-precision audio extraction and phoneme-level subtitle alignment powered by WhisperX Large-v3 running locally on an RTX 4070 (float16) to generate millisecond-accurate word boundaries.
+              </p>
               <div class="stage-tech-pills">
                 <span>WhisperX Large-v3</span>
                 <span>RTX 4070 float16</span>
@@ -207,10 +264,12 @@
                 <span class="stage-number-badge">03</span>
                 <div>
                   <span class="stage-tag">CORE ENGINE (auto_maker.py)</span>
-                  <h4 data-i18n-key="semanticCutPage.stage3Title"></h4>
+                  <h4 data-i18n-key="semanticCutPage.stage3Title">STAGE 3 · The Core Automation Engine (auto_maker.py)</h4>
                 </div>
               </div>
-              <p class="stage-card-body" data-i18n-key="semanticCutPage.stage3Desc"></p>
+              <p class="stage-card-body" data-i18n-key="semanticCutPage.stage3Desc">
+                The primary orchestration hub executing three key operations simultaneously: subtitle scaling, fast voiceover generation, and intelligent comedic sound effect mapping.
+              </p>
               <div class="stage-subgrid">
                 <div class="stage-subcard">
                   <h5><i class="fas fa-closed-captioning"></i> 3A · Subtitle Scaling</h5>
@@ -233,10 +292,12 @@
                 <span class="stage-number-badge">04</span>
                 <div>
                   <span class="stage-tag">THE AI COGNITIVE BRAIN (video_mapper.py)</span>
-                  <h4 data-i18n-key="semanticCutPage.stage4Title"></h4>
+                  <h4 data-i18n-key="semanticCutPage.stage4Title">STAGE 4 · The AI Cognitive Brain: Semantic Video Mapping (video_mapper.py)</h4>
                 </div>
               </div>
-              <p class="stage-card-body" data-i18n-key="semanticCutPage.stage4Desc"></p>
+              <p class="stage-card-body" data-i18n-key="semanticCutPage.stage4Desc">
+                The intellectual breakthrough of the pipeline: utilizing Google Gemini with high-temperature shot reasoning to match raw video frames with target voiceover narrative beats.
+              </p>
               <div class="stage-tech-pills">
                 <span>Google Gemini Shot Reasoning</span>
                 <span>Multi-Episode Trap Rule</span>
@@ -252,10 +313,12 @@
                 <span class="stage-number-badge">05</span>
                 <div>
                   <span class="stage-tag">PREMIERE PRO XML ASSEMBLY</span>
-                  <h4 data-i18n-key="semanticCutPage.stage5Title"></h4>
+                  <h4 data-i18n-key="semanticCutPage.stage5Title">STAGE 5 · Premiere Pro XML Assembly &amp; Multi-Track Output</h4>
                 </div>
               </div>
-              <p class="stage-card-body" data-i18n-key="semanticCutPage.stage5Desc"></p>
+              <p class="stage-card-body" data-i18n-key="semanticCutPage.stage5Desc">
+                Generates a complete, authentic Final Cut Pro / Premiere XML sequence with 2 video tracks and 3 dedicated audio tracks ready for instant export.
+              </p>
               <div class="stage-tracks-list">
                 <div class="track-row video-track">
                   <span class="track-badge">V1</span>
@@ -283,9 +346,53 @@
         </section>
       </main>
 
-      <!-- Universal Footer Contact Dock -->
+      <!-- Universal Footer Contact Dock (Pre-rendered to eliminate layout shift) -->
       <div class="container footer-container">
-        <footer id="footer-container"></footer>
+        <footer id="footer-container">
+          <div class="footer-contact-container">
+            <div class="footer-contact-header">
+              <span class="contact-label" data-i18n-key="common.contactMe">Contact Me</span>
+            </div>
+            <div class="footer-neon-divider"></div>
+            <div class="footer-social-icons">
+              <a
+                href="https://github.com/Ahmedmansor"
+                target="_blank"
+                class="footer-contact-btn github-btn"
+                title="GitHub"
+                aria-label="GitHub"
+              >
+                <i class="fab fa-github"></i>
+              </a>
+              <a
+                href="https://linkedin.com/in/ahmed-mansour-343716209"
+                target="_blank"
+                class="footer-contact-btn linkedin-btn"
+                title="LinkedIn"
+                aria-label="LinkedIn"
+              >
+                <i class="fab fa-linkedin"></i>
+              </a>
+              <a
+                href="mailto:ahmedmansour70000@gmail.com"
+                class="footer-contact-btn email-btn"
+                title="Gmail: ahmedmansour70000@gmail.com"
+                aria-label="Gmail"
+              >
+                <i class="fas fa-envelope"></i>
+              </a>
+              <a
+                href="https://wa.me/201000872150"
+                target="_blank"
+                class="footer-contact-btn whatsapp-btn"
+                title="WhatsApp: +201000872150"
+                aria-label="WhatsApp"
+              >
+                <i class="fab fa-whatsapp"></i>
+              </a>
+            </div>
+          </div>
+        </footer>
       </div>
     </div>
 

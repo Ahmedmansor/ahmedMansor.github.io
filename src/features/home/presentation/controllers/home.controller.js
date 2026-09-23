@@ -458,12 +458,12 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
         });
       }
 
-      // 2. Hide when approaching the 3D Carousel zone and KEEP hidden throughout the entire 2400px pin
+      // 2. Hide when approaching the 3D Carousel zone and KEEP hidden throughout the entire carousel section
       if (carousel) {
         ScrollTrigger.create({
           trigger: carousel,
           start: "top 120px",
-          end: () => `+=${2400 + window.innerHeight}`,
+          end: "bottom 100px",
           onEnter: () => appbar.classList.add("appbar-hidden"),
           onLeave: () => appbar.classList.remove("appbar-hidden"),
           onEnterBack: () => appbar.classList.add("appbar-hidden"),

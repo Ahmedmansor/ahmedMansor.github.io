@@ -190,16 +190,14 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
 
       const isMobile = window.innerWidth <= 768;
 
-      // GSAP ScrollTrigger Timeline
+      // GSAP ScrollTrigger Timeline with smoothly scrubbed state (Eliminates wheel notches & jitter)
+      const animState = { progress: 0 };
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: componentEl,
           start: "top top",
-          end: `+=${pinDistance}`,
-          pin: true,
-          pinType: "transform",
+          end: "bottom bottom",
           scrub: isMobile ? true : 0.6,
-          anticipatePin: 0,
           invalidateOnRefresh: true,
           onEnter: () => {
             const appbar = document.querySelector(".appbar");
@@ -216,24 +214,30 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
           onLeaveBack: () => {
             const appbar = document.querySelector(".appbar");
             if (appbar) appbar.classList.remove("appbar-hidden");
-          },
-          onUpdate: (self) => {
-            updateStage(self.progress);
-            const idx = Math.min(Math.round(self.progress * 3), 3);
-            if (idx !== activeIndex) {
-              updateControls(idx);
-            }
           }
         }
       });
 
-      tl.to({}, { duration: 30, ease: "none" });
+      tl.to(animState, {
+        progress: 1,
+        ease: "none",
+        duration: 1,
+        onUpdate: () => {
+          updateStage(animState.progress);
+          const idx = Math.min(Math.round(animState.progress * 3), 3);
+          if (idx !== activeIndex) {
+            updateControls(idx);
+          }
+        }
+      });
+
       currentCarouselTimeline = tl;
 
       function scrollToStep(targetIndex) {
         if (!tl.scrollTrigger) return;
         const startY = tl.scrollTrigger.start;
-        const targetY = startY + (targetIndex / 3) * pinDistance;
+        const endY = tl.scrollTrigger.end;
+        const targetY = startY + (targetIndex / 3) * (endY - startY);
         window.scrollTo({ top: targetY, behavior: "smooth" });
       }
 
@@ -313,7 +317,8 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
 
       if (currentCarouselTimeline && currentCarouselTimeline.scrollTrigger) {
         const startY = currentCarouselTimeline.scrollTrigger.start;
-        const targetY = startY + (targetIndex / 3) * 2400;
+        const endY = currentCarouselTimeline.scrollTrigger.end;
+        const targetY = startY + (targetIndex / 3) * (endY - startY);
         window.scrollTo({ top: targetY, behavior: smooth ? "smooth" : "auto" });
       } else {
         const section = document.getElementById("projects-carousel-section");
