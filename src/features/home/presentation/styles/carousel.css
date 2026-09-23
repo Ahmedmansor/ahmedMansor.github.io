@@ -169,6 +169,7 @@
   inset: -3px;
   border-radius: 50%;
   border: 1.5px solid var(--color-primary, #00f0ff);
+  box-shadow: 0 0 16px var(--color-primary, #00f0ff);
   pointer-events: none;
   animation: laserRadarPulse 2s cubic-bezier(0.1, 0.8, 0.2, 1) infinite;
   will-change: transform, opacity;
@@ -187,17 +188,14 @@
   0% {
     transform: scale(0.95);
     opacity: 0.9;
-    box-shadow: 0 0 14px var(--color-primary, #00f0ff);
   }
   50% {
     transform: scale(1.42);
     opacity: 0.35;
-    box-shadow: 0 0 26px var(--color-primary, #00f0ff);
   }
   100% {
     transform: scale(1.68);
     opacity: 0;
-    box-shadow: 0 0 0px transparent;
   }
 }
 
@@ -221,6 +219,7 @@
 
 .carousel-title-nav-btn.title-btn-linker::after {
   border-color: #60a5fa;
+  box-shadow: 0 0 16px rgba(96, 165, 250, 0.85);
   animation: laserRadarPulseLinker 2s cubic-bezier(0.1, 0.8, 0.2, 1) infinite;
 }
 
@@ -228,17 +227,14 @@
   0% {
     transform: scale(0.95);
     opacity: 0.9;
-    box-shadow: 0 0 14px rgba(96, 165, 250, 0.85);
   }
   50% {
     transform: scale(1.42);
     opacity: 0.35;
-    box-shadow: 0 0 26px rgba(168, 85, 247, 0.85);
   }
   100% {
     transform: scale(1.68);
     opacity: 0;
-    box-shadow: 0 0 0px transparent;
   }
 }
 
@@ -436,6 +432,21 @@ html[dir="rtl"] .carousel-title-nav-btn svg {
   opacity: 1;
 }
 
+/* ========================================================
+   VIEWPORT-AWARE ON-DEMAND EXECUTION FOR CAROUSEL
+   Pauses heavy infinite keyframe animations when section is offscreen or tab hidden
+   ======================================================== */
+#projects-carousel-section.carousel-paused .carousel-item .project-card.is-active::before,
+#projects-carousel-section:not(.carousel-in-view) .carousel-item .project-card.is-active::before,
+#projects-carousel-section.carousel-paused .carousel-title-nav-btn::before,
+#projects-carousel-section:not(.carousel-in-view) .carousel-title-nav-btn::before,
+#projects-carousel-section.carousel-paused .carousel-title-nav-btn::after,
+#projects-carousel-section:not(.carousel-in-view) .carousel-title-nav-btn::after,
+#projects-carousel-section.carousel-paused .pulse-dot,
+#projects-carousel-section:not(.carousel-in-view) .pulse-dot {
+  animation-play-state: paused !important;
+}
+
 /* Thumbnail Wrapper */
 .carousel-item .project-thumbnail-wrapper {
   width: 100%;
@@ -538,18 +549,17 @@ html[dir="rtl"] .thumbnail-glass-badge {
   background: var(--accent-teal, #03dac6);
   box-shadow: 0 0 8px var(--accent-teal, #03dac6);
   animation: pulseGlow 1.8s infinite ease-in-out;
+  will-change: transform, opacity;
 }
 
 @keyframes pulseGlow {
   0%, 100% {
     opacity: 1;
     transform: scale(1);
-    box-shadow: 0 0 8px var(--accent-teal, #03dac6);
   }
   50% {
     opacity: 0.35;
     transform: scale(0.75);
-    box-shadow: 0 0 2px var(--accent-teal, #03dac6);
   }
 }
 

@@ -437,8 +437,8 @@
 }
 
 @keyframes cyberDotPulse {
-  0%, 100% { transform: scale(1); opacity: 0.7; }
-  50% { transform: scale(1.4); opacity: 1; box-shadow: 0 0 12px #00e696; }
+  0%, 100% { transform: scale(1); opacity: 0.65; }
+  50% { transform: scale(1.35); opacity: 1; }
 }
 
 @keyframes cyberCursorBlink {
@@ -827,6 +827,14 @@
   10% { opacity: 0.9; }
   85% { opacity: 0.9; }
   100% { transform: translateY(340px); opacity: 0; }
+}
+
+/* Viewport-Aware Animation Play State (Paused when off-screen or tab backgrounded) */
+#about-section.about-paused .bio-scanline-beam,
+#about-section.about-paused .bio-pulse-dot,
+#about-section:not(.about-in-view) .bio-scanline-beam,
+#about-section:not(.about-in-view) .bio-pulse-dot {
+  animation-play-state: paused !important;
 }
 
 /* Image Container & 3D Parallax Layers */

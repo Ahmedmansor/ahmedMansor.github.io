@@ -121,10 +121,11 @@ window.Portfolio.presentation.components = window.Portfolio.presentation.compone
      * Mouse move parallax and window resize
      */
     setupEventListeners() {
-      window.addEventListener("resize", () => {
+      this._resizeHandler = () => {
         this.resize();
         this.initStars();
-      }, { passive: true });
+      };
+      window.addEventListener("resize", this._resizeHandler, { passive: true });
 
       // Window-wide subtle mouse parallax handler on desktop
       this._onMouseMove = (e) => {
@@ -137,31 +138,48 @@ window.Portfolio.presentation.components = window.Portfolio.presentation.compone
     }
 
     /**
-     * Auto-pause canvas loop when scrolled out of viewport
+     * Auto-pause canvas loop when scrolled out of viewport or when tab is backgrounded
      */
     setupIntersectionObserver() {
       if (!window.IntersectionObserver || !this.stage) return;
 
-      const observer = new IntersectionObserver(
+      if (this.observer) {
+        this.observer.disconnect();
+      }
+
+      this.observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
             this.isVisible = entry.isIntersecting;
-            if (this.isVisible) {
+            if (this.isVisible && !document.hidden) {
               this.start();
             } else {
               this.stop();
             }
           });
         },
-        { threshold: 0.05 }
+        { rootMargin: "80px 0px 80px 0px", threshold: 0 }
       );
 
-      observer.observe(this.stage);
+      this.observer.observe(this.stage);
+
+      this._visibilityHandler = () => {
+        if (document.hidden) {
+          this.stop();
+        } else if (this.isVisible) {
+          this.start();
+        }
+      };
+      document.addEventListener("visibilitychange", this._visibilityHandler);
     }
 
     start() {
       if (this.isRunning) return;
       this.isRunning = true;
+      if (this.animationFrameId) {
+        cancelAnimationFrame(this.animationFrameId);
+        this.animationFrameId = null;
+      }
       if (this._onMouseMove) {
         window.addEventListener("mousemove", this._onMouseMove, {
           passive: true,
@@ -178,6 +196,25 @@ window.Portfolio.presentation.components = window.Portfolio.presentation.compone
       }
       if (this._onMouseMove) {
         window.removeEventListener("mousemove", this._onMouseMove);
+      }
+    }
+
+    /**
+     * Complete lifecycle cleanup preventing any SPA memory leaks
+     */
+    destroy() {
+      this.stop();
+      if (this.observer) {
+        this.observer.disconnect();
+        this.observer = null;
+      }
+      if (this._visibilityHandler) {
+        document.removeEventListener("visibilitychange", this._visibilityHandler);
+        this._visibilityHandler = null;
+      }
+      if (this._resizeHandler) {
+        window.removeEventListener("resize", this._resizeHandler);
+        this._resizeHandler = null;
       }
     }
 

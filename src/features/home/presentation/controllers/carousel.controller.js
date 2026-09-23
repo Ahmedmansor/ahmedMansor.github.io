@@ -19,6 +19,10 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
   let resizeTimeout = null;
 
   class CarouselController {
+    static isCarouselActive = false;
+    static _observer = null;
+    static _visibilityHandler = null;
+
     /**
      * Initializes and builds the 3D Cylinder Carousel
      * @param {Array<Object>} projects - Project list from localized dictionary
@@ -40,6 +44,9 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
 
       titleTrack.innerHTML = "";
       cylinder.innerHTML = "";
+
+      // Setup Viewport-Aware IntersectionObserver & Visibility handling
+      this.setupIntersectionObserver(componentEl);
 
       if (!projects || projects.length === 0) return;
 
@@ -350,6 +357,67 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
         activeScrollTriggerInstance.kill();
         activeScrollTriggerInstance = null;
       }
+      if (this._observer) {
+        this._observer.disconnect();
+        this._observer = null;
+      }
+      if (this._visibilityHandler) {
+        document.removeEventListener("visibilitychange", this._visibilityHandler);
+        this._visibilityHandler = null;
+      }
+    }
+
+    /**
+     * Initializes Viewport-Aware IntersectionObserver for the Carousel section
+     * @param {HTMLElement} componentEl 
+     */
+    static setupIntersectionObserver(componentEl) {
+      if (!window.IntersectionObserver || !componentEl) return;
+
+      if (this._observer) {
+        this._observer.disconnect();
+        this._observer = null;
+      }
+      if (this._visibilityHandler) {
+        document.removeEventListener("visibilitychange", this._visibilityHandler);
+        this._visibilityHandler = null;
+      }
+
+      this._observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            const isVisible = entry.isIntersecting && !document.hidden;
+            CarouselController.isCarouselActive = isVisible;
+            if (isVisible) {
+              componentEl.classList.add("carousel-in-view");
+              componentEl.classList.remove("carousel-paused");
+            } else {
+              componentEl.classList.remove("carousel-in-view");
+              componentEl.classList.add("carousel-paused");
+            }
+          });
+        },
+        { rootMargin: "100px 0px 100px 0px", threshold: 0 }
+      );
+
+      this._observer.observe(componentEl);
+
+      this._visibilityHandler = () => {
+        if (document.hidden) {
+          CarouselController.isCarouselActive = false;
+          componentEl.classList.remove("carousel-in-view");
+          componentEl.classList.add("carousel-paused");
+        } else {
+          const rect = componentEl.getBoundingClientRect();
+          const inView = rect.top < (window.innerHeight + 100) && rect.bottom > -100;
+          CarouselController.isCarouselActive = inView;
+          if (inView) {
+            componentEl.classList.add("carousel-in-view");
+            componentEl.classList.remove("carousel-paused");
+          }
+        }
+      };
+      document.addEventListener("visibilitychange", this._visibilityHandler);
     }
   }
 

@@ -22,6 +22,10 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
   let heroTimelineInstance = null;
 
   class HomeController {
+    static isAboutActive = false;
+    static _aboutObserver = null;
+    static _aboutVisibilityHandler = null;
+
     /**
      * Cleans up any existing Space Hero GSAP Timeline and ScrollTrigger,
      * resetting element transforms to a clean initial state.
@@ -699,6 +703,61 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
             rafId = requestAnimationFrame(updateParallax);
           }
         });
+      }
+
+      // 6. Viewport-Aware On-Demand State (IntersectionObserver & Visibility)
+      HomeController.isAboutActive = false;
+      this.cleanupAboutSection();
+
+      if (window.IntersectionObserver) {
+        this._aboutObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              const isVisible = entry.isIntersecting && !document.hidden;
+              HomeController.isAboutActive = isVisible;
+              if (isVisible) {
+                aboutSection.classList.add("about-in-view");
+                aboutSection.classList.remove("about-paused");
+              } else {
+                aboutSection.classList.remove("about-in-view");
+                aboutSection.classList.add("about-paused");
+              }
+            });
+          },
+          { rootMargin: "80px 0px 80px 0px", threshold: 0 }
+        );
+        this._aboutObserver.observe(aboutSection);
+
+        this._aboutVisibilityHandler = () => {
+          if (document.hidden) {
+            HomeController.isAboutActive = false;
+            aboutSection.classList.remove("about-in-view");
+            aboutSection.classList.add("about-paused");
+          } else {
+            const rect = aboutSection.getBoundingClientRect();
+            const inView = rect.top < (window.innerHeight + 80) && rect.bottom > -80;
+            HomeController.isAboutActive = inView;
+            if (inView) {
+              aboutSection.classList.add("about-in-view");
+              aboutSection.classList.remove("about-paused");
+            }
+          }
+        };
+        document.addEventListener("visibilitychange", this._aboutVisibilityHandler);
+      }
+    }
+
+    /**
+     * Cleans up About section observer and visibility handlers preventing memory leaks
+     */
+    static cleanupAboutSection() {
+      if (this._aboutObserver) {
+        this._aboutObserver.disconnect();
+        this._aboutObserver = null;
+      }
+      if (this._aboutVisibilityHandler) {
+        document.removeEventListener("visibilitychange", this._aboutVisibilityHandler);
+        this._aboutVisibilityHandler = null;
       }
     }
 
