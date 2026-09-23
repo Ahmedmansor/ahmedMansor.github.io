@@ -17,7 +17,6 @@ window.Portfolio.presentation.components = window.Portfolio.presentation.compone
       this.canvas = null;
       this.ctx = null;
       this.stage = null;
-      this.horizon = null;
       this.stars = [];
       this.animationFrameId = null;
       this.isRunning = false;
@@ -28,6 +27,7 @@ window.Portfolio.presentation.components = window.Portfolio.presentation.compone
       this.mouseY = 0;
       this.targetMouseX = 0;
       this.targetMouseY = 0;
+      this._onMouseMove = null;
 
       // Star layer counts (optimized for 60fps)
       this.smallCount = 140;
@@ -41,8 +41,6 @@ window.Portfolio.presentation.components = window.Portfolio.presentation.compone
     init() {
       this.stage = document.getElementById("space-hero-stage");
       this.canvas = document.getElementById("space-stars-canvas");
-      this.horizon = document.getElementById("space-horizon");
-      this.earth = document.getElementById("earth-sphere");
 
       if (!this.stage || !this.canvas) return;
 
@@ -65,8 +63,8 @@ window.Portfolio.presentation.components = window.Portfolio.presentation.compone
       this.width = rect.width;
       this.height = rect.height;
 
-      this.canvas.width = this.width * dpr;
-      this.canvas.height = this.height * dpr;
+      this.canvas.width = Math.floor(this.width * dpr);
+      this.canvas.height = Math.floor(this.height * dpr);
       this.canvas.style.width = `${this.width}px`;
       this.canvas.style.height = `${this.height}px`;
 
@@ -128,14 +126,14 @@ window.Portfolio.presentation.components = window.Portfolio.presentation.compone
         this.initStars();
       }, { passive: true });
 
-      // Window-wide subtle mouse parallax on desktop
-      window.addEventListener("mousemove", (e) => {
+      // Window-wide subtle mouse parallax handler on desktop
+      this._onMouseMove = (e) => {
         const cx = window.innerWidth / 2;
         const cy = window.innerHeight / 2;
         // Normalized between -1 and 1
         this.targetMouseX = (e.clientX - cx) / cx;
         this.targetMouseY = (e.clientY - cy) / cy;
-      }, { passive: true });
+      };
     }
 
     /**
@@ -164,6 +162,11 @@ window.Portfolio.presentation.components = window.Portfolio.presentation.compone
     start() {
       if (this.isRunning) return;
       this.isRunning = true;
+      if (this._onMouseMove) {
+        window.addEventListener("mousemove", this._onMouseMove, {
+          passive: true,
+        });
+      }
       this.loop();
     }
 
@@ -172,6 +175,9 @@ window.Portfolio.presentation.components = window.Portfolio.presentation.compone
       if (this.animationFrameId) {
         cancelAnimationFrame(this.animationFrameId);
         this.animationFrameId = null;
+      }
+      if (this._onMouseMove) {
+        window.removeEventListener("mousemove", this._onMouseMove);
       }
     }
 
@@ -184,20 +190,6 @@ window.Portfolio.presentation.components = window.Portfolio.presentation.compone
       // Smooth lerp mouse interpolation
       this.mouseX += (this.targetMouseX - this.mouseX) * 0.06;
       this.mouseY += (this.targetMouseY - this.mouseY) * 0.06;
-
-      // Parallax tilt on Horizon element
-      if (this.horizon) {
-        const tiltX = this.mouseX * 12;
-        const tiltY = this.mouseY * 8;
-        this.horizon.style.transform = `translateX(calc(-50% + ${tiltX}px)) translateY(${tiltY}px)`;
-      }
-
-      // Parallax tilt on Earth sphere (multiplane depth parallax)
-      if (this.earth) {
-        const tiltX = this.mouseX * 6;
-        const tiltY = this.mouseY * 4;
-        this.earth.style.transform = `translateX(calc(-50% + ${tiltX}px)) translateY(${tiltY}px)`;
-      }
 
       this.ctx.clearRect(0, 0, this.width, this.height);
 
@@ -217,7 +209,7 @@ window.Portfolio.presentation.components = window.Portfolio.presentation.compone
         const currentAlpha = Math.max(0.1, Math.min(1, star.baseAlpha + twinkleFactor));
 
         // Depth parallax offset from mouse
-        const depthFactor = star.layer * 6;
+        const depthFactor = star.layer * 7;
         const drawX = star.x + this.mouseX * depthFactor;
         const drawY = star.y + this.mouseY * depthFactor;
 
@@ -225,13 +217,11 @@ window.Portfolio.presentation.components = window.Portfolio.presentation.compone
         this.ctx.arc(drawX, drawY, star.radius, 0, Math.PI * 2);
 
         if (star.layer === 3) {
-          // Subtle celestial blue/white glow for big stars
-          this.ctx.fillStyle = `rgba(215, 245, 255, ${currentAlpha})`;
-          this.ctx.shadowColor = "rgba(0, 229, 255, 0.6)";
-          this.ctx.shadowBlur = 4;
+          this.ctx.fillStyle = `rgba(225, 248, 255, ${currentAlpha})`;
+        } else if (star.layer === 2) {
+          this.ctx.fillStyle = `rgba(240, 248, 255, ${currentAlpha})`;
         } else {
           this.ctx.fillStyle = `rgba(255, 255, 255, ${currentAlpha})`;
-          this.ctx.shadowBlur = 0;
         }
 
         this.ctx.fill();

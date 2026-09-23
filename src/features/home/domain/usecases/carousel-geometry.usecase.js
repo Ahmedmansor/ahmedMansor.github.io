@@ -50,15 +50,13 @@ window.Portfolio.domain.usecases = window.Portfolio.domain.usecases || {};
       const scale = 1.0 - (0.28 * (1 - cosT)) / 2;
 
       const depthFactor = (cosT + 1) / 2;
-      const opacity = 0.42 + 0.58 * depthFactor;
-      const brightness = 0.5 + 0.5 * depthFactor;
+      const opacity = 0.38 + 0.62 * depthFactor;
       const zIndex = Math.round(depthFactor * 30) + 1;
       const isNearCenter = Math.abs(theta) < 45;
 
       return {
         transform: `translate3d(${x}px, ${y}px, ${z}px) rotateY(${rotY}deg) scale(${scale})`,
         opacity,
-        filter: isMobile ? "" : `brightness(${brightness})`,
         zIndex,
         isNearCenter
       };

@@ -73,3 +73,27 @@ a:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-neon-cyan);
 }
+
+/* ======== Standalone SVG Icon Utilities ======== */
+.app-icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.125em;
+  fill: currentColor;
+}
+
+@keyframes icon-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.icon-spin {
+  animation: icon-spin 1.5s linear infinite;
+  display: inline-block;
+}
+

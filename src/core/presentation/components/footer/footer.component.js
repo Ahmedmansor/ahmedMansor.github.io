@@ -31,7 +31,7 @@ window.Portfolio.presentation.components = window.Portfolio.presentation.compone
               title="GitHub"
               aria-label="GitHub"
             >
-              <i class="fab fa-github"></i>
+              ${window.Icons ? window.Icons.github() : '<i class="fab fa-github"></i>'}
             </a>
             <a
               href="https://linkedin.com/in/ahmed-mansour-343716209"
@@ -40,7 +40,7 @@ window.Portfolio.presentation.components = window.Portfolio.presentation.compone
               title="LinkedIn"
               aria-label="LinkedIn"
             >
-              <i class="fab fa-linkedin"></i>
+              ${window.Icons ? window.Icons.linkedin() : '<i class="fab fa-linkedin"></i>'}
             </a>
             <a
               href="mailto:ahmedmansour70000@gmail.com"
@@ -48,7 +48,7 @@ window.Portfolio.presentation.components = window.Portfolio.presentation.compone
               title="Gmail: ahmedmansour70000@gmail.com"
               aria-label="Gmail"
             >
-              <i class="fas fa-envelope"></i>
+              ${window.Icons ? window.Icons.envelope() : '<i class="fas fa-envelope"></i>'}
             </a>
             <a
               href="https://wa.me/201000872150"
@@ -57,7 +57,7 @@ window.Portfolio.presentation.components = window.Portfolio.presentation.compone
               title="WhatsApp: +201000872150"
               aria-label="WhatsApp"
             >
-              <i class="fab fa-whatsapp"></i>
+              ${window.Icons ? window.Icons.whatsapp() : '<i class="fab fa-whatsapp"></i>'}
             </a>
           </div>
         </div>

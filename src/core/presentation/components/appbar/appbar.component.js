@@ -49,7 +49,9 @@ window.Portfolio.presentation.components = window.Portfolio.presentation.compone
       if (!container || container.dataset.initialized === "true") return;
       container.dataset.initialized = "true";
       container.classList.add("appbar");
-      container.innerHTML = this.getTemplate();
+      if (!container.querySelector(".appbar-inner")) {
+        container.innerHTML = this.getTemplate();
+      }
     }
   }
 

@@ -17,6 +17,7 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
   const LanguageSwitcherComponent = window.Portfolio.presentation.components.LanguageSwitcherComponent;
   const FooterComponent = window.Portfolio.presentation.components.FooterComponent;
   const CarouselController = window.Portfolio.presentation.controllers.CarouselController;
+  const SpaceHeroComponent = window.Portfolio.presentation.components.SpaceHeroComponent;
 
   class HomeController {
     /**
@@ -138,7 +139,13 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
       // 6. Initialize Smart Floating App Bar auto-hide and scroll reveal
       this.setupSmartAppBar();
 
-      // 7. Initialize Pinned Scroll-Driven Space Hero Sequence (Section 1 - Top)
+      // 7. Initialize Space Hero Canvas component
+      if (SpaceHeroComponent) {
+        this.spaceHero = new SpaceHeroComponent();
+        this.spaceHero.init();
+      }
+
+      // 8. Initialize Pinned Scroll-Driven Space Hero Sequence (Section 1 - Top)
       this.setupSpaceHeroScrollSequence();
 
       // 8. Initialize Cyberpunk Code IDE & Biometric Hologram section (Section 2 - Middle)
@@ -308,12 +315,18 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
         }
       });
 
-      // Clear lingering hash when scrolling back up into the hero
-      window.addEventListener("scroll", () => {
-        if (window.scrollY < 400 && window.location.hash === "#projects-carousel-section") {
-          history.replaceState(null, "", window.location.pathname);
-        }
-      }, { passive: true });
+      // Clear lingering hash when scrolling back up into the hero via ScrollTrigger
+      if (typeof ScrollTrigger !== "undefined") {
+        ScrollTrigger.create({
+          start: 0,
+          end: 400,
+          onEnterBack: () => {
+            if (window.location.hash === "#projects-carousel-section") {
+              history.replaceState(null, "", window.location.pathname);
+            }
+          }
+        });
+      }
     }
 
     /**
@@ -342,46 +355,34 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
       const appbar = document.querySelector(".appbar");
       const aboutSection = document.getElementById("about-section");
       const carousel = document.getElementById("projects-carousel-section");
-      if (!appbar) return;
+      if (!appbar || typeof ScrollTrigger === "undefined") return;
 
-      const updateAppBarState = () => {
-        // 1. Solution 1: Keep App Bar completely hidden throughout the Space Hero sequence
-        // Reveal only when reaching or passing the About Me section (#about-section)
-        if (aboutSection) {
-          const aboutRect = aboutSection.getBoundingClientRect();
-          if (aboutRect.top > 90) {
+      // 1. Solution 1: Keep App Bar hidden throughout the Space Hero sequence,
+      // and smoothly reveal it only upon reaching #about-section
+      if (aboutSection) {
+        ScrollTrigger.create({
+          trigger: aboutSection,
+          start: "top 90px",
+          onEnter: () => appbar.classList.remove("appbar-hero-hidden"),
+          onLeaveBack: () => {
             appbar.classList.add("appbar-hero-hidden");
             appbar.classList.remove("appbar-hidden");
-            return;
-          } else {
-            appbar.classList.remove("appbar-hero-hidden");
           }
-        }
+        });
+      }
 
-        // 2. Hide when immersed inside the 3D Carousel zone
-        if (carousel) {
-          const carouselRect = carousel.getBoundingClientRect();
-          if (carouselRect.top <= 140 && carouselRect.bottom > 100) {
-            appbar.classList.add("appbar-hidden");
-          } else {
-            appbar.classList.remove("appbar-hidden");
-          }
-        }
-      };
-
-      // Initial check on page load
-      updateAppBarState();
-
-      let ticking = false;
-      window.addEventListener("scroll", () => {
-        if (!ticking) {
-          window.requestAnimationFrame(() => {
-            updateAppBarState();
-            ticking = false;
-          });
-          ticking = true;
-        }
-      }, { passive: true });
+      // 2. Hide when immersed inside the 3D Carousel zone, restore when exiting
+      if (carousel) {
+        ScrollTrigger.create({
+          trigger: carousel,
+          start: "top 140px",
+          end: "bottom 100px",
+          onEnter: () => appbar.classList.add("appbar-hidden"),
+          onLeave: () => appbar.classList.remove("appbar-hidden"),
+          onEnterBack: () => appbar.classList.add("appbar-hidden"),
+          onLeaveBack: () => appbar.classList.remove("appbar-hidden")
+        });
+      }
     }
 
     /**
@@ -464,9 +465,10 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
           }
 
           // Initial compile log state
+          const cogIcon = window.Icons ? window.Icons.cog("icon-spin") : '<i class="fas fa-cog fa-spin"></i>';
           terminalOutput.innerHTML = `
             <div class="term-line prompt-line">$ flutter run -d production --profile</div>
-            <div class="term-line info-line"><i class="fas fa-cog fa-spin"></i> Initializing Dart VM & Clean Architecture kernel...</div>
+            <div class="term-line info-line">${cogIcon} Initializing Dart VM & Clean Architecture kernel...</div>
           `;
 
           // Step 1: Resolving dependencies
@@ -575,7 +577,13 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
           }
         };
 
+        let cardRect = null;
+        const updateCardRect = () => {
+          cardRect = bioCard.getBoundingClientRect();
+        };
+
         bioCard.addEventListener("mouseenter", () => {
+          updateCardRect();
           targetZ = 20; // Smoothly lift forward in 3D
           if (!rafId) {
             rafId = requestAnimationFrame(updateParallax);
@@ -583,10 +591,10 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
         });
 
         bioCard.addEventListener("mousemove", (e) => {
-          const rect = bioCard.getBoundingClientRect();
-          // Normalize coordinates: -1 to +1
-          targetX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-          targetY = ((e.clientY - rect.top) / rect.height) * 2 - 1;
+          if (!cardRect) updateCardRect();
+          // Normalize coordinates: -1 to +1 using cached cardRect
+          targetX = ((e.clientX - cardRect.left) / cardRect.width) * 2 - 1;
+          targetY = ((e.clientY - cardRect.top) / cardRect.height) * 2 - 1;
           targetZ = 20;
 
           if (!rafId) {
@@ -595,6 +603,7 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
         });
 
         bioCard.addEventListener("mouseleave", () => {
+          cardRect = null;
           // Smoothly glide everything back to resting position (0, 0, 0)
           targetX = 0;
           targetY = 0;

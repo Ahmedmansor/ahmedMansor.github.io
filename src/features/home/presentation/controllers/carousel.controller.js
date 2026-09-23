@@ -1,6 +1,7 @@
 /**
  * @file carousel.controller.js
  * @description Controller managing 3D Cylinder GSAP Carousel, animations, title sync & interactions.
+ * Pure Vanilla JS implementation (zero jQuery dependency).
  * Part of Clean Architecture (Presentation Layer Controller).
  */
 
@@ -31,12 +32,14 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
       // 1. Clean up existing timeline and triggers
       this.cleanup();
 
-      const componentEl = $("#projects-carousel-section");
-      const titleTrack = $("#carousel-title-track");
-      const cylinder = $("#carousel-cylinder");
+      const componentEl = document.getElementById("projects-carousel-section");
+      const titleTrack = document.getElementById("carousel-title-track");
+      const cylinder = document.getElementById("carousel-cylinder");
 
-      titleTrack.empty();
-      cylinder.empty();
+      if (!componentEl || !titleTrack || !cylinder) return;
+
+      titleTrack.innerHTML = "";
+      cylinder.innerHTML = "";
 
       if (!projects || projects.length === 0) return;
 
@@ -46,6 +49,9 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
       const fourProjects = [p1, p2, p1, p2];
 
       // 2. Render Title Track & 3D Cards
+      let titlesHTML = "";
+      let cardsHTML = "";
+
       fourProjects.forEach((project, index) => {
         const isLinker = project.id === "linker" || index % 2 === 0;
         const displayTitle = project.bigTitle || project.title;
@@ -54,31 +60,31 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
         const titleBtnClass = isLinker ? "title-btn-linker" : "title-btn-automation";
 
         // Title Zone Item
-        const titleHTML = `
+        titlesHTML += `
           <div class="carousel-title-item" data-index="${index}">
             <span class="carousel-title-category">${displayCategory}</span>
             <a href="${project.link}" class="carousel-title-link" aria-label="${viewText} - ${displayTitle}" title="${viewText}">
               <h2 class="carousel-title-heading">${displayTitle}</h2>
               <span class="carousel-title-nav-btn ${titleBtnClass}">
-                <i class="fas fa-arrow-up-right-from-square"></i>
+                ${window.Icons ? window.Icons.arrowUpRightFromSquare() : '<i class="fas fa-arrow-up-right-from-square"></i>'}
               </span>
             </a>
           </div>
         `;
-        titleTrack.append(titleHTML);
 
         // 3D Card Item
         const cardClass = isLinker ? "project-card linker-card" : "project-card semanticcut-card";
         const thumbClass = isLinker ? "linker-thumb" : "automation-thumb";
         const typeBadgeText = project.typeBadge || (isLinker ? "Mobile App • iOS & Android" : "AI Automation Pipeline");
         const typeIcon = project.typeBadgeIcon || (isLinker ? "fas fa-mobile-screen-button" : "fas fa-robot");
+        const badgeIconHTML = window.Icons ? window.Icons.get(typeIcon) : `<i class="${typeIcon}"></i>`;
         const badgeClass = project.badgeClass || (isLinker ? "mobile-badge" : "automation-badge");
 
         const tagsHTML = project.tags
           ? project.tags.map((tag) => `<span>${tag}</span>`).join("")
           : "";
 
-        const cardHTML = `
+        cardsHTML += `
           <div class="carousel-item" carousel="item" data-index="${index}">
             <a href="${project.link}" class="${cardClass}">
               <div class="project-thumbnail-wrapper ${thumbClass}">
@@ -88,7 +94,7 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
                 <div class="project-header-row">
                   <span class="project-badge ${badgeClass}">
                     <span class="pulse-dot ${isLinker ? "linker-dot" : ""}"></span>
-                    <i class="${typeIcon}"></i>
+                    ${badgeIconHTML}
                     <span>${typeBadgeText}</span>
                   </span>
                   ${displayCategory ? `<span class="project-sub-category">${displayCategory}</span>` : ""}
@@ -97,14 +103,16 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
                 <p>${project.description}</p>
                 <div class="tech-tags">${tagsHTML}</div>
                 <span class="view-project-btn">
-                  ${viewText} <i class="fas fa-arrow-right"></i>
+                  ${viewText} ${window.Icons ? window.Icons.arrowRight() : '<i class="fas fa-arrow-right"></i>'}
                 </span>
               </div>
             </a>
           </div>
         `;
-        cylinder.append(cardHTML);
       });
+
+      titleTrack.innerHTML = titlesHTML;
+      cylinder.innerHTML = cardsHTML;
 
       // 3. Setup 3D Geometry and GSAP ScrollTrigger
       this.setupAnimation(componentEl);
@@ -112,20 +120,20 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
 
     /**
      * Sets up GSAP ScrollTrigger timeline and controls
-     * @param {jQuery} componentEl
+     * @param {HTMLElement} componentEl
      */
     static setupAnimation(componentEl) {
-      const itemEl = componentEl.find("[carousel='item']");
-      const titleTrack = componentEl.find("#carousel-title-track");
-      const nextBtn = $("#carousel-next");
-      const prevBtn = $("#carousel-prev");
+      const itemEls = componentEl.querySelectorAll("[carousel='item']");
+      const titleTrackEl = componentEl.querySelector("#carousel-title-track");
+      const nextBtn = document.getElementById("carousel-next");
+      const prevBtn = document.getElementById("carousel-prev");
 
       const itemCount = 4;
       let activeIndex = 0;
       const pinDistance = 2400;
 
       // Cache card nodes and child references to eliminate DOM traversing during scroll
-      const cardNodes = itemEl.toArray().map((el, i) => ({
+      const cardNodes = Array.from(itemEls).map((el, i) => ({
         wrapper: el,
         card: el.querySelector(".project-card"),
         index: i,
@@ -135,8 +143,8 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
 
       function updateControls(index) {
         activeIndex = index;
-        prevBtn.toggleClass("is-disabled", index === 0);
-        nextBtn.toggleClass("is-disabled", index === itemCount - 1);
+        if (prevBtn) prevBtn.classList.toggle("is-disabled", index === 0);
+        if (nextBtn) nextBtn.classList.toggle("is-disabled", index === itemCount - 1);
       }
 
       function updateStage(progress) {
@@ -156,15 +164,6 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
           item.wrapper.style.transform = cardProps.transform;
           item.wrapper.style.opacity = cardProps.opacity;
 
-          if (isMobile) {
-            // Drop filter on mobile to eliminate rasterization and compositor bottlenecks
-            if (item.wrapper.style.filter) {
-              item.wrapper.style.filter = "";
-            }
-          } else {
-            item.wrapper.style.filter = cardProps.filter;
-          }
-
           if (item.lastZIndex !== cardProps.zIndex) {
             item.wrapper.style.zIndex = cardProps.zIndex;
             item.lastZIndex = cardProps.zIndex;
@@ -180,8 +179,8 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
         // Exact title track offset
         const titleItemHeight = CarouselGeometryUseCase.getTitleItemHeight(winWidth);
         const titleY = CarouselGeometryUseCase.calculateTitleOffset(progress, titleItemHeight);
-        if (titleTrack[0]) {
-          titleTrack[0].style.transform = `translate3d(0px, ${titleY}px, 0px)`;
+        if (titleTrackEl) {
+          titleTrackEl.style.transform = `translate3d(0px, ${titleY}px, 0px)`;
         }
       }
 
@@ -194,7 +193,7 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
       // GSAP ScrollTrigger Timeline
       const tl = gsap.timeline({
         scrollTrigger: {
-          trigger: componentEl[0],
+          trigger: componentEl,
           start: "top top",
           end: `+=${pinDistance}`,
           pin: true,
@@ -218,54 +217,66 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
         if (!tl.scrollTrigger) return;
         const startY = tl.scrollTrigger.start;
         const targetY = startY + (targetIndex / 3) * pinDistance;
-        $("html, body").stop().animate({ scrollTop: targetY }, 400);
+        window.scrollTo({ top: targetY, behavior: "smooth" });
       }
 
-      // Arrow navigation
-      nextBtn.off("click").on("click", function () {
-        if (activeIndex < 3) {
-          scrollToStep(activeIndex + 1);
-        }
+      // Arrow navigation (Vanilla JS)
+      if (nextBtn) {
+        nextBtn.onclick = () => {
+          if (activeIndex < 3) {
+            scrollToStep(activeIndex + 1);
+          }
+        };
+      }
+
+      if (prevBtn) {
+        prevBtn.onclick = () => {
+          if (activeIndex > 0) {
+            scrollToStep(activeIndex - 1);
+          }
+        };
+      }
+
+      // Card clicks (Vanilla JS)
+      itemEls.forEach((itemEl) => {
+        itemEl.onclick = (e) => {
+          const clickedIndex = parseInt(itemEl.dataset.index, 10);
+          const cardEl = itemEl.querySelector("a.project-card");
+          const targetUrl = cardEl ? cardEl.getAttribute("href") : null;
+          const isDirectAction = e.target.closest(".view-project-btn") !== null;
+          const isCardActive =
+            clickedIndex === activeIndex ||
+            (cardEl && cardEl.classList.contains("is-active"));
+
+          if (isDirectAction) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (targetUrl) window.location.href = targetUrl;
+            return;
+          }
+
+          if (isCardActive) {
+            e.preventDefault();
+            if (targetUrl) window.location.href = targetUrl;
+          } else {
+            e.preventDefault();
+            scrollToStep(clickedIndex);
+          }
+        };
       });
 
-      prevBtn.off("click").on("click", function () {
-        if (activeIndex > 0) {
-          scrollToStep(activeIndex - 1);
-        }
-      });
-
-      // Card clicks
-      itemEl.off("click").on("click", function (e) {
-        const clickedIndex = $(this).data("index");
-        const targetUrl = $(this).find("a.project-card").attr("href");
-        const isDirectAction = $(e.target).closest(".view-project-btn").length > 0;
-        const isCardActive =
-          clickedIndex === activeIndex ||
-          $(this).find(".project-card").hasClass("is-active");
-
-        if (isDirectAction) {
-          e.preventDefault();
-          e.stopPropagation();
-          if (targetUrl) window.location.href = targetUrl;
-          return;
-        }
-
-        if (isCardActive) {
-          e.preventDefault();
-          if (targetUrl) window.location.href = targetUrl;
-        } else {
-          e.preventDefault();
-          scrollToStep(clickedIndex);
-        }
-      });
-
-      // Title track link clicks
-      titleTrack.find(".carousel-title-link").off("click").on("click", function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        const targetUrl = $(this).attr("href");
-        if (targetUrl) window.location.href = targetUrl;
-      });
+      // Title track link clicks (Vanilla JS)
+      if (titleTrackEl) {
+        const titleLinks = titleTrackEl.querySelectorAll(".carousel-title-link");
+        titleLinks.forEach((link) => {
+          link.onclick = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const targetUrl = link.getAttribute("href");
+            if (targetUrl) window.location.href = targetUrl;
+          };
+        });
+      }
 
       ScrollTrigger.refresh();
 
@@ -282,7 +293,7 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
       if (currentCarouselTimeline && currentCarouselTimeline.scrollTrigger) {
         const startY = currentCarouselTimeline.scrollTrigger.start;
         const targetY = startY + (targetIndex / 3) * 2400;
-        $("html, body").stop().animate({ scrollTop: targetY }, 600);
+        window.scrollTo({ top: targetY, behavior: "smooth" });
       } else {
         const section = document.getElementById("projects-carousel-section");
         if (section) section.scrollIntoView({ behavior: "smooth" });

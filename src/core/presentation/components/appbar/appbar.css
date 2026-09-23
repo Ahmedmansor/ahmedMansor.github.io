@@ -24,6 +24,13 @@
   overflow: hidden;
 }
 
+/* Initial hidden state for hero section (prevents FOUC layout shift) */
+.appbar.appbar-hero-hidden {
+  transform: translate(-50%, -110px) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
 /* 1. Cyberpunk Energy Border-Beam (Flowing Laser Glow) */
 .appbar::before {
   content: "";

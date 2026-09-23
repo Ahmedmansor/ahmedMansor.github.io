@@ -267,7 +267,8 @@
   box-shadow: 0 0 35px rgba(96, 165, 250, 0.95), 0 0 65px rgba(168, 85, 247, 0.5);
 }
 
-html[dir="rtl"] .carousel-title-nav-btn i {
+html[dir="rtl"] .carousel-title-nav-btn i,
+html[dir="rtl"] .carousel-title-nav-btn svg {
   transform: scaleX(-1);
 }
 
@@ -311,7 +312,7 @@ html[dir="rtl"] .carousel-title-nav-btn i {
   backface-visibility: hidden !important;
   -webkit-backface-visibility: hidden !important;
   border-radius: 24px;
-  will-change: transform, opacity, filter;
+  will-change: transform, opacity;
   transition: box-shadow 0.3s ease;
   cursor: pointer;
 }
@@ -706,7 +707,8 @@ html[dir="rtl"] .carousel-item .view-project-btn {
   align-self: flex-start;
 }
 
-html[dir="rtl"] .carousel-item .view-project-btn i {
+html[dir="rtl"] .carousel-item .view-project-btn i,
+html[dir="rtl"] .carousel-item .view-project-btn svg {
   transform: scaleX(-1);
 }
 
@@ -747,7 +749,8 @@ html[dir="rtl"] .carousel-item .view-project-btn i {
   transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease;
 }
 
-.carousel-arrow-btn i {
+.carousel-arrow-btn i,
+.carousel-arrow-btn svg {
   color: #000000;
   font-size: 1.15rem;
   font-weight: 900;
@@ -978,7 +981,8 @@ html[dir="rtl"] .carousel-item .view-project-btn i {
     width: 56px;
     height: 34px;
   }
-  .carousel-arrow-btn i {
+  .carousel-arrow-btn i,
+  .carousel-arrow-btn svg {
     font-size: 1rem;
   }
 }
