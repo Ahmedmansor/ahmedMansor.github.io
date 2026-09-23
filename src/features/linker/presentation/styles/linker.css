@@ -213,6 +213,7 @@ html[dir="rtl"] .google-play-btn .btn-text {
   box-shadow: var(--shadow-main);
 }
 
+.feature-spotlight h2,
 .feature-spotlight h4 {
   color: var(--color-primary);
   font-size: 1.8em;
@@ -228,8 +229,10 @@ html[dir="rtl"] .google-play-btn .btn-text {
   line-height: 1.7;
 }
 
+html[dir="ltr"] .feature-spotlight h2,
 html[dir="ltr"] .feature-spotlight h4,
 html[dir="ltr"] .feature-spotlight .feature-description,
+html[dir="ltr"] .feature-spotlight h3,
 html[dir="ltr"] .feature-spotlight h5,
 html[dir="ltr"] .feature-spotlight p,
 html[dir="ltr"] .feature-spotlight ul,
@@ -343,6 +346,7 @@ video.lazy-video {
   text-align: center;
 }
 
+.side-by-side-container h3,
 .side-by-side-container h5 {
   font-family: "Montserrat", "Cairo", sans-serif;
   font-size: 1.4em;
@@ -541,6 +545,7 @@ html[dir="ltr"] .side-by-side-container [data-i18n-key="project1Page.feature3Com
     border-radius: 16px;
   }
 
+  .feature-spotlight h2,
   .feature-spotlight h4 {
     font-size: 1.45em;
     margin-bottom: 12px;

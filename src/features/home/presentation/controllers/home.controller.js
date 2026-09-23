@@ -427,17 +427,16 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
      */
     static handleHashNavigation() {
       if (window.location.hash === "#projects-carousel-section") {
-        setTimeout(() => {
-          CarouselController.scrollToCarousel(0);
-        }, 150);
+        CarouselController.scrollToCarousel(0, false);
       }
     }
 
     /**
-     * Implements Solution 1:
+     * Implements Smart App Bar visibility:
      * - Hides the floating capsule App Bar throughout the Space Hero pinned sequence.
      * - Smoothly reveals the App Bar only when scrolling past the Space Hero into About Me (#about-section).
-     * - Auto-hides when entering the 3D Carousel immersion zone, restoring it when scrolling away.
+     * - Auto-hides when entering the 3D Carousel immersion zone, and stays hidden throughout the ENTIRE 2400px pin duration.
+     * - Restores the App Bar when scrolling past the Carousel into the footer or back into About Me.
      */
     static setupSmartAppBar() {
       const appbar = document.querySelector(".appbar");
@@ -459,12 +458,12 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
         });
       }
 
-      // 2. Hide when immersed inside the 3D Carousel zone, restore when exiting
+      // 2. Hide when approaching the 3D Carousel zone and KEEP hidden throughout the entire 2400px pin
       if (carousel) {
         ScrollTrigger.create({
           trigger: carousel,
-          start: "top 140px",
-          end: "bottom 100px",
+          start: "top 120px",
+          end: () => `+=${2400 + window.innerHeight}`,
           onEnter: () => appbar.classList.add("appbar-hidden"),
           onLeave: () => appbar.classList.remove("appbar-hidden"),
           onEnterBack: () => appbar.classList.add("appbar-hidden"),

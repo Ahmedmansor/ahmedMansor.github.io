@@ -95,7 +95,6 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
       const ul = nav.querySelector("ul");
       if (!ul) return;
 
-      ul.innerHTML = "";
       const titles = pageTranslations.featureNavTitles || [
         "Secure and Easy Login and Logout System",
         "User Registration with Robust Validation",
@@ -105,6 +104,15 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
         "Core Interaction: Session Creation & Enrollment"
       ];
 
+      const existingLinks = ul.querySelectorAll("a");
+      if (existingLinks.length === titles.length) {
+        existingLinks.forEach((a, i) => {
+          a.textContent = `${i + 1}. ${titles[i]}`;
+        });
+        return;
+      }
+
+      ul.innerHTML = "";
       titles.forEach((title, i) => {
         const li = document.createElement("li");
         const a = document.createElement("a");
@@ -224,6 +232,7 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
           const seeMoreBtn = document.createElement("button");
           seeMoreBtn.className = "see-more-btn";
           seeMoreBtn.setAttribute("data-i18n-key", "common.seeMore");
+          seeMoreBtn.setAttribute("aria-label", "Toggle caption expansion");
           seeMoreBtn.textContent = commonTranslations.seeMore || "See More";
           itemDiv.appendChild(seeMoreBtn);
         }
@@ -237,6 +246,8 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
           video.preload = "none";
           video.className = "lazy-video";
           video.setAttribute("data-src", itemData.videoSrc);
+          video.setAttribute("aria-label", "Feature demonstration video");
+          video.setAttribute("title", "Feature demonstration video");
 
           video.innerHTML = "Your browser does not support the video tag.";
           itemDiv.appendChild(video);
@@ -412,17 +423,10 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
     }
 
     /**
-     * Destroys all mobile Swiper instances if any
+     * Destroys all mobile Swiper instances if any (No-op after switching to native CSS flex stack)
      */
     static destroyAllSwipers() {
-      if (window.swipers) {
-        Object.keys(window.swipers).forEach((id) => {
-          if (window.swipers[id]) {
-            window.swipers[id].destroy(true, true);
-            window.swipers[id] = null;
-          }
-        });
-      }
+      // Intentionally empty: galleries use high-performance native CSS vertical stack on mobile
     }
   }
 

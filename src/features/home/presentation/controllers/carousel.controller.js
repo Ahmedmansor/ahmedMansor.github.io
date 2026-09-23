@@ -88,7 +88,7 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
           <div class="carousel-item" carousel="item" data-index="${index}">
             <a href="${project.link}" class="${cardClass}">
               <div class="project-thumbnail-wrapper ${thumbClass}">
-                <img src="${project.thumbnail}" alt="${project.title}">
+                <img src="${project.thumbnail}" alt="${project.title}" width="600" height="340" loading="eager" decoding="async">
               </div>
               <div class="project-info">
                 <div class="project-header-row">
@@ -197,9 +197,26 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
           start: "top top",
           end: `+=${pinDistance}`,
           pin: true,
+          pinType: "transform",
           scrub: isMobile ? true : 0.6,
-          anticipatePin: isMobile ? 0 : 1,
+          anticipatePin: 0,
           invalidateOnRefresh: true,
+          onEnter: () => {
+            const appbar = document.querySelector(".appbar");
+            if (appbar) appbar.classList.add("appbar-hidden");
+          },
+          onLeave: () => {
+            const appbar = document.querySelector(".appbar");
+            if (appbar) appbar.classList.remove("appbar-hidden");
+          },
+          onEnterBack: () => {
+            const appbar = document.querySelector(".appbar");
+            if (appbar) appbar.classList.add("appbar-hidden");
+          },
+          onLeaveBack: () => {
+            const appbar = document.querySelector(".appbar");
+            if (appbar) appbar.classList.remove("appbar-hidden");
+          },
           onUpdate: (self) => {
             updateStage(self.progress);
             const idx = Math.min(Math.round(self.progress * 3), 3);
@@ -286,17 +303,21 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
     }
 
     /**
-     * Smoothly scrolls to the 3D Carousel section, syncing with ScrollTrigger start
+     * Programmatically scrolls user to the Carousel at a specific card index
      * @param {number} [targetIndex=0] - Card index to scroll to
+     * @param {boolean} [smooth=true] - Whether to use smooth scrolling
      */
-    static scrollToCarousel(targetIndex = 0) {
+    static scrollToCarousel(targetIndex = 0, smooth = true) {
+      const appbar = document.querySelector(".appbar");
+      if (appbar) appbar.classList.add("appbar-hidden");
+
       if (currentCarouselTimeline && currentCarouselTimeline.scrollTrigger) {
         const startY = currentCarouselTimeline.scrollTrigger.start;
         const targetY = startY + (targetIndex / 3) * 2400;
-        window.scrollTo({ top: targetY, behavior: "smooth" });
+        window.scrollTo({ top: targetY, behavior: smooth ? "smooth" : "auto" });
       } else {
         const section = document.getElementById("projects-carousel-section");
-        if (section) section.scrollIntoView({ behavior: "smooth" });
+        if (section) section.scrollIntoView({ behavior: smooth ? "smooth" : "auto" });
       }
     }
 

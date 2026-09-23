@@ -3,38 +3,98 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title data-i18n-key="project1Page.pageTitle"></title>
-    <link rel="stylesheet" href="style.css" />
-    <!-- Swiper CSS -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    <meta
+      name="description"
+      content="Detailed showcase of Linker EG - an integrated sports social platform for athletes, coaches, and sports enthusiasts built with Flutter by Ahmed Mansour."
     />
+    <link rel="canonical" href="https://ahmedmansor.github.io/linker.html" />
+    <title data-i18n-key="project1Page.pageTitle">
+      Project Details: Linker EG | Ahmed Mansour - Flutter Developer
+    </title>
+
+    <!-- Direct Core & Feature Stylesheets (Eliminates @import Waterfall) -->
+    <link rel="stylesheet" href="src/core/presentation/styles/variables.css" />
+    <link rel="stylesheet" href="src/core/presentation/styles/base.css" />
+    <link rel="stylesheet" href="src/core/presentation/components/appbar/appbar.css" />
+    <link rel="stylesheet" href="src/core/presentation/components/language-switcher/language-switcher.css" />
+    <link rel="stylesheet" href="src/core/presentation/components/footer/footer.css" />
+    <link rel="stylesheet" href="src/features/linker/presentation/styles/linker.css" />
+    <link rel="stylesheet" href="src/core/presentation/styles/rtl.css" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Montserrat:wght@400;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Montserrat:wght@400;600;700&display=swap"
       rel="stylesheet"
     />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      media="print"
+      onload="this.media='all'"
     />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      />
+    </noscript>
+
+    <!-- Initial Localization Dictionary (Synchronous) -->
+    <script src="lang/en.js" id="lang-script"></script>
   </head>
 
   <body id="project1-page">
-    <!-- Global Sticky App Bar -->
-    <header id="appbar-container"></header>
+    <!-- Global Sticky App Bar (Pre-rendered with .appbar to prevent CLS) -->
+    <header id="appbar-container" class="appbar">
+      <div class="appbar-inner">
+        <a href="index.html" class="appbar-brand" title="Home">
+          <span class="hud-status-dot" aria-hidden="true"></span>
+          <span class="brand-tag">&lt;</span><span class="brand-name">ahmedMansour</span><span class="brand-tag"> /&gt;</span>
+        </a>
+        <nav class="appbar-nav">
+          <a href="index.html#projects-carousel-section" class="appbar-link active" data-i18n-key="common.navProjects">Projects</a>
+        </nav>
+        <div class="appbar-actions">
+          <div class="language-switcher">
+            <button id="lang-en-btn">English</button>
+            <button id="lang-ar-btn">العربية</button>
+          </div>
+        </div>
+      </div>
+    </header>
 
-    <!-- Sticky Feature Navigation Bar -->
+    <!-- Sticky Feature Navigation Bar (Pre-rendered to eliminate layout shift for div.container) -->
     <nav class="feature-nav" id="feature-nav">
-      <ul></ul>
+      <ul>
+        <li><a href="#feature1" data-feature="1" class="active">1. Secure and Easy Login and Logout System</a></li>
+        <li><a href="#feature2" data-feature="2">2. User Registration with Robust Validation</a></li>
+        <li><a href="#feature3" data-feature="3">3. The Complete User Journey: Guest, Player &amp; Coach Views</a></li>
+        <li><a href="#feature4" data-feature="4">4. Advanced Search &amp; Multi-Factor Filtering</a></li>
+        <li><a href="#feature5" data-feature="5">5. Full-Circle Application: From Player to Coach</a></li>
+        <li><a href="#feature6" data-feature="6">6. Core Interaction: Session Creation &amp; Enrollment</a></li>
+      </ul>
     </nav>
+
     <template id="gallery-item-template">
       <div class="gallery-item">
         <p class="media-caption"></p>
-        <button class="see-more-btn" data-i18n-key="common.seeMore"></button>
-        <video loop muted playsinline preload="none" class="lazy-video">
+        <button
+          class="see-more-btn"
+          data-i18n-key="common.seeMore"
+          aria-label="Toggle caption expansion"
+        >
+          See More
+        </button>
+        <video
+          loop
+          muted
+          playsinline
+          preload="none"
+          class="lazy-video"
+          aria-label="Linker feature demonstration video"
+          title="Linker feature demonstration video"
+        >
           <source src="" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
@@ -43,8 +103,10 @@
 
     <div class="container">
       <header class="project-detail-header">
-        <h1 data-i18n-key="project1Page.headerTitle"></h1>
-        <p data-i18n-key="project1Page.headerDescription"></p>
+        <h1 data-i18n-key="project1Page.headerTitle">Linker EG</h1>
+        <p data-i18n-key="project1Page.headerDescription">
+          Linker is an integrated platform for athletes, coaches, and sports enthusiasts to communicate, showcase skills, and grow their sports careers. Whether you are looking for a trainer, want to train, or promote your experience, Linker makes it easy in one place.
+        </p>
         <div class="store-buttons-container">
           <a
             href="https://play.google.com/store/apps/details?id=com.app.linker.eg&pcampaignid=web_share&pli=1"
@@ -52,6 +114,7 @@
             rel="noopener noreferrer"
             class="google-play-btn"
             id="google-play-store-btn"
+            aria-label="Download Linker EG on Google Play Store"
           >
             <i class="fab fa-google-play"></i>
             <div class="btn-text">
@@ -64,55 +127,70 @@
 
       <main class="project-detail-content">
         <div class="feature-spotlight" id="feature1">
-          <h4 data-i18n-key="project1Page.feature1Title"></h4>
+          <h2 class="feature-title" data-i18n-key="project1Page.feature1Title">✨ 1- Secure and Easy Login and Logout System</h2>
           <p
             class="feature-description"
             data-i18n-key="project1Page.feature1Description"
-          ></p>
-          <!-- Swiper container for mobile, fallback to grid for desktop -->
+          >
+            The authentication process was designed to be seamless. Below are demonstrations of both a successful login and the clear error handling for incorrect data.
+          </p>
           <div
             class="feature-media-gallery swiper-container"
             id="login-gallery"
           >
             <div class="swiper-wrapper"></div>
-            <!-- Add Pagination -->
-            <div class="swiper-pagination"></div>
           </div>
         </div>
+
         <div class="feature-spotlight" id="feature2">
-          <h4 data-i18n-key="project1Page.feature2Title"></h4>
+          <h2 class="feature-title" data-i18n-key="project1Page.feature2Title">📝 2- User Registration with Robust Validation</h2>
           <p
             class="feature-description"
             data-i18n-key="project1Page.feature2Description"
-          ></p>
+          >
+            Our registration process is designed to be user-friendly while ensuring data integrity. It guides new users through essential steps, incorporating real-time validation for a smooth onboarding experience.
+          </p>
           <div
             class="feature-media-gallery swiper-container"
             id="registration-gallery"
           >
             <div class="swiper-wrapper"></div>
-            <div class="swiper-pagination"></div>
           </div>
         </div>
+
         <div class="feature-spotlight" id="feature3">
-          <h4 data-i18n-key="project1Page.feature3Title"></h4>
+          <h2 class="feature-title" data-i18n-key="project1Page.feature3Title">👤 3- The Complete User Journey: Guest, Player &amp; Coach Views</h2>
           <p
             class="feature-description"
             data-i18n-key="project1Page.feature3Description"
-          ></p>
+          >
+            The app offers a distinct experience at every stage. It starts with a guest view for exploration, followed by specialized, role-based profiles for players and coaches after logging in, creating a tailored journey for each user.
+          </p>
           <div
             class="feature-media-gallery swiper-container"
             id="profiles-gallery"
           >
             <div class="swiper-wrapper"></div>
-            <div class="swiper-pagination"></div>
           </div>
           <div class="side-by-side-container">
-            <h5 data-i18n-key="project1Page.feature3ComparisonTitle"></h5>
-            <p data-i18n-key="project1Page.feature3ComparisonDescription"></p>
-            <div class="zoomable-media-wrapper" id="comparison-zoom-wrapper" role="button" tabindex="0">
+            <h3 class="comparison-title" data-i18n-key="project1Page.feature3ComparisonTitle">
+              UI Across All Roles:<br />Guest, Player, and Coach
+            </h3>
+            <p data-i18n-key="project1Page.feature3ComparisonDescription">
+              This image provides a clear comparison of the three core views<br />the exploratory Guest interface, the simple Player profile, and the rich Coach profile.
+            </p>
+            <div
+              class="zoomable-media-wrapper"
+              id="comparison-zoom-wrapper"
+              role="button"
+              tabindex="0"
+              aria-label="Tap to zoom image comparison of all user roles"
+            >
               <img
                 src="assets/images/all-profiles-comparison.jpg"
-                alt="Side-by-side comparison"
+                alt="Side-by-side comparison of Guest, Player, and Coach profiles"
+                width="1800"
+                height="1300"
                 loading="lazy"
                 decoding="async"
               />
@@ -123,46 +201,52 @@
             </div>
           </div>
         </div>
+
         <div class="feature-spotlight" id="feature4">
-          <h4 data-i18n-key="project1Page.feature4Title"></h4>
+          <h2 class="feature-title" data-i18n-key="project1Page.feature4Title">🔎 4- Advanced Search &amp; Multi-Factor Filtering</h2>
           <p
             class="feature-description"
             data-i18n-key="project1Page.feature4Description"
-          ></p>
+          >
+            To empower users, the app includes a powerful search function to find coaches by name, complemented by a multi-layered filtering system. Users can refine results by sport, location, age group, and skill level, making it simple to find the perfect match.
+          </p>
           <div
             class="feature-media-gallery swiper-container"
             id="search-filter-gallery"
           >
             <div class="swiper-wrapper"></div>
-            <div class="swiper-pagination"></div>
           </div>
         </div>
+
         <div class="feature-spotlight" id="feature5">
-          <h4 data-i18n-key="project1Page.feature5Title"></h4>
+          <h2 class="feature-title" data-i18n-key="project1Page.feature5Title">🚀 5- Full-Circle Application: From Player to Coach</h2>
           <p
             class="feature-description"
             data-i18n-key="project1Page.feature5Description"
-          ></p>
+          >
+            This feature demonstrates the complete, asynchronous workflow for a player to upgrade their account. It showcases a detailed application process, review by a separate admin panel, and the final transformation of the user's role and UI upon approval.
+          </p>
           <div
             class="feature-media-gallery swiper-container"
             id="become-coach-gallery"
           >
             <div class="swiper-wrapper"></div>
-            <div class="swiper-pagination"></div>
           </div>
         </div>
+
         <div class="feature-spotlight" id="feature6">
-          <h4 data-i18n-key="project1Page.feature6Title"></h4>
+          <h2 class="feature-title" data-i18n-key="project1Page.feature6Title">🤝 6- Core Interaction: Session Creation &amp; Enrollment</h2>
           <p
             class="feature-description"
             data-i18n-key="project1Page.feature6Description"
-          ></p>
+          >
+            This feature demonstrates the app's primary function: enabling coaches to offer training and allowing players to enroll. It showcases the complete interaction loop, from creation to enrollment, which is the heart of the Linker platform.
+          </p>
           <div
             class="feature-media-gallery swiper-container"
             id="session-gallery"
           >
             <div class="swiper-wrapper"></div>
-            <div class="swiper-pagination"></div>
           </div>
         </div>
       </main>
@@ -174,7 +258,14 @@
     </div>
 
     <!-- Image Lightbox Modal for Full-Resolution Mobile & Desktop Inspection -->
-    <div class="image-lightbox-modal" id="image-lightbox-modal" aria-hidden="true" role="dialog">
+    <div
+      class="image-lightbox-modal"
+      id="image-lightbox-modal"
+      aria-hidden="true"
+      aria-modal="true"
+      role="dialog"
+      aria-label="Image comparison full view"
+    >
       <div class="lightbox-overlay" id="lightbox-overlay"></div>
       <div class="lightbox-container">
         <button class="lightbox-close-btn" id="lightbox-close-btn" aria-label="Close Preview">
@@ -185,18 +276,17 @@
             src="assets/images/all-profiles-comparison.jpg"
             alt="All Profiles Full Comparison"
             class="lightbox-image"
+            width="1800"
+            height="1300"
             loading="lazy"
             decoding="async"
           />
         </div>
         <p class="lightbox-caption" data-i18n-key="project1Page.lightboxHint">
-          High-resolution comparison of Guest, Player & Coach roles • Tap ✕ or outside to close
+          High-resolution comparison of Guest, Player &amp; Coach roles • Tap ✕ or outside to close
         </p>
       </div>
     </div>
-
-    <!-- Swiper JS -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
     <!-- Feature-First Clean Architecture Scripts -->
     <!-- 1. Core Layer -->
