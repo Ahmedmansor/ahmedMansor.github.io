@@ -19,7 +19,51 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
   const CarouselController = window.Portfolio.presentation.controllers.CarouselController;
   const SpaceHeroComponent = window.Portfolio.presentation.components.SpaceHeroComponent;
 
+  let heroTimelineInstance = null;
+
   class HomeController {
+    /**
+     * Cleans up any existing Space Hero GSAP Timeline and ScrollTrigger,
+     * resetting element transforms to a clean initial state.
+     */
+    static cleanupSpaceHero() {
+      if (typeof ScrollTrigger !== "undefined") {
+        const existingTrigger = ScrollTrigger.getById("spaceHeroTrigger");
+        if (existingTrigger) {
+          existingTrigger.kill(true);
+        }
+      }
+      if (heroTimelineInstance) {
+        if (heroTimelineInstance.scrollTrigger) {
+          heroTimelineInstance.scrollTrigger.kill(true);
+        }
+        heroTimelineInstance.kill();
+        heroTimelineInstance = null;
+      }
+      const heroWrapper = document.getElementById("space-hero-pin-wrapper");
+      if (heroWrapper && typeof gsap !== "undefined") {
+        gsap.set(heroWrapper, { clearProps: "all" });
+      }
+    }
+
+    /**
+     * Handles pageshow event to recalibrate ScrollTrigger on BFCache restore or back-forward navigation
+     * @param {PageTransitionEvent} event
+     */
+    static handlePageShow(event) {
+      if (typeof ScrollTrigger !== "undefined") {
+        ScrollTrigger.refresh();
+        requestAnimationFrame(() => {
+          ScrollTrigger.refresh();
+          ScrollTrigger.update();
+        });
+      }
+      if (event && event.persisted) {
+        const preloader = document.getElementById("cyber-preloader");
+        if (preloader) preloader.remove();
+      }
+    }
+
     /**
      * Drives the Cyberpunk System Boot Preloader animation:
      * - Animates progress bar from 0% to 100% in ~750ms
@@ -109,16 +153,41 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
      * Initializes the Home page
      */
     static async init() {
-      // 1. Force manual scroll restoration so browser never restores scroll into unpinned DOM
-      if ("scrollRestoration" in history) {
-        history.scrollRestoration = "manual";
+      // Force auto scroll-behavior so ScrollTrigger calculations are never distorted by smooth transitions
+      document.documentElement.style.scrollBehavior = "auto";
+      if (document.body) {
+        document.body.style.scrollBehavior = "auto";
       }
-      window.scrollTo(0, 0);
+
+      if (typeof ScrollTrigger !== "undefined") {
+        ScrollTrigger.clearScrollMemory();
+      }
+
+      // 1. Enable standard browser scroll restoration so back-navigation restores smoothly
+      if ("scrollRestoration" in history) {
+        history.scrollRestoration = "auto";
+      }
+
+      // Check if arriving via Back/Forward navigation
+      const navEntries = performance.getEntriesByType("navigation");
+      const isBackForward = navEntries.length > 0 && navEntries[0].type === "back_forward";
+
+      const preloader = document.getElementById("cyber-preloader");
+
+      // 2. Start or bypass Cyberpunk Boot Sequence:
+      // On Back/Forward navigation, instantly dismiss the preloader so the user returns right to their spot
+      let bootPromise;
+      if (isBackForward) {
+        if (preloader) preloader.remove();
+        bootPromise = Promise.resolve();
+      } else {
+        if (!window.location.hash) {
+          window.scrollTo(0, 0);
+        }
+        bootPromise = this.runCyberBootSequence();
+      }
 
       const activeLang = LanguageRepository.getActiveLanguage();
-
-      // 2. Start Cyberpunk Boot Sequence concurrently
-      const bootPromise = this.runCyberBootSequence();
 
       // 3. Initialize universal Floating App Bar (starts with appbar-hero-hidden in HTML)
       if (AppbarComponent) {
@@ -166,6 +235,10 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
       // 12. Await boot animation completion before resolving
       await bootPromise;
 
+      if (typeof ScrollTrigger !== "undefined") {
+        ScrollTrigger.refresh();
+      }
+
       // 13. Handle direct landing with hash (#projects-carousel-section)
       this.handleHashNavigation();
     }
@@ -192,12 +265,12 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
 
       if (!heroWrapper || !titleWrapper || !consoleTextEl) return;
 
+      // Clean up previous instance if re-initializing
+      this.cleanupSpaceHero();
+
       gsap.registerPlugin(ScrollTrigger);
 
       const fullText = "AHMED MANSOUR";
-
-      // Initial clean state: empty text ready for scroll typing
-      consoleTextEl.textContent = "";
 
       // Ensure title wrapper is visible with clean initial state
       gsap.set(titleWrapper, { autoAlpha: 1 });
@@ -208,10 +281,27 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
       if (spaceship) {
         gsap.set(spaceship, { autoAlpha: 0, x: -450, y: 160, rotation: 16, scale: 0.75 });
       }
+      if (horizon) {
+        gsap.set(horizon, { y: 0, scale: 1 });
+      }
+
+      // Helper to compute typed text character-by-character continuously forward and backward
+      const updateTypingText = (progress) => {
+        if (progress < 0.06) {
+          consoleTextEl.textContent = "";
+        } else if (progress >= 0.50) {
+          consoleTextEl.textContent = fullText;
+        } else {
+          const ratio = (progress - 0.06) / (0.50 - 0.06);
+          const currentCount = Math.min(fullText.length, Math.floor(ratio * fullText.length + 0.1));
+          consoleTextEl.textContent = fullText.slice(0, currentCount);
+        }
+      };
 
       // Smooth scroll click on cyber scroll indicator
       const scrollIndicator = document.getElementById("cyber-scroll-indicator");
-      if (scrollIndicator) {
+      if (scrollIndicator && !scrollIndicator.dataset.hasClickListener) {
+        scrollIndicator.dataset.hasClickListener = "true";
         scrollIndicator.addEventListener("click", () => {
           const aboutSection = document.getElementById("about-section");
           if (aboutSection) {
@@ -223,14 +313,25 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
       // Create Pinned Scrub Timeline with generous scroll travel (+180vh)
       const heroTl = gsap.timeline({
         scrollTrigger: {
+          id: "spaceHeroTrigger",
           trigger: heroWrapper,
           start: "top top",
           end: "+=180%",
           pin: true,
           scrub: 0.8,
-          anticipatePin: 1
+          refreshPriority: 10,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            updateTypingText(self.progress);
+          }
         }
       });
+      heroTimelineInstance = heroTl;
+
+      // Sync text immediately with current trigger progress (so name is visible if starting below hero)
+      if (heroTl.scrollTrigger) {
+        updateTypingText(heroTl.scrollTrigger.progress);
+      }
 
       // Fade out scroll indicator immediately on initial scroll
       if (scrollIndicator) {
@@ -242,17 +343,8 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
         }, 0.01);
       }
 
-      // Step 1: Scroll-Driven Character-by-Character Typing (Scrubbed forward & backward)
-      const typingTracker = { length: 0 };
-      heroTl.to(typingTracker, {
-        length: fullText.length,
-        duration: 0.44,
-        ease: "none",
-        onUpdate: () => {
-          const currentCount = Math.min(fullText.length, Math.floor(typingTracker.length + 0.1));
-          consoleTextEl.textContent = fullText.slice(0, currentCount);
-        }
-      }, 0.06);
+      // Step 1: Scroll-Driven Character-by-Character Typing block (0.06 to 0.50)
+      heroTl.to({}, { duration: 0.44 }, 0.06);
 
       // Step 3: Subtitle words emerge sequentially ("SOFTWARE", "ENGINEER", "[ FLUTTER & AI ]")
       if (subWords.length > 0) {
@@ -273,7 +365,7 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
           ease: "power1.in"
         }, 0.62)
         .to(spaceship, {
-          x: window.innerWidth + 450,
+          x: () => window.innerWidth + 450,
           y: 20,
           rotation: -6,
           scale: 1.05,
@@ -335,13 +427,9 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
      */
     static handleHashNavigation() {
       if (window.location.hash === "#projects-carousel-section") {
-        if (window.scrollY === 0) {
-          history.replaceState(null, "", window.location.pathname);
-          return;
-        }
         setTimeout(() => {
           CarouselController.scrollToCarousel(0);
-        }, 200);
+        }, 150);
       }
     }
 

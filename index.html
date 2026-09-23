@@ -32,6 +32,9 @@
 
     <!-- Critical CSS Layout Guards (Prevents FOUC and CLS during initial load) -->
     <style>
+      html {
+        scroll-behavior: auto !important;
+      }
       .cyber-preloader {
         position: fixed;
         inset: 0;
@@ -440,6 +443,19 @@
       // Initialize Home Page via Feature-First Controller
       document.addEventListener("DOMContentLoaded", () => {
         window.Portfolio.presentation.controllers.HomeController.init();
+      });
+
+      // Recalibrate GSAP ScrollTriggers on Back-Forward navigation / BFCache restore
+      window.addEventListener("pageshow", (event) => {
+        if (
+          window.Portfolio &&
+          window.Portfolio.presentation &&
+          window.Portfolio.presentation.controllers &&
+          window.Portfolio.presentation.controllers.HomeController &&
+          typeof window.Portfolio.presentation.controllers.HomeController.handlePageShow === "function"
+        ) {
+          window.Portfolio.presentation.controllers.HomeController.handlePageShow(event);
+        }
       });
     </script>
   </body>
