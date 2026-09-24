@@ -297,18 +297,18 @@ html[dir="rtl"] .flowchart-actions {
 .flowchart-img-scroll {
   overflow-x: auto;
   text-align: center;
-  padding: 10px 0;
-  border-radius: 8px;
+  padding: 0;
+  border-radius: 12px;
 }
 
 .flowchart-svg-object {
   width: 100%;
-  height: 950px;
-  min-height: 650px;
+  height: auto;
+  aspect-ratio: 1919 / 1478;
   display: block;
-  border: none;
+  border: 1px solid var(--border-subtle);
   border-radius: 12px;
-  background: var(--woodsmoke-950);
+  background: #171717;
   box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6), 0 0 25px rgba(0, 240, 255, 0.08);
 }
 
@@ -320,20 +320,13 @@ html[dir="rtl"] .flowchart-actions {
   border-radius: 12px;
   display: block;
   margin: 0 auto;
-  background: var(--woodsmoke-950);
+  background: #171717;
   box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6), 0 0 25px rgba(0, 240, 255, 0.08);
-}
-
-@media (max-width: 1100px) {
-  .flowchart-svg-object {
-    height: 780px;
-  }
 }
 
 @media (max-width: 768px) {
   .flowchart-svg-object {
-    height: 600px;
-    min-width: 800px;
+    min-width: 780px;
   }
 }
 
