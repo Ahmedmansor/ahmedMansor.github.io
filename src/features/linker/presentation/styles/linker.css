@@ -6,10 +6,11 @@
 /* ======== Sticky Feature Navigation Bar ======== */
 .feature-nav {
   position: sticky;
-  top: 54px;
+  top: 82px;
+  margin-top: 60px;
   z-index: 100;
   background: var(--bg-card);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
   padding: 0;
   margin-bottom: 30px;
   border-bottom: 2px solid var(--color-primary);
@@ -62,6 +63,10 @@
 }
 
 @media (max-width: 900px) {
+  .feature-nav {
+    top: 68px;
+    margin-top: 48px;
+  }
   .feature-nav ul {
     grid-template-columns: 1fr 1fr;
   }
@@ -134,16 +139,32 @@ html[dir="rtl"] .feature-nav a {
   border: 1.5px solid var(--border-color);
   text-decoration: none !important;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45), 0 0 15px rgba(0, 240, 255, 0.15);
-  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), border-color 0.3s ease, background 0.3s ease;
   cursor: pointer;
+}
+
+.google-play-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.6), var(--shadow-neon-cyan);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
 }
 
 .google-play-btn:hover {
   transform: translateY(-4px) scale(1.02);
   border-color: var(--color-primary);
   background: linear-gradient(135deg, var(--vulcan-800) 0%, var(--vulcan-950) 100%);
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.6), var(--shadow-neon-cyan);
   color: #ffffff !important;
+}
+
+.google-play-btn:hover::after {
+  opacity: 1;
 }
 
 .google-play-btn i {
@@ -211,6 +232,8 @@ html[dir="rtl"] .google-play-btn .btn-text {
   margin: 40px 0;
   border: 1px solid var(--border-color);
   box-shadow: var(--shadow-main);
+  content-visibility: auto;
+  contain-intrinsic-size: 0 850px;
 }
 
 .feature-spotlight h2,
@@ -378,12 +401,26 @@ video.lazy-video {
   overflow: hidden;
   max-width: 100%;
   margin: 10px auto 0;
-  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.zoomable-media-wrapper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6), var(--shadow-neon-cyan);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
 }
 
 .zoomable-media-wrapper:hover {
   transform: translateY(-3px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6), var(--shadow-neon-cyan);
+}
+
+.zoomable-media-wrapper:hover::after {
+  opacity: 1;
 }
 
 /* Floating Magnifier Glass Badge */
@@ -647,3 +684,9 @@ html[dir="ltr"] .side-by-side-container [data-i18n-key="project1Page.feature3Com
     transform: none !important;
   }
 }
+
+/* Commandment 4: Power-Saving Visibility State */
+body.page-paused * {
+  animation-play-state: paused !important;
+}
+

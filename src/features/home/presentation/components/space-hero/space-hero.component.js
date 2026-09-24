@@ -121,9 +121,13 @@ window.Portfolio.presentation.components = window.Portfolio.presentation.compone
      * Mouse move parallax and window resize
      */
     setupEventListeners() {
+      let resizeTimer = null;
       this._resizeHandler = () => {
-        this.resize();
-        this.initStars();
+        if (resizeTimer) clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+          this.resize();
+          this.initStars();
+        }, 150);
       };
       window.addEventListener("resize", this._resizeHandler, { passive: true });
 
@@ -175,6 +179,13 @@ window.Portfolio.presentation.components = window.Portfolio.presentation.compone
 
     start() {
       if (this.isRunning) return;
+
+      // Respect OS-level reduced motion accessibility setting
+      if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        this.loop(false);
+        return;
+      }
+
       this.isRunning = true;
       if (this.animationFrameId) {
         cancelAnimationFrame(this.animationFrameId);
@@ -221,8 +232,8 @@ window.Portfolio.presentation.components = window.Portfolio.presentation.compone
     /**
      * Main rendering loop (smooth 60fps)
      */
-    loop() {
-      if (!this.isRunning) return;
+    loop(continuous = true) {
+      if (continuous && !this.isRunning) return;
 
       // Smooth lerp mouse interpolation
       this.mouseX += (this.targetMouseX - this.mouseX) * 0.06;
@@ -264,7 +275,9 @@ window.Portfolio.presentation.components = window.Portfolio.presentation.compone
         this.ctx.fill();
       }
 
-      this.animationFrameId = requestAnimationFrame(() => this.loop());
+      if (continuous && this.isRunning) {
+        this.animationFrameId = requestAnimationFrame(() => this.loop(true));
+      }
     }
   }
 

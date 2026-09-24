@@ -24,44 +24,49 @@
   overflow: hidden;
 }
 
-/* Initial hidden state for hero section (prevents FOUC layout shift) */
+/* Initial hidden state for hero section (prevents FOUC layout shift & pauses animations) */
 .appbar.appbar-hero-hidden {
   transform: translate(-50%, -110px) !important;
   opacity: 0 !important;
   pointer-events: none !important;
 }
 
-/* 1. Cyberpunk Energy Border-Beam (Flowing Laser Glow) */
+.appbar.appbar-hero-hidden::before,
+.appbar.appbar-hidden::before,
+.appbar.appbar-hero-hidden .hud-status-dot::after,
+.appbar.appbar-hidden .hud-status-dot::after {
+  animation-play-state: paused !important;
+}
+
+/* 1. Cyberpunk Energy Border-Beam (Flowing Laser Glow - 100% GPU Accelerated) */
 .appbar::before {
   content: "";
   position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  padding: 1.5px;
+  top: 0;
+  left: 0;
+  width: 40%;
+  height: 2px;
   background: linear-gradient(
     90deg,
     transparent 0%,
-    transparent 20%,
-    var(--color-primary) 45%,
-    var(--color-secondary) 65%,
-    transparent 85%,
+    var(--color-primary) 50%,
+    var(--color-secondary) 80%,
     transparent 100%
   );
-  background-size: 200% 100%;
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
+  box-shadow: 0 0 10px var(--color-primary), 0 0 18px var(--color-secondary);
   pointer-events: none;
-  animation: cyberBeamFlow 6s linear infinite;
-  opacity: 0.85;
+  animation: cyberBeamFlow 5s ease-in-out infinite;
+  will-change: transform;
+  opacity: 0.9;
+  z-index: 5;
 }
 
 @keyframes cyberBeamFlow {
   0% {
-    background-position: 200% 0;
+    transform: translate3d(-100%, 0, 0);
   }
   100% {
-    background-position: -200% 0;
+    transform: translate3d(300%, 0, 0);
   }
 }
 

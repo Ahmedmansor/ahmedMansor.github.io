@@ -680,6 +680,8 @@
   border-top: none;
   border-bottom: 1px solid rgba(0, 240, 255, 0.12);
   overflow: hidden;
+  content-visibility: auto;
+  contain-intrinsic-size: 0 750px;
 }
 
 /* 3D Perspective Retro Cyber Grid Floor (Calm & Elegant Synthwave) */
@@ -840,15 +842,25 @@
 /* Image Container & 3D Parallax Layers */
 .biometric-card {
   transform-style: preserve-3d;
-  will-change: transform;
-  transition: box-shadow 0.4s ease;
+  position: relative;
 }
 
-.biometric-card:hover {
+.biometric-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
   box-shadow: 
     0 24px 50px rgba(0, 0, 0, 0.95),
     0 0 35px rgba(0, 240, 255, 0.22),
     inset 0 0 28px rgba(0, 240, 255, 0.08);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.biometric-card:hover::after {
+  opacity: 1;
 }
 
 .bio-img-container {

@@ -3,6 +3,11 @@
    src/presentation/common/components/footer/footer.css
    ======================================================== */
 
+.footer-container {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 250px;
+}
+
 footer {
   text-align: center;
   margin-top: 50px;

@@ -25,13 +25,23 @@
 
     @keyframes arrowheadPulse {
       0%, 100% {
-        opacity: 0.9;
-        filter: drop-shadow(0 0 3px currentColor);
+        opacity: 0.75;
       }
       50% {
         opacity: 1;
-        filter: drop-shadow(0 0 8px currentColor) drop-shadow(0 0 14px currentColor);
       }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .pipeline-connector-pulse,
+      .pipeline-arrowhead {
+        animation: none !important;
+      }
+    }
+
+    svg.is-paused .pipeline-connector-pulse,
+    svg.is-paused .pipeline-arrowhead {
+      animation-play-state: paused !important;
     }
 
     .pipeline-connector-group {
@@ -51,34 +61,34 @@
       transition: stroke-opacity 0.25s ease, stroke-width 0.25s ease, filter 0.25s ease;
     }
 
-    /* Animated photon pulse traveling along the connection */
+    /* Animated photon pulse traveling along the connection (Pure dashoffset, zero idle filter recalculations) */
     .pipeline-connector-pulse {
-      stroke-dasharray: 12 24 !important;
+      stroke-dasharray: 10 22 !important;
       stroke-linecap: round !important;
-      stroke-width: 4.8px !important;
-      animation: pipelineFlow 1.4s cubic-bezier(0.4, 0, 0.2, 1) infinite !important;
-      filter: drop-shadow(0 0 4px currentColor) drop-shadow(0 0 10px currentColor) !important;
+      stroke-width: 4px !important;
+      animation: pipelineFlow 1.6s linear infinite !important;
       transition: stroke-width 0.25s ease, filter 0.25s ease;
     }
 
-    /* Arrowhead breathing glow */
+    /* Arrowhead breathing glow (GPU-composited opacity) */
     .pipeline-arrowhead {
       animation: arrowheadPulse 2s ease-in-out infinite;
       transition: filter 0.25s ease, opacity 0.25s ease, transform 0.25s ease;
     }
 
-    /* Hover effect on connectors */
+    /* Hover effect on connectors - Rich glowing drop shadows ONLY when interacted */
     .pipeline-connector-group:hover .pipeline-connector-track {
       stroke-opacity: 0.95 !important;
       stroke-width: 4.5px !important;
       filter: drop-shadow(0 0 6px currentColor);
     }
     .pipeline-connector-group:hover .pipeline-connector-pulse {
-      stroke-width: 6.5px !important;
-      filter: drop-shadow(0 0 8px currentColor) drop-shadow(0 0 18px currentColor) !important;
+      stroke-width: 6px !important;
+      filter: drop-shadow(0 0 8px currentColor) drop-shadow(0 0 16px currentColor) !important;
     }
     .pipeline-connector-group:hover .pipeline-arrowhead {
-      filter: drop-shadow(0 0 10px currentColor) drop-shadow(0 0 20px currentColor) !important;
+      filter: drop-shadow(0 0 8px currentColor) drop-shadow(0 0 16px currentColor) !important;
+      opacity: 1 !important;
     }
 
     /* Interactive Node States */

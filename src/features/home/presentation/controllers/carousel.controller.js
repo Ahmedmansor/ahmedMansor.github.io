@@ -95,7 +95,7 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
           <div class="carousel-item" carousel="item" data-index="${index}">
             <a href="${project.link}" class="${cardClass}">
               <div class="project-thumbnail-wrapper ${thumbClass}">
-                <img src="${project.thumbnail}" alt="${project.title}" width="600" height="340" loading="eager" decoding="async">
+                <img src="${project.thumbnail}" alt="${project.title}" width="600" height="340" loading="lazy" decoding="async">
               </div>
               <div class="project-info">
                 <div class="project-header-row">

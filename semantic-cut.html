@@ -30,6 +30,8 @@
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
       media="print"
       onload="this.media='all'"
     />
@@ -37,6 +39,8 @@
       <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
       />
     </noscript>
 
@@ -161,16 +165,19 @@
             </div>
             <div class="flowchart-img-scroll">
               <object
-                data="assets/projects/SemanticCut AI/SpongeBob Pipeline.svg?v=2"
-                type="image/svg+xml"
-                class="flowchart-svg-object"
                 id="pipeline-flowchart-object"
+                class="flowchart-svg-object"
+                type="image/svg+xml"
+                data=""
+                data-src="assets/projects/SemanticCut AI/SpongeBob Pipeline.svg?v=2"
                 aria-label="SemanticCut AI Pipeline Architecture Interactive Diagram"
               >
                 <img
                   src="assets/projects/SemanticCut AI/SpongeBob Pipeline.svg?v=2"
                   alt="SemanticCut AI Pipeline Architecture Diagram"
                   class="flowchart-svg-img"
+                  loading="lazy"
+                  decoding="async"
                 />
               </object>
             </div>
@@ -197,7 +204,6 @@
               loading="lazy"
               frameborder="0"
               allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
-              allowfullscreen
               title="SemanticCut AI Demo"
             ></iframe>
           </div>

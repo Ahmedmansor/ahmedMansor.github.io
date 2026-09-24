@@ -312,7 +312,6 @@ html[dir="rtl"] .carousel-title-nav-btn svg {
   -webkit-backface-visibility: hidden !important;
   border-radius: 24px;
   will-change: transform, opacity;
-  transition: box-shadow 0.3s ease;
   contain: layout style;
   cursor: pointer;
 }
@@ -336,7 +335,7 @@ html[dir="rtl"] .carousel-title-nav-btn svg {
   overflow: hidden;
   text-decoration: none;
   color: #e0e0e0;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: border-color 0.3s ease;
   pointer-events: none;
   backface-visibility: hidden !important;
   -webkit-backface-visibility: hidden !important;
@@ -356,22 +355,15 @@ html[dir="rtl"] .carousel-title-nav-btn svg {
 }
 
 /* ========================================================
-   ACTIVE CARD CLOCKWISE NEON LASER BEAM
-   Smooth Easy-Ease Cinematic Motion (After Effects curve)
-   Single continuous head orbiting clockwise around card perimeter
+   ACTIVE CARD CLOCKWISE NEON LASER BEAM (100% GPU COMPOSITED)
+   Pure GPU Transform Rotation - Zero Style Recalculations
    ======================================================== */
-@property --beam-angle {
-  syntax: "<angle>";
-  initial-value: 0deg;
-  inherits: false;
-}
-
-@keyframes borderBeamClockwise {
+@keyframes borderBeamRotate {
   0% {
-    --beam-angle: 0deg;
+    transform: translate(-50%, -50%) rotate(0deg);
   }
   100% {
-    --beam-angle: 360deg;
+    transform: translate(-50%, -50%) rotate(360deg);
   }
 }
 
@@ -379,33 +371,33 @@ html[dir="rtl"] .carousel-title-nav-btn svg {
 .carousel-item .project-card.is-active::before {
   content: "";
   position: absolute;
-  inset: -1.5px;
-  border-radius: inherit;
-  padding: 2px;
+  top: 50%;
+  left: 50%;
+  width: 250%;
+  height: 250%;
+  aspect-ratio: 1 / 1;
   background: conic-gradient(
-    from var(--beam-angle) at 50% 50%,
+    from 0deg at 50% 50%,
     transparent 0deg,
-    transparent 270deg,
-    rgba(0, 240, 255, 0.45) 305deg,
+    transparent 280deg,
+    rgba(0, 240, 255, 0.4) 305deg,
     var(--color-primary, #00f0ff) 338deg,
     #ffffff 356deg,
     transparent 360deg
   );
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
+  transform: translate(-50%, -50%) rotate(0deg);
+  animation: borderBeamRotate 4.2s linear infinite;
+  will-change: transform;
   pointer-events: none;
-  animation: borderBeamClockwise 4.2s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
-  opacity: 0.92;
-  z-index: 10;
-  will-change: --beam-angle;
+  z-index: 0;
+  opacity: 0.95;
 }
 
 .carousel-item .project-card.linker-card.is-active::before {
   background: conic-gradient(
-    from var(--beam-angle) at 50% 50%,
+    from 0deg at 50% 50%,
     transparent 0deg,
-    transparent 270deg,
+    transparent 280deg,
     rgba(168, 85, 247, 0.45) 300deg,
     #60a5fa 335deg,
     #ffffff 356deg,
@@ -413,18 +405,27 @@ html[dir="rtl"] .carousel-title-nav-btn svg {
   );
 }
 
+/* Inner Card Mask Shield leaving 1.5px glowing perimeter */
+.carousel-item .project-card.is-active::after {
+  content: "";
+  position: absolute;
+  inset: 1.5px;
+  border-radius: 22.5px;
+  background: rgba(22, 24, 32, 0.98);
+  pointer-events: none;
+  z-index: 1;
+}
+
 .carousel-item .project-card.is-active:hover {
   transform: translateY(-8px) scale(1.02);
-  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s ease;
   border-color: var(--color-primary, #00f0ff);
-  box-shadow: 0 34px 90px rgba(0, 0, 0, 0.98), 0 0 50px rgba(0, 240, 255, 0.4);
 }
 
 .carousel-item .project-card.linker-card.is-active:hover {
   transform: translateY(-8px) scale(1.02);
-  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s ease;
   border-color: #60a5fa;
-  box-shadow: 0 34px 90px rgba(0, 0, 0, 0.98), 0 0 50px rgba(59, 130, 246, 0.5);
 }
 
 .carousel-item .project-card.is-active:hover::before {
@@ -454,6 +455,7 @@ html[dir="rtl"] .carousel-title-nav-btn svg {
   flex-shrink: 0;
   overflow: hidden;
   position: relative;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -570,6 +572,8 @@ html[dir="rtl"] .thumbnail-glass-badge {
   display: flex;
   flex-direction: column;
   text-align: left;
+  position: relative;
+  z-index: 2;
 }
 
 html[dir="rtl"] .carousel-item .project-info {

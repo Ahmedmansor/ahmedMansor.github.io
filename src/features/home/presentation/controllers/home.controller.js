@@ -664,6 +664,7 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
             layerBg.style.transform = `scale(1.14) translate3d(${-currentX * 14}px, ${-currentY * 14}px, 0)`;
             layerPerson.style.transform = `translate3d(${currentX * 16}px, ${currentY * 16}px, ${currentZ}px)`;
             bioCard.style.transform = `perspective(900px) rotateY(${currentX * 5.5}deg) rotateX(${-currentY * 5.5}deg)`;
+            bioCard.style.willChange = "auto";
             rafId = null;
           }
         };
@@ -675,6 +676,7 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
 
         bioCard.addEventListener("mouseenter", () => {
           updateCardRect();
+          bioCard.style.willChange = "transform";
           targetZ = 20; // Smoothly lift forward in 3D
           if (!rafId) {
             rafId = requestAnimationFrame(updateParallax);

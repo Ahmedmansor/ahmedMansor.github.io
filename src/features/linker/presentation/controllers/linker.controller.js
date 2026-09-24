@@ -143,21 +143,24 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
           const target = document.getElementById(targetId);
           if (target) {
             const navHeight = nav.offsetHeight;
+            const stickyOffset = window.innerWidth <= 768 ? 70 : 86;
             const rect = target.getBoundingClientRect();
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            const top = rect.top + scrollTop - navHeight - 10;
+            const top = rect.top + scrollTop - navHeight - stickyOffset - 10;
             window.scrollTo({ top, behavior: "smooth" });
           }
         };
       });
 
-      // Highlight active nav item on scroll
-      function onScroll() {
+      // Highlight active nav item on scroll (Commandment 7: Throttling via requestAnimationFrame)
+      let isTicking = false;
+      function updateNavOnScroll() {
         const navHeight = nav.offsetHeight;
+        const stickyOffset = window.innerWidth <= 768 ? 70 : 86;
         let current = 0;
         featureSections.forEach((section, idx) => {
           if (section) {
-            const sectionTop = section.getBoundingClientRect().top - navHeight - 20;
+            const sectionTop = section.getBoundingClientRect().top - navHeight - stickyOffset - 20;
             if (sectionTop <= 0) current = idx;
           }
         });
@@ -168,13 +171,21 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
             link.classList.remove("active");
           }
         });
+        isTicking = false;
+      }
+
+      function onScroll() {
+        if (!isTicking) {
+          window.requestAnimationFrame(updateNavOnScroll);
+          isTicking = true;
+        }
       }
 
       if (!scrollListenerAttached) {
-        window.addEventListener("scroll", onScroll);
+        window.addEventListener("scroll", onScroll, { passive: true });
         scrollListenerAttached = true;
       }
-      onScroll();
+      updateNavOnScroll();
     }
 
     /**
@@ -420,6 +431,21 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
       lazyVideos.forEach((video) => {
         this._videoObserver.observe(video);
       });
+
+      // Commandment 4: Power-Saving Visibility State
+      if (!this._visibilityHandlerAttached) {
+        document.addEventListener("visibilitychange", () => {
+          if (document.hidden) {
+            lazyVideos.forEach((video) => {
+              if (!video.paused) video.pause();
+            });
+            document.body.classList.add("page-paused");
+          } else {
+            document.body.classList.remove("page-paused");
+          }
+        });
+        this._visibilityHandlerAttached = true;
+      }
     }
 
     /**

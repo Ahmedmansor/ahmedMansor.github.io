@@ -43,6 +43,8 @@
 /* Problem / Solution Grid */
 .problem-solution-section {
   margin: 35px 0;
+  content-visibility: auto;
+  contain-intrinsic-size: 0 450px;
 }
 
 .problem-solution-grid {
@@ -57,7 +59,7 @@
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   box-shadow: var(--shadow-main);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.3s ease;
   position: relative;
 }
 
@@ -114,6 +116,8 @@ html[dir="rtl"] .solution-card {
 .tech-stack-section {
   margin: 40px 0;
   text-align: center;
+  content-visibility: auto;
+  contain-intrinsic-size: 0 150px;
 }
 
 .section-title {
@@ -200,6 +204,8 @@ html[dir="rtl"] .solution-card {
 /* Demo Video Responsive Vimeo Embed */
 .demo-video-section {
   margin: 50px 0;
+  content-visibility: auto;
+  contain-intrinsic-size: 0 550px;
 }
 
 .video-responsive-wrapper {
@@ -241,6 +247,11 @@ html[dir="rtl"] .solution-card {
   margin-bottom: 15px;
 }
 
+.flowchart-section {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 700px;
+}
+
 html[dir="rtl"] .flowchart-actions {
   justify-content: flex-start;
 }
@@ -256,14 +267,31 @@ html[dir="rtl"] .flowchart-actions {
   border-radius: var(--radius-sm);
   font-weight: 600;
   font-size: 0.9em;
-  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
   text-decoration: none !important;
+}
+
+.diagram-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: var(--shadow-neon-cyan);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
 }
 
 .diagram-btn:hover {
   background: var(--color-primary);
   color: var(--woodsmoke-950) !important;
-  box-shadow: var(--shadow-neon-cyan);
+  transform: translateY(-2px);
+}
+
+.diagram-btn:hover::after {
+  opacity: 1;
 }
 
 .flowchart-img-scroll {
@@ -285,11 +313,15 @@ html[dir="rtl"] .flowchart-actions {
 }
 
 .flowchart-svg-img {
+  width: 100%;
   max-width: 100%;
   height: auto;
+  aspect-ratio: 1919 / 1478;
   border-radius: 12px;
-  display: inline-block;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  display: block;
+  margin: 0 auto;
+  background: var(--woodsmoke-950);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6), 0 0 25px rgba(0, 240, 255, 0.08);
 }
 
 @media (max-width: 1100px) {
@@ -308,6 +340,8 @@ html[dir="rtl"] .flowchart-actions {
 /* Deep Dive Stages */
 .deep-dive-section {
   margin: 55px 0;
+  content-visibility: auto;
+  contain-intrinsic-size: 0 1000px;
 }
 
 .deep-dive-intro {
@@ -330,7 +364,28 @@ html[dir="rtl"] .flowchart-actions {
   border-radius: var(--radius-md);
   padding: 28px;
   box-shadow: var(--shadow-main);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.stage-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 10px 30px rgba(0, 240, 255, 0.2);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.stage-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(0, 240, 255, 0.4);
+}
+
+.stage-card:hover::after {
+  opacity: 1;
 }
 
 .stage-card.highlight-card {
@@ -571,13 +626,28 @@ html[dir="rtl"] .flowchart-actions {
   border-radius: 8px;
   font-weight: 700;
   text-decoration: none !important;
-  box-shadow: 0 4px 15px rgba(26, 183, 234, 0.4);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s ease;
+}
+
+.vimeo-watch-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 8px 25px rgba(26, 183, 234, 0.6);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
 }
 
 .vimeo-watch-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(26, 183, 234, 0.6);
+}
+
+.vimeo-watch-btn:hover::after {
+  opacity: 1;
 }
 
 /* RTL Adjustments for SemanticCut Page */
@@ -827,3 +897,27 @@ html[dir="rtl"] #semanticcut-page .track-row {
     font-size: 1.08rem;
   }
 }
+
+/* ========================================================
+   COMMANDMENT 1 & 4: SCROLL REVEAL & POWER-SAVING STATE
+   ======================================================== */
+.stage-card,
+.flowchart-card,
+.problem-solution-section {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.stage-card.is-revealed,
+.flowchart-card.is-revealed,
+.problem-solution-section.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Pause all CSS animations when tab is hidden */
+body.page-paused * {
+  animation-play-state: paused !important;
+}
+
