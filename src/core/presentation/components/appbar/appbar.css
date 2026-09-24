@@ -214,13 +214,52 @@ body#semanticcut-page {
 /* Responsive Mobile Adjustments */
 @media (max-width: 768px) {
   .appbar {
-    top: 10px;
-    width: 95%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    transform: none;
+    border-radius: 0;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+    background: #080b14;
+    background: rgba(8, 11, 20, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.85);
+    padding-top: max(8px, env(safe-area-inset-top, 0px));
+    box-sizing: border-box;
+  }
+
+  /* Energy Beam pinned to bottom border on mobile */
+  .appbar::before {
+    top: auto;
+    bottom: 0;
+    height: 1.5px;
+  }
+
+  /* Clean vertical slide for mobile hidden states without horizontal offset */
+  .appbar.appbar-hero-hidden {
+    transform: translateY(-110%) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  .appbar.appbar-hidden {
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
   }
 
   .appbar-inner {
-    padding: 6px 14px;
+    height: var(--appbar-mobile-inner-height, 48px);
+    padding: 0 16px;
     gap: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
   }
 
   .appbar-brand {
@@ -230,6 +269,15 @@ body#semanticcut-page {
   .appbar-link {
     font-size: 0.82rem;
     padding: 4px 10px;
+  }
+
+  /* Project pages top padding compensation so content clears fixed mobile appbar */
+  body#project1-page {
+    padding-top: var(--appbar-mobile-height, 56px);
+  }
+
+  body#semanticcut-page {
+    padding-top: calc(var(--appbar-mobile-height, 56px) + 20px);
   }
 }
 

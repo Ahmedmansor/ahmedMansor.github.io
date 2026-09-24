@@ -65,30 +65,95 @@
 @media (max-width: 900px) {
   .feature-nav {
     top: 68px;
-    margin-top: 48px;
+    margin-top: 24px;
+    margin-bottom: 20px;
   }
   .feature-nav ul {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-@media (max-width: 600px) {
-  .feature-nav ul {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    padding: 0 12px;
   }
   .feature-nav a {
-    font-size: 0.98em;
-    padding: 12px 10px;
+    font-size: 0.82rem;
+    min-height: 48px;
+    padding: 8px 12px;
   }
 }
 
-html[dir="rtl"] .feature-nav ul {
-  direction: rtl;
-}
+@media (max-width: 768px) {
+  /* On mobile: compact horizontal chip bar seamlessly attached below fixed appbar with 0 gap */
+  .feature-nav {
+    position: sticky;
+    top: var(--appbar-mobile-height, 56px);
+    margin-top: 0;
+    margin-bottom: 24px;
+    padding: 6px 0;
+    width: 100%;
+    border-radius: 0;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid rgba(0, 240, 255, 0.25);
+    background: #080b14;
+    background: rgba(8, 11, 20, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.75);
+    z-index: 999;
+  }
 
-html[dir="rtl"] .feature-nav a {
-  text-align: right;
-  justify-content: flex-end;
+  .feature-nav ul {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    gap: 8px !important;
+    padding: 4px 14px !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+    scrollbar-width: none !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .feature-nav ul::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .feature-nav li {
+    flex-shrink: 0 !important;
+    display: flex !important;
+  }
+
+  .feature-nav a {
+    min-height: 34px !important;
+    height: 34px !important;
+    padding: 0 14px !important;
+    font-size: 0.76rem !important;
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+    border-radius: 20px !important;
+    border: 1px solid rgba(0, 240, 255, 0.25) !important;
+    background: rgba(15, 23, 42, 0.85) !important;
+    color: #94a3b8 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-bottom-width: 1px !important;
+    transition: all 0.2s ease !important;
+  }
+
+  .feature-nav a.active,
+  .feature-nav a:hover {
+    color: #00f0ff !important;
+    background: rgba(0, 240, 255, 0.16) !important;
+    border-color: #00f0ff !important;
+    box-shadow: 0 0 14px rgba(0, 240, 255, 0.35) !important;
+  }
+
+  html[dir="rtl"] .feature-nav a {
+    text-align: center !important;
+    justify-content: center !important;
+  }
 }
 
 /* ======== Project Detail Header ======== */

@@ -20,6 +20,7 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
   const SpaceHeroComponent = window.Portfolio.presentation.components.SpaceHeroComponent;
 
   let heroTimelineInstance = null;
+  let heroMatchMediaInstance = null;
 
   class HomeController {
     static isAboutActive = false;
@@ -31,6 +32,10 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
      * resetting element transforms to a clean initial state.
      */
     static cleanupSpaceHero() {
+      if (heroMatchMediaInstance) {
+        heroMatchMediaInstance.revert();
+        heroMatchMediaInstance = null;
+      }
       if (typeof ScrollTrigger !== "undefined") {
         const existingTrigger = ScrollTrigger.getById("spaceHeroTrigger");
         if (existingTrigger) {
@@ -291,18 +296,18 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
 
       // Helper to compute typed text character-by-character continuously forward and backward
       const updateTypingText = (progress) => {
-        if (progress < 0.06) {
+        if (progress < 0.05) {
           consoleTextEl.textContent = "";
-        } else if (progress >= 0.50) {
+        } else if (progress >= 0.48) {
           consoleTextEl.textContent = fullText;
         } else {
-          const ratio = (progress - 0.06) / (0.50 - 0.06);
+          const ratio = (progress - 0.05) / (0.48 - 0.05);
           const currentCount = Math.min(fullText.length, Math.floor(ratio * fullText.length + 0.1));
           consoleTextEl.textContent = fullText.slice(0, currentCount);
         }
       };
 
-      // Smooth scroll click on cyber scroll indicator
+      // Smooth scroll click on cyber scroll indicator (desktop only)
       const scrollIndicator = document.getElementById("cyber-scroll-indicator");
       if (scrollIndicator && !scrollIndicator.dataset.hasClickListener) {
         scrollIndicator.dataset.hasClickListener = "true";
@@ -314,79 +319,175 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
         });
       }
 
-      // Create Pinned Scrub Timeline with generous scroll travel (+180vh)
-      const heroTl = gsap.timeline({
-        scrollTrigger: {
-          id: "spaceHeroTrigger",
-          trigger: heroWrapper,
-          start: "top top",
-          end: "+=180%",
-          pin: true,
-          scrub: 0.8,
-          refreshPriority: 10,
-          invalidateOnRefresh: true,
-          onUpdate: (self) => {
-            updateTypingText(self.progress);
+      // Responsive GSAP matchMedia (Rule #2: Graceful Degradation for Mobile)
+      const mm = gsap.matchMedia();
+      heroMatchMediaInstance = mm;
+
+      // Branch A: Desktop (Full cinematic flight, expansive curve, and smooth scrub)
+      mm.add("(min-width: 769px)", () => {
+        if (subWords.length > 0) {
+          gsap.set(subWords, { autoAlpha: 0, y: 22 });
+        }
+        if (spaceship) {
+          gsap.set(spaceship, { autoAlpha: 0, x: -450, y: 160, rotation: 16, scale: 0.75 });
+        }
+        if (horizon) {
+          gsap.set(horizon, { y: 0, scale: 1 });
+        }
+
+        const heroTl = gsap.timeline({
+          scrollTrigger: {
+            id: "spaceHeroTrigger",
+            trigger: heroWrapper,
+            start: "top top",
+            end: "+=180%",
+            pin: true,
+            scrub: 0.8,
+            refreshPriority: 10,
+            invalidateOnRefresh: true,
+            onUpdate: (self) => {
+              updateTypingText(self.progress);
+            }
           }
+        });
+        heroTimelineInstance = heroTl;
+
+        if (heroTl.scrollTrigger) {
+          updateTypingText(heroTl.scrollTrigger.progress);
+        }
+
+        if (scrollIndicator) {
+          heroTl.to(scrollIndicator, {
+            autoAlpha: 0,
+            y: 10,
+            duration: 0.12,
+            ease: "power1.out"
+          }, 0.01);
+        }
+
+        // Typing duration
+        heroTl.to({}, { duration: 0.43 }, 0.05);
+
+        // Subtitle words emerge sequentially
+        if (subWords.length > 0) {
+          heroTl.to(subWords, {
+            autoAlpha: 1,
+            y: 0,
+            stagger: 0.08,
+            duration: 0.22,
+            ease: "power2.out"
+          }, 0.50);
+        }
+
+        // Spaceship swoops across horizon
+        if (spaceship) {
+          heroTl.to(spaceship, {
+            autoAlpha: 1,
+            duration: 0.08,
+            ease: "power1.in"
+          }, 0.60)
+          .to(spaceship, {
+            x: () => window.innerWidth + 450,
+            y: 20,
+            rotation: -6,
+            scale: 1.05,
+            duration: 0.38,
+            ease: "power1.inOut"
+          }, 0.60);
+        }
+
+        if (horizon) {
+          heroTl.to(horizon, {
+            y: 16,
+            scale: 1.025,
+            duration: 0.45,
+            ease: "sine.inOut"
+          }, 0.58);
         }
       });
-      heroTimelineInstance = heroTl;
 
-      // Sync text immediately with current trigger progress (so name is visible if starting below hero)
-      if (heroTl.scrollTrigger) {
-        updateTypingText(heroTl.scrollTrigger.progress);
-      }
+      // Branch B: Mobile (Compact, lightweight, smaller spaceship, fast natural touch response)
+      mm.add("(max-width: 768px)", () => {
+        if (subWords.length > 0) {
+          gsap.set(subWords, { autoAlpha: 0, y: 14 });
+        }
+        if (spaceship) {
+          gsap.set(spaceship, { autoAlpha: 0, x: -280, y: 70, rotation: 8, scale: 0.75 });
+        }
+        if (horizon) {
+          gsap.set(horizon, { y: 0, scale: 1 });
+        }
 
-      // Fade out scroll indicator immediately on initial scroll
-      if (scrollIndicator) {
-        heroTl.to(scrollIndicator, {
-          autoAlpha: 0,
-          y: 10,
-          duration: 0.12,
-          ease: "power1.out"
-        }, 0.01);
-      }
+        const heroTl = gsap.timeline({
+          scrollTrigger: {
+            id: "spaceHeroTrigger",
+            trigger: heroWrapper,
+            start: "top top",
+            end: "+=170%", // Longer travel on mobile so user clearly sees the spaceship fly
+            pin: true,
+            scrub: 0.8, // Smooth cinematic scrub avoiding jumpy thumb flicks
+            refreshPriority: 10,
+            invalidateOnRefresh: true,
+            onUpdate: (self) => {
+              updateTypingText(self.progress);
+            }
+          }
+        });
+        heroTimelineInstance = heroTl;
 
-      // Step 1: Scroll-Driven Character-by-Character Typing block (0.06 to 0.50)
-      heroTl.to({}, { duration: 0.44 }, 0.06);
+        if (heroTl.scrollTrigger) {
+          updateTypingText(heroTl.scrollTrigger.progress);
+        }
 
-      // Step 3: Subtitle words emerge sequentially ("SOFTWARE", "ENGINEER", "[ FLUTTER & AI ]")
-      if (subWords.length > 0) {
-        heroTl.to(subWords, {
-          autoAlpha: 1,
-          y: 0,
-          stagger: 0.08,
-          duration: 0.22,
-          ease: "power2.out"
-        }, 0.52);
-      }
+        if (scrollIndicator) {
+          heroTl.to(scrollIndicator, {
+            autoAlpha: 0,
+            y: 8,
+            duration: 0.1,
+            ease: "power1.out"
+          }, 0.01);
+        }
 
-      // Step 4: Spaceship flies majestically across the curved horizon
-      if (spaceship) {
-        heroTl.to(spaceship, {
-          autoAlpha: 1,
-          duration: 0.08,
-          ease: "power1.in"
-        }, 0.62)
-        .to(spaceship, {
-          x: () => window.innerWidth + 450,
-          y: 20,
-          rotation: -6,
-          scale: 1.05,
-          duration: 0.38,
-          ease: "power1.inOut"
-        }, 0.62);
-      }
+        // Typing from 0.05 to 0.44
+        heroTl.to({}, { duration: 0.39 }, 0.05);
 
-      // Step 5: Atmospheric subtle tilt
-      if (horizon) {
-        heroTl.to(horizon, {
-          y: 16,
-          scale: 1.025,
-          duration: 0.45,
-          ease: "sine.inOut"
-        }, 0.60);
-      }
+        // Subtitle emerges at 0.42
+        if (subWords.length > 0) {
+          heroTl.to(subWords, {
+            autoAlpha: 1,
+            y: 0,
+            stagger: 0.06,
+            duration: 0.18,
+            ease: "power2.out"
+          }, 0.42);
+        }
+
+        // Spaceship swoops slowly & gracefully from 0.46 all the way to 0.98
+        if (spaceship) {
+          heroTl.to(spaceship, {
+            autoAlpha: 1,
+            duration: 0.10,
+            ease: "power1.in"
+          }, 0.46)
+          .to(spaceship, {
+            x: () => window.innerWidth + 280,
+            y: 25,
+            rotation: -4,
+            scale: 0.9,
+            duration: 0.52,
+            ease: "power1.inOut"
+          }, 0.46);
+        }
+
+        if (horizon) {
+          heroTl.to(horizon, {
+            y: 12,
+            scale: 1.02,
+            duration: 0.50,
+            ease: "sine.inOut"
+          }, 0.46);
+        }
+      });
     }
 
     /**
@@ -621,7 +722,7 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
         }
       }
 
-      // 5. 3D Mouse Parallax & Depth Tilt on Biometric Avatar Card
+      // 5. 3D Mouse & Touch Parallax / Depth Tilt on Biometric Avatar Card
       const layerBg = document.getElementById("bio-layer-bg");
       const layerPerson = document.getElementById("bio-layer-person");
 
@@ -640,10 +741,10 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
           currentY += (targetY - currentY) * 0.085;
           currentZ += (targetZ - currentZ) * 0.085;
 
-          // 1. Background layer moves opposite to mouse (depth)
+          // 1. Background layer moves opposite to input (depth)
           layerBg.style.transform = `scale(1.14) translate3d(${-currentX * 14}px, ${-currentY * 14}px, 0)`;
 
-          // 2. Person layer moves with mouse & floats forward in 3D smoothly
+          // 2. Person layer moves with input & floats forward in 3D smoothly
           layerPerson.style.transform = `translate3d(${currentX * 16}px, ${currentY * 16}px, ${currentZ}px)`;
 
           // 3. Card 3D tilt
@@ -674,6 +775,7 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
           cardRect = bioCard.getBoundingClientRect();
         };
 
+        // Desktop Mouse Handlers
         bioCard.addEventListener("mouseenter", () => {
           updateCardRect();
           bioCard.style.willChange = "transform";
@@ -685,7 +787,6 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
 
         bioCard.addEventListener("mousemove", (e) => {
           if (!cardRect) updateCardRect();
-          // Normalize coordinates: -1 to +1 using cached cardRect
           targetX = ((e.clientX - cardRect.left) / cardRect.width) * 2 - 1;
           targetY = ((e.clientY - cardRect.top) / cardRect.height) * 2 - 1;
           targetZ = 20;
@@ -697,7 +798,6 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
 
         bioCard.addEventListener("mouseleave", () => {
           cardRect = null;
-          // Smoothly glide everything back to resting position (0, 0, 0)
           targetX = 0;
           targetY = 0;
           targetZ = 0;
@@ -705,6 +805,46 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
             rafId = requestAnimationFrame(updateParallax);
           }
         });
+
+        // Mobile Touch Handlers (Restores touch interactive movement requested by user)
+        bioCard.addEventListener("touchstart", (e) => {
+          updateCardRect();
+          bioCard.style.willChange = "transform";
+          const touch = e.touches[0];
+          if (touch && cardRect) {
+            targetX = ((touch.clientX - cardRect.left) / cardRect.width) * 2 - 1;
+            targetY = ((touch.clientY - cardRect.top) / cardRect.height) * 2 - 1;
+            targetZ = 22;
+          }
+          if (!rafId) {
+            rafId = requestAnimationFrame(updateParallax);
+          }
+        }, { passive: true });
+
+        bioCard.addEventListener("touchmove", (e) => {
+          const touch = e.touches[0];
+          if (touch && cardRect) {
+            targetX = ((touch.clientX - cardRect.left) / cardRect.width) * 2 - 1;
+            targetY = ((touch.clientY - cardRect.top) / cardRect.height) * 2 - 1;
+            targetZ = 22;
+          }
+          if (!rafId) {
+            rafId = requestAnimationFrame(updateParallax);
+          }
+        }, { passive: true });
+
+        const resetTouch = () => {
+          cardRect = null;
+          targetX = 0;
+          targetY = 0;
+          targetZ = 0;
+          if (!rafId) {
+            rafId = requestAnimationFrame(updateParallax);
+          }
+        };
+
+        bioCard.addEventListener("touchend", resetTouch, { passive: true });
+        bioCard.addEventListener("touchcancel", resetTouch, { passive: true });
       }
 
       // 6. Viewport-Aware On-Demand State (IntersectionObserver & Visibility)

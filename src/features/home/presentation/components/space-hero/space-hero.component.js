@@ -29,10 +29,18 @@ window.Portfolio.presentation.components = window.Portfolio.presentation.compone
       this.targetMouseY = 0;
       this._onMouseMove = null;
 
-      // Star layer counts (optimized for 60fps)
-      this.smallCount = 140;
-      this.mediumCount = 55;
-      this.bigCount = 25;
+      // Dynamic Star density (Graceful degradation: lightweight on mobile)
+      this.updateStarCounts();
+    }
+
+    /**
+     * Calibrates star counts based on viewport density (70 stars on mobile, 220 on desktop)
+     */
+    updateStarCounts() {
+      const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+      this.smallCount = isMobile ? 45 : 140;
+      this.mediumCount = isMobile ? 18 : 55;
+      this.bigCount = isMobile ? 7 : 25;
     }
 
     /**
@@ -57,6 +65,7 @@ window.Portfolio.presentation.components = window.Portfolio.presentation.compone
      */
     resize() {
       if (!this.canvas || !this.stage) return;
+      this.updateStarCounts();
       const rect = this.stage.getBoundingClientRect();
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
@@ -131,14 +140,19 @@ window.Portfolio.presentation.components = window.Portfolio.presentation.compone
       };
       window.addEventListener("resize", this._resizeHandler, { passive: true });
 
-      // Window-wide subtle mouse parallax handler on desktop
-      this._onMouseMove = (e) => {
-        const cx = window.innerWidth / 2;
-        const cy = window.innerHeight / 2;
-        // Normalized between -1 and 1
-        this.targetMouseX = (e.clientX - cx) / cx;
-        this.targetMouseY = (e.clientY - cy) / cy;
-      };
+      // Window-wide subtle mouse parallax handler on desktop only (killed on touch devices)
+      const isTouch = window.matchMedia && window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+      if (!isTouch) {
+        this._onMouseMove = (e) => {
+          const cx = window.innerWidth / 2;
+          const cy = window.innerHeight / 2;
+          // Normalized between -1 and 1
+          this.targetMouseX = (e.clientX - cx) / cx;
+          this.targetMouseY = (e.clientY - cy) / cy;
+        };
+      } else {
+        this._onMouseMove = null;
+      }
     }
 
     /**
@@ -230,10 +244,21 @@ window.Portfolio.presentation.components = window.Portfolio.presentation.compone
     }
 
     /**
-     * Main rendering loop (smooth 60fps)
+     * Main rendering loop (smooth 60fps throttle preventing 240Hz battery/GPU drain)
      */
     loop(continuous = true) {
       if (continuous && !this.isRunning) return;
+
+      if (continuous && this.isRunning) {
+        this.animationFrameId = requestAnimationFrame(() => this.loop(true));
+      }
+
+      const now = performance.now();
+      // Cap at 60fps (~16.6ms) to prevent 120Hz/144Hz/240Hz displays from overworking GPU
+      if (this.lastFrameTime && now - this.lastFrameTime < 16) {
+        return;
+      }
+      this.lastFrameTime = now;
 
       // Smooth lerp mouse interpolation
       this.mouseX += (this.targetMouseX - this.mouseX) * 0.06;
@@ -273,10 +298,6 @@ window.Portfolio.presentation.components = window.Portfolio.presentation.compone
         }
 
         this.ctx.fill();
-      }
-
-      if (continuous && this.isRunning) {
-        this.animationFrameId = requestAnimationFrame(() => this.loop(true));
       }
     }
   }

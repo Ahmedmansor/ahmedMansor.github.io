@@ -143,11 +143,16 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
           const target = document.getElementById(targetId);
           if (target) {
             const navHeight = nav.offsetHeight;
-            const stickyOffset = window.innerWidth <= 768 ? 70 : 86;
+            const appbar = document.getElementById("appbar-container");
+            const appbarHeight = appbar ? appbar.offsetHeight : (window.innerWidth <= 768 ? 56 : 75);
+            const totalStickyHeight = navHeight + appbarHeight;
             const rect = target.getBoundingClientRect();
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            const top = rect.top + scrollTop - navHeight - stickyOffset - 10;
+            const top = rect.top + scrollTop - totalStickyHeight - 12;
             window.scrollTo({ top, behavior: "smooth" });
+            if (window.innerWidth <= 768) {
+              link.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+            }
           }
         };
       });
@@ -156,17 +161,23 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
       let isTicking = false;
       function updateNavOnScroll() {
         const navHeight = nav.offsetHeight;
-        const stickyOffset = window.innerWidth <= 768 ? 70 : 86;
+        const appbar = document.getElementById("appbar-container");
+        const appbarHeight = appbar ? appbar.offsetHeight : (window.innerWidth <= 768 ? 56 : 75);
+        const totalStickyHeight = navHeight + appbarHeight;
         let current = 0;
         featureSections.forEach((section, idx) => {
           if (section) {
-            const sectionTop = section.getBoundingClientRect().top - navHeight - stickyOffset - 20;
+            const sectionTop = section.getBoundingClientRect().top - totalStickyHeight - 20;
             if (sectionTop <= 0) current = idx;
           }
         });
         navLinks.forEach((link, idx) => {
           if (idx === current) {
+            const wasActive = link.classList.contains("active");
             link.classList.add("active");
+            if (!wasActive && window.innerWidth <= 768) {
+              link.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+            }
           } else {
             link.classList.remove("active");
           }

@@ -133,4 +133,10 @@
   --transition-fast: 0.2s ease;
   --transition-normal: 0.3s ease;
   --transition-smooth: 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+  /* ======================================================
+     6. HEADER & MOBILE LAYOUT TOKENS
+     ====================================================== */
+  --appbar-mobile-inner-height: 48px;
+  --appbar-mobile-height: calc(var(--appbar-mobile-inner-height) + max(8px, env(safe-area-inset-top, 0px)));
 }
