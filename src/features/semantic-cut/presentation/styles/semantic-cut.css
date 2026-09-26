@@ -239,6 +239,12 @@ html[dir="rtl"] .solution-card {
   border-radius: 16px;
   padding: 20px;
   box-shadow: var(--shadow-main);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.flowchart-card:hover {
+  border-color: rgba(0, 240, 255, 0.45);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6), 0 0 18px rgba(0, 240, 255, 0.18);
 }
 
 .flowchart-actions {
@@ -460,6 +466,14 @@ html[dir="rtl"] .flowchart-actions {
   border: 1px solid var(--border-color);
   border-radius: 10px;
   padding: 16px;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  cursor: pointer;
+}
+
+.stage-subcard:hover {
+  transform: translateY(-2px);
+  border-color: rgba(0, 240, 255, 0.45);
+  box-shadow: 0 4px 16px rgba(0, 240, 255, 0.15);
 }
 
 .stage-subcard h5 {
@@ -494,6 +508,14 @@ html[dir="rtl"] .flowchart-actions {
   padding: 10px 16px;
   border-radius: 8px;
   border: 1px solid var(--border-color);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.track-row:hover {
+  transform: translateX(4px);
+  border-color: rgba(0, 240, 255, 0.4);
+  box-shadow: 0 2px 12px rgba(0, 240, 255, 0.12);
 }
 
 .track-badge {

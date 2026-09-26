@@ -46,6 +46,18 @@
 
     <!-- Initial Localization Dictionary (Deferred) -->
     <script src="lang/en.js" id="lang-script" defer></script>
+
+    <!-- Early Session Guard: Restore audio state before first paint -->
+    <script>
+      (function () {
+        try {
+          // If mute state was never set, default to unmuted
+          if (localStorage.getItem('portfolio_audio_muted') === null) {
+            localStorage.setItem('portfolio_audio_muted', 'false');
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
 
   <body id="semanticcut-page">
@@ -71,8 +83,8 @@
     <div class="container">
       <!-- Header Section -->
       <header class="project-detail-header semanticcut-header">
-        <div class="project-badge-tag">
-          <i class="fas fa-microchip"></i> Python & AI Automation Engine
+        <div class="project-badge-tag" data-sound-hover="ui-hover">
+          <i class="fas fa-microchip"></i> Python &amp; AI Automation Engine
         </div>
 
         <h1 data-i18n-key="semanticCutPage.headerTitle">
@@ -96,14 +108,14 @@
         <!-- 1. The Challenge vs Solution Grid -->
         <section class="problem-solution-section">
           <div class="problem-solution-grid">
-            <div class="ps-card problem-card">
+            <div class="ps-card problem-card" data-sound-hover="ui-hover">
               <div class="ps-icon"><i class="fas fa-triangle-exclamation"></i></div>
               <h3 data-i18n-key="semanticCutPage.problemTitle">⚠️ The Challenge / Problem</h3>
               <p data-i18n-key="semanticCutPage.problemDescription">
                 Manually editing and summarizing cartoon episodes demands hours of tedious work: slicing silences, millisecond subtitle alignment, scouring raw footage for the right scene to match each line, and engineering comedic sound effects.
               </p>
             </div>
-            <div class="ps-card solution-card">
+            <div class="ps-card solution-card" data-sound-hover="ui-hover">
               <div class="ps-icon"><i class="fas fa-wand-magic-sparkles"></i></div>
               <h3 data-i18n-key="semanticCutPage.solutionTitle">💡 The Solution</h3>
               <p data-i18n-key="semanticCutPage.solutionDescription">
@@ -120,19 +132,19 @@
             <span data-i18n-key="semanticCutPage.techStackHeading">Technologies &amp; Architecture Stack</span>
           </h3>
           <div class="tech-stack-single-line">
-            <span class="tech-pill-badge python">Python</span>
+            <span class="tech-pill-badge python" data-sound-hover="ui-hover" data-sound-click="ui-click">Python</span>
             <span class="tech-pill-divider">|</span>
-            <span class="tech-pill-badge gemini">Google Gemini API</span>
+            <span class="tech-pill-badge gemini" data-sound-hover="ui-hover" data-sound-click="ui-click">Google Gemini API</span>
             <span class="tech-pill-divider">|</span>
-            <span class="tech-pill-badge groq">Groq API</span>
+            <span class="tech-pill-badge groq" data-sound-hover="ui-hover" data-sound-click="ui-click">Groq API</span>
             <span class="tech-pill-divider">|</span>
-            <span class="tech-pill-badge whisper">WhisperX</span>
+            <span class="tech-pill-badge whisper" data-sound-hover="ui-hover" data-sound-click="ui-click">WhisperX</span>
             <span class="tech-pill-divider">|</span>
-            <span class="tech-pill-badge ffmpeg">FFmpeg</span>
+            <span class="tech-pill-badge ffmpeg" data-sound-hover="ui-hover" data-sound-click="ui-click">FFmpeg</span>
             <span class="tech-pill-divider">|</span>
-            <span class="tech-pill-badge pydub">Pydub</span>
+            <span class="tech-pill-badge pydub" data-sound-hover="ui-hover" data-sound-click="ui-click">Pydub</span>
             <span class="tech-pill-divider">|</span>
-            <span class="tech-pill-badge xml">Premiere XML</span>
+            <span class="tech-pill-badge xml" data-sound-hover="ui-hover" data-sound-click="ui-click">Premiere XML</span>
           </div>
         </section>
 
@@ -151,13 +163,15 @@
             </p>
           </div>
 
-          <div class="flowchart-card">
+          <div class="flowchart-card" data-sound-hover="ui-hover">
             <div class="flowchart-actions">
               <a
                 href="assets/projects/SemanticCut AI/SpongeBob Pipeline.svg"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="diagram-btn"
+                data-sound-click="warp-whoosh"
+                data-sound-hover="ui-hover"
               >
                 <i class="fas fa-up-right-from-square"></i>
                 <span data-i18n-key="semanticCutPage.openFullDiagramBtn">View Full High-Res Diagram</span>
@@ -226,7 +240,7 @@
 
           <div class="pipeline-stages-container">
             <!-- Stage 1 -->
-            <div class="stage-card">
+            <div class="stage-card" data-sound-hover="ui-hover" data-sound-click="laser-scan">
               <div class="stage-card-header">
                 <span class="stage-number-badge">01</span>
                 <div>
@@ -246,7 +260,7 @@
             </div>
 
             <!-- Stage 2 -->
-            <div class="stage-card">
+            <div class="stage-card" data-sound-hover="ui-hover" data-sound-click="laser-scan">
               <div class="stage-card-header">
                 <span class="stage-number-badge">02</span>
                 <div>
@@ -266,7 +280,7 @@
             </div>
 
             <!-- Stage 3 -->
-            <div class="stage-card">
+            <div class="stage-card" data-sound-hover="ui-hover" data-sound-click="laser-scan">
               <div class="stage-card-header">
                 <span class="stage-number-badge">03</span>
                 <div>
@@ -278,15 +292,15 @@
                 The primary orchestration hub executing three key operations simultaneously: subtitle scaling, fast voiceover generation, and intelligent comedic sound effect mapping.
               </p>
               <div class="stage-subgrid">
-                <div class="stage-subcard">
+                <div class="stage-subcard" data-sound-hover="ui-hover" data-sound-click="ui-click">
                   <h5><i class="fas fa-closed-captioning"></i> 3A · Subtitle Scaling</h5>
                   <p>CapCut-style forced alignment (Stable-Whisper for AR, WhisperX for other languages) + mathematical speed division into millisecond maps.</p>
                 </div>
-                <div class="stage-subcard">
+                <div class="stage-subcard" data-sound-hover="ui-hover" data-sound-click="ui-click">
                   <h5><i class="fas fa-microphone-lines"></i> 3B · Fast Voiceover</h5>
                   <p>Human audio or Google Gemini TTS tuned for SpongeBob accent, routed through Fast Pacing Engine (Pydub silence trim + FFmpeg pitch-kept speedup).</p>
                 </div>
-                <div class="stage-subcard">
+                <div class="stage-subcard" data-sound-hover="ui-hover" data-sound-click="ui-click">
                   <h5><i class="fas fa-music"></i> 3C · AI Comedy SFX</h5>
                   <p>Groq API (Llama 3.3 70B) analyzes script comedy beats, classifying gags and mapping to the cartoon SFX soundbed automatically.</p>
                 </div>
@@ -294,7 +308,7 @@
             </div>
 
             <!-- Stage 4 -->
-            <div class="stage-card highlight-card">
+            <div class="stage-card highlight-card" data-sound-hover="ui-hover" data-sound-click="hologram-on">
               <div class="stage-card-header">
                 <span class="stage-number-badge">04</span>
                 <div>
@@ -315,7 +329,7 @@
             </div>
 
             <!-- Stage 5 -->
-            <div class="stage-card">
+            <div class="stage-card" data-sound-hover="ui-hover" data-sound-click="laser-scan">
               <div class="stage-card-header">
                 <span class="stage-number-badge">05</span>
                 <div>
@@ -327,23 +341,23 @@
                 Generates a complete, authentic Final Cut Pro / Premiere XML sequence with 2 video tracks and 3 dedicated audio tracks ready for instant export.
               </p>
               <div class="stage-tracks-list">
-                <div class="track-row video-track">
+                <div class="track-row video-track" data-sound-hover="ui-hover" data-sound-click="ui-click">
                   <span class="track-badge">V1</span>
                   <span class="track-desc">Episode Video Cuts (reframed 9:16 vertical 1080×1920)</span>
                 </div>
-                <div class="track-row video-track">
+                <div class="track-row video-track" data-sound-hover="ui-hover" data-sound-click="ui-click">
                   <span class="track-badge">V2</span>
                   <span class="track-desc">Channel Watermark Overlay (<code>waterMarkAr.mov</code>)</span>
                 </div>
-                <div class="track-row audio-track">
+                <div class="track-row audio-track" data-sound-hover="ui-hover" data-sound-click="ui-click">
                   <span class="track-badge">A1</span>
                   <span class="track-desc">Mastered Multilingual Voiceover (+5dB Boost)</span>
                 </div>
-                <div class="track-row audio-track">
+                <div class="track-row audio-track" data-sound-hover="ui-hover" data-sound-click="ui-click">
                   <span class="track-badge">A2</span>
                   <span class="track-desc">AI Comedic Sound Effects Track (-8dB Balanced)</span>
                 </div>
-                <div class="track-row audio-track">
+                <div class="track-row audio-track" data-sound-hover="ui-hover" data-sound-click="ui-click">
                   <span class="track-badge">A3</span>
                   <span class="track-desc">Background Music Bed (0dB with Auto-Ducking)</span>
                 </div>
@@ -403,18 +417,23 @@
       </div>
     </div>
 
+    <!-- Audio Engine (Howler.js) — must load before audio.service.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"></script>
+    <script src="assets/icons/icons.js"></script>
+
     <!-- Feature-First Clean Architecture Scripts -->
     <!-- 1. Core Layer -->
-    <script defer src="src/core/domain/usecases/localization.usecase.js"></script>
-    <script defer src="src/core/data/datasources/storage.datasource.js"></script>
-    <script defer src="src/core/data/datasources/language.datasource.js"></script>
-    <script defer src="src/core/data/repositories/language.repository.js"></script>
-    <script defer src="src/core/presentation/components/language-switcher/language-switcher.component.js"></script>
-    <script defer src="src/core/presentation/components/appbar/appbar.component.js"></script>
-    <script defer src="src/core/presentation/components/footer/footer.component.js"></script>
+    <script src="src/core/domain/usecases/localization.usecase.js"></script>
+    <script src="src/core/data/datasources/storage.datasource.js"></script>
+    <script src="src/core/data/datasources/audio.service.js"></script>
+    <script src="src/core/data/datasources/language.datasource.js"></script>
+    <script src="src/core/data/repositories/language.repository.js"></script>
+    <script src="src/core/presentation/components/language-switcher/language-switcher.component.js"></script>
+    <script src="src/core/presentation/components/appbar/appbar.component.js"></script>
+    <script src="src/core/presentation/components/footer/footer.component.js"></script>
 
     <!-- 2. SemanticCut Feature -->
-    <script defer src="src/features/semantic-cut/presentation/controllers/semantic-cut.controller.js"></script>
+    <script src="src/features/semantic-cut/presentation/controllers/semantic-cut.controller.js"></script>
 
     <script>
       // Initialize SemanticCut AI Detail Page via Feature-First Controller

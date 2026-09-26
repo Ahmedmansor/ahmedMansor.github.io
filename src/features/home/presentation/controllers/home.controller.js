@@ -250,6 +250,122 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
 
       // 13. Handle direct landing with hash (#projects-carousel-section)
       this.handleHashNavigation();
+
+      // 14. Initialize Cyber Start Experience & Audio Warning Overlay
+      this.setupStartExperienceOverlay();
+    }
+
+    /**
+     * Initializes the full-screen "Start Experience / Initialize Audio" entrance overlay
+     */
+    static setupStartExperienceOverlay() {
+      const overlay = document.getElementById("cyber-start-overlay");
+      const startBtn = document.getElementById("btn-start-experience");
+      const skipBtn = document.getElementById("btn-skip-audio");
+
+      // If the experience was already started in this session, bypass overlay
+        if (sessionStorage.getItem('experience_started') === 'true') {
+          const AudioService = window.AudioService;
+          // Restore the saved mute preference (don't force unmute)
+          const savedMuted = localStorage.getItem('portfolio_audio_muted') === 'true';
+          if (AudioService) {
+            // Sync Howler mute state with saved preference
+            AudioService.setMuted(savedMuted);
+            // Resume BGM if user had started unmuted
+            if (!savedMuted) {
+              AudioService.playBGM();
+            }
+          }
+          if (window.AppbarComponent && typeof window.AppbarComponent.updateAudioButtonUI === 'function') {
+            window.AppbarComponent.updateAudioButtonUI(savedMuted);
+          }
+          if (overlay) overlay.remove();
+          return;
+        }
+
+        if (!overlay || !startBtn) return;
+
+      const AudioService = window.AudioService;
+
+      // Handle "START EXPERIENCE" click (explicit user activation gesture)
+      startBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        // 1. Explicitly resume Howler AudioContext
+        if (typeof Howler !== "undefined" && Howler.ctx && Howler.ctx.state === "suspended") {
+          Howler.ctx.resume().catch(() => {});
+        }
+
+        // 2. Set global mute state to FALSE & unlock audio
+        if (AudioService) {
+          AudioService.setMuted(false);
+          AudioService.unlock();
+        }
+
+        // Mark session as started so overlay won't show again on refresh
+        sessionStorage.setItem('experience_started', 'true');
+
+        // 3. Update Appbar icon to 'Volume High' state
+        if (AppbarComponent && typeof AppbarComponent.updateAudioButtonUI === "function") {
+          AppbarComponent.updateAudioButtonUI(false);
+        }
+
+        // 4. Fade out overlay smoothly with GSAP
+        if (typeof gsap !== "undefined") {
+          gsap.to(overlay, {
+            autoAlpha: 0,
+            scale: 1.04,
+            duration: 0.45,
+            ease: "power2.inOut",
+            onComplete: () => {
+              overlay.remove();
+              // 5. Play hologram-on SFX + start BGM loop
+              if (AudioService) {
+                AudioService.play("hologram-on");
+                AudioService.playBGM();
+              }
+            }
+          });
+        } else {
+          overlay.style.opacity = "0";
+          overlay.style.pointerEvents = "none";
+          setTimeout(() => {
+            overlay.remove();
+            if (AudioService) {
+              AudioService.play("hologram-on");
+              AudioService.playBGM();
+            }
+          }, 450);
+        }
+      });
+
+      // Handle "PROCEED MUTED" click
+      if (skipBtn) {
+        skipBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+
+          if (AudioService) {
+            AudioService.setMuted(true);
+          }
+          // Mark session as started (muted) so overlay won't show again on refresh
+          sessionStorage.setItem('experience_started', 'true');
+          if (AppbarComponent && typeof AppbarComponent.updateAudioButtonUI === "function") {
+            AppbarComponent.updateAudioButtonUI(true);
+          }
+          if (typeof gsap !== "undefined") {
+            gsap.to(overlay, {
+              autoAlpha: 0,
+              duration: 0.35,
+              ease: "power2.inOut",
+              onComplete: () => overlay.remove()
+            });
+          } else {
+            overlay.remove();
+          }
+        });
+      }
     }
 
     /**
@@ -294,16 +410,27 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
         gsap.set(horizon, { y: 0, scale: 1 });
       }
 
+      let lastTypeCount = -1;
       // Helper to compute typed text character-by-character continuously forward and backward
       const updateTypingText = (progress) => {
+        let currentCount = 0;
         if (progress < 0.05) {
           consoleTextEl.textContent = "";
+          currentCount = 0;
         } else if (progress >= 0.48) {
           consoleTextEl.textContent = fullText;
+          currentCount = fullText.length;
         } else {
           const ratio = (progress - 0.05) / (0.48 - 0.05);
-          const currentCount = Math.min(fullText.length, Math.floor(ratio * fullText.length + 0.1));
+          currentCount = Math.min(fullText.length, Math.floor(ratio * fullText.length + 0.1));
           consoleTextEl.textContent = fullText.slice(0, currentCount);
+        }
+
+        if (currentCount !== lastTypeCount && currentCount > 0) {
+          lastTypeCount = currentCount;
+          if (window.AudioService) {
+            window.AudioService.playThrottled("typing-tick", 60);
+          }
         }
       };
 
@@ -384,7 +511,10 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
           heroTl.to(spaceship, {
             autoAlpha: 1,
             duration: 0.08,
-            ease: "power1.in"
+            ease: "power1.in",
+            onStart: () => {
+              if (window.AudioService) window.AudioService.play("spaceship-flyby");
+            }
           }, 0.60)
           .to(spaceship, {
             x: () => window.innerWidth + 450,
@@ -467,7 +597,10 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
           heroTl.to(spaceship, {
             autoAlpha: 1,
             duration: 0.10,
-            ease: "power1.in"
+            ease: "power1.in",
+            onStart: () => {
+              if (window.AudioService) window.AudioService.play("spaceship-flyby");
+            }
           }, 0.46)
           .to(spaceship, {
             x: () => window.innerWidth + 280,
@@ -647,6 +780,7 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
         runBtn.addEventListener("click", () => {
           // Open terminal drawer if closed
           terminalDrawer.classList.add("open");
+          if (window.AudioService) window.AudioService.play("warp-whoosh");
 
           if (isCompiling) return;
           isCompiling = true;
@@ -669,6 +803,7 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
             line1.className = "term-line info-line";
             line1.innerHTML = `[SYS] Resolving dependencies: flutter_bloc, supabase_flutter, get_it... <span style="color:#00e696;">[OK]</span>`;
             terminalOutput.appendChild(line1);
+            if (window.AudioService) window.AudioService.play("typing-tick");
           }, 500);
 
           // Step 2: AI Pipelines & State Management
@@ -677,6 +812,7 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
             line2.className = "term-line info-line";
             line2.innerHTML = `[SYS] Compiling Reactive BLoCs & AI Automation Pipelines... <span style="color:#00e696;">[OK]</span>`;
             terminalOutput.appendChild(line2);
+            if (window.AudioService) window.AudioService.play("typing-tick");
           }, 1000);
 
           // Step 3: Build Successful Finish
@@ -696,6 +832,7 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
               termStatus.style.color = "#00e696";
             }
             terminalOutput.scrollTop = terminalOutput.scrollHeight;
+            if (window.AudioService) window.AudioService.play("success-chime");
             isCompiling = false;
           }, 1500);
         });
@@ -711,6 +848,9 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
               trigger: aboutSection,
               start: "top 80%",
               toggleActions: "play none none none",
+              onEnter: () => {
+                if (window.AudioService) window.AudioService.play("laser-scan");
+              }
             },
             y: 35,
             autoAlpha: 0,
@@ -780,6 +920,9 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
           updateCardRect();
           bioCard.style.willChange = "transform";
           targetZ = 20; // Smoothly lift forward in 3D
+          if (window.AudioService) {
+            window.AudioService.playThrottled("hologram-on", 500);
+          }
           if (!rafId) {
             rafId = requestAnimationFrame(updateParallax);
           }
@@ -810,6 +953,9 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
         bioCard.addEventListener("touchstart", (e) => {
           updateCardRect();
           bioCard.style.willChange = "transform";
+          if (window.AudioService) {
+            window.AudioService.playThrottled("hologram-on", 500);
+          }
           const touch = e.touches[0];
           if (touch && cardRect) {
             targetX = ((touch.clientX - cardRect.left) / cardRect.width) * 2 - 1;

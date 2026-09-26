@@ -70,9 +70,9 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
         titlesHTML += `
           <div class="carousel-title-item" data-index="${index}">
             <span class="carousel-title-category">${displayCategory}</span>
-            <a href="${project.link}" class="carousel-title-link" aria-label="${viewText} - ${displayTitle}" title="${viewText}">
+            <a href="${project.link}" class="carousel-title-link" aria-label="${viewText} - ${displayTitle}" title="${viewText}" data-sound-hover="ui-hover" data-sound-click="warp-whoosh">
               <h2 class="carousel-title-heading">${displayTitle}</h2>
-              <span class="carousel-title-nav-btn ${titleBtnClass}">
+              <span class="carousel-title-nav-btn ${titleBtnClass}" data-sound-hover="ui-hover">
                 ${window.Icons ? window.Icons.arrowUpRightFromSquare() : '<i class="fas fa-arrow-up-right-from-square"></i>'}
               </span>
             </a>
@@ -93,7 +93,7 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
 
         cardsHTML += `
           <div class="carousel-item" carousel="item" data-index="${index}">
-            <a href="${project.link}" class="${cardClass}">
+            <a href="${project.link}" class="${cardClass}" data-sound-hover="ui-hover" data-sound-click="warp-whoosh">
               <div class="project-thumbnail-wrapper ${thumbClass}">
                 <img src="${project.thumbnail}" alt="${project.title}" width="600" height="340" loading="lazy" decoding="async">
               </div>
@@ -109,7 +109,7 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
                 <h4>${project.title}</h4>
                 <p>${project.description}</p>
                 <div class="tech-tags">${tagsHTML}</div>
-                <span class="view-project-btn">
+                <span class="view-project-btn" data-sound-hover="ui-hover" data-sound-click="warp-whoosh">
                   ${viewText} ${window.Icons ? window.Icons.arrowRight() : '<i class="fas fa-arrow-right"></i>'}
                 </span>
               </div>
@@ -234,6 +234,7 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
           const idx = Math.min(Math.round(animState.progress * 3), 3);
           if (idx !== activeIndex) {
             updateControls(idx);
+            if (window.AudioService) window.AudioService.play("ratchet-step");
           }
         }
       });
@@ -253,6 +254,7 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
         nextBtn.onclick = () => {
           if (activeIndex < 3) {
             scrollToStep(activeIndex + 1);
+            if (window.AudioService) window.AudioService.play("ratchet-step");
           }
         };
       }
@@ -261,6 +263,7 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
         prevBtn.onclick = () => {
           if (activeIndex > 0) {
             scrollToStep(activeIndex - 1);
+            if (window.AudioService) window.AudioService.play("ratchet-step");
           }
         };
       }
@@ -279,15 +282,18 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
           if (isDirectAction) {
             e.preventDefault();
             e.stopPropagation();
+            if (window.AudioService) window.AudioService.play("warp-whoosh");
             if (targetUrl) window.location.href = targetUrl;
             return;
           }
 
           if (isCardActive) {
             e.preventDefault();
+            if (window.AudioService) window.AudioService.play("warp-whoosh");
             if (targetUrl) window.location.href = targetUrl;
           } else {
             e.preventDefault();
+            if (window.AudioService) window.AudioService.play("ratchet-step");
             scrollToStep(clickedIndex);
           }
         };
@@ -300,6 +306,7 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
           link.onclick = (e) => {
             e.preventDefault();
             e.stopPropagation();
+            if (window.AudioService) window.AudioService.play("warp-whoosh");
             const targetUrl = link.getAttribute("href");
             if (targetUrl) window.location.href = targetUrl;
           };

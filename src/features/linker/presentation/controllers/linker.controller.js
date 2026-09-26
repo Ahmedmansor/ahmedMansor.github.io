@@ -108,6 +108,8 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
       if (existingLinks.length === titles.length) {
         existingLinks.forEach((a, i) => {
           a.textContent = `${i + 1}. ${titles[i]}`;
+          a.setAttribute("data-sound-click", "ui-click");
+          a.setAttribute("data-sound-hover", "ui-hover");
         });
         return;
       }
@@ -118,6 +120,8 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
         const a = document.createElement("a");
         a.href = `#feature${i + 1}`;
         a.setAttribute("data-feature", i + 1);
+        a.setAttribute("data-sound-click", "ui-click");
+        a.setAttribute("data-sound-hover", "ui-hover");
         a.textContent = `${i + 1}. ${title}`;
         li.appendChild(a);
         ul.appendChild(li);
@@ -139,6 +143,9 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
       navLinks.forEach((link) => {
         link.onclick = (e) => {
           e.preventDefault();
+          if (window.AudioService) {
+            window.AudioService.play("ui-click");
+          }
           const targetId = link.getAttribute("href").replace("#", "");
           const target = document.getElementById(targetId);
           if (target) {
@@ -255,6 +262,8 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
           seeMoreBtn.className = "see-more-btn";
           seeMoreBtn.setAttribute("data-i18n-key", "common.seeMore");
           seeMoreBtn.setAttribute("aria-label", "Toggle caption expansion");
+          seeMoreBtn.setAttribute("data-sound-click", "ui-click");
+          seeMoreBtn.setAttribute("data-sound-hover", "ui-hover");
           seeMoreBtn.textContent = commonTranslations.seeMore || "See More";
           itemDiv.appendChild(seeMoreBtn);
         }
@@ -301,6 +310,9 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
         }
 
         button.addEventListener("click", () => {
+          if (window.AudioService) {
+            window.AudioService.play("ui-click");
+          }
           caption.classList.toggle("truncated");
           button.textContent = caption.classList.contains("truncated")
             ? commonTranslations.seeMore || "See More"
@@ -357,12 +369,18 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
       if (!trigger || !modal) return;
 
       const openModal = () => {
+        if (window.AudioService) {
+          window.AudioService.play("warp-whoosh");
+        }
         modal.classList.add("is-open");
         modal.setAttribute("aria-hidden", "false");
         document.body.style.overflow = "hidden";
       };
 
       const closeModal = () => {
+        if (window.AudioService) {
+          window.AudioService.play("ui-click");
+        }
         modal.classList.remove("is-open");
         modal.setAttribute("aria-hidden", "true");
         document.body.style.overflow = "";

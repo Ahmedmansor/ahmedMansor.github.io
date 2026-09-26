@@ -55,6 +55,12 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
       const flowchartObj = document.getElementById("pipeline-flowchart-object");
       if (!flowchartSection || !flowchartObj || !("IntersectionObserver" in window)) return;
 
+      const bindSvgAudio = () => {
+        SemanticCutController.setupSvgNodeAudioInteractions(flowchartObj);
+      };
+
+      flowchartObj.addEventListener("load", bindSvgAudio);
+
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
@@ -63,6 +69,7 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
                 flowchartObj.setAttribute("data", flowchartObj.dataset.src);
               }
               SemanticCutController.toggleSvgAnimation(false);
+              bindSvgAudio();
             } else {
               SemanticCutController.toggleSvgAnimation(true);
             }
@@ -72,6 +79,53 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
       );
 
       observer.observe(flowchartSection);
+    }
+
+    /**
+     * Binds interactive audio effects and hover glow to SVG flowchart nodes
+     * @param {HTMLObjectElement} flowchartObj
+     */
+    static setupSvgNodeAudioInteractions(flowchartObj) {
+      if (!flowchartObj) return;
+      try {
+        const doc = flowchartObj.contentDocument;
+        if (!doc || doc._audioListenersAttached) return;
+
+        const nodes = doc.querySelectorAll(".pipeline-node, [id^='node-'], g[data-title]");
+        if (!nodes.length) return;
+
+        doc._audioListenersAttached = true;
+
+        // Inject subtle hover styles into SVG
+        const style = doc.createElementNS("http://www.w3.org/2000/svg", "style");
+        style.textContent = `
+          .pipeline-node, [id^='node-'] {
+            cursor: pointer !important;
+            transition: transform 0.2s ease, filter 0.2s ease !important;
+          }
+          .pipeline-node:hover, [id^='node-']:hover {
+            filter: drop-shadow(0 0 12px rgba(0, 240, 255, 0.8)) !important;
+          }
+        `;
+        const svg = doc.querySelector("svg");
+        if (svg) svg.appendChild(style);
+
+        nodes.forEach((node) => {
+          node.addEventListener("mouseenter", () => {
+            if (window.AudioService) {
+              window.AudioService.playThrottled("ui-hover", 50);
+            }
+          });
+
+          node.addEventListener("click", () => {
+            if (window.AudioService) {
+              window.AudioService.play("laser-scan");
+            }
+          });
+        });
+      } catch (_) {
+        // Safe cross-boundary ignore
+      }
     }
 
     /**
@@ -91,6 +145,9 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
             } else {
               svg.classList.remove("is-paused");
             }
+          }
+          if (!doc._audioListenersAttached) {
+            SemanticCutController.setupSvgNodeAudioInteractions(flowchartObj);
           }
         }
       } catch (_) {

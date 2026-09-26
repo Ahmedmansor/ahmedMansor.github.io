@@ -49,17 +49,26 @@
   text-decoration: none;
   border-bottom: 3px solid transparent;
   border-radius: 8px;
-  transition: background 0.2s, color 0.2s, border 0.2s;
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
   background: none;
   word-break: break-word;
   text-align: left;
+  cursor: pointer;
 }
 
-.feature-nav a.active,
 .feature-nav a:hover {
+  color: #00f0ff;
+  background: rgba(0, 240, 255, 0.08);
+  border-bottom: 3px solid #00f0ff;
+  box-shadow: 0 4px 16px rgba(0, 240, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+.feature-nav a.active {
   color: var(--color-primary);
   background: var(--vulcan-900);
   border-bottom: 3px solid var(--color-primary);
+  box-shadow: 0 4px 18px rgba(0, 240, 255, 0.22);
 }
 
 @media (max-width: 900px) {
@@ -418,6 +427,14 @@ html[dir="rtl"] .see-more-btn {
   display: block;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
   background: var(--vulcan-900);
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-media-gallery .gallery-item:hover video,
+.feature-media-gallery .gallery-item:hover img {
+  border-color: rgba(0, 240, 255, 0.6);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 16px rgba(0, 240, 255, 0.25);
+  transform: translateY(-3px);
 }
 
 video.lazy-video {
@@ -457,7 +474,6 @@ video.lazy-video {
   display: block;
 }
 
-/* Zoomable Media Container */
 .zoomable-media-wrapper {
   position: relative;
   display: inline-block;
@@ -466,7 +482,8 @@ video.lazy-video {
   overflow: hidden;
   max-width: 100%;
   margin: 10px auto 0;
-  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  border: 1.5px solid var(--border-color);
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .zoomable-media-wrapper::after {
@@ -481,7 +498,9 @@ video.lazy-video {
 }
 
 .zoomable-media-wrapper:hover {
-  transform: translateY(-3px);
+  transform: translateY(-4px) scale(1.015);
+  border-color: var(--color-primary);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.7), 0 0 24px rgba(0, 240, 255, 0.4);
 }
 
 .zoomable-media-wrapper:hover::after {

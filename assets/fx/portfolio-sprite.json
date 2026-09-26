@@ -1,0 +1,52 @@
+{
+    "src": [
+        "portfolio-sprite.webm",
+        "portfolio-sprite.mp3"
+    ],
+    "sprite": {
+        "hologram-on": [
+            0,
+            500
+        ],
+        "laser-scan": [
+            1500,
+            700
+        ],
+        "notification-ping": [
+            3200,
+            300
+        ],
+        "ratchet-step": [
+            4500,
+            200
+        ],
+        "spaceship-flyby": [
+            5700,
+            1200
+        ],
+        "success-chime": [
+            7900,
+            600
+        ],
+        "typing-tick": [
+            9500,
+            93
+        ],
+        "ui-click": [
+            10593,
+            200
+        ],
+        "ui-hover": [
+            11793,
+            150
+        ],
+        "warning-beep": [
+            12943,
+            229
+        ],
+        "warp-whoosh": [
+            14172,
+            530
+        ]
+    }
+}

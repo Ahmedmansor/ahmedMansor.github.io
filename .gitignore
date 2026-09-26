@@ -3,3 +3,19 @@
 
 # Ignore VS Code's workspace settings
 .vscode/
+
+
+
+# Raw Audio FX Files
+hologram-on.mp3
+laser-scan.mp3
+notification-ping.mp3
+ratchet-step.mp3
+spaceship-flyby.mp3
+success-chime.mp3
+typing-tick.mp3
+ui-click.mp3
+ui-hover.mp3
+warning-beep.mp3
+warp-whoosh.mp3
+Hazy Pulse (Remastered).mp3

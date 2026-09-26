@@ -30,6 +30,8 @@ window.Portfolio.presentation.components = window.Portfolio.presentation.compone
               class="footer-contact-btn github-btn"
               title="GitHub"
               aria-label="GitHub"
+              data-sound-hover="ui-hover"
+              data-sound-click="ui-click"
             >
               ${window.Icons ? window.Icons.github() : '<i class="fab fa-github"></i>'}
             </a>
@@ -39,6 +41,8 @@ window.Portfolio.presentation.components = window.Portfolio.presentation.compone
               class="footer-contact-btn linkedin-btn"
               title="LinkedIn"
               aria-label="LinkedIn"
+              data-sound-hover="ui-hover"
+              data-sound-click="ui-click"
             >
               ${window.Icons ? window.Icons.linkedin() : '<i class="fab fa-linkedin"></i>'}
             </a>
@@ -47,6 +51,8 @@ window.Portfolio.presentation.components = window.Portfolio.presentation.compone
               class="footer-contact-btn email-btn"
               title="Gmail: ahmedmansour70000@gmail.com"
               aria-label="Gmail"
+              data-sound-hover="ui-hover"
+              data-sound-click="ui-click"
             >
               ${window.Icons ? window.Icons.envelope() : '<i class="fas fa-envelope"></i>'}
             </a>
@@ -56,6 +62,8 @@ window.Portfolio.presentation.components = window.Portfolio.presentation.compone
               class="footer-contact-btn whatsapp-btn"
               title="WhatsApp: +201000872150"
               aria-label="WhatsApp"
+              data-sound-hover="ui-hover"
+              data-sound-click="ui-click"
             >
               ${window.Icons ? window.Icons.whatsapp() : '<i class="fab fa-whatsapp"></i>'}
             </a>

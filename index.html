@@ -27,6 +27,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 
+    <!-- Audio Engine (Howler.js) — must load before audio.service.js (no defer!) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"></script>
+
     <!-- Initial Localization Dictionary (Synchronous) -->
     <script src="lang/en.js" id="lang-script"></script>
 
@@ -72,6 +75,24 @@
         height: calc(100vh + 2400px) !important;
       }
     </style>
+
+    <!-- Early Session Guard: Instantly hide overlay & restore audio state before first paint -->
+    <script>
+      (function () {
+        if (sessionStorage.getItem('experience_started') === 'true') {
+          // Inject a style rule to hide the overlay before the browser paints it
+          var s = document.createElement('style');
+          s.textContent = '#cyber-start-overlay { display: none !important; }';
+          document.head.appendChild(s);
+          // Ensure mute state is set (defaults to false/unmuted if never explicitly muted)
+          try {
+            if (localStorage.getItem('portfolio_audio_muted') === null) {
+              localStorage.setItem('portfolio_audio_muted', 'false');
+            }
+          } catch (e) {}
+        }
+      })();
+    </script>
   </head>
 
   <body id="home-page">
@@ -97,20 +118,70 @@
       <div class="preloader-grid-bg"></div>
     </div>
 
+    <!-- Cyber Audio & Experience Initialization Overlay (First-Load Entrance) -->
+    <div id="cyber-start-overlay" class="cyber-start-overlay" role="dialog" aria-modal="true" aria-labelledby="start-overlay-title">
+      <div class="start-overlay-backdrop"></div>
+      <div class="start-overlay-card">
+        <!-- Corner Tech Brackets -->
+        <div class="hud-corner hud-corner-tl"></div>
+        <div class="hud-corner hud-corner-tr"></div>
+        <div class="hud-corner hud-corner-bl"></div>
+        <div class="hud-corner hud-corner-br"></div>
+
+        <!-- Animated Radar Sound Waves Hologram Badge -->
+        <div class="start-overlay-badge">
+          <div class="badge-pulse-ring"></div>
+          <svg class="app-icon start-sound-icon" viewBox="0 0 640 512" fill="currentColor">
+            <path d="M533.6 32.5C598.5 85.3 640 165.8 640 256s-41.5 170.7-106.4 223.5c-10.3 8.4-25.4 6.8-33.8-3.5s-6.8-25.4 3.5-33.8C557.5 398.2 592 331.2 592 256s-34.5-142.2-88.7-186.3c-10.3-8.4-11.8-23.5-3.5-33.8s23.5-11.8 33.8-3.5zM473.1 107c6.1-12 20.8-16.8 32.8-10.7 48.2 24.4 82.1 74.5 82.1 132.3s-33.9 107.9-82.1 132.3c-12 6.1-26.7 1.3-32.8-10.7s-1.3-26.7 10.7-32.8C520.1 308.8 544 272.7 544 256s-23.9-52.8-60.2-71.2c-12-6.1-16.8-20.8-10.7-32.8zM380 448c-12.7 0-24.9-5.1-33.9-14.1L217.9 306 144 306c-26.5 0-48-21.5-48-48l0-64c0-26.5 21.5-48 48-48l73.9 0 128.1-127.9C355.1 8.9 367.3 3.8 380 3.8c24.3 0 44 19.7 44 44l0 356.3c0 24.3-19.7 44-44 44z"/>
+          </svg>
+        </div>
+
+        <div class="start-overlay-header">
+          <span class="start-sys-tag">&gt; [SYS.AUDIO // INITIALIZE_ENGINE]</span>
+          <h2 id="start-overlay-title" class="start-title">SPATIAL AUDIO INTERFACE</h2>
+        </div>
+
+        <p class="start-overlay-description">
+          This portfolio is enhanced with dynamic spatial audio sprites, GSAP scroll triggers, and high-frequency tactile UI interactions. Click below to initialize the audio engine.
+        </p>
+
+        <div class="start-overlay-actions">
+          <button id="btn-start-experience" class="btn-start-experience" type="button" data-sound-hover="ui-hover">
+            <svg class="app-icon" viewBox="0 0 384 512" fill="currentColor">
+              <path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/>
+            </svg>
+            <span>START EXPERIENCE</span>
+          </button>
+          <button id="btn-skip-audio" class="btn-skip-audio" type="button">
+            <span>PROCEED MUTED</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- Global Sticky App Bar (Starts hidden on Hero) -->
     <header id="appbar-container" class="appbar appbar-hero-hidden">
       <div class="appbar-inner">
-        <a href="index.html" class="appbar-brand" title="Home">
+        <a href="index.html" class="appbar-brand" title="Home" data-sound-click="ui-click" data-sound-hover="ui-hover">
           <span class="hud-status-dot" aria-hidden="true"></span>
           <span class="brand-tag">&lt;</span><span class="brand-name">ahmedMansour</span><span class="brand-tag"> /&gt;</span>
         </a>
         <nav class="appbar-nav">
-          <a href="#projects-carousel-section" class="appbar-link" data-i18n-key="common.navProjects">Projects</a>
+          <a href="#projects-carousel-section" class="appbar-link" data-i18n-key="common.navProjects" data-sound-click="ui-click" data-sound-hover="ui-hover">Projects</a>
         </nav>
         <div class="appbar-actions">
+          <!-- Cyber Audio Controller (Mute / Unmute Toggle) -->
+          <button id="audio-toggle-btn" class="appbar-audio-btn" type="button" aria-label="Toggle Audio" title="Toggle Audio (Mute/Unmute)">
+            <span class="audio-btn-icon" id="audio-btn-icon"></span>
+            <span class="audio-wave-bars" aria-hidden="true">
+              <span class="bar bar-1"></span>
+              <span class="bar bar-2"></span>
+              <span class="bar bar-3"></span>
+            </span>
+          </button>
           <div class="language-switcher">
-            <button id="lang-en-btn">English</button>
-            <button id="lang-ar-btn">العربية</button>
+            <button id="lang-en-btn" data-sound-click="ui-click" data-sound-hover="ui-hover">English</button>
+            <button id="lang-ar-btn" data-sound-click="ui-click" data-sound-hover="ui-hover">العربية</button>
           </div>
         </div>
       </div>
@@ -221,7 +292,7 @@
           </div>
 
           <!-- Futuristic Animated Cyber Mouse Scroll Indicator -->
-          <div class="cyber-scroll-indicator" id="cyber-scroll-indicator" role="button" aria-label="Scroll to descend">
+          <div class="cyber-scroll-indicator" id="cyber-scroll-indicator" role="button" aria-label="Scroll to descend" data-sound-click="warp-whoosh" data-sound-hover="ui-hover">
             <div class="mouse-icon">
               <div class="mouse-wheel"></div>
             </div>
@@ -256,7 +327,7 @@
           
           <!-- 1. Left: Biometric Hologram ID Card -->
           <div class="biometric-card-wrapper">
-            <div class="biometric-card">
+            <div class="biometric-card" data-sound-hover="hologram-on">
               <!-- Corner HUD Brackets -->
               <div class="hud-corner hud-corner-tl"></div>
               <div class="hud-corner hud-corner-tr"></div>
@@ -300,18 +371,18 @@
             <!-- IDE Window Header -->
             <div class="ide-window-header">
               <div class="ide-dots">
-                <span class="dot dot-close" title="Close"></span>
-                <span class="dot dot-min" title="Minimize"></span>
-                <span class="dot dot-max" title="Maximize"></span>
+                <span class="dot dot-close" title="Close" data-sound-click="warning-beep" data-sound-hover="ui-hover"></span>
+                <span class="dot dot-min" title="Minimize" data-sound-click="warning-beep" data-sound-hover="ui-hover"></span>
+                <span class="dot dot-max" title="Maximize" data-sound-click="warning-beep" data-sound-hover="ui-hover"></span>
               </div>
 
               <!-- File Tabs -->
               <div class="ide-tabs">
-                <button class="ide-tab active" data-tab="dart" id="tab-dart" type="button">
+                <button class="ide-tab active" data-tab="dart" id="tab-dart" type="button" data-sound-click="ui-click" data-sound-hover="ui-hover">
                   <svg class="app-icon ide-tab-icon" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M410.5 256.7L254.8 412.4l-57.8-57.8 97.9-97.9-97.9-97.9 57.8-57.8L410.5 256.7zM254.8 101L156.9 3.1 3.1 156.9l97.9 97.9L254.8 101zM156.9 508.9l97.9-97.9-57.8-57.8-97.9 97.9 57.8 57.8z"/></svg>
                   <span>ahmed_mansour.dart</span>
                 </button>
-                <button class="ide-tab" data-tab="json" id="tab-json" type="button">
+                <button class="ide-tab" data-tab="json" id="tab-json" type="button" data-sound-click="ui-click" data-sound-hover="ui-hover">
                   <svg class="app-icon ide-tab-icon" viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><path d="M0 64C0 28.7 28.7 0 64 0H224V128c0 17.7 14.3 32 32 32H384V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V64zm384 64H256V0L384 128zM175 231c-9.4-9.4-24.6-9.4-33.9 0l-48 48c-9.4 9.4-9.4 24.6 0 33.9l48 48c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9L141.9 296l33.1-33.1c9.4-9.4 9.4-24.6 0-33.9zm66 0c-9.4 9.4-9.4 24.6 0 33.9l33.1 33.1-33.1 33.1c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l48-48c9.4-9.4 9.4-24.6 0-33.9l-48-48c-9.4-9.4-24.6-9.4-33.9 0z"/></svg>
                   <span>skills_matrix.json</span>
                 </button>
@@ -319,7 +390,7 @@
 
               <!-- Run Code Action Button -->
               <div class="ide-actions">
-                <button class="ide-run-btn" id="ide-run-btn" type="button" title="Execute Code">
+                <button class="ide-run-btn" id="ide-run-btn" type="button" title="Execute Code" data-sound-click="warp-whoosh" data-sound-hover="ui-hover">
                   <svg class="app-icon" viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg>
                   <span>RUN CODE</span>
                   <span class="run-glow"></span>
@@ -416,10 +487,10 @@
 
         <!-- 3. Lower Controls Zone (Lime-Neon Arrows) -->
         <div class="carousel-controls-zone">
-          <button class="carousel-arrow-btn prev-btn" id="carousel-prev" aria-label="Previous Project">
+          <button class="carousel-arrow-btn prev-btn" id="carousel-prev" aria-label="Previous Project" data-sound-click="ratchet-step" data-sound-hover="ui-hover">
             <svg class="app-icon" viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
           </button>
-          <button class="carousel-arrow-btn next-btn" id="carousel-next" aria-label="Next Project">
+          <button class="carousel-arrow-btn next-btn" id="carousel-next" aria-label="Next Project" data-sound-click="ratchet-step" data-sound-hover="ui-hover">
             <svg class="app-icon" viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg>
           </button>
         </div>
@@ -436,6 +507,7 @@
     <!-- 1. Core Layer -->
     <script src="src/core/domain/usecases/localization.usecase.js"></script>
     <script src="src/core/data/datasources/storage.datasource.js"></script>
+    <script src="src/core/data/datasources/audio.service.js"></script>
     <script src="src/core/data/datasources/language.datasource.js"></script>
     <script src="src/core/data/repositories/language.repository.js"></script>
     <script src="src/core/presentation/components/language-switcher/language-switcher.component.js"></script>

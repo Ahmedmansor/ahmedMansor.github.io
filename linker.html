@@ -46,6 +46,18 @@
 
     <!-- Initial Localization Dictionary (Deferred) -->
     <script src="lang/en.js" id="lang-script" defer></script>
+
+    <!-- Early Session Guard: Restore audio state before first paint -->
+    <script>
+      (function () {
+        try {
+          // If mute state was never set, default to unmuted
+          if (localStorage.getItem('portfolio_audio_muted') === null) {
+            localStorage.setItem('portfolio_audio_muted', 'false');
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
 
   <body id="project1-page">
@@ -71,12 +83,12 @@
     <!-- Sticky Feature Navigation Bar (Pre-rendered to eliminate layout shift for div.container) -->
     <nav class="feature-nav" id="feature-nav">
       <ul>
-        <li><a href="#feature1" data-feature="1" class="active">1. Secure and Easy Login and Logout System</a></li>
-        <li><a href="#feature2" data-feature="2">2. User Registration with Robust Validation</a></li>
-        <li><a href="#feature3" data-feature="3">3. The Complete User Journey: Guest, Player &amp; Coach Views</a></li>
-        <li><a href="#feature4" data-feature="4">4. Advanced Search &amp; Multi-Factor Filtering</a></li>
-        <li><a href="#feature5" data-feature="5">5. Full-Circle Application: From Player to Coach</a></li>
-        <li><a href="#feature6" data-feature="6">6. Core Interaction: Session Creation &amp; Enrollment</a></li>
+        <li><a href="#feature1" data-feature="1" class="active" data-sound-click="ui-click" data-sound-hover="ui-hover">1. Secure and Easy Login and Logout System</a></li>
+        <li><a href="#feature2" data-feature="2" data-sound-click="ui-click" data-sound-hover="ui-hover">2. User Registration with Robust Validation</a></li>
+        <li><a href="#feature3" data-feature="3" data-sound-click="ui-click" data-sound-hover="ui-hover">3. The Complete User Journey: Guest, Player &amp; Coach Views</a></li>
+        <li><a href="#feature4" data-feature="4" data-sound-click="ui-click" data-sound-hover="ui-hover">4. Advanced Search &amp; Multi-Factor Filtering</a></li>
+        <li><a href="#feature5" data-feature="5" data-sound-click="ui-click" data-sound-hover="ui-hover">5. Full-Circle Application: From Player to Coach</a></li>
+        <li><a href="#feature6" data-feature="6" data-sound-click="ui-click" data-sound-hover="ui-hover">6. Core Interaction: Session Creation &amp; Enrollment</a></li>
       </ul>
     </nav>
 
@@ -87,6 +99,8 @@
           class="see-more-btn"
           data-i18n-key="common.seeMore"
           aria-label="Toggle caption expansion"
+          data-sound-click="ui-click"
+          data-sound-hover="ui-hover"
         >
           See More
         </button>
@@ -119,6 +133,8 @@
             class="google-play-btn"
             id="google-play-store-btn"
             aria-label="Download Linker EG on Google Play Store"
+            data-sound-click="ui-click"
+            data-sound-hover="ui-hover"
           >
             <i class="fab fa-google-play"></i>
             <div class="btn-text">
@@ -189,6 +205,8 @@
               role="button"
               tabindex="0"
               aria-label="Tap to zoom image comparison of all user roles"
+              data-sound-click="warp-whoosh"
+              data-sound-hover="ui-hover"
             >
               <img
                 src="assets/images/all-profiles-comparison.jpg"
@@ -272,7 +290,7 @@
     >
       <div class="lightbox-overlay" id="lightbox-overlay"></div>
       <div class="lightbox-container">
-        <button class="lightbox-close-btn" id="lightbox-close-btn" aria-label="Close Preview">
+        <button class="lightbox-close-btn" id="lightbox-close-btn" aria-label="Close Preview" data-sound-click="ui-click" data-sound-hover="ui-hover">
           <i class="fas fa-times"></i>
         </button>
         <div class="lightbox-scroll-area">
@@ -292,10 +310,15 @@
       </div>
     </div>
 
+    <!-- Audio Engine (Howler.js) — must load before audio.service.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"></script>
+    <script src="assets/icons/icons.js"></script>
+
     <!-- Feature-First Clean Architecture Scripts -->
     <!-- 1. Core Layer -->
     <script src="src/core/domain/usecases/localization.usecase.js"></script>
     <script src="src/core/data/datasources/storage.datasource.js"></script>
+    <script src="src/core/data/datasources/audio.service.js"></script>
     <script src="src/core/data/datasources/language.datasource.js"></script>
     <script src="src/core/data/repositories/language.repository.js"></script>
     <script src="src/core/presentation/components/language-switcher/language-switcher.component.js"></script>
