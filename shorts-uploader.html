@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="YouTube Shorts Auto-Uploader: Autonomous Multi-Language Browser Automation & AI Publishing Pipeline built by Ahmed Mansour."
+    />
+    <link rel="canonical" href="https://ahmedmansor.github.io/shorts-uploader.html" />
+    <title data-i18n-key="shortsUploaderPage.pageTitle">
+      Project Details: YouTube Shorts Auto-Uploader | Ahmed Mansour
+    </title>
+
+    <!-- Direct Core & Feature Stylesheets (Eliminates @import Waterfall & FOUC) -->
+    <link rel="stylesheet" href="src/core/presentation/styles/variables.css" />
+    <link rel="stylesheet" href="src/core/presentation/styles/base.css" />
+    <link rel="stylesheet" href="src/core/presentation/components/appbar/appbar.css" />
+    <link rel="stylesheet" href="src/core/presentation/components/language-switcher/language-switcher.css" />
+    <link rel="stylesheet" href="src/core/presentation/components/footer/footer.css" />
+    <link rel="stylesheet" href="src/features/shorts-uploader/presentation/styles/shorts-uploader.css" />
+    <link rel="stylesheet" href="src/core/presentation/styles/rtl.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Montserrat:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+      />
+    </noscript>
+
+    <!-- Initial Localization Dictionary (Deferred) -->
+    <script src="lang/en.js" id="lang-script" defer></script>
+
+    <!-- Early Session Guard: Restore audio state before first paint -->
+    <script>
+      (function () {
+        try {
+          if (localStorage.getItem("portfolio_audio_muted") === null) {
+            localStorage.setItem("portfolio_audio_muted", "false");
+          }
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+
+  <body id="shortsuploader-page">
+    <!-- Global Sticky App Bar (Pre-rendered with .appbar to prevent CLS) -->
+    <header id="appbar-container" class="appbar">
+      <div class="appbar-inner">
+        <a href="index.html" class="appbar-brand" title="Home">
+          <span class="hud-status-dot" aria-hidden="true"></span>
+          <span class="brand-tag">&lt;</span><span class="brand-name">ahmedMansour</span><span class="brand-tag"> /&gt;</span>
+        </a>
+        <nav class="appbar-nav">
+          <a href="index.html#projects-carousel-section" class="appbar-link active" data-i18n-key="common.navProjects">Projects</a>
+        </nav>
+        <div class="appbar-actions">
+          <div class="language-switcher">
+            <button id="lang-en-btn">English</button>
+            <button id="lang-ar-btn">العربية</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="container">
+      <!-- Header Section -->
+      <header class="project-detail-header shortsuploader-header">
+        <div class="uploader-badge-tag" data-sound-hover="ui-hover">
+          <i class="fas fa-robot"></i> <span data-i18n-key="shortsUploaderPage.headerBadge">Python &amp; Browser Automation Engine</span>
+        </div>
+
+        <h1 data-i18n-key="shortsUploaderPage.headerTitle">
+          YouTube Shorts Auto-Uploader: Autonomous Multi-Language Pipeline
+        </h1>
+        <h2 class="project-subtitle" data-i18n-key="shortsUploaderPage.headerSubtitle">
+          Industrial-Grade Browser Automation &amp; AI-Driven YouTube Publishing Engine
+        </h2>
+        <p class="project-main-desc" data-i18n-key="shortsUploaderPage.headerDescription">
+          An autonomous Python &amp; Playwright automation ecosystem that orchestrates the entire YouTube Shorts publishing lifecycle across 4 global languages (Arabic, English, Portuguese, Spanish). Features Google Gemini AI metadata generation with culture-specific viral copywriting, anti-bot browser automation via persistent Chrome profiles, smart Cairo-time two-train scheduling, and atomic crash-safe state persistence.
+        </p>
+      </header>
+
+      <main class="project-detail-content">
+        <!-- 1. The Challenge vs Solution Grid -->
+        <section class="problem-solution-section">
+          <div class="problem-solution-grid">
+            <div class="ps-card problem-card" data-sound-hover="ui-hover">
+              <div class="ps-icon"><i class="fas fa-triangle-exclamation"></i></div>
+              <h3 data-i18n-key="shortsUploaderPage.problemTitle">⚠️ The Challenge / Problem</h3>
+              <p data-i18n-key="shortsUploaderPage.problemDescription">
+                Managing daily multi-language YouTube Shorts publishing across multiple regional channels is exhausting and error-prone. Manual uploading demands repetitive browser logins, tedious copy-pasting of translated titles, tags, and descriptions, manually calculating peak-hour schedules across different timezones, and risking workflow corruption if an upload crashes mid-sequence.
+              </p>
+            </div>
+            <div class="ps-card solution-card" data-sound-hover="ui-hover">
+              <div class="ps-icon"><i class="fas fa-bolt"></i></div>
+              <h3 data-i18n-key="shortsUploaderPage.solutionTitle">💡 The Solution</h3>
+              <p data-i18n-key="shortsUploaderPage.solutionDescription">
+                An end-to-end autonomous terminal pipeline (<code>python main.py</code>) operating on a zero-intervention basis. It reads video queues, uses Google Gemini to generate culture-tuned viral hooks and descriptions with local atomic caching, schedules publication to peak Cairo audience hours via a two-train algorithm, drives authentic Google Chrome instances using Playwright to bypass bot detection, and guarantees zero data loss via atomic filesystem operations.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. Tech Stack in One Single Line -->
+        <section class="tech-stack-section">
+          <h3 class="section-title">
+            <i class="fas fa-layer-group"></i>
+            <span data-i18n-key="shortsUploaderPage.techStackHeading">Technologies &amp; Architecture Stack</span>
+          </h3>
+          <div class="tech-stack-single-line">
+            <span class="tech-pill-badge python" data-sound-hover="ui-hover" data-sound-click="ui-click">Python</span>
+            <span class="tech-pill-divider">|</span>
+            <span class="tech-pill-badge playwright" data-sound-hover="ui-hover" data-sound-click="ui-click">Microsoft Playwright</span>
+            <span class="tech-pill-divider">|</span>
+            <span class="tech-pill-badge gemini" data-sound-hover="ui-hover" data-sound-click="ui-click">Google Gemini API</span>
+            <span class="tech-pill-divider">|</span>
+            <span class="tech-pill-badge pytz" data-sound-hover="ui-hover" data-sound-click="ui-click">Pytz (Cairo TZ)</span>
+            <span class="tech-pill-divider">|</span>
+            <span class="tech-pill-badge atomic" data-sound-hover="ui-hover" data-sound-click="ui-click">Atomic JSON IO</span>
+            <span class="tech-pill-divider">|</span>
+            <span class="tech-pill-badge chrome" data-sound-hover="ui-hover" data-sound-click="ui-click">Chrome Persistent Profiles</span>
+            <span class="tech-pill-divider">|</span>
+            <span class="tech-pill-badge dotenv" data-sound-hover="ui-hover" data-sound-click="ui-click">Python-Dotenv</span>
+            <span class="tech-pill-divider">|</span>
+            <span class="tech-pill-badge cli" data-sound-hover="ui-hover" data-sound-click="ui-click">CLI Orchestration</span>
+          </div>
+        </section>
+
+        <!-- 3. Architecture Flowchart (YouTube Shorts Multi-Language Upload Pipeline.svg) -->
+        <section class="flowchart-section">
+          <div class="section-header-centered">
+            <h3 class="section-title">
+              <i class="fas fa-diagram-project"></i>
+              <span data-i18n-key="shortsUploaderPage.flowchartHeading">🗺️ System Architecture &amp; Automation Flowchart</span>
+            </h3>
+            <p class="section-subtext" data-i18n-key="shortsUploaderPage.flowchartDescription">
+              Interactive architectural blueprint mapping queue synchronization, AI metadata generation, timezone slot allocation, Playwright browser driving, and completion archiving.
+            </p>
+          </div>
+
+          <div class="flowchart-card" data-sound-hover="ui-hover">
+            <div class="flowchart-actions">
+              <a
+                href="assets/projects/shorts_automation_uploader/YouTube Shorts Multi-Language Upload Pipeline.svg"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="diagram-btn"
+                data-sound-click="warp-whoosh"
+                data-sound-hover="ui-hover"
+              >
+                <i class="fas fa-up-right-from-square"></i>
+                <span data-i18n-key="shortsUploaderPage.openFullDiagramBtn">View Full High-Res Diagram</span>
+              </a>
+            </div>
+            <div class="flowchart-img-scroll">
+              <object
+                id="pipeline-flowchart-object"
+                class="flowchart-svg-object"
+                type="image/svg+xml"
+                data=""
+                data-src="assets/projects/shorts_automation_uploader/YouTube Shorts Multi-Language Upload Pipeline.svg?v=1"
+                aria-label="YouTube Shorts Automation Pipeline Diagram"
+              >
+                <img
+                  src="assets/projects/shorts_automation_uploader/YouTube Shorts Multi-Language Upload Pipeline.svg?v=1"
+                  alt="YouTube Shorts Automation Pipeline Diagram"
+                  class="flowchart-svg-img"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </object>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4. Deep-Dive Video Walkthrough (Vimeo Placeholder Ready For Embed) -->
+        <section class="demo-video-section">
+          <div class="section-header-centered">
+            <h3 class="section-title">
+              <i class="fas fa-play-circle"></i>
+              <span data-i18n-key="shortsUploaderPage.demoVideoHeading">🎬 Live Demonstration &amp; Deep-Dive Walkthrough</span>
+            </h3>
+            <p class="section-subtext" data-i18n-key="shortsUploaderPage.demoVideoDescription">
+              Dedicated spot for the upcoming comprehensive Vimeo video walkthrough analyzing the terminal orchestration, anti-bot mechanisms, and live YouTube Studio upload execution.
+            </p>
+          </div>
+          <div class="video-responsive-wrapper">
+            <!-- 
+              VIMEO EMBED PLACEHOLDER:
+              When the video is recorded and uploaded to Vimeo, replace this placeholder with:
+              <iframe
+                src="https://player.vimeo.com/video/YOUR_VIMEO_ID?badge=0&autopause=0&player_id=0&dnt=1"
+                loading="lazy"
+                frameborder="0"
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; unload"
+                title="YouTube Shorts Auto-Uploader Deep-Dive Walkthrough"
+              ></iframe>
+            -->
+            <div class="video-placeholder-container">
+              <div class="video-hud-grid"></div>
+              <div class="video-hud-brackets"></div>
+              <div class="video-hud-telemetry-top">
+                <span>[HUD.TELEMETRY: VIMEO 4K DEEP-DIVE DOCK]</span>
+                <span>[MODE: PLAYWRIGHT &amp; GEMINI ANALYSIS]</span>
+              </div>
+              <div class="video-play-pulse-btn" data-sound-hover="ui-hover" data-sound-click="hologram-on">
+                <i class="fas fa-play"></i>
+              </div>
+              <div class="video-placeholder-badge">
+                <i class="fas fa-video"></i> <span data-i18n-key="shortsUploaderPage.videoStatusBadge">VIDEO PRODUCTION IN PROGRESS</span>
+              </div>
+              <h4 class="video-placeholder-title" data-i18n-key="shortsUploaderPage.videoRecordingTitle">
+                Deep-Dive Engineering Video (Coming Soon to Vimeo)
+              </h4>
+              <p class="video-placeholder-desc" data-i18n-key="shortsUploaderPage.videoRecordingDesc">
+                A high-resolution video walk-through is currently being recorded. It will break down live Playwright Chromium automation, anti-bot humanization techniques, prompt engineering in Google Gemini, and atomic queue scheduling in real time.
+              </p>
+              <span class="video-placeholder-note" data-i18n-key="shortsUploaderPage.videoPlaceholderNote">
+                &lt;VIMEO_EMBED_SLOT_RESERVED /&gt;
+              </span>
+              <div class="video-hud-telemetry-bottom">
+                <span>[AUTH: AHMED MANSOUR // SENIOR ENGINEER]</span>
+                <span>[STATUS: READY_FOR_EMBED]</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 5. Technical Deep Dive (6 Architecture Stages) -->
+        <section class="deep-dive-section">
+          <div class="section-header-centered">
+            <h3 class="section-title">
+              <i class="fas fa-code"></i>
+              <span data-i18n-key="shortsUploaderPage.deepDiveHeading">🔬 Technical Deep Dive (Hacker Breakdown)</span>
+            </h3>
+            <p class="deep-dive-intro" data-i18n-key="shortsUploaderPage.deepDiveIntro">
+              🎬 End-to-End Pipeline Concept: An architectural breakdown of how YouTube Shorts Auto-Uploader orchestrates data ingestion, AI metadata synthesis, timezone scheduling, anti-bot browser automation, and atomic state synchronization.
+            </p>
+          </div>
+
+          <div class="pipeline-stages-container">
+            <!-- Stage 1 -->
+            <div class="stage-card" data-sound-hover="ui-hover" data-sound-click="laser-scan">
+              <div class="stage-card-header">
+                <span class="stage-number-badge">01</span>
+                <div>
+                  <span class="stage-tag" data-i18n-key="shortsUploaderPage.stage1Tag">INPUT &amp; QUEUE LAYER</span>
+                  <h4 data-i18n-key="shortsUploaderPage.stage1Title">STAGE 1 · Local Storage &amp; Upload Queue Architecture</h4>
+                </div>
+              </div>
+              <p class="stage-card-body" data-i18n-key="shortsUploaderPage.stage1Desc">
+                The pipeline ingests raw processed video cuts organized into isolated episode folders inside <code>Upload_Queue/</code>. Each episode folder contains localized video files (<code>AR.mp4</code>, <code>EN.mp4</code>, <code>PT.mp4</code>, <code>ES.mp4</code>) alongside the canonical summary transcript (<code>script.txt</code>).
+              </p>
+              <div class="stage-tech-pills">
+                <span><code>Upload_Queue/{episode}/</code></span>
+                <span><code>AR.mp4</code></span>
+                <span><code>EN.mp4</code></span>
+                <span><code>PT.mp4</code></span>
+                <span><code>ES.mp4</code></span>
+                <span><code>script.txt</code></span>
+              </div>
+            </div>
+
+            <!-- Stage 2 -->
+            <div class="stage-card" data-sound-hover="ui-hover" data-sound-click="laser-scan">
+              <div class="stage-card-header">
+                <span class="stage-number-badge">02</span>
+                <div>
+                  <span class="stage-tag" data-i18n-key="shortsUploaderPage.stage2Tag">ORCHESTRATION &amp; DEFENSIVE STATE</span>
+                  <h4 data-i18n-key="shortsUploaderPage.stage2Title">STAGE 2 · Core Orchestrator &amp; Crash-Safe State Manager (main.py &amp; state_manager.py)</h4>
+                </div>
+              </div>
+              <p class="stage-card-body" data-i18n-key="shortsUploaderPage.stage2Desc">
+                <code>main.py</code> acts as the CLI maestro with flags like <code>--dry-run</code>, <code>--lang</code>, and <code>--episode</code>. It enforces a strict Queue Blocking Rule: no episode progresses until 100% of its language variants succeed. <code>state_manager.py</code> tracks state via <code>upload_state.json</code> using atomic writes (<code>tempfile</code> + <code>os.replace</code>) to ensure immunity against power loss and sudden process termination.
+              </p>
+              <div class="stage-subgrid">
+                <div class="stage-subcard" data-sound-hover="ui-hover" data-sound-click="ui-click">
+                  <h5><i class="fas fa-lock"></i> Strict Queue Lock</h5>
+                  <p>Guarantees sequential episode storytelling. If any language encounters an error, the queue stays safely anchored until resolved.</p>
+                </div>
+                <div class="stage-subcard" data-sound-hover="ui-hover" data-sound-click="ui-click">
+                  <h5><i class="fas fa-shield-halved"></i> Atomic File Ops</h5>
+                  <p>Writes new state to a temporary file first, then swaps it instantly via <code>os.replace</code>, preventing corrupted JSON files.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Stage 3 -->
+            <div class="stage-card highlight-card" data-sound-hover="ui-hover" data-sound-click="hologram-on">
+              <div class="stage-card-header">
+                <span class="stage-number-badge">03</span>
+                <div>
+                  <span class="stage-tag" data-i18n-key="shortsUploaderPage.stage3Tag">AI REASONING &amp; LOCAL CACHING</span>
+                  <h4 data-i18n-key="shortsUploaderPage.stage3Title">STAGE 3 · AI Metadata Generation &amp; Atomic Caching (metadata_gen.py)</h4>
+                </div>
+              </div>
+              <p class="stage-card-body" data-i18n-key="shortsUploaderPage.stage3Desc">
+                Calls Google Gemini 3.1 Flash Lite via official SDK (<code>google-genai</code>). It analyzes <code>script.txt</code> to generate high-retention viral clickbait hooks and targeted descriptions matching the regional culture of each audience (e.g. Egyptian vernacular for Arabic, sarcastic wit for English). Employs atomic local caching in <code>metadata.json</code> to prevent unnecessary API consumption on re-runs.
+              </p>
+              <div class="stage-tech-pills">
+                <span>Google Gemini 3.1 Flash</span>
+                <span>Viral Clickbait Hooks</span>
+                <span>Dialect-Aware Copywriting</span>
+                <span><code>metadata.json</code> Local Cache</span>
+                <span>Rate-Limit Backoff</span>
+              </div>
+            </div>
+
+            <!-- Stage 4 -->
+            <div class="stage-card" data-sound-hover="ui-hover" data-sound-click="laser-scan">
+              <div class="stage-card-header">
+                <span class="stage-number-badge">04</span>
+                <div>
+                  <span class="stage-tag" data-i18n-key="shortsUploaderPage.stage4Tag">TIMEZONE SCHEDULING ALGORITHM</span>
+                  <h4 data-i18n-key="shortsUploaderPage.stage4Title">STAGE 4 · Cairo Timezone &amp; "Two Trains" Scheduler (scheduler.py)</h4>
+                </div>
+              </div>
+              <p class="stage-card-body" data-i18n-key="shortsUploaderPage.stage4Desc">
+                Computes optimal scheduling slots based on Cairo timezone (<code>Africa/Cairo</code> / UTC+2) using <code>pytz</code> to circumvent daylight savings anomalies. Adopts the "Two Trains Model" (Afternoon Peak Train &amp; Evening Peak Train) and consults <code>schedule_tracker.json</code> to enforce daily quotas (max 2 uploads per language per day) with automatic next-day rollover.
+              </p>
+              <div class="stage-tech-pills">
+                <span>Two Trains Model</span>
+                <span><code>Africa/Cairo</code> UTC+2</span>
+                <span><code>schedule_tracker.json</code></span>
+                <span>Daily Quota: 2/day</span>
+                <span>Automatic Next-Day Rollover</span>
+              </div>
+            </div>
+
+            <!-- Stage 5 -->
+            <div class="stage-card highlight-card" data-sound-hover="ui-hover" data-sound-click="hologram-on">
+              <div class="stage-card-header">
+                <span class="stage-number-badge">05</span>
+                <div>
+                  <span class="stage-tag" data-i18n-key="shortsUploaderPage.stage5Tag">BROWSER AUTOMATION &amp; ANTI-BOT</span>
+                  <h4 data-i18n-key="shortsUploaderPage.stage5Title">STAGE 5 · Playwright Browser Automation &amp; Anti-Bot Bypass (uploader.py)</h4>
+                </div>
+              </div>
+              <p class="stage-card-body" data-i18n-key="shortsUploaderPage.stage5Desc">
+                Drives a genuine Google Chrome instance using Microsoft Playwright persistent contexts (<code>launch_persistent_context</code>). Leverages independent profiles (<code>Profile_AR</code>, <code>Profile_EN</code>, etc.) to maintain continuous login sessions. Employs humanized typing emulation (<code>slow_type</code>) with variable character delays and isolated DOM selectors (<code>SEL</code> hub) to completely avoid bot-detection heuristics.
+              </p>
+              <div class="stage-subgrid">
+                <div class="stage-subcard" data-sound-hover="ui-hover" data-sound-click="ui-click">
+                  <h5><i class="fas fa-user-secret"></i> Anti-Bot Stealth</h5>
+                  <p>Persistent user data directories retain Google cookies and device fingerprints, removing the need for programmatic logins.</p>
+                </div>
+                <div class="stage-subcard" data-sound-hover="ui-hover" data-sound-click="ui-click">
+                  <h5><i class="fas fa-keyboard"></i> Human Simulation</h5>
+                  <p>Emulates natural typing cadence with random delays and mouse cursor easing to defeat cloud anti-automation algorithms.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Stage 6 -->
+            <div class="stage-card" data-sound-hover="ui-hover" data-sound-click="laser-scan">
+              <div class="stage-card-header">
+                <span class="stage-number-badge">06</span>
+                <div>
+                  <span class="stage-tag" data-i18n-key="shortsUploaderPage.stage6Tag">ARCHIVING &amp; ERROR RESILIENCE</span>
+                  <h4 data-i18n-key="shortsUploaderPage.stage6Title">STAGE 6 · YouTube Studio Upload Wizard, Retry Policy &amp; Done Archiving</h4>
+                </div>
+              </div>
+              <p class="stage-card-body" data-i18n-key="shortsUploaderPage.stage6Desc">
+                Navigates the YouTube Studio upload stepper: selects file via <code>expect_file_chooser</code>, fills Title, Description, Tags, audience flags ("Not made for kids"), and visibility scheduling. Monitors upload progress until 100% processing is achieved. On failure, triggers a 30-second cooldown retry before locking. Once all 4 languages succeed, the episode is atomically migrated from <code>Upload_Queue/</code> to <code>Uploaded_Done/</code>.
+              </p>
+              <div class="stage-tech-pills">
+                <span><code>expect_file_chooser</code></span>
+                <span>Upload Progress 100% Gate</span>
+                <span>30s Cooldown Retry Policy</span>
+                <span><code>Uploaded_Done/</code></span>
+                <span>Rotating Logs (5MB)</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 6. Engineering Review & Architecture Audit Matrix -->
+        <section class="engineering-review-section">
+          <div class="section-header-centered">
+            <h3 class="section-title">
+              <i class="fas fa-stethoscope"></i>
+              <span data-i18n-key="shortsUploaderPage.reviewHeading">🛠️ Senior Engineering Review &amp; Optimization Roadmap</span>
+            </h3>
+            <p class="section-subtext" data-i18n-key="shortsUploaderPage.reviewIntro">
+              In-depth architectural analysis highlighting potential vulnerabilities in real-world production and engineering solutions to maximize robustness.
+            </p>
+          </div>
+
+          <div class="review-grid">
+            <!-- Review 1 -->
+            <div class="review-card" data-sound-hover="ui-hover">
+              <div class="review-card-header">
+                <div class="review-icon"><i class="fas fa-crosshairs"></i></div>
+                <h4 data-i18n-key="shortsUploaderPage.review1Title">1. DOM Selectors Brittleness</h4>
+              </div>
+              <div class="review-split">
+                <div class="review-box current-state">
+                  <div class="review-box-label"><i class="fas fa-triangle-exclamation"></i> Observation</div>
+                  <span data-i18n-key="shortsUploaderPage.review1Current">YouTube Studio periodically shifts DOM structure and button texts depending on language, making deep CSS selectors vulnerable to breakage.</span>
+                </div>
+                <div class="review-box upgrade-state">
+                  <div class="review-box-label"><i class="fas fa-circle-check"></i> Recommended Upgrade</div>
+                  <span data-i18n-key="shortsUploaderPage.review1Upgrade">Adopt accessible role locators (<code>page.get_by_role()</code>, <code>page.get_by_label()</code>) which remain resilient to UI redesigns and localization shifts.</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Review 2 -->
+            <div class="review-card" data-sound-hover="ui-hover">
+              <div class="review-card-header">
+                <div class="review-icon"><i class="fas fa-bell"></i></div>
+                <h4 data-i18n-key="shortsUploaderPage.review2Title">2. Real-Time Telemetry &amp; Alerting</h4>
+              </div>
+              <div class="review-split">
+                <div class="review-box current-state">
+                  <div class="review-box-label"><i class="fas fa-triangle-exclamation"></i> Observation</div>
+                  <span data-i18n-key="shortsUploaderPage.review2Current">Queue stalls or runtime exceptions are only visible through terminal inspection or manually checking rotating log files.</span>
+                </div>
+                <div class="review-box upgrade-state">
+                  <div class="review-box-label"><i class="fas fa-circle-check"></i> Recommended Upgrade</div>
+                  <span data-i18n-key="shortsUploaderPage.review2Upgrade">Integrate instant asynchronous webhooks (Telegram Bot API / Discord Webhook) to broadcast video scheduled links or alert on <code>STATUS_ERROR</code>.</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Review 3 -->
+            <div class="review-card" data-sound-hover="ui-hover">
+              <div class="review-card-header">
+                <div class="review-icon"><i class="fas fa-brackets-curly"></i></div>
+                <h4 data-i18n-key="shortsUploaderPage.review3Title">3. Gemini Structured Outputs via Pydantic</h4>
+              </div>
+              <div class="review-split">
+                <div class="review-box current-state">
+                  <div class="review-box-label"><i class="fas fa-triangle-exclamation"></i> Observation</div>
+                  <span data-i18n-key="shortsUploaderPage.review3Current">Currently uses manual markdown string stripping (<code>raw.startswith("```")</code>) to parse Gemini JSON responses.</span>
+                </div>
+                <div class="review-box upgrade-state">
+                  <div class="review-box-label"><i class="fas fa-circle-check"></i> Recommended Upgrade</div>
+                  <span data-i18n-key="shortsUploaderPage.review3Upgrade">Pass a strict Pydantic class to <code>response_schema</code> within <code>google-genai</code> to guarantee 100% typed, validated JSON without string sanitation.</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Review 4 -->
+            <div class="review-card" data-sound-hover="ui-hover">
+              <div class="review-card-header">
+                <div class="review-icon"><i class="fas fa-filter-circle-xmark"></i></div>
+                <h4 data-i18n-key="shortsUploaderPage.review4Title">4. Queue Bottleneck &amp; Quarantine Folder</h4>
+              </div>
+              <div class="review-split">
+                <div class="review-box current-state">
+                  <div class="review-box-label"><i class="fas fa-triangle-exclamation"></i> Observation</div>
+                  <span data-i18n-key="shortsUploaderPage.review4Current">A single corrupted MP4 file halts the entire publishing queue, blocking all subsequent episodes until manual intervention.</span>
+                </div>
+                <div class="review-box upgrade-state">
+                  <div class="review-box-label"><i class="fas fa-circle-check"></i> Recommended Upgrade</div>
+                  <span data-i18n-key="shortsUploaderPage.review4Upgrade">Implement a <code>--skip-errored</code> flag and automatic quarantine isolation (<code>Upload_Failed/</code>) after 2 failed retries to preserve publishing velocity.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- Universal Footer Contact Dock (Pre-rendered to eliminate layout shift) -->
+      <div class="container footer-container">
+        <footer id="footer-container">
+          <div class="footer-contact-container">
+            <div class="footer-contact-header">
+              <span class="contact-label" data-i18n-key="common.contactMe">Contact Me</span>
+            </div>
+            <div class="footer-neon-divider"></div>
+            <div class="footer-social-icons">
+              <a
+                href="https://github.com/Ahmedmansor"
+                target="_blank"
+                class="footer-contact-btn github-btn"
+                title="GitHub"
+                aria-label="GitHub"
+              >
+                <i class="fab fa-github"></i>
+              </a>
+              <a
+                href="https://linkedin.com/in/ahmed-mansour-343716209"
+                target="_blank"
+                class="footer-contact-btn linkedin-btn"
+                title="LinkedIn"
+                aria-label="LinkedIn"
+              >
+                <i class="fab fa-linkedin"></i>
+              </a>
+              <a
+                href="mailto:ahmedmansour70000@gmail.com"
+                class="footer-contact-btn email-btn"
+                title="Gmail: ahmedmansour70000@gmail.com"
+                aria-label="Gmail"
+              >
+                <i class="fas fa-envelope"></i>
+              </a>
+              <a
+                href="https://wa.me/201000872150"
+                target="_blank"
+                class="footer-contact-btn whatsapp-btn"
+                title="WhatsApp: +201000872150"
+                aria-label="WhatsApp"
+              >
+                <i class="fab fa-whatsapp"></i>
+              </a>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <!-- Audio Engine (Howler.js) — must load before audio.service.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"></script>
+    <script src="assets/icons/icons.js"></script>
+
+    <!-- Feature-First Clean Architecture Scripts -->
+    <!-- 1. Core Layer -->
+    <script src="src/core/domain/usecases/localization.usecase.js"></script>
+    <script src="src/core/data/datasources/storage.datasource.js"></script>
+    <script src="src/core/data/datasources/audio.service.js"></script>
+    <script src="src/core/data/datasources/language.datasource.js"></script>
+    <script src="src/core/data/repositories/language.repository.js"></script>
+    <script src="src/core/presentation/components/language-switcher/language-switcher.component.js"></script>
+    <script src="src/core/presentation/components/appbar/appbar.component.js"></script>
+    <script src="src/core/presentation/components/footer/footer.component.js"></script>
+
+    <!-- 2. Shorts Uploader Feature -->
+    <script src="src/features/shorts-uploader/presentation/controllers/shorts-uploader.controller.js"></script>
+
+    <script>
+      // Initialize Shorts Uploader Detail Page via Feature-First Controller
+      document.addEventListener("DOMContentLoaded", () => {
+        window.Portfolio.presentation.controllers.ShortsUploaderController.init();
+      });
+    </script>
+  </body>
+</html>

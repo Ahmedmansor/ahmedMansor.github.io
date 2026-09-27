@@ -312,3 +312,22 @@ html[dir="rtl"] .bio-label {
 html[dir="rtl"] .bio-val {
   font-family: var(--font-arabic, "Cairo"), sans-serif !important;
 }
+
+/* ========================================================
+   Shorts Uploader & Code Snippet LTR Lock (Strict Project Rule)
+   ======================================================== */
+html[dir="rtl"] .video-hud-telemetry-top,
+html[dir="rtl"] .video-hud-telemetry-bottom,
+html[dir="rtl"] .stage-tech-pills code,
+html[dir="rtl"] .stage-tech-pills span,
+html[dir="rtl"] .review-box code,
+html[dir="rtl"] .tech-stack-single-line,
+html[dir="rtl"] .stage-number-badge {
+  direction: ltr !important;
+  text-align: left !important;
+}
+
+html[dir="rtl"] .carousel-item .uploader-card .view-project-btn {
+  align-self: flex-start;
+}
+

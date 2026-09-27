@@ -86,6 +86,29 @@ translations = {
         ],
         viewProject: "View Project Details",
       },
+      {
+        id: "shorts-uploader",
+        title: "Shorts Auto-Uploader",
+        bigTitle: "SHORTS UPLOADER",
+        category: "Python & Playwright Automation",
+        typeBadge: "Browser Automation",
+        typeBadgeIcon: "fas fa-bolt",
+        badgeClass: "automation-badge",
+        description:
+          "An autonomous multi-language YouTube Shorts production & upload pipeline with Gemini AI metadata, anti-bot Playwright automation, and Cairo timezone scheduling.",
+        thumbnail: "assets/images/shorts-uploader-thumbnail.jpg",
+        link: "shorts-uploader.html",
+        tags: [
+          "Python",
+          "Playwright",
+          "Google Gemini API",
+          "Anti-Bot Stealth",
+          "Cairo TZ Scheduler",
+          "Atomic File Operations",
+          "Chrome User Profiles",
+        ],
+        viewProject: "View Project Details",
+      },
     ],
   },
   // Text specific to the project1.html page
@@ -288,6 +311,91 @@ translations = {
     explainerDescription:
       "A comprehensive video walkthrough explaining the code structure, prompt engineering, and live Premiere XML timeline import.",
     watchOnVimeoBtn: "Watch Full Demo on Vimeo",
+  },
+  // Text specific to the shorts-uploader.html page
+  shortsUploaderPage: {
+    pageTitle: "Project Details: YouTube Shorts Auto-Uploader | Ahmed Mansour",
+    headerBadge: "Python & Browser Automation Engine",
+    headerTitle:
+      "YouTube Shorts Auto-Uploader: Autonomous Multi-Language Pipeline",
+    headerSubtitle:
+      "Industrial-Grade Browser Automation & AI-Driven YouTube Publishing Engine",
+    headerDescription:
+      "An autonomous Python & Playwright automation ecosystem that orchestrates the entire YouTube Shorts publishing lifecycle across 4 global languages (Arabic, English, Portuguese, Spanish). Features Google Gemini AI metadata generation with culture-specific viral copywriting, anti-bot browser automation via persistent Chrome profiles, smart Cairo-time two-train scheduling, and atomic crash-safe state persistence.",
+    problemTitle: "⚠️ The Challenge / Problem",
+    problemDescription:
+      "Managing daily multi-language YouTube Shorts publishing across multiple regional channels is exhausting and error-prone. Manual uploading demands repetitive browser logins, tedious copy-pasting of translated titles, tags, and descriptions, manually calculating peak-hour schedules across different timezones, and risking workflow corruption if an upload crashes mid-sequence.",
+    solutionTitle: "💡 The Solution",
+    solutionDescription:
+      "An end-to-end autonomous terminal pipeline (python main.py) operating on a zero-intervention basis. It reads video queues, uses Google Gemini to generate culture-tuned viral hooks and descriptions with local atomic caching, schedules publication to peak Cairo audience hours via a two-train algorithm, drives authentic Google Chrome instances using Playwright to bypass bot detection, and guarantees zero data loss via atomic filesystem operations.",
+    techStackHeading: "Technologies & Architecture Stack",
+    flowchartHeading: "🗺️ System Architecture & Automation Flowchart",
+    flowchartDescription:
+      "Interactive architectural blueprint mapping queue synchronization, AI metadata generation, timezone slot allocation, Playwright browser driving, and completion archiving.",
+    openFullDiagramBtn: "View Full High-Res Diagram",
+    demoVideoHeading: "🎬 Live Demonstration & Deep-Dive Walkthrough",
+    demoVideoDescription:
+      "Dedicated spot for the upcoming comprehensive Vimeo video walkthrough analyzing the terminal orchestration, anti-bot mechanisms, and live YouTube Studio upload execution.",
+    videoStatusBadge: "VIDEO PRODUCTION IN PROGRESS",
+    videoRecordingTitle: "Deep-Dive Engineering Video (Coming Soon to Vimeo)",
+    videoRecordingDesc:
+      "A high-resolution video walk-through is currently being recorded. It will break down live Playwright Chromium automation, anti-bot humanization techniques, prompt engineering in Google Gemini, and atomic queue scheduling in real time.",
+    videoPlaceholderNote: "<VIMEO_EMBED_SLOT_RESERVED />",
+    deepDiveHeading: "🔬 Technical Deep Dive (Hacker Breakdown)",
+    deepDiveIntro:
+      "🎬 End-to-End Pipeline Concept: An architectural breakdown of how YouTube Shorts Auto-Uploader orchestrates data ingestion, AI metadata synthesis, timezone scheduling, anti-bot browser automation, and atomic state synchronization.",
+    stage1Tag: "INPUT & QUEUE LAYER",
+    stage1Title: "STAGE 1 · Local Storage & Upload Queue Architecture",
+    stage1Desc:
+      "The pipeline ingests raw processed video cuts organized into isolated episode folders inside Upload_Queue/. Each episode folder contains localized video files (AR.mp4, EN.mp4, PT.mp4, ES.mp4) alongside the canonical summary transcript (script.txt).",
+    stage2Tag: "ORCHESTRATION & DEFENSIVE STATE",
+    stage2Title:
+      "STAGE 2 · Core Orchestrator & Crash-Safe State Manager (main.py & state_manager.py)",
+    stage2Desc:
+      "main.py acts as the CLI maestro with flags like --dry-run, --lang, and --episode. It enforces a strict Queue Blocking Rule: no episode progresses until 100% of its language variants succeed. state_manager.py tracks state via upload_state.json using atomic writes (tempfile + os.replace) to ensure immunity against power loss and sudden process termination.",
+    stage3Tag: "AI REASONING & LOCAL CACHING",
+    stage3Title:
+      "STAGE 3 · AI Metadata Generation & Atomic Caching (metadata_gen.py)",
+    stage3Desc:
+      "Calls Google Gemini 3.1 Flash Lite via official SDK (google-genai). It analyzes script.txt to generate high-retention viral clickbait hooks and targeted descriptions matching the regional culture of each audience (e.g. Egyptian vernacular for Arabic, sarcastic wit for English). Employs atomic local caching in metadata.json to prevent unnecessary API consumption on re-runs.",
+    stage4Tag: "TIMEZONE SCHEDULING ALGORITHM",
+    stage4Title:
+      "STAGE 4 · Cairo Timezone & 'Two Trains' Scheduler (scheduler.py)",
+    stage4Desc:
+      "Computes optimal scheduling slots based on Cairo timezone (Africa/Cairo / UTC+2) using pytz to circumvent daylight savings anomalies. Adopts the 'Two Trains Model' (Afternoon Peak Train & Evening Peak Train) and consults schedule_tracker.json to enforce daily quotas (max 2 uploads per language per day) with automatic next-day rollover.",
+    stage5Tag: "BROWSER AUTOMATION & ANTI-BOT",
+    stage5Title:
+      "STAGE 5 · Playwright Browser Automation & Anti-Bot Bypass (uploader.py)",
+    stage5Desc:
+      "Drives a genuine Google Chrome instance using Microsoft Playwright persistent contexts (launch_persistent_context). Leverages independent profiles (Profile_AR, Profile_EN, etc.) to maintain continuous login sessions. Employs humanized typing emulation (slow_type) with variable character delays and isolated DOM selectors (SEL hub) to completely avoid bot-detection heuristics.",
+    stage6Tag: "ARCHIVING & ERROR RESILIENCE",
+    stage6Title:
+      "STAGE 6 · YouTube Studio Upload Wizard, Retry Policy & Done Archiving (utils.py)",
+    stage6Desc:
+      "Navigates the YouTube Studio upload stepper: selects file via expect_file_chooser, fills Title, Description, Tags, audience flags ('Not made for kids'), and visibility scheduling. Monitors upload progress until 100% processing is achieved. On failure, triggers a 30-second cooldown retry before locking. Once all 4 languages succeed, the episode is atomically migrated from Upload_Queue/ to Uploaded_Done/.",
+    reviewHeading: "🛠️ Senior Engineering Review & Optimization Roadmap",
+    reviewIntro:
+      "In-depth architectural analysis highlighting potential vulnerabilities in real-world production and engineering solutions to maximize robustness.",
+    review1Title: "1. DOM Selectors Brittleness",
+    review1Current:
+      "YouTube Studio periodically shifts DOM structure and button texts depending on language, making deep CSS selectors vulnerable to breakage.",
+    review1Upgrade:
+      "Adopt accessible role locators (page.get_by_role(), page.get_by_label()) which remain resilient to UI redesigns and localization shifts.",
+    review2Title: "2. Real-Time Telemetry & Alerting",
+    review2Current:
+      "Queue stalls or runtime exceptions are only visible through terminal inspection or manually checking rotating log files.",
+    review2Upgrade:
+      "Integrate instant asynchronous webhooks (Telegram Bot API / Discord Webhook) to broadcast video scheduled links or alert on STATUS_ERROR.",
+    review3Title: "3. Gemini Structured Outputs via Pydantic",
+    review3Current:
+      "Currently uses manual markdown string stripping (raw.startswith('```')) to parse Gemini JSON responses.",
+    review3Upgrade:
+      "Pass a strict Pydantic class to response_schema within google-genai to guarantee 100% typed, validated JSON without string sanitation.",
+    review4Title: "4. Queue Bottleneck & Quarantine Folder",
+    review4Current:
+      "A single corrupted MP4 file halts the entire publishing queue, blocking all subsequent episodes until manual intervention.",
+    review4Upgrade:
+      "Implement a --skip-errored flag and automatic quarantine isolation (Upload_Failed/) after 2 failed retries to preserve publishing velocity.",
   },
 };
 

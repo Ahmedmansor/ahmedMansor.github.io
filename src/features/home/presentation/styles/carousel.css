@@ -266,6 +266,13 @@
   box-shadow: 0 0 35px rgba(96, 165, 250, 0.95), 0 0 65px rgba(168, 85, 247, 0.5);
 }
 
+.carousel-title-link:hover .title-btn-uploader.carousel-title-nav-btn {
+  background: #f43f5e;
+  color: #07070a;
+  border-color: #ffffff;
+  box-shadow: 0 0 35px rgba(244, 63, 94, 0.95), 0 0 65px rgba(251, 113, 133, 0.5);
+}
+
 html[dir="rtl"] .carousel-title-nav-btn i,
 html[dir="rtl"] .carousel-title-nav-btn svg {
   transform: scaleX(-1);
@@ -354,6 +361,11 @@ html[dir="rtl"] .carousel-title-nav-btn svg {
   box-shadow: 0 28px 75px rgba(0, 0, 0, 0.95), 0 0 35px rgba(37, 99, 235, 0.28);
 }
 
+.carousel-item .project-card.uploader-card.is-active {
+  border-color: rgba(244, 63, 94, 0.6);
+  box-shadow: 0 28px 75px rgba(0, 0, 0, 0.95), 0 0 35px rgba(244, 63, 94, 0.28);
+}
+
 /* ========================================================
    ACTIVE CARD CLOCKWISE NEON LASER BEAM (100% GPU COMPOSITED)
    Pure GPU Transform Rotation - Zero Style Recalculations
@@ -405,6 +417,18 @@ html[dir="rtl"] .carousel-title-nav-btn svg {
   );
 }
 
+.carousel-item .project-card.uploader-card.is-active::before {
+  background: conic-gradient(
+    from 0deg at 50% 50%,
+    transparent 0deg,
+    transparent 280deg,
+    rgba(244, 63, 94, 0.45) 300deg,
+    #fb7185 335deg,
+    #ffffff 356deg,
+    transparent 360deg
+  );
+}
+
 /* Inner Card Mask Shield leaving 1.5px glowing perimeter */
 .carousel-item .project-card.is-active::after {
   content: "";
@@ -426,6 +450,12 @@ html[dir="rtl"] .carousel-title-nav-btn svg {
   transform: translateY(-8px) scale(1.02);
   transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s ease;
   border-color: #60a5fa;
+}
+
+.carousel-item .project-card.uploader-card.is-active:hover {
+  transform: translateY(-8px) scale(1.02);
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s ease;
+  border-color: #f43f5e;
 }
 
 .carousel-item .project-card.is-active:hover::before {
@@ -672,6 +702,10 @@ html[dir="rtl"] .carousel-item .project-info {
   color: #60a5fa;
 }
 
+.carousel-item .uploader-card:hover .project-info h4 {
+  color: #fb7185;
+}
+
 .carousel-item .project-info p {
   margin: 0 0 12px;
   font-size: 0.92rem;
@@ -704,6 +738,11 @@ html[dir="rtl"] .carousel-item .project-info {
 .carousel-item .linker-card .tech-tags span {
   background: rgba(37, 99, 235, 0.14);
   color: #93c5fd;
+}
+
+.carousel-item .uploader-card .tech-tags span {
+  background: rgba(244, 63, 94, 0.14);
+  color: #fca5a5;
 }
 
 .carousel-item .view-project-btn {
@@ -742,6 +781,12 @@ html[dir="rtl"] .carousel-item .view-project-btn svg {
   background: #60a5fa;
   color: #0a1945;
   box-shadow: 0 4px 20px rgba(96, 165, 250, 0.45);
+}
+
+.carousel-item .uploader-card:hover .view-project-btn {
+  background: #f43f5e;
+  color: #ffffff;
+  box-shadow: 0 4px 20px rgba(244, 63, 94, 0.45);
 }
 
 /* 3. Lower Controls Zone (Lime-Neon Arrows) */
@@ -804,7 +849,8 @@ html[dir="rtl"] .carousel-item .view-project-btn svg {
 
   /* Kill rotating radar beam & sonar waves on MOBILE ONLY (Desktop remains 100% intact) */
   .carousel-item .project-card.is-active::before,
-  .carousel-item .project-card.linker-card.is-active::before {
+  .carousel-item .project-card.linker-card.is-active::before,
+  .carousel-item .project-card.uploader-card.is-active::before {
     display: none !important;
     animation: none !important;
   }
@@ -821,6 +867,11 @@ html[dir="rtl"] .carousel-item .view-project-btn svg {
   .carousel-item .project-card.linker-card.is-active {
     border: 1.5px solid rgba(96, 165, 250, 0.75) !important;
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.9), 0 0 25px rgba(37, 99, 235, 0.3) !important;
+  }
+
+  .carousel-item .project-card.uploader-card.is-active {
+    border: 1.5px solid rgba(244, 63, 94, 0.75) !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.9), 0 0 25px rgba(244, 63, 94, 0.3) !important;
   }
 
   /* Keep the arrow launcher button on mobile, but kill the pulsing radar ripples */

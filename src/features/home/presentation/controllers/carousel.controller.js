@@ -50,21 +50,29 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
 
       if (!projects || projects.length === 0) return;
 
-      // Exactly 4 items alternating between the featured projects
-      const p1 = projects[0];
-      const p2 = projects[1] || projects[0];
-      const fourProjects = [p1, p2, p1, p2];
+      // Exactly 4 items for the 3D cylinder geometry
+      let fourProjects;
+      if (projects.length >= 4) {
+        fourProjects = projects.slice(0, 4);
+      } else if (projects.length === 3) {
+        fourProjects = [projects[0], projects[1], projects[2], projects[0]];
+      } else {
+        const p1 = projects[0];
+        const p2 = projects[1] || projects[0];
+        fourProjects = [p1, p2, p1, p2];
+      }
 
       // 2. Render Title Track & 3D Cards
       let titlesHTML = "";
       let cardsHTML = "";
 
       fourProjects.forEach((project, index) => {
-        const isLinker = project.id === "linker" || index % 2 === 0;
+        const isLinker = project.id === "linker";
+        const isUploader = project.id === "shorts-uploader";
         const displayTitle = project.bigTitle || project.title;
         const displayCategory = project.category || "";
         const viewText = project.viewProject || "View Project Details";
-        const titleBtnClass = isLinker ? "title-btn-linker" : "title-btn-automation";
+        const titleBtnClass = isLinker ? "title-btn-linker" : (isUploader ? "title-btn-uploader" : "title-btn-automation");
 
         // Title Zone Item
         titlesHTML += `
@@ -80,8 +88,8 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
         `;
 
         // 3D Card Item
-        const cardClass = isLinker ? "project-card linker-card" : "project-card semanticcut-card";
-        const thumbClass = isLinker ? "linker-thumb" : "automation-thumb";
+        const cardClass = isLinker ? "project-card linker-card" : (isUploader ? "project-card uploader-card" : "project-card semanticcut-card");
+        const thumbClass = isLinker ? "linker-thumb" : (isUploader ? "uploader-thumb" : "automation-thumb");
         const typeBadgeText = project.typeBadge || (isLinker ? "Mobile App • iOS & Android" : "AI Automation Pipeline");
         const typeIcon = project.typeBadgeIcon || (isLinker ? "fas fa-mobile-screen-button" : "fas fa-robot");
         const badgeIconHTML = window.Icons ? window.Icons.get(typeIcon) : `<i class="${typeIcon}"></i>`;
