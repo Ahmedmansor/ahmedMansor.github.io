@@ -194,13 +194,66 @@
           </div>
           <div class="side-by-side-container">
             <h3 class="comparison-title" data-i18n-key="project1Page.feature3ComparisonTitle">
-              UI Across All Roles:<br />Guest, Player, and Coach
+              UI Across All Roles: Guest, Player &amp; Coach
             </h3>
             <p data-i18n-key="project1Page.feature3ComparisonDescription">
-              This image provides a clear comparison of the three core views<br />the exploratory Guest interface, the simple Player profile, and the rich Coach profile.
+              This image provides a clear comparison of the three core views: the exploratory Guest interface, the simple Player profile, and the rich Coach profile.
             </p>
+
+            <!-- Role Selector Segmented Controls -->
+            <div class="role-selector-bar" role="tablist" aria-label="Select Profile View">
+              <button
+                type="button"
+                class="role-tab active"
+                data-role="all"
+                role="tab"
+                aria-selected="true"
+                data-sound-click="ui-click"
+                data-sound-hover="ui-hover"
+              >
+                <i class="fas fa-layer-group"></i>
+                <span data-i18n-key="project1Page.roleTabAll">All Roles</span>
+              </button>
+              <button
+                type="button"
+                class="role-tab"
+                data-role="guest"
+                role="tab"
+                aria-selected="false"
+                data-sound-click="ui-click"
+                data-sound-hover="ui-hover"
+              >
+                <i class="fas fa-user-clock"></i>
+                <span data-i18n-key="project1Page.roleTabGuest">Guest</span>
+              </button>
+              <button
+                type="button"
+                class="role-tab"
+                data-role="player"
+                role="tab"
+                aria-selected="false"
+                data-sound-click="ui-click"
+                data-sound-hover="ui-hover"
+              >
+                <i class="fas fa-running"></i>
+                <span data-i18n-key="project1Page.roleTabPlayer">Player</span>
+              </button>
+              <button
+                type="button"
+                class="role-tab"
+                data-role="coach"
+                role="tab"
+                aria-selected="false"
+                data-sound-click="ui-click"
+                data-sound-hover="ui-hover"
+              >
+                <i class="fas fa-dumbbell"></i>
+                <span data-i18n-key="project1Page.roleTabCoach">Coach</span>
+              </button>
+            </div>
+
             <div
-              class="zoomable-media-wrapper"
+              class="zoomable-media-wrapper role-view-all"
               id="comparison-zoom-wrapper"
               role="button"
               tabindex="0"
@@ -208,14 +261,18 @@
               data-sound-click="warp-whoosh"
               data-sound-hover="ui-hover"
             >
-              <img
-                src="assets/images/all-profiles-comparison.jpg"
-                alt="Side-by-side comparison of Guest, Player, and Coach profiles"
-                width="1800"
-                height="1300"
-                loading="lazy"
-                decoding="async"
-              />
+              <div class="comparison-viewport" id="comparison-viewport">
+                <img
+                  src="assets/images/all-profiles-comparison.jpg"
+                  alt="Side-by-side comparison of Guest, Player, and Coach profiles"
+                  width="1800"
+                  height="1300"
+                  loading="lazy"
+                  decoding="async"
+                  class="comparison-img"
+                  id="comparison-img"
+                />
+              </div>
               <div class="zoom-magnifier-badge">
                 <i class="fas fa-magnifying-glass-plus"></i>
                 <span data-i18n-key="project1Page.tapToZoom">Tap to Zoom</span>

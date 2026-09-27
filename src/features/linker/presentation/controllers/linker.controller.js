@@ -52,6 +52,7 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
       }
 
       this.setupImageLightbox();
+      this.setupRoleTabs();
       await this.switchLanguage(activeLang);
     }
 
@@ -401,6 +402,78 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
         if (e.key === "Escape" && modal.classList.contains("is-open")) {
           closeModal();
         }
+      });
+    }
+
+    /**
+     * Initializes interactive role selector tabs to switch between full comparison and focused role views
+     */
+    static setupRoleTabs() {
+      const tabs = document.querySelectorAll(".role-tab");
+      const wrapper = document.getElementById("comparison-zoom-wrapper");
+      const comparisonImg = document.getElementById("comparison-img");
+      const lightboxImg = document.querySelector(".lightbox-image");
+      if (!tabs.length || !wrapper || !comparisonImg) return;
+
+      const roleImages = {
+        all: {
+          src: "assets/images/all-profiles-comparison.jpg",
+          alt: "Side-by-side comparison of Guest, Player, and Coach profiles"
+        },
+        guest: {
+          src: "assets/images/profile-guest-comparison.jpg",
+          alt: "Guest Profile UI - Exploration View"
+        },
+        player: {
+          src: "assets/images/profile-player-comparison.jpg",
+          alt: "Player Profile UI - Clean Dashboard View"
+        },
+        coach: {
+          src: "assets/images/profile-coach-comparison.jpg",
+          alt: "Coach Profile UI - Comprehensive Coaching Profile"
+        }
+      };
+
+      tabs.forEach((tab) => {
+        tab.onclick = () => {
+          const role = tab.getAttribute("data-role") || "all";
+
+          tabs.forEach((t) => {
+            t.classList.remove("active");
+            t.setAttribute("aria-selected", "false");
+          });
+
+          tab.classList.add("active");
+          tab.setAttribute("aria-selected", "true");
+
+          if (window.AudioService) {
+            window.AudioService.play("ui-click");
+          }
+
+          // Update container sizing classes
+          wrapper.classList.remove(
+            "role-view-all",
+            "role-view-guest",
+            "role-view-player",
+            "role-view-coach"
+          );
+          wrapper.classList.add(`role-view-${role}`);
+
+          // Smoothly switch the displayed image
+          const roleData = roleImages[role] || roleImages.all;
+          comparisonImg.style.opacity = "0.3";
+          comparisonImg.src = roleData.src;
+          comparisonImg.alt = roleData.alt;
+          setTimeout(() => {
+            comparisonImg.style.opacity = "1";
+          }, 120);
+
+          // Sync with fullscreen lightbox
+          if (lightboxImg) {
+            lightboxImg.src = roleData.src;
+            lightboxImg.alt = roleData.alt;
+          }
+        };
       });
     }
 

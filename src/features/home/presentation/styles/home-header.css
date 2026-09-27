@@ -469,7 +469,7 @@
 
 .hud-telemetry {
   position: absolute;
-  font-family: 'Share Tech Mono', 'Courier New', Courier, monospace;
+  font-family: 'Share Tech Mono', 'Cairo', monospace, sans-serif;
   font-size: 11px;
   letter-spacing: 1.8px;
   color: #8bbce5;
@@ -741,7 +741,6 @@
   justify-content: center;
   align-items: center;
   gap: 14px;
-  direction: ltr !important;
 }
 
 #subtitle .sub-word {
@@ -939,10 +938,13 @@
 }
 
 .cyber-header-telemetry {
-  font-family: 'Share Tech Mono', monospace;
+  font-family: 'Share Tech Mono', 'Cairo', monospace, sans-serif;
   font-size: 0.82rem;
   color: #648cae;
   letter-spacing: 1.5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .cyber-header-telemetry .hud-bracket {
@@ -1117,16 +1119,19 @@
 
 .bio-id-row {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
-  font-family: 'Share Tech Mono', 'Fira Code', monospace;
+  gap: 12px;
+  font-family: 'Share Tech Mono', 'Cairo', monospace, sans-serif;
   font-size: 0.78rem;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
 }
 
 .bio-label {
   color: #55799b;
   font-weight: bold;
+  min-width: 65px;
+  flex-shrink: 0;
 }
 
 .bio-val {
@@ -1168,6 +1173,9 @@
   display: flex;
   flex-direction: column;
   position: relative;
+  direction: ltr !important;
+  text-align: left !important;
+  unicode-bidi: isolate !important;
 }
 
 /* IDE Window Top Header */
@@ -1568,10 +1576,10 @@
   .hud-telemetry {
     display: inline-flex !important;
     font-size: clamp(7.5px, 2vw, 9px) !important;
-    padding: 3px 7px !important;
-    letter-spacing: 0.8px !important;
+    padding: 3px 6px !important;
+    letter-spacing: 0.5px !important;
     border-radius: 3px !important;
-    max-width: 44%;
+    max-width: 48.5%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1638,7 +1646,6 @@
     padding: 0 16px;
     font-size: clamp(10px, 2.9vw, 13px);
     letter-spacing: 2px;
-    direction: ltr !important;
   }
 
   #subtitle .sub-word {

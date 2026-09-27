@@ -395,7 +395,10 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
 
       gsap.registerPlugin(ScrollTrigger);
 
-      const fullText = "AHMED MANSOUR";
+      const isAr = (typeof LanguageRepository !== "undefined" && LanguageRepository.getActiveLanguage() === "ar") || 
+                   document.documentElement.getAttribute("dir") === "rtl" ||
+                   document.documentElement.getAttribute("lang") === "ar";
+      const fullText = isAr ? "أحمد منصور" : "AHMED MANSOUR";
 
       // Ensure title wrapper is visible with clean initial state
       gsap.set(titleWrapper, { autoAlpha: 1 });
@@ -414,14 +417,15 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
       // Helper to compute typed text character-by-character continuously forward and backward
       const updateTypingText = (progress) => {
         let currentCount = 0;
+        const typingEndProgress = window.innerWidth <= 768 ? 0.42 : 0.48;
         if (progress < 0.05) {
           consoleTextEl.textContent = "";
           currentCount = 0;
-        } else if (progress >= 0.48) {
+        } else if (progress >= typingEndProgress) {
           consoleTextEl.textContent = fullText;
           currentCount = fullText.length;
         } else {
-          const ratio = (progress - 0.05) / (0.48 - 0.05);
+          const ratio = (progress - 0.05) / (typingEndProgress - 0.05);
           currentCount = Math.min(fullText.length, Math.floor(ratio * fullText.length + 0.1));
           consoleTextEl.textContent = fullText.slice(0, currentCount);
         }
@@ -1058,8 +1062,15 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
         const translations = await LanguageRepository.loadLanguage(lang);
         const { pageTranslations } = LocalizationUseCase.translateDOM(translations, "home-page");
 
+        // Re-initialize hero typing sequence with localized name and subtitle
+        this.setupSpaceHeroScrollSequence();
+
         if (pageTranslations && pageTranslations.projectsData) {
           CarouselController.init(pageTranslations.projectsData);
+        }
+
+        if (typeof ScrollTrigger !== "undefined") {
+          ScrollTrigger.refresh();
         }
       } catch (err) {
         console.error("Failed to switch language:", err);

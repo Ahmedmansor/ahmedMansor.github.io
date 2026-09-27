@@ -18,6 +18,11 @@ body {
   overflow-x: clip;
 }
 
+img {
+  max-width: 100%;
+  height: auto;
+}
+
 body {
   background-color: var(--bg-body, #121212);
   color: var(--text-secondary, #e0e0e0);
