@@ -396,6 +396,20 @@ translations = {
       "A single corrupted MP4 file halts the entire publishing queue, blocking all subsequent episodes until manual intervention.",
     review4Upgrade:
       "Implement a --skip-errored flag and automatic quarantine isolation (Upload_Failed/) after 2 failed retries to preserve publishing velocity.",
+    stage2Sub1Title: '<i class="fas fa-lock"></i> Strict Queue Lock',
+    stage2Sub1Desc:
+      "Guarantees sequential episode storytelling. If any language encounters an error, the queue stays safely anchored until resolved.",
+    stage2Sub2Title: '<i class="fas fa-shield-halved"></i> Atomic File Ops',
+    stage2Sub2Desc:
+      "Writes new state to a temporary file first, then swaps it instantly via os.replace, preventing corrupted JSON files.",
+    stage5Sub1Title: '<i class="fas fa-user-secret"></i> Anti-Bot Stealth',
+    stage5Sub1Desc:
+      "Persistent user data directories retain Google cookies and device fingerprints, removing the need for programmatic logins.",
+    stage5Sub2Title: '<i class="fas fa-keyboard"></i> Human Simulation',
+    stage5Sub2Desc:
+      "Emulates natural typing cadence with random delays and mouse cursor easing to defeat cloud anti-automation algorithms.",
+    reviewObservationLabel: "Observation",
+    reviewUpgradeLabel: "Recommended Upgrade",
   },
 };
 

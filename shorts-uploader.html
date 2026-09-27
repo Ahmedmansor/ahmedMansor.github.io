@@ -292,12 +292,12 @@
               </p>
               <div class="stage-subgrid">
                 <div class="stage-subcard" data-sound-hover="ui-hover" data-sound-click="ui-click">
-                  <h5><i class="fas fa-lock"></i> Strict Queue Lock</h5>
-                  <p>Guarantees sequential episode storytelling. If any language encounters an error, the queue stays safely anchored until resolved.</p>
+                  <h5 data-i18n-key="shortsUploaderPage.stage2Sub1Title"><i class="fas fa-lock"></i> Strict Queue Lock</h5>
+                  <p data-i18n-key="shortsUploaderPage.stage2Sub1Desc">Guarantees sequential episode storytelling. If any language encounters an error, the queue stays safely anchored until resolved.</p>
                 </div>
                 <div class="stage-subcard" data-sound-hover="ui-hover" data-sound-click="ui-click">
-                  <h5><i class="fas fa-shield-halved"></i> Atomic File Ops</h5>
-                  <p>Writes new state to a temporary file first, then swaps it instantly via <code>os.replace</code>, preventing corrupted JSON files.</p>
+                  <h5 data-i18n-key="shortsUploaderPage.stage2Sub2Title"><i class="fas fa-shield-halved"></i> Atomic File Ops</h5>
+                  <p data-i18n-key="shortsUploaderPage.stage2Sub2Desc">Writes new state to a temporary file first, then swaps it instantly via <code>os.replace</code>, preventing corrupted JSON files.</p>
                 </div>
               </div>
             </div>
@@ -358,12 +358,12 @@
               </p>
               <div class="stage-subgrid">
                 <div class="stage-subcard" data-sound-hover="ui-hover" data-sound-click="ui-click">
-                  <h5><i class="fas fa-user-secret"></i> Anti-Bot Stealth</h5>
-                  <p>Persistent user data directories retain Google cookies and device fingerprints, removing the need for programmatic logins.</p>
+                  <h5 data-i18n-key="shortsUploaderPage.stage5Sub1Title"><i class="fas fa-user-secret"></i> Anti-Bot Stealth</h5>
+                  <p data-i18n-key="shortsUploaderPage.stage5Sub1Desc">Persistent user data directories retain Google cookies and device fingerprints, removing the need for programmatic logins.</p>
                 </div>
                 <div class="stage-subcard" data-sound-hover="ui-hover" data-sound-click="ui-click">
-                  <h5><i class="fas fa-keyboard"></i> Human Simulation</h5>
-                  <p>Emulates natural typing cadence with random delays and mouse cursor easing to defeat cloud anti-automation algorithms.</p>
+                  <h5 data-i18n-key="shortsUploaderPage.stage5Sub2Title"><i class="fas fa-keyboard"></i> Human Simulation</h5>
+                  <p data-i18n-key="shortsUploaderPage.stage5Sub2Desc">Emulates natural typing cadence with random delays and mouse cursor easing to defeat cloud anti-automation algorithms.</p>
                 </div>
               </div>
             </div>
@@ -412,11 +412,11 @@
               </div>
               <div class="review-split">
                 <div class="review-box current-state">
-                  <div class="review-box-label"><i class="fas fa-triangle-exclamation"></i> Observation</div>
+                  <div class="review-box-label"><i class="fas fa-triangle-exclamation"></i> <span data-i18n-key="shortsUploaderPage.reviewObservationLabel">Observation</span></div>
                   <span data-i18n-key="shortsUploaderPage.review1Current">YouTube Studio periodically shifts DOM structure and button texts depending on language, making deep CSS selectors vulnerable to breakage.</span>
                 </div>
                 <div class="review-box upgrade-state">
-                  <div class="review-box-label"><i class="fas fa-circle-check"></i> Recommended Upgrade</div>
+                  <div class="review-box-label"><i class="fas fa-circle-check"></i> <span data-i18n-key="shortsUploaderPage.reviewUpgradeLabel">Recommended Upgrade</span></div>
                   <span data-i18n-key="shortsUploaderPage.review1Upgrade">Adopt accessible role locators (<code>page.get_by_role()</code>, <code>page.get_by_label()</code>) which remain resilient to UI redesigns and localization shifts.</span>
                 </div>
               </div>
@@ -430,11 +430,11 @@
               </div>
               <div class="review-split">
                 <div class="review-box current-state">
-                  <div class="review-box-label"><i class="fas fa-triangle-exclamation"></i> Observation</div>
+                  <div class="review-box-label"><i class="fas fa-triangle-exclamation"></i> <span data-i18n-key="shortsUploaderPage.reviewObservationLabel">Observation</span></div>
                   <span data-i18n-key="shortsUploaderPage.review2Current">Queue stalls or runtime exceptions are only visible through terminal inspection or manually checking rotating log files.</span>
                 </div>
                 <div class="review-box upgrade-state">
-                  <div class="review-box-label"><i class="fas fa-circle-check"></i> Recommended Upgrade</div>
+                  <div class="review-box-label"><i class="fas fa-circle-check"></i> <span data-i18n-key="shortsUploaderPage.reviewUpgradeLabel">Recommended Upgrade</span></div>
                   <span data-i18n-key="shortsUploaderPage.review2Upgrade">Integrate instant asynchronous webhooks (Telegram Bot API / Discord Webhook) to broadcast video scheduled links or alert on <code>STATUS_ERROR</code>.</span>
                 </div>
               </div>
@@ -443,16 +443,16 @@
             <!-- Review 3 -->
             <div class="review-card" data-sound-hover="ui-hover">
               <div class="review-card-header">
-                <div class="review-icon"><i class="fas fa-brackets-curly"></i></div>
+                <div class="review-icon"><i class="fas fa-code"></i></div>
                 <h4 data-i18n-key="shortsUploaderPage.review3Title">3. Gemini Structured Outputs via Pydantic</h4>
               </div>
               <div class="review-split">
                 <div class="review-box current-state">
-                  <div class="review-box-label"><i class="fas fa-triangle-exclamation"></i> Observation</div>
+                  <div class="review-box-label"><i class="fas fa-triangle-exclamation"></i> <span data-i18n-key="shortsUploaderPage.reviewObservationLabel">Observation</span></div>
                   <span data-i18n-key="shortsUploaderPage.review3Current">Currently uses manual markdown string stripping (<code>raw.startswith("```")</code>) to parse Gemini JSON responses.</span>
                 </div>
                 <div class="review-box upgrade-state">
-                  <div class="review-box-label"><i class="fas fa-circle-check"></i> Recommended Upgrade</div>
+                  <div class="review-box-label"><i class="fas fa-circle-check"></i> <span data-i18n-key="shortsUploaderPage.reviewUpgradeLabel">Recommended Upgrade</span></div>
                   <span data-i18n-key="shortsUploaderPage.review3Upgrade">Pass a strict Pydantic class to <code>response_schema</code> within <code>google-genai</code> to guarantee 100% typed, validated JSON without string sanitation.</span>
                 </div>
               </div>
@@ -466,11 +466,11 @@
               </div>
               <div class="review-split">
                 <div class="review-box current-state">
-                  <div class="review-box-label"><i class="fas fa-triangle-exclamation"></i> Observation</div>
+                  <div class="review-box-label"><i class="fas fa-triangle-exclamation"></i> <span data-i18n-key="shortsUploaderPage.reviewObservationLabel">Observation</span></div>
                   <span data-i18n-key="shortsUploaderPage.review4Current">A single corrupted MP4 file halts the entire publishing queue, blocking all subsequent episodes until manual intervention.</span>
                 </div>
                 <div class="review-box upgrade-state">
-                  <div class="review-box-label"><i class="fas fa-circle-check"></i> Recommended Upgrade</div>
+                  <div class="review-box-label"><i class="fas fa-circle-check"></i> <span data-i18n-key="shortsUploaderPage.reviewUpgradeLabel">Recommended Upgrade</span></div>
                   <span data-i18n-key="shortsUploaderPage.review4Upgrade">Implement a <code>--skip-errored</code> flag and automatic quarantine isolation (<code>Upload_Failed/</code>) after 2 failed retries to preserve publishing velocity.</span>
                 </div>
               </div>

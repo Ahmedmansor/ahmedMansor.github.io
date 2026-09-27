@@ -3,6 +3,17 @@
    src/features/shorts-uploader/presentation/styles/shorts-uploader.css
    ======================================================== */
 
+/* Container Spacing for Fixed Floating App Bar */
+#shortsuploader-page .container {
+  margin-top: 100px;
+}
+
+@media (max-width: 768px) {
+  #shortsuploader-page .container {
+    margin-top: 85px;
+  }
+}
+
 .shortsuploader-header {
   text-align: center;
   margin-bottom: 35px;

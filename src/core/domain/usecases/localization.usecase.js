@@ -30,6 +30,9 @@ window.Portfolio.domain.usecases = window.Portfolio.domain.usecases || {};
       if (pageId === "semanticcut-page") {
         return translations.semanticCutPage || {};
       }
+      if (pageId === "shortsuploader-page") {
+        return translations.shortsUploaderPage || {};
+      }
       return translations[pageId] || {};
     }
 
@@ -72,7 +75,8 @@ window.Portfolio.domain.usecases = window.Portfolio.domain.usecases || {};
             .replace("homePage.", "")
             .replace("indexPage.", "")
             .replace("project1Page.", "")
-            .replace("semanticCutPage.", "");
+            .replace("semanticCutPage.", "")
+            .replace("shortsUploaderPage.", "");
 
           value = cleanKey
             .split(".")
