@@ -327,7 +327,21 @@ html[dir="rtl"] .stage-number-badge {
   text-align: left !important;
 }
 
-html[dir="rtl"] .carousel-item .uploader-card .view-project-btn {
+html[dir="rtl"] .carousel-item .uploader-card .view-project-btn,
+html[dir="rtl"] .carousel-item .multiplatform-card .view-project-btn {
   align-self: flex-start;
 }
+
+html[dir="rtl"] .video-placeholder-note {
+  direction: ltr !important;
+  text-align: left !important;
+}
+
+html[dir="rtl"] .actor-classification {
+  direction: rtl !important;
+  text-align: right !important;
+  font-family: var(--font-arabic, "Cairo"), sans-serif !important;
+  letter-spacing: 0 !important;
+}
+
 

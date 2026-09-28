@@ -33,6 +33,9 @@ window.Portfolio.domain.usecases = window.Portfolio.domain.usecases || {};
       if (pageId === "shortsuploader-page") {
         return translations.shortsUploaderPage || {};
       }
+      if (pageId === "socialmediauploader-page") {
+        return translations.socialMediaUploaderPage || {};
+      }
       return translations[pageId] || {};
     }
 
@@ -76,7 +79,8 @@ window.Portfolio.domain.usecases = window.Portfolio.domain.usecases || {};
             .replace("indexPage.", "")
             .replace("project1Page.", "")
             .replace("semanticCutPage.", "")
-            .replace("shortsUploaderPage.", "");
+            .replace("shortsUploaderPage.", "")
+            .replace("socialMediaUploaderPage.", "");
 
           value = cleanKey
             .split(".")
@@ -91,6 +95,9 @@ window.Portfolio.domain.usecases = window.Portfolio.domain.usecases || {};
         }
 
         if (value !== undefined) {
+          if (element.tagName === "TITLE") {
+            document.title = value;
+          }
           element.innerHTML = value;
         }
       });

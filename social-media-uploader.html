@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Multi-Platform Video Publishing Automation: Synchronized distribution across YouTube Shorts, Instagram Reels, Facebook Reels & TikTok built by Ahmed Mansour."
+    />
+    <link rel="canonical" href="https://ahmedmansor.github.io/social-media-uploader.html" />
+    <title data-i18n-key="socialMediaUploaderPage.pageTitle">
+      Project Details: Multi-Platform Video Publishing Automation | Ahmed Mansour
+    </title>
+
+    <!-- Direct Core & Feature Stylesheets (Eliminates @import Waterfall & FOUC) -->
+    <link rel="stylesheet" href="src/core/presentation/styles/variables.css" />
+    <link rel="stylesheet" href="src/core/presentation/styles/base.css" />
+    <link rel="stylesheet" href="src/core/presentation/components/appbar/appbar.css" />
+    <link rel="stylesheet" href="src/core/presentation/components/language-switcher/language-switcher.css" />
+    <link rel="stylesheet" href="src/core/presentation/components/footer/footer.css" />
+    <link rel="stylesheet" href="src/features/social-media-uploader/presentation/styles/social-media-uploader.css" />
+    <link rel="stylesheet" href="src/core/presentation/styles/rtl.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Montserrat:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+      />
+    </noscript>
+
+    <!-- Initial Localization Dictionary (Deferred) -->
+    <script src="lang/en.js" id="lang-script" defer></script>
+
+    <!-- Early Session Guard: Restore audio state before first paint -->
+    <script>
+      (function () {
+        try {
+          if (localStorage.getItem("portfolio_audio_muted") === null) {
+            localStorage.setItem("portfolio_audio_muted", "false");
+          }
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+
+  <body id="socialmediauploader-page">
+    <!-- Global Sticky App Bar (Pre-rendered with .appbar to prevent CLS) -->
+    <header id="appbar-container" class="appbar">
+      <div class="appbar-inner">
+        <a href="index.html" class="appbar-brand" title="Home" data-sound-click="ui-click" data-sound-hover="ui-hover">
+          <span class="hud-status-dot" aria-hidden="true"></span>
+          <span class="brand-tag">&lt;</span><span class="brand-name">ahmedMansour</span><span class="brand-tag"> /&gt;</span>
+        </a>
+        <nav class="appbar-nav">
+          <a href="index.html#projects-carousel-section" class="appbar-link active" data-i18n-key="common.navProjects" data-sound-click="ui-click" data-sound-hover="ui-hover">Projects</a>
+        </nav>
+        <div class="appbar-actions">
+          <div class="language-switcher">
+            <button id="lang-en-btn" data-sound-click="ui-click" data-sound-hover="ui-hover">English</button>
+            <button id="lang-ar-btn" data-sound-click="ui-click" data-sound-hover="ui-hover">العربية</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="container">
+      <!-- Header Section -->
+      <header class="project-detail-header multiplatform-header">
+        <div class="multiplatform-badge-tag" data-sound-hover="ui-hover">
+          <i class="fas fa-network-wired"></i> <span data-i18n-key="socialMediaUploaderPage.headerBadge">Multi-Platform Publishing Ecosystem</span>
+        </div>
+
+        <h1 data-i18n-key="socialMediaUploaderPage.headerTitle">
+          Multi-Platform Video Publishing Automation
+        </h1>
+        <h2 class="project-subtitle" data-i18n-key="socialMediaUploaderPage.headerSubtitle">
+          End-to-End Operational Architecture &amp; Synchronized Social Distribution Pipeline
+        </h2>
+        <p class="project-main-desc" data-i18n-key="socialMediaUploaderPage.headerDescription">
+          Fully automated, synchronized distribution of short-form video content across YouTube Shorts, Instagram Reels, Facebook Reels, and TikTok. Timed precisely to regional audience peak hours, enriched with localized Arabic &amp; multilingual AI metadata, protected by anti-detect browser isolation, tracked via persistent state ledgers, monitored via real-time Telegram alerts, and concluded with automated cold archiving upon 100% multi-platform completion.
+        </p>
+      </header>
+
+      <main class="project-detail-content">
+        <!-- 1. The Challenge vs Solution Grid -->
+        <section class="problem-solution-section">
+          <div class="problem-solution-grid">
+            <div class="ps-card problem-card" data-sound-hover="ui-hover">
+              <div class="ps-icon"><i class="fas fa-triangle-exclamation"></i></div>
+              <h3 data-i18n-key="socialMediaUploaderPage.problemTitle">⚠️ The Operational Bottleneck</h3>
+              <p data-i18n-key="socialMediaUploaderPage.problemDescription">
+                Managing synchronized multi-platform video publishing across YouTube Shorts, Instagram, Facebook Reels, and TikTok is overwhelming and vulnerable to failure. Manual distribution suffers from disjointed peak-hour scheduling across different regional timezones, repetitive browser authentications triggering platform bot bans, unoptimized platform-specific captions, and lack of atomic tracking leading to duplicate posts or lost media.
+              </p>
+            </div>
+            <div class="ps-card solution-card" data-sound-hover="ui-hover">
+              <div class="ps-icon"><i class="fas fa-wand-magic-sparkles"></i></div>
+              <h3 data-i18n-key="socialMediaUploaderPage.solutionTitle">💡 The Automated Architecture</h3>
+              <p data-i18n-key="socialMediaUploaderPage.solutionDescription">
+                An industrial-grade autonomous orchestration pipeline that ingests pending media packages, calculates collision-free peak viewing slots, queries specialized AI Language Agents for viral copywriting with local caching, drives isolated anti-detect hardware-fingerprinted browser sessions, enforces unified Meta Reels distribution, dispatches instant Telegram operational telemetry, and automatically archives completed media.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. Tech Stack in One Single Line -->
+        <section class="tech-stack-section">
+          <h3 class="section-title">
+            <i class="fas fa-layer-group"></i>
+            <span data-i18n-key="socialMediaUploaderPage.techStackHeading">Technologies &amp; Architecture Stack</span>
+          </h3>
+          <div class="tech-stack-single-line">
+            <span class="tech-pill-badge" data-sound-hover="ui-hover" data-sound-click="ui-click">Python Core</span>
+            <span class="tech-pill-divider">|</span>
+            <span class="tech-pill-badge" data-sound-hover="ui-hover" data-sound-click="ui-click">Anti-Detect Profiles</span>
+            <span class="tech-pill-divider">|</span>
+            <span class="tech-pill-badge" data-sound-hover="ui-hover" data-sound-click="ui-click">Playwright Driver</span>
+            <span class="tech-pill-divider">|</span>
+            <span class="tech-pill-badge" data-sound-hover="ui-hover" data-sound-click="ui-click">Google Gemini API</span>
+            <span class="tech-pill-divider">|</span>
+            <span class="tech-pill-badge" data-sound-hover="ui-hover" data-sound-click="ui-click">Arabic &amp; Multilingual NLP</span>
+            <span class="tech-pill-divider">|</span>
+            <span class="tech-pill-badge" data-sound-hover="ui-hover" data-sound-click="ui-click">YouTube Studio</span>
+            <span class="tech-pill-divider">|</span>
+            <span class="tech-pill-badge" data-sound-hover="ui-hover" data-sound-click="ui-click">Meta Business Suite</span>
+            <span class="tech-pill-divider">|</span>
+            <span class="tech-pill-badge" data-sound-hover="ui-hover" data-sound-click="ui-click">TikTok Creator Studio</span>
+            <span class="tech-pill-divider">|</span>
+            <span class="tech-pill-badge" data-sound-hover="ui-hover" data-sound-click="ui-click">Telegram Bot API</span>
+            <span class="tech-pill-divider">|</span>
+            <span class="tech-pill-badge" data-sound-hover="ui-hover" data-sound-click="ui-click">Atomic State Ledger</span>
+          </div>
+        </section>
+
+        <!-- 3. Architecture Flowchart (social_media_uploader_pipeline.svg) -->
+        <section class="flowchart-section">
+          <div class="section-header-centered">
+            <h3 class="section-title">
+              <i class="fas fa-diagram-project"></i>
+              <span data-i18n-key="socialMediaUploaderPage.flowchartHeading">🗺️ System Architecture &amp; Automation Flowchart</span>
+            </h3>
+            <p class="section-subtext" data-i18n-key="socialMediaUploaderPage.flowchartDescription">
+              Interactive architectural blueprint mapping queue ingestion, intelligent scheduling cadence, AI semantic metadata generation, anti-detect browser orchestration, multi-platform publishing split, and Telegram ledger monitoring.
+            </p>
+          </div>
+
+          <div class="flowchart-card" data-sound-hover="ui-hover">
+            <div class="flowchart-actions">
+              <a
+                href="assets/projects/social_media_uploader/social_media_uploader_pipeline.svg"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="diagram-btn"
+                data-sound-click="warp-whoosh"
+                data-sound-hover="ui-hover"
+              >
+                <i class="fas fa-up-right-from-square"></i>
+                <span data-i18n-key="socialMediaUploaderPage.openFullDiagramBtn">View Full High-Res Diagram</span>
+              </a>
+            </div>
+            <div class="flowchart-img-scroll">
+              <object
+                id="pipeline-flowchart-object"
+                class="flowchart-svg-object"
+                type="image/svg+xml"
+                data=""
+                data-src="assets/projects/social_media_uploader/social_media_uploader_pipeline.svg"
+                aria-label="Multi-Platform Video Publishing Automation Pipeline Diagram"
+              >
+                <img
+                  src="assets/projects/social_media_uploader/social_media_uploader_pipeline.svg"
+                  alt="Multi-Platform Video Publishing Automation Pipeline Diagram"
+                  class="flowchart-svg-img"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </object>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4. Deep-Dive Video Walkthrough (Vimeo Placeholder Ready For Embed) -->
+        <section class="demo-video-section">
+          <div class="section-header-centered">
+            <h3 class="section-title">
+              <i class="fas fa-play-circle"></i>
+              <span data-i18n-key="socialMediaUploaderPage.demoVideoHeading">🎬 Live Demonstration &amp; Deep-Dive Walkthrough</span>
+            </h3>
+            <p class="section-subtext" data-i18n-key="socialMediaUploaderPage.demoVideoDescription">
+              Dedicated spot for the upcoming comprehensive Vimeo video walkthrough demonstrating the live multi-platform execution, anti-detect isolation, and synchronized scheduling in real time.
+            </p>
+          </div>
+          <div class="video-responsive-wrapper">
+            <!-- 
+              VIMEO EMBED PLACEHOLDER:
+              When the video is recorded and uploaded to Vimeo, replace this placeholder with:
+              <iframe
+                src="https://player.vimeo.com/video/YOUR_VIMEO_ID?badge=0&autopause=0&player_id=0&dnt=1"
+                loading="lazy"
+                frameborder="0"
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; unload"
+                title="Multi-Platform Video Publishing Automation Walkthrough"
+              ></iframe>
+            -->
+            <div class="video-placeholder-container">
+              <div class="video-hud-grid"></div>
+              <div class="video-hud-brackets"></div>
+              <div class="video-hud-telemetry-top">
+                <span>[HUD.TELEMETRY: VIMEO 4K DEEP-DIVE DOCK]</span>
+                <span>[MODE: MULTI-PLATFORM ORCHESTRATION]</span>
+              </div>
+              <div class="video-play-pulse-btn" data-sound-hover="ui-hover" data-sound-click="hologram-on">
+                <i class="fas fa-play"></i>
+              </div>
+              <div class="video-placeholder-badge">
+                <i class="fas fa-video"></i> <span data-i18n-key="socialMediaUploaderPage.videoStatusBadge">VIDEO PRODUCTION IN PROGRESS</span>
+              </div>
+              <h4 class="video-placeholder-title" data-i18n-key="socialMediaUploaderPage.videoRecordingTitle">
+                Deep-Dive Engineering Video (Coming Soon to Vimeo)
+              </h4>
+              <p class="video-placeholder-desc" data-i18n-key="socialMediaUploaderPage.videoRecordingDesc">
+                A high-resolution video walk-through is currently being filmed. It will analyze live anti-detect browser profile attachment, Gemini AI dialogue extraction &amp; copywriting, collision-safe cadence scheduling, and automated Telegram alert dispatching.
+              </p>
+              <span class="video-placeholder-note" data-i18n-key="socialMediaUploaderPage.videoPlaceholderNote">
+                &lt;VIMEO_EMBED_SLOT_RESERVED /&gt;
+              </span>
+              <div class="video-hud-telemetry-bottom">
+                <span>[SYS.OPERATOR: AHMED MANSOUR // SENIOR ENGINEER]</span>
+                <span>[STATUS: READY_FOR_EMBED]</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 5. Technical Deep Dive (6 Chronological Sequence Stages) -->
+        <section class="deep-dive-section">
+          <div class="section-header-centered">
+            <h3 class="section-title">
+              <i class="fas fa-code"></i>
+              <span data-i18n-key="socialMediaUploaderPage.deepDiveHeading">🔬 Technical Deep Dive &amp; Business Logic Flow</span>
+            </h3>
+            <p class="deep-dive-intro" data-i18n-key="socialMediaUploaderPage.deepDiveIntro">
+              Chronological pipeline execution sequence decomposing the system into 6 mission-critical operational phases, decision branches, and fail-safe recovery protocols.
+            </p>
+          </div>
+
+          <div class="pipeline-stages-container">
+            <!-- Stage 1 -->
+            <div class="stage-card stage-1" data-sound-hover="ui-hover" data-sound-click="laser-scan">
+              <div class="stage-card-header">
+                <span class="stage-number-badge">01</span>
+                <div>
+                  <span class="stage-tag" data-i18n-key="socialMediaUploaderPage.stage1Tag">STAGE 1 · QUEUE INGESTION</span>
+                  <h4 data-i18n-key="socialMediaUploaderPage.stage1Title">Ingestion &amp; Task Discovery</h4>
+                </div>
+              </div>
+              <p class="stage-card-body" data-i18n-key="socialMediaUploaderPage.stage1Desc">
+                Triggered on scheduled intervals or manual invocation. Scans the pending media queue for unprocessed video packages containing vertical video assets, spoken transcripts, and optional visual covers. Inspects asset integrity and reads active platform publishing flags.
+              </p>
+              <div class="stage-subgrid">
+                <div class="stage-subcard" data-sound-hover="ui-hover" data-sound-click="ui-click">
+                  <h5 data-i18n-key="socialMediaUploaderPage.stage1Sub1Title"><i class="fas fa-clipboard-check"></i> Ledger Status Verification</h5>
+                  <p data-i18n-key="socialMediaUploaderPage.stage1Sub1Desc">Checks if all target platforms are marked as completed. If already finished, processing bypasses immediately to eliminate duplicate uploads.</p>
+                </div>
+                <div class="stage-subcard" data-sound-hover="ui-hover" data-sound-click="ui-click">
+                  <h5 data-i18n-key="socialMediaUploaderPage.stage1Sub2Title"><i class="fas fa-shield-halved"></i> Asset Integrity Gate</h5>
+                  <p data-i18n-key="socialMediaUploaderPage.stage1Sub2Desc">Validates presence and readability of mandatory media files and transcripts. Valid packages lock state to In-Progress; invalid inputs trigger immediate operator alerts.</p>
+                </div>
+              </div>
+              <div class="stage-tech-pills">
+                <span><code>pending_queue/</code></span>
+                <span><code>video.mp4</code></span>
+                <span><code>transcript.txt</code></span>
+                <span><code>State: Unprocessed &rarr; In-Progress</code></span>
+              </div>
+            </div>
+
+            <!-- Stage 2 -->
+            <div class="stage-card stage-2" data-sound-hover="ui-hover" data-sound-click="laser-scan">
+              <div class="stage-card-header">
+                <span class="stage-number-badge">02</span>
+                <div>
+                  <span class="stage-tag" data-i18n-key="socialMediaUploaderPage.stage2Tag">STAGE 2 · SCHEDULING ENGINE</span>
+                  <h4 data-i18n-key="socialMediaUploaderPage.stage2Title">Cadence &amp; Intelligent Scheduling Engine</h4>
+                </div>
+              </div>
+              <p class="stage-card-body" data-i18n-key="socialMediaUploaderPage.stage2Desc">
+                Calculates optimal future release slots by mapping local operator time to target viewer peak hours (e.g., European evening peak). Applies dynamic cadence spacing (+1 day daily, +2 days alternate, or +3 days cadence interval).
+              </p>
+              <div class="stage-subgrid">
+                <div class="stage-subcard" data-sound-hover="ui-hover" data-sound-click="ui-click">
+                  <h5 data-i18n-key="socialMediaUploaderPage.stage2Sub1Title"><i class="fas fa-calendar-day"></i> Timezone Peak Mapping</h5>
+                  <p data-i18n-key="socialMediaUploaderPage.stage2Sub1Desc">Resolves timezone offsets dynamically to ensure publications land precisely when regional audience engagement curves reach maximum retention.</p>
+                </div>
+                <div class="stage-subcard" data-sound-hover="ui-hover" data-sound-click="ui-click">
+                  <h5 data-i18n-key="socialMediaUploaderPage.stage2Sub2Title"><i class="fas fa-route"></i> Collision Prevention</h5>
+                  <p data-i18n-key="socialMediaUploaderPage.stage2Sub2Desc">Inspects the state ledger. If a calculated slot collides with an already booked release, the engine shifts forward by cadence increments until an open slot is locked.</p>
+                </div>
+              </div>
+              <div class="stage-tech-pills">
+                <span>Dynamic Cadence (+1d / +2d / +3d)</span>
+                <span>Peak Hour Mapping</span>
+                <span>Collision Guard</span>
+                <span>Locked Publication Timestamps</span>
+              </div>
+            </div>
+
+            <!-- Stage 3 -->
+            <div class="stage-card stage-3" data-sound-hover="ui-hover" data-sound-click="laser-scan">
+              <div class="stage-card-header">
+                <span class="stage-number-badge">03</span>
+                <div>
+                  <span class="stage-tag" data-i18n-key="socialMediaUploaderPage.stage3Tag">STAGE 3 · AI METADATA ENRICHMENT</span>
+                  <h4 data-i18n-key="socialMediaUploaderPage.stage3Title">AI Semantic Metadata Enrichment (The Brain)</h4>
+                </div>
+              </div>
+              <p class="stage-card-body" data-i18n-key="socialMediaUploaderPage.stage3Desc">
+                Strips timing markers and sequence numbers to extract clean dialogue from the transcript. Checks local cache for existing localized metadata; if missing, queries the AI Language Agent using a specialized regional persona to synthesize viral hook titles, hashtags, SEO-optimized narrative descriptions, channel disclaimers, and discovery tags.
+              </p>
+              <div class="stage-subgrid">
+                <div class="stage-subcard" data-sound-hover="ui-hover" data-sound-click="ui-click">
+                  <h5 data-i18n-key="socialMediaUploaderPage.stage3Sub1Title"><i class="fas fa-database"></i> Zero-API Cache Layer</h5>
+                  <p data-i18n-key="socialMediaUploaderPage.stage3Sub1Desc">Checks persistent JSON cache first. Existing metadata loads instantly with zero external API calls or latency.</p>
+                </div>
+                <div class="stage-subcard" data-sound-hover="ui-hover" data-sound-click="ui-click">
+                  <h5 data-i18n-key="socialMediaUploaderPage.stage3Sub2Title"><i class="fas fa-brain"></i> Persona &amp; Fail-Safe Recovery</h5>
+                  <p data-i18n-key="socialMediaUploaderPage.stage3Sub2Desc">Applies exponential backoff retries if AI generation encounters timeouts, falling back to a hardened emergency template if retries exhaust.</p>
+                </div>
+              </div>
+              <div class="stage-tech-pills">
+                <span>Google Gemini API</span>
+                <span>Persona Copywriting</span>
+                <span>Zero-API Cache</span>
+                <span>Exponential Backoff Fallback</span>
+              </div>
+            </div>
+
+            <!-- Stage 4 -->
+            <div class="stage-card stage-4" data-sound-hover="ui-hover" data-sound-click="laser-scan">
+              <div class="stage-card-header">
+                <span class="stage-number-badge">04</span>
+                <div>
+                  <span class="stage-tag" data-i18n-key="socialMediaUploaderPage.stage4Tag">STAGE 4 · BROWSER SESSION ORCHESTRATION</span>
+                  <h4 data-i18n-key="socialMediaUploaderPage.stage4Title">Anti-Detect Browser Session Orchestration</h4>
+                </div>
+              </div>
+              <p class="stage-card-body" data-i18n-key="socialMediaUploaderPage.stage4Desc">
+                Communicates with the local anti-detect profile manager. Launches an isolated, hardware-fingerprinted browser profile equipped with persistent login cookies and residential proxies. Binds the remote automation driver via a dedicated debugging channel.
+              </p>
+              <div class="stage-subgrid">
+                <div class="stage-subcard" data-sound-hover="ui-hover" data-sound-click="ui-click">
+                  <h5 data-i18n-key="socialMediaUploaderPage.stage4Sub1Title"><i class="fas fa-fingerprint"></i> Hardware Fingerprint Spoofing</h5>
+                  <p data-i18n-key="socialMediaUploaderPage.stage4Sub1Desc">Spoofs Canvas, WebGL, AudioContext, and OS headers to mirror an authentic human residential machine, eliminating bot detection flags.</p>
+                </div>
+                <div class="stage-subcard" data-sound-hover="ui-hover" data-sound-click="ui-click">
+                  <h5 data-i18n-key="socialMediaUploaderPage.stage4Sub2Title"><i class="fas fa-plug-circle-bolt"></i> Remote Driver Binding</h5>
+                  <p data-i18n-key="socialMediaUploaderPage.stage4Sub2Desc">Binds the remote automation driver via Chrome DevTools Protocol (CDP) debugging endpoint with health-check monitoring and retry thresholds.</p>
+                </div>
+              </div>
+              <div class="stage-tech-pills">
+                <span>Anti-Detect Engine</span>
+                <span>CDP Debug Channel</span>
+                <span>Residential Proxy Masking</span>
+                <span>Fingerprint Isolation</span>
+              </div>
+            </div>
+
+            <!-- Stage 5 -->
+            <div class="stage-card stage-5" data-sound-hover="ui-hover" data-sound-click="laser-scan">
+              <div class="stage-card-header">
+                <span class="stage-number-badge">05</span>
+                <div>
+                  <span class="stage-tag" data-i18n-key="socialMediaUploaderPage.stage5Tag">STAGE 5 · MULTI-PLATFORM PUBLISHING</span>
+                  <h4 data-i18n-key="socialMediaUploaderPage.stage5Title">Multi-Platform Publishing Execution (Sub-Flows)</h4>
+                </div>
+              </div>
+              <p class="stage-card-body" data-i18n-key="socialMediaUploaderPage.stage5Desc">
+                Executes platform-specific publishing drivers in designated sub-flows using the authenticated browser session, media files, scheduled timestamps, and AI-enriched metadata.
+              </p>
+              <div class="stage-subgrid">
+                <div class="stage-subcard" data-sound-hover="ui-hover" data-sound-click="ui-click">
+                  <h5 data-i18n-key="socialMediaUploaderPage.stage5Sub1Title"><i class="fab fa-youtube"></i> 5A: YouTube Shorts Channel</h5>
+                  <p data-i18n-key="socialMediaUploaderPage.stage5Sub1Desc">Uploads vertical video to YouTube Studio &rarr; Enters AI title with #Shorts, descriptions &amp; tags &rarr; Sets audience policy &rarr; Confirms scheduled release.</p>
+                </div>
+                <div class="stage-subcard" data-sound-hover="ui-hover" data-sound-click="ui-click">
+                  <h5 data-i18n-key="socialMediaUploaderPage.stage5Sub2Title"><i class="fab fa-meta"></i> 5B: Meta Business Suite (FB &amp; IG Unified)</h5>
+                  <p data-i18n-key="socialMediaUploaderPage.stage5Sub2Desc">Strict Pair Rule: Facebook &amp; Instagram share a single Reels Composer. Both must be enabled/disabled together. Dual schedule timers submitted simultaneously.</p>
+                </div>
+                <div class="stage-subcard" data-sound-hover="ui-hover" data-sound-click="ui-click">
+                  <h5 data-i18n-key="socialMediaUploaderPage.stage5Sub3Title"><i class="fab fa-tiktok"></i> 5C: TikTok Creator Studio</h5>
+                  <p data-i18n-key="socialMediaUploaderPage.stage5Sub3Desc">Uploads media to TikTok Creator portal &rarr; Pastes localized captions and trending hashtags &rarr; Sets scheduled release time &rarr; Confirms publication.</p>
+                </div>
+              </div>
+              <div class="stage-tech-pills">
+                <span>YouTube Studio Terminal</span>
+                <span>Meta Reels Composer (FB + IG Unified)</span>
+                <span>TikTok Creator Portal</span>
+                <span>Consolidated Execution Report</span>
+              </div>
+            </div>
+
+            <!-- Stage 6 -->
+            <div class="stage-card stage-6" data-sound-hover="ui-hover" data-sound-click="laser-scan">
+              <div class="stage-card-header">
+                <span class="stage-number-badge">06</span>
+                <div>
+                  <span class="stage-tag" data-i18n-key="socialMediaUploaderPage.stage6Tag">STAGE 6 · MONITORING &amp; ARCHIVING</span>
+                  <h4 data-i18n-key="socialMediaUploaderPage.stage6Title">Monitoring, State Persistence &amp; Archiving</h4>
+                </div>
+              </div>
+              <p class="stage-card-body" data-i18n-key="socialMediaUploaderPage.stage6Desc">
+                Updates the persistent state ledger with platform statuses, execution timestamps, and attempt counts. Synthesizes a Markdown-formatted execution report and dispatches it immediately to the operator's Telegram channel. Evaluates overall job completion for automated cold archiving.
+              </p>
+              <div class="stage-subgrid">
+                <div class="stage-subcard" data-sound-hover="ui-hover" data-sound-click="ui-click">
+                  <h5 data-i18n-key="socialMediaUploaderPage.stage6Sub1Title"><i class="fab fa-telegram"></i> Telegram Operator Telemetry</h5>
+                  <p data-i18n-key="socialMediaUploaderPage.stage6Sub1Desc">Dispatches formatted operational reports, platform success/error badges, and diagnostics directly to the operator's private channel.</p>
+                </div>
+                <div class="stage-subcard" data-sound-hover="ui-hover" data-sound-click="ui-click">
+                  <h5 data-i18n-key="socialMediaUploaderPage.stage6Sub2Title"><i class="fas fa-box-archive"></i> Automated Cold Storage Archiving</h5>
+                  <p data-i18n-key="socialMediaUploaderPage.stage6Sub2Desc">If 100% of platforms achieve SUCCESS, the entire package moves from pending to cold archive storage. Partial failures stay in queue for subsequent retry.</p>
+                </div>
+              </div>
+              <div class="stage-tech-pills">
+                <span>State Ledger (JSON)</span>
+                <span>Telegram Bot Alert</span>
+                <span>100% Success Rule</span>
+                <span>Archive Storage Migration</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 6. System Actors & External Integrations Grid -->
+        <section class="actors-section">
+          <div class="section-header-centered">
+            <h3 class="section-title">
+              <i class="fas fa-cubes-stacked"></i>
+              <span data-i18n-key="socialMediaUploaderPage.actorsHeading">System Actors &amp; External Integrations</span>
+            </h3>
+            <p class="section-subtext" data-i18n-key="socialMediaUploaderPage.actorsDescription">
+              Logical classifications and operational responsibilities across internal stores and external platform endpoints.
+            </p>
+          </div>
+
+          <div class="actors-grid">
+            <!-- Actor 1 -->
+            <div class="actor-card" data-sound-hover="ui-hover">
+              <div class="actor-icon-row">
+                <div class="actor-icon-box"><i class="fas fa-folder-open"></i></div>
+                <span class="actor-classification" data-i18n-key="socialMediaUploaderPage.actor1Class">Local Ingestion Store</span>
+              </div>
+              <h4 data-i18n-key="socialMediaUploaderPage.actor1Title">Pending Media Queue</h4>
+              <p data-i18n-key="socialMediaUploaderPage.actor1Desc">Ingests incoming vertical video assets, dialogue scripts, and visual thumbnails ready for pipeline scheduling.</p>
+            </div>
+
+            <!-- Actor 2 -->
+            <div class="actor-card" data-sound-hover="ui-hover">
+              <div class="actor-icon-row">
+                <div class="actor-icon-box"><i class="fas fa-database"></i></div>
+                <span class="actor-classification" data-i18n-key="socialMediaUploaderPage.actor2Class">Storage &amp; State Machine</span>
+              </div>
+              <h4 data-i18n-key="socialMediaUploaderPage.actor2Title">Persistent State Ledger</h4>
+              <p data-i18n-key="socialMediaUploaderPage.actor2Desc">Tracks lifecycle states (pending, loading, success, error, skipped), scheduled dates, attempt counters, and retry logs.</p>
+            </div>
+
+            <!-- Actor 3 -->
+            <div class="actor-card" data-sound-hover="ui-hover">
+              <div class="actor-icon-row">
+                <div class="actor-icon-box"><i class="fas fa-clock"></i></div>
+                <span class="actor-classification" data-i18n-key="socialMediaUploaderPage.actor3Class">Business Logic Engine</span>
+              </div>
+              <h4 data-i18n-key="socialMediaUploaderPage.actor3Title">Intelligent Scheduler</h4>
+              <p data-i18n-key="socialMediaUploaderPage.actor3Desc">Resolves timezone offsets, computes publishing cadence intervals, and prevents release slot collisions.</p>
+            </div>
+
+            <!-- Actor 4 -->
+            <div class="actor-card" data-sound-hover="ui-hover">
+              <div class="actor-icon-row">
+                <div class="actor-icon-box"><i class="fas fa-robot"></i></div>
+                <span class="actor-classification" data-i18n-key="socialMediaUploaderPage.actor4Class">External AI Service</span>
+              </div>
+              <h4 data-i18n-key="socialMediaUploaderPage.actor4Title">AI Language Agent</h4>
+              <p data-i18n-key="socialMediaUploaderPage.actor4Desc">Performs dialogue cleaning, cultural localization, viral hook generation, hashtag curation, and SEO tag synthesis.</p>
+            </div>
+
+            <!-- Actor 5 -->
+            <div class="actor-card" data-sound-hover="ui-hover">
+              <div class="actor-icon-row">
+                <div class="actor-icon-box"><i class="fas fa-user-secret"></i></div>
+                <span class="actor-classification" data-i18n-key="socialMediaUploaderPage.actor5Class">Environment Orchestrator</span>
+              </div>
+              <h4 data-i18n-key="socialMediaUploaderPage.actor5Title">Anti-Detect Profile Manager</h4>
+              <p data-i18n-key="socialMediaUploaderPage.actor5Desc">Provides isolated hardware fingerprints, residential IP masking, and session persistence to ensure bot stealth.</p>
+            </div>
+
+            <!-- Actor 6 -->
+            <div class="actor-card" data-sound-hover="ui-hover">
+              <div class="actor-icon-row">
+                <div class="actor-icon-box"><i class="fas fa-share-nodes"></i></div>
+                <span class="actor-classification" data-i18n-key="socialMediaUploaderPage.actor6Class">External Social Endpoints</span>
+              </div>
+              <h4 data-i18n-key="socialMediaUploaderPage.actor6Title">Target Distribution Channels</h4>
+              <p data-i18n-key="socialMediaUploaderPage.actor6Desc">YouTube Studio, Meta Business Suite (FB &amp; IG Unified Composer), and TikTok Creator Center.</p>
+            </div>
+
+            <!-- Actor 7 -->
+            <div class="actor-card" data-sound-hover="ui-hover">
+              <div class="actor-icon-row">
+                <div class="actor-icon-box"><i class="fab fa-telegram"></i></div>
+                <span class="actor-classification" data-i18n-key="socialMediaUploaderPage.actor7Class">Alerting &amp; Monitoring Channel</span>
+              </div>
+              <h4 data-i18n-key="socialMediaUploaderPage.actor7Title">Operator Notification Hub</h4>
+              <p data-i18n-key="socialMediaUploaderPage.actor7Desc">Sends instant Markdown operational alerts, schedule confirmations, and error diagnostics directly to Telegram.</p>
+            </div>
+
+            <!-- Actor 8 -->
+            <div class="actor-card" data-sound-hover="ui-hover">
+              <div class="actor-icon-row">
+                <div class="actor-icon-box"><i class="fas fa-boxes-packing"></i></div>
+                <span class="actor-classification" data-i18n-key="socialMediaUploaderPage.actor8Class">Final Destination Storage</span>
+              </div>
+              <h4 data-i18n-key="socialMediaUploaderPage.actor8Title">Completed Archive Storage</h4>
+              <p data-i18n-key="socialMediaUploaderPage.actor8Desc">Cold storage for media packages that achieved 100% success across all active target platforms.</p>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- Universal Footer Contact Dock (Pre-rendered to eliminate layout shift) -->
+      <div class="container footer-container">
+        <footer id="footer-container">
+          <div class="footer-contact-container">
+            <div class="footer-contact-header">
+              <span class="contact-label" data-i18n-key="common.contactMe">Contact Me</span>
+            </div>
+            <div class="footer-neon-divider"></div>
+            <div class="footer-social-icons">
+              <a
+                href="https://github.com/Ahmedmansor"
+                target="_blank"
+                class="footer-contact-btn github-btn"
+                title="GitHub"
+                aria-label="GitHub"
+                data-sound-click="ui-click"
+                data-sound-hover="ui-hover"
+              >
+                <i class="fab fa-github"></i>
+              </a>
+              <a
+                href="https://linkedin.com/in/ahmed-mansour-343716209"
+                target="_blank"
+                class="footer-contact-btn linkedin-btn"
+                title="LinkedIn"
+                aria-label="LinkedIn"
+                data-sound-click="ui-click"
+                data-sound-hover="ui-hover"
+              >
+                <i class="fab fa-linkedin"></i>
+              </a>
+              <a
+                href="mailto:ahmedmansour70000@gmail.com"
+                class="footer-contact-btn email-btn"
+                title="Gmail: ahmedmansour70000@gmail.com"
+                aria-label="Gmail"
+                data-sound-click="ui-click"
+                data-sound-hover="ui-hover"
+              >
+                <i class="fas fa-envelope"></i>
+              </a>
+              <a
+                href="https://wa.me/201000872150"
+                target="_blank"
+                class="footer-contact-btn whatsapp-btn"
+                title="WhatsApp: +201000872150"
+                aria-label="WhatsApp"
+                data-sound-click="ui-click"
+                data-sound-hover="ui-hover"
+              >
+                <i class="fab fa-whatsapp"></i>
+              </a>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <!-- Audio Engine (Howler.js) — must load before audio.service.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"></script>
+    <script src="assets/icons/icons.js"></script>
+
+    <!-- Feature-First Clean Architecture Scripts -->
+    <!-- 1. Core Layer -->
+    <script src="src/core/domain/usecases/localization.usecase.js"></script>
+    <script src="src/core/data/datasources/storage.datasource.js"></script>
+    <script src="src/core/data/datasources/audio.service.js"></script>
+    <script src="src/core/data/datasources/language.datasource.js"></script>
+    <script src="src/core/data/repositories/language.repository.js"></script>
+    <script src="src/core/presentation/components/language-switcher/language-switcher.component.js"></script>
+    <script src="src/core/presentation/components/appbar/appbar.component.js"></script>
+    <script src="src/core/presentation/components/footer/footer.component.js"></script>
+
+    <!-- 2. Feature Controller -->
+    <script src="src/features/social-media-uploader/presentation/controllers/social-media-uploader.controller.js"></script>
+
+    <script>
+      // Initialize Multi-Platform Video Publishing Automation Detail Page via Feature-First Controller
+      document.addEventListener("DOMContentLoaded", () => {
+        window.Portfolio.presentation.controllers.SocialMediaUploaderController.init();
+      });
+    </script>
+  </body>
+</html>

@@ -273,6 +273,43 @@
   box-shadow: 0 0 35px rgba(244, 63, 94, 0.95), 0 0 65px rgba(251, 113, 133, 0.5);
 }
 
+/* Multi-Platform Variant: Electric Cyan & Sunset Amber Laser */
+.carousel-title-nav-btn.title-btn-multiplatform {
+  background: radial-gradient(circle, rgba(0, 240, 255, 0.22) 0%, rgba(14, 16, 24, 0.95) 85%);
+  border-color: rgba(0, 240, 255, 0.75);
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.5), inset 0 0 12px rgba(0, 240, 255, 0.3);
+}
+
+.carousel-title-nav-btn.title-btn-multiplatform::before {
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 200deg,
+    rgba(245, 158, 11, 0.45) 250deg,
+    #00f0ff 320deg,
+    #ffffff 360deg
+  );
+}
+
+.carousel-title-nav-btn.title-btn-multiplatform::after {
+  border-color: #00f0ff;
+  box-shadow: 0 0 16px rgba(0, 240, 255, 0.85);
+  animation: laserRadarPulseMultiplatform 2s cubic-bezier(0.1, 0.8, 0.2, 1) infinite;
+}
+
+@keyframes laserRadarPulseMultiplatform {
+  0% { transform: scale(0.95); opacity: 0.9; }
+  50% { transform: scale(1.42); opacity: 0.35; }
+  100% { transform: scale(1.68); opacity: 0; }
+}
+
+.carousel-title-link:hover .title-btn-multiplatform.carousel-title-nav-btn {
+  background: #00f0ff;
+  color: #07070a;
+  border-color: #ffffff;
+  box-shadow: 0 0 35px rgba(0, 240, 255, 0.95), 0 0 65px rgba(245, 158, 11, 0.5);
+}
+
 html[dir="rtl"] .carousel-title-nav-btn i,
 html[dir="rtl"] .carousel-title-nav-btn svg {
   transform: scaleX(-1);
@@ -366,6 +403,11 @@ html[dir="rtl"] .carousel-title-nav-btn svg {
   box-shadow: 0 28px 75px rgba(0, 0, 0, 0.95), 0 0 35px rgba(244, 63, 94, 0.28);
 }
 
+.carousel-item .project-card.multiplatform-card.is-active {
+  border-color: rgba(0, 240, 255, 0.6);
+  box-shadow: 0 28px 75px rgba(0, 0, 0, 0.95), 0 0 35px rgba(0, 240, 255, 0.35);
+}
+
 /* ========================================================
    ACTIVE CARD CLOCKWISE NEON LASER BEAM (100% GPU COMPOSITED)
    Pure GPU Transform Rotation - Zero Style Recalculations
@@ -429,6 +471,18 @@ html[dir="rtl"] .carousel-title-nav-btn svg {
   );
 }
 
+.carousel-item .project-card.multiplatform-card.is-active::before {
+  background: conic-gradient(
+    from 0deg at 50% 50%,
+    transparent 0deg,
+    transparent 280deg,
+    rgba(245, 158, 11, 0.45) 300deg,
+    #00f0ff 335deg,
+    #ffffff 356deg,
+    transparent 360deg
+  );
+}
+
 /* Inner Card Mask Shield leaving 1.5px glowing perimeter */
 .carousel-item .project-card.is-active::after {
   content: "";
@@ -456,6 +510,12 @@ html[dir="rtl"] .carousel-title-nav-btn svg {
   transform: translateY(-8px) scale(1.02);
   transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s ease;
   border-color: #f43f5e;
+}
+
+.carousel-item .project-card.multiplatform-card.is-active:hover {
+  transform: translateY(-8px) scale(1.02);
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s ease;
+  border-color: #00f0ff;
 }
 
 .carousel-item .project-card.is-active:hover::before {
@@ -706,6 +766,10 @@ html[dir="rtl"] .carousel-item .project-info {
   color: #fb7185;
 }
 
+.carousel-item .multiplatform-card:hover .project-info h4 {
+  color: #00f0ff;
+}
+
 .carousel-item .project-info p {
   margin: 0 0 12px;
   font-size: 0.92rem;
@@ -743,6 +807,11 @@ html[dir="rtl"] .carousel-item .project-info {
 .carousel-item .uploader-card .tech-tags span {
   background: rgba(244, 63, 94, 0.14);
   color: #fca5a5;
+}
+
+.carousel-item .multiplatform-card .tech-tags span {
+  background: rgba(0, 240, 255, 0.14);
+  color: #38bdf8;
 }
 
 .carousel-item .view-project-btn {
@@ -787,6 +856,12 @@ html[dir="rtl"] .carousel-item .view-project-btn svg {
   background: #f43f5e;
   color: #ffffff;
   box-shadow: 0 4px 20px rgba(244, 63, 94, 0.45);
+}
+
+.carousel-item .multiplatform-card:hover .view-project-btn {
+  background: #00f0ff;
+  color: #07070a;
+  box-shadow: 0 4px 20px rgba(0, 240, 255, 0.45);
 }
 
 /* 3. Lower Controls Zone (Lime-Neon Arrows) */
@@ -850,7 +925,8 @@ html[dir="rtl"] .carousel-item .view-project-btn svg {
   /* Kill rotating radar beam & sonar waves on MOBILE ONLY (Desktop remains 100% intact) */
   .carousel-item .project-card.is-active::before,
   .carousel-item .project-card.linker-card.is-active::before,
-  .carousel-item .project-card.uploader-card.is-active::before {
+  .carousel-item .project-card.uploader-card.is-active::before,
+  .carousel-item .project-card.multiplatform-card.is-active::before {
     display: none !important;
     animation: none !important;
   }
@@ -872,6 +948,11 @@ html[dir="rtl"] .carousel-item .view-project-btn svg {
   .carousel-item .project-card.uploader-card.is-active {
     border: 1.5px solid rgba(244, 63, 94, 0.75) !important;
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.9), 0 0 25px rgba(244, 63, 94, 0.3) !important;
+  }
+
+  .carousel-item .project-card.multiplatform-card.is-active {
+    border: 1.5px solid rgba(0, 240, 255, 0.75) !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.9), 0 0 25px rgba(0, 240, 255, 0.3) !important;
   }
 
   /* Keep the arrow launcher button on mobile, but kill the pulsing radar ripples */

@@ -69,10 +69,11 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
       fourProjects.forEach((project, index) => {
         const isLinker = project.id === "linker";
         const isUploader = project.id === "shorts-uploader";
+        const isMultiPlatform = project.id === "social-media-uploader";
         const displayTitle = project.bigTitle || project.title;
         const displayCategory = project.category || "";
         const viewText = project.viewProject || "View Project Details";
-        const titleBtnClass = isLinker ? "title-btn-linker" : (isUploader ? "title-btn-uploader" : "title-btn-automation");
+        const titleBtnClass = isLinker ? "title-btn-linker" : (isUploader ? "title-btn-uploader" : (isMultiPlatform ? "title-btn-multiplatform" : "title-btn-automation"));
 
         // Title Zone Item
         titlesHTML += `
@@ -88,8 +89,8 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
         `;
 
         // 3D Card Item
-        const cardClass = isLinker ? "project-card linker-card" : (isUploader ? "project-card uploader-card" : "project-card semanticcut-card");
-        const thumbClass = isLinker ? "linker-thumb" : (isUploader ? "uploader-thumb" : "automation-thumb");
+        const cardClass = isLinker ? "project-card linker-card" : (isUploader ? "project-card uploader-card" : (isMultiPlatform ? "project-card multiplatform-card" : "project-card semanticcut-card"));
+        const thumbClass = isLinker ? "linker-thumb" : (isUploader ? "uploader-thumb" : (isMultiPlatform ? "multiplatform-thumb" : "automation-thumb"));
         const typeBadgeText = project.typeBadge || (isLinker ? "Mobile App • iOS & Android" : "AI Automation Pipeline");
         const typeIcon = project.typeBadgeIcon || (isLinker ? "fas fa-mobile-screen-button" : "fas fa-robot");
         const badgeIconHTML = window.Icons ? window.Icons.get(typeIcon) : `<i class="${typeIcon}"></i>`;
