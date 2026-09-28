@@ -97,7 +97,7 @@ translations = {
         badgeClass: "automation-badge",
         description:
           "An autonomous multi-language YouTube Shorts production & upload pipeline with Gemini AI metadata, anti-bot Playwright automation, and Cairo timezone scheduling.",
-        thumbnail: "assets/images/shorts-uploader-thumbnail.jpg",
+        thumbnail: "assets/images/shorts-uploader-thumbnail-en.webp",
         link: "shorts-uploader.html",
         tags: [
           "Python",

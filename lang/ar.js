@@ -97,7 +97,7 @@ translations = {
         badgeClass: "automation-badge",
         description:
           "منظومة أتمتة متكاملة لجدولة ورفع فيديوهات YouTube Shorts بـ 4 لغات آلياً، مع توليد البيانات الوصفية بـ Gemini ومحاكاة سلوك الإنسان عبر Playwright.",
-        thumbnail: "assets/images/shorts-uploader-thumbnail.jpg",
+        thumbnail: "assets/images/shorts-uploader-thumbnail-ar.webp",
         link: "shorts-uploader.html",
         tags: [
           "Python",
