@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="AI Social Media Carousel Automation: Autonomous Multi-Slide Editorial Copywriting, 3D Hero Isolation & Headless Publishing Pipeline built by Ahmed Mansour."
+    />
+    <link rel="canonical" href="https://ahmedmansor.github.io/carousel-automation.html" />
+    <title data-i18n-key="carouselAutomationPage.pageTitle">
+      Project Details: AI Social Media Carousel Automation | Ahmed Mansour
+    </title>
+
+    <!-- Direct Core & Feature Stylesheets (Eliminates @import Waterfall & FOUC) -->
+    <link rel="stylesheet" href="src/core/presentation/styles/variables.css" />
+    <link rel="stylesheet" href="src/core/presentation/styles/base.css" />
+    <link rel="stylesheet" href="src/core/presentation/components/appbar/appbar.css" />
+    <link rel="stylesheet" href="src/core/presentation/components/language-switcher/language-switcher.css" />
+    <link rel="stylesheet" href="src/core/presentation/components/footer/footer.css" />
+    <link rel="stylesheet" href="src/features/carousel-automation/presentation/styles/carousel-automation.css" />
+    <link rel="stylesheet" href="src/core/presentation/styles/rtl.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Montserrat:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+      />
+    </noscript>
+
+    <!-- Initial Localization Dictionary (Deferred) -->
+    <script src="lang/en.js" id="lang-script" defer></script>
+
+    <!-- Early Session Guard: Restore audio state before first paint -->
+    <script>
+      (function () {
+        try {
+          if (localStorage.getItem("portfolio_audio_muted") === null) {
+            localStorage.setItem("portfolio_audio_muted", "false");
+          }
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+
+  <body id="carouselautomation-page">
+    <!-- Global Sticky App Bar (Pre-rendered with .appbar to prevent CLS) -->
+    <header id="appbar-container" class="appbar">
+      <div class="appbar-inner">
+        <a href="index.html" class="appbar-brand" title="Home" data-sound-click="ui-click" data-sound-hover="ui-hover">
+          <span class="hud-status-dot" aria-hidden="true"></span>
+          <span class="brand-tag">&lt;</span><span class="brand-name">ahmedMansour</span><span class="brand-tag"> /&gt;</span>
+        </a>
+        <nav class="appbar-nav">
+          <a href="index.html#projects-carousel-section" class="appbar-link active" data-i18n-key="common.navProjects" data-sound-click="ui-click" data-sound-hover="ui-hover">Projects</a>
+        </nav>
+        <div class="appbar-actions">
+          <div class="language-switcher">
+            <button id="lang-en-btn" data-sound-click="ui-click" data-sound-hover="ui-hover">English</button>
+            <button id="lang-ar-btn" data-sound-click="ui-click" data-sound-hover="ui-hover">العربية</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="container">
+      <!-- Header Section -->
+      <header class="project-detail-header carousel-page-header">
+        <div class="carousel-badge-tag" data-sound-hover="ui-hover">
+          <i class="fas fa-images"></i> <span data-i18n-key="carouselAutomationPage.headerBadge">Generative AI &amp; Publishing Engine</span>
+        </div>
+
+        <h1 data-i18n-key="carouselAutomationPage.headerTitle">
+          AI Social Media Carousel Automation
+        </h1>
+        <h2 class="project-subtitle" data-i18n-key="carouselAutomationPage.headerSubtitle">
+          Curated Italian Editorial Copywriting, Transparent 3D Hero Isolation &amp; Headless High-DPI Multi-Slide Publishing
+        </h2>
+        <p class="project-main-desc" data-i18n-key="carouselAutomationPage.headerDescription">
+          An autonomous end-to-end generative pipeline that ingests topics via chat, synthesizes structured editorial social media carousel decks in Italian, generates centered 3D hero assets with alpha background isolation, renders high-DPI viewports for Instagram (4:5) and TikTok (9:16 safe areas), powers live interactive review loops in Telegram, and executes an unconditional ephemeral purge leaving zero residual system footprint.
+        </p>
+      </header>
+
+      <main class="project-detail-content">
+        <!-- 1. The Challenge vs Solution Grid -->
+        <section class="problem-solution-section">
+          <div class="problem-solution-grid">
+            <div class="ps-card problem-card" data-sound-hover="ui-hover">
+              <div class="ps-icon"><i class="fas fa-triangle-exclamation"></i></div>
+              <h3 data-i18n-key="carouselAutomationPage.problemTitle">⚠️ The Content Production Bottleneck</h3>
+              <p data-i18n-key="carouselAutomationPage.problemDescription">
+                Crafting luxury social media carousels manually is slow, fractured, and tedious. Marketers struggle with writing concise editorial copy adhering to strict character budgets, generating and cleanly cutting out 3D subjects from white backgrounds, adapting layouts across Instagram portrait (4:5) and TikTok vertical (9:16) safe margins, and enduring endless mockup revisions inside disjointed chat channels.
+              </p>
+            </div>
+            <div class="ps-card solution-card" data-sound-hover="ui-hover">
+              <div class="ps-icon"><i class="fas fa-wand-magic-sparkles"></i></div>
+              <h3 data-i18n-key="carouselAutomationPage.solutionTitle">💡 The Automated Architecture</h3>
+              <p data-i18n-key="carouselAutomationPage.solutionDescription">
+                An industrial-grade autonomous orchestration pipeline that pairs Google Gemini with cloud generative vision and neural segmentation (rembg). It delivers interactive Telegram review dashboards with in-place mockup refreshing, theme toggling (Light/Dark), high-DPI headless browser compositing, and automated multi-page photo album delivery backed by guaranteed ephemeral disk cleanup.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. Tech Stack in One Single Line -->
+        <section class="tech-stack-section">
+          <h3 class="section-title">
+            <i class="fas fa-layer-group"></i>
+            <span data-i18n-key="carouselAutomationPage.techStackHeading">Technologies &amp; Architecture Stack</span>
+          </h3>
+          <div class="tech-stack-single-line">
+            <span class="tech-pill-badge" data-sound-hover="ui-hover" data-sound-click="ui-click">Node.js Core</span>
+            <span class="tech-pill-divider">|</span>
+            <span class="tech-pill-badge" data-sound-hover="ui-hover" data-sound-click="ui-click">Telegram Bot API</span>
+            <span class="tech-pill-divider">|</span>
+            <span class="tech-pill-badge" data-sound-hover="ui-hover" data-sound-click="ui-click">Google Gemini API</span>
+            <span class="tech-pill-divider">|</span>
+            <span class="tech-pill-badge" data-sound-hover="ui-hover" data-sound-click="ui-click">Italian Editorial NLP</span>
+            <span class="tech-pill-divider">|</span>
+            <span class="tech-pill-badge" data-sound-hover="ui-hover" data-sound-click="ui-click">Cloud 3D Synthesis</span>
+            <span class="tech-pill-divider">|</span>
+            <span class="tech-pill-badge" data-sound-hover="ui-hover" data-sound-click="ui-click">Neural Segmentation (rembg)</span>
+            <span class="tech-pill-divider">|</span>
+            <span class="tech-pill-badge" data-sound-hover="ui-hover" data-sound-click="ui-click">Headless Chromium</span>
+            <span class="tech-pill-divider">|</span>
+            <span class="tech-pill-badge" data-sound-hover="ui-hover" data-sound-click="ui-click">High-DPI Compositor</span>
+            <span class="tech-pill-divider">|</span>
+            <span class="tech-pill-badge" data-sound-hover="ui-hover" data-sound-click="ui-click">In-Memory State Ledger</span>
+            <span class="tech-pill-divider">|</span>
+            <span class="tech-pill-badge" data-sound-hover="ui-hover" data-sound-click="ui-click">Ephemeral Staging Cache</span>
+          </div>
+        </section>
+
+        <!-- 3. Architecture Flowchart (carousel-bot-cyber.svg) -->
+        <section class="flowchart-section">
+          <div class="section-header-centered">
+            <h3 class="section-title">
+              <i class="fas fa-diagram-project"></i>
+              <span data-i18n-key="carouselAutomationPage.flowchartHeading">🗺️ System Architecture &amp; Automation Flowchart</span>
+            </h3>
+            <p class="section-subtext" data-i18n-key="carouselAutomationPage.flowchartDescription">
+              Interactive architectural blueprint mapping prompt ingestion, AI narrative authoring, 3D visual generation, neural alpha isolation, high-DPI headless compositing, interactive Telegram state loops, and zero-footprint ephemeral cleanup.
+            </p>
+          </div>
+
+          <div class="flowchart-card" data-sound-hover="ui-hover">
+            <div class="flowchart-actions">
+              <a
+                href="assets/projects/carousel-bot/carousel-bot-cyber.svg"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="diagram-btn"
+                data-sound-click="warp-whoosh"
+                data-sound-hover="ui-hover"
+              >
+                <i class="fas fa-up-right-from-square"></i>
+                <span data-i18n-key="carouselAutomationPage.openFullDiagramBtn">View Full High-Res Diagram</span>
+              </a>
+            </div>
+            <div class="flowchart-img-scroll">
+              <object
+                id="pipeline-flowchart-object"
+                class="flowchart-svg-object"
+                type="image/svg+xml"
+                data=""
+                data-src="assets/projects/carousel-bot/carousel-bot-cyber.svg"
+                aria-label="AI Social Media Carousel Automation Pipeline Diagram"
+              >
+                <img
+                  src="assets/projects/carousel-bot/carousel-bot-cyber.svg"
+                  alt="AI Social Media Carousel Automation Pipeline Diagram"
+                  class="flowchart-svg-img"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </object>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4. Deep-Dive Video Walkthrough (Vimeo Placeholder Ready For Embed) -->
+        <section class="demo-video-section">
+          <div class="section-header-centered">
+            <h3 class="section-title">
+              <i class="fas fa-play-circle"></i>
+              <span data-i18n-key="carouselAutomationPage.demoVideoHeading">🎬 Live Demonstration &amp; Deep-Dive Walkthrough</span>
+            </h3>
+            <p class="section-subtext" data-i18n-key="carouselAutomationPage.demoVideoDescription">
+              Dedicated spot for the upcoming comprehensive Vimeo video walkthrough demonstrating the live Telegram interaction, in-place review dashboard, theme toggles, and multi-slide rendering in real time.
+            </p>
+          </div>
+          <div class="video-responsive-wrapper">
+            <div class="video-placeholder-container">
+              <div class="video-hud-grid"></div>
+              <div class="video-hud-telemetry-top">
+                <span>[HUD.TELEMETRY: VIMEO 4K DOCK]</span>
+                <span>[MODE: AI CAROUSEL PIPELINE]</span>
+              </div>
+              <div class="video-play-pulse-btn" data-sound-hover="ui-hover" data-sound-click="hologram-on">
+                <i class="fas fa-play"></i>
+              </div>
+              <div class="video-placeholder-badge">
+                <i class="fas fa-video"></i> <span data-i18n-key="carouselAutomationPage.videoStatusBadge">VIDEO PRODUCTION IN PROGRESS</span>
+              </div>
+              <h4 class="video-placeholder-title" data-i18n-key="carouselAutomationPage.videoRecordingTitle">
+                Deep-Dive Engineering Video (Coming Soon to Vimeo)
+              </h4>
+              <p class="video-placeholder-desc" data-i18n-key="carouselAutomationPage.videoRecordingDesc">
+                A high-resolution video walk-through is currently being recorded. It will break down conversational bot orchestration, Gemini AI editorial prompt engineering, rembg neural segmentation, headless Chromium DOM rendering, and ephemeral asset finalization.
+              </p>
+              <span class="video-placeholder-note" data-i18n-key="carouselAutomationPage.videoPlaceholderNote">
+                &lt;VIMEO_EMBED_SLOT_RESERVED /&gt;
+              </span>
+              <div class="video-hud-telemetry-bottom">
+                <span>[SYS.OPERATOR: AHMED MANSOUR // SENIOR ENGINEER]</span>
+                <span>[STATUS: READY_FOR_EMBED]</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 5. Technical Deep Dive (7 Chronological Sequence Stages) -->
+        <section class="deep-dive-section">
+          <div class="section-header-centered">
+            <h3 class="section-title">
+              <i class="fas fa-code"></i>
+              <span data-i18n-key="carouselAutomationPage.deepDiveHeading">🔬 Technical Deep Dive &amp; Business Logic Flow</span>
+            </h3>
+            <p class="section-subtext" data-i18n-key="carouselAutomationPage.deepDiveIntro">
+              Chronological pipeline execution sequence decomposing the system into 7 mission-critical operational phases, decision branches, interactive review loops, and guaranteed purge protocols.
+            </p>
+          </div>
+
+          <div class="stages-stack">
+            <!-- Stage 1 -->
+            <article class="stage-card" data-sound-hover="ui-hover">
+              <div class="stage-header-row">
+                <span class="stage-index-badge" data-i18n-key="carouselAutomationPage.stage1Tag">STAGE 1 · INGESTION &amp; VALIDATION</span>
+                <span class="card-code">[GATEWAY: TELEGRAM / REST]</span>
+              </div>
+              <h3 class="stage-title" data-i18n-key="carouselAutomationPage.stage1Title">Ingestion &amp; Input Validation</h3>
+              <p class="stage-desc" data-i18n-key="carouselAutomationPage.stage1Desc">
+                User submits a creation request containing a topic string. The gateway validates that the payload is non-empty. If the destination channel is unassigned, it prompts the user with an interactive selector. Upon confirmation, any lingering session is purged for state idempotency.
+              </p>
+              <div class="sub-features-grid">
+                <div class="sub-feature-box">
+                  <h4 data-i18n-key="carouselAutomationPage.stage1Sub1Title"><i class="fas fa-bullseye"></i> Channel Constraint Locking</h4>
+                  <p data-i18n-key="carouselAutomationPage.stage1Sub1Desc">Locks aspect ratio bounds: Instagram 1080×1350 (4:5) or TikTok 1080×1920 (9:16 vertical) with safe-area overlay protection.</p>
+                </div>
+                <div class="sub-feature-box">
+                  <h4 data-i18n-key="carouselAutomationPage.stage1Sub2Title"><i class="fas fa-rotate"></i> Idempotent Session Initialization</h4>
+                  <p data-i18n-key="carouselAutomationPage.stage1Sub2Desc">Clears residual session state and establishes a fresh operational memory block keyed by the conversation tracking ID.</p>
+                </div>
+              </div>
+              <div class="stage-tech-pills">
+                <span>Telegram Bot API</span>
+                <span>Payload Validation</span>
+                <span>Aspect-Ratio Locking</span>
+                <span>Session Idempotency</span>
+              </div>
+            </article>
+
+            <!-- Stage 2 -->
+            <article class="stage-card" data-sound-hover="ui-hover">
+              <div class="stage-header-row">
+                <span class="stage-index-badge" data-i18n-key="carouselAutomationPage.stage2Tag">STAGE 2 · AI NARRATIVE &amp; PROMPTS</span>
+                <span class="card-code">[ENGINE: GOOGLE GEMINI AI]</span>
+              </div>
+              <h3 class="stage-title" data-i18n-key="carouselAutomationPage.stage2Title">AI Narrative &amp; Visual Metadata Generation</h3>
+              <p class="stage-desc" data-i18n-key="carouselAutomationPage.stage2Desc">
+                An AI Copywriting Strategist analyzes the core topic and brand guidelines to author an editorial carousel deck in Italian. The schema enforces a high-converting hook cover, 3-6 progressive value points (&lt;150 characters for visual legibility), a closing CTA, and a complementary English 3D hero prompt.
+              </p>
+              <div class="sub-features-grid">
+                <div class="sub-feature-box">
+                  <h4 data-i18n-key="carouselAutomationPage.stage2Sub1Title"><i class="fas fa-feather-pointed"></i> Curated Editorial Copywriting</h4>
+                  <p data-i18n-key="carouselAutomationPage.stage2Sub1Desc">Synthesizes high-converting Italian copy with semantic highlight tags, punchy headlines, and disciplined character budgets.</p>
+                </div>
+                <div class="sub-feature-box">
+                  <h4 data-i18n-key="carouselAutomationPage.stage2Sub2Title"><i class="fas fa-cube"></i> Isolated 3D Prompt Engineering</h4>
+                  <p data-i18n-key="carouselAutomationPage.stage2Sub2Desc">Authors optimized English prompt requesting a centered 3D hero object on pure solid white background to facilitate neural extraction.</p>
+                </div>
+              </div>
+              <div class="stage-tech-pills">
+                <span>Google Gemini AI</span>
+                <span>Italian Editorial NLP</span>
+                <span>Hook &amp; CTA Synthesizer</span>
+                <span>Isolated 3D Prompting</span>
+              </div>
+            </article>
+
+            <!-- Stage 3 -->
+            <article class="stage-card" data-sound-hover="ui-hover">
+              <div class="stage-header-row">
+                <span class="stage-index-badge" data-i18n-key="carouselAutomationPage.stage3Tag">STAGE 3 · VISUAL ASSET SYNTHESIS</span>
+                <span class="card-code">[NEURAL: REMBG &amp; DIFFUSION]</span>
+              </div>
+              <h3 class="stage-title" data-i18n-key="carouselAutomationPage.stage3Title">Visual Asset Generation &amp; Foreground Isolation</h3>
+              <p class="stage-desc" data-i18n-key="carouselAutomationPage.stage3Desc">
+                Dispatches the visual prompt to a generative imagery service for a high-definition 1080×1080 centered 3D hero subject. The raw graphic streams into staging disk and undergoes deep-learning background segmentation (rembg) to output an alpha-transparent PNG.
+              </p>
+              <div class="sub-features-grid">
+                <div class="sub-feature-box">
+                  <h4 data-i18n-key="carouselAutomationPage.stage3Sub1Title"><i class="fas fa-clock-rotate-left"></i> Resilient Streaming &amp; Backoff</h4>
+                  <p data-i18n-key="carouselAutomationPage.stage3Sub1Desc">Enforces 45-second execution timeout with exponential backoff up to 2 retry attempts to guarantee network resilience.</p>
+                </div>
+                <div class="sub-feature-box">
+                  <h4 data-i18n-key="carouselAutomationPage.stage3Sub2Title"><i class="fas fa-scissors"></i> 3-Tier Segmentation Cascade</h4>
+                  <p data-i18n-key="carouselAutomationPage.stage3Sub2Desc">Cascade: Primary neural segmentation (rembg) ➔ Secondary system utilities ➔ Tertiary raw visual pass-through (zero crash guarantee).</p>
+                </div>
+              </div>
+              <div class="stage-tech-pills">
+                <span>Cloud Generative Vision</span>
+                <span>rembg Neural Segmentation</span>
+                <span>Alpha Transparency Cutout</span>
+                <span>3-Tier Fallback Cascade</span>
+              </div>
+            </article>
+
+            <!-- Stage 4 -->
+            <article class="stage-card" data-sound-hover="ui-hover">
+              <div class="stage-header-row">
+                <span class="stage-index-badge" data-i18n-key="carouselAutomationPage.stage4Tag">STAGE 4 · COVER MOCKUP &amp; STAGING</span>
+                <span class="card-code">[COMPOSITOR: PUPPETEER HIGH-DPI]</span>
+              </div>
+              <h3 class="stage-title" data-i18n-key="carouselAutomationPage.stage4Title">Cover Mockup Rendering &amp; Review Staging</h3>
+              <p class="stage-desc" data-i18n-key="carouselAutomationPage.stage4Desc">
+                Renders a single high-fidelity cover slide using a headless browser compositor at 2× pixel density, applying dynamic brand tokens (Default: Light Theme). Publishes a live, dual-part interactive dashboard to the chat: a rendered cover mockup photo and a full text draft with inline control buttons.
+              </p>
+              <div class="sub-features-grid">
+                <div class="sub-feature-box">
+                  <h4 data-i18n-key="carouselAutomationPage.stage4Sub1Title"><i class="fas fa-expand"></i> 2× High-DPI Lossless Compositing</h4>
+                  <p data-i18n-key="carouselAutomationPage.stage4Sub1Desc">Headless Chromium renders HTML/CSS layouts at 2x pixel density to guarantee crisp vector typography and lossless visuals.</p>
+                </div>
+                <div class="sub-feature-box">
+                  <h4 data-i18n-key="carouselAutomationPage.stage4Sub2Title"><i class="fas fa-pen-to-square"></i> Zero-Clutter In-Place Updates</h4>
+                  <p data-i18n-key="carouselAutomationPage.stage4Sub2Desc">Records chat message tracking IDs to edit existing media and text in place during iterations, eliminating chat clutter.</p>
+                </div>
+              </div>
+              <div class="stage-tech-pills">
+                <span>Headless Chromium</span>
+                <span>2× High-DPI Compositor</span>
+                <span>In-Place Media Update</span>
+                <span>Telegram Inline Keyboard</span>
+              </div>
+            </article>
+
+            <!-- Stage 5 -->
+            <article class="stage-card" data-sound-hover="ui-hover">
+              <div class="stage-header-row">
+                <span class="stage-index-badge" data-i18n-key="carouselAutomationPage.stage5Tag">STAGE 5 · USER REVIEW &amp; FINE-TUNING</span>
+                <span class="card-code">[STATE MACHINE: EVENT LOOPS]</span>
+              </div>
+              <h3 class="stage-title" data-i18n-key="carouselAutomationPage.stage5Title">User Review, Fine-Tuning &amp; State Loops</h3>
+              <p class="stage-desc" data-i18n-key="carouselAutomationPage.stage5Desc">
+                The session enters an event-driven wait state where the creator can perform iterative modifications before production: toggling Light ☀️ / Dark 🌙 themes, triggering visual regenerations ("Rigenera Copertina"), overriding prompts via `/setimage`, or editing individual slide copy (AI or manual).
+              </p>
+              <div class="sub-features-grid">
+                <div class="sub-feature-box">
+                  <h4 data-i18n-key="carouselAutomationPage.stage5Sub1Title"><i class="fas fa-palette"></i> Instant Theme Switch Loop</h4>
+                  <p data-i18n-key="carouselAutomationPage.stage5Sub1Desc">Switches between obsidian black and warm off-white tokens; re-renders the cover mockup and updates the chat in-place.</p>
+                </div>
+                <div class="sub-feature-box">
+                  <h4 data-i18n-key="carouselAutomationPage.stage5Sub2Title"><i class="fas fa-sliders"></i> Multi-Mode Slide Editing</h4>
+                  <p data-i18n-key="carouselAutomationPage.stage5Sub2Desc">Supports AI slide rewriting within character bounds or manual text submission with automated title and body parsing.</p>
+                </div>
+              </div>
+              <div class="stage-tech-pills">
+                <span>Event-Driven State Machine</span>
+                <span>Light / Dark Theme Tokens</span>
+                <span>Context-Aware AI Rewriter</span>
+                <span>Telegram Callback Queries</span>
+              </div>
+            </article>
+
+            <!-- Stage 6 -->
+            <article class="stage-card" data-sound-hover="ui-hover">
+              <div class="stage-header-row">
+                <span class="stage-index-badge" data-i18n-key="carouselAutomationPage.stage6Tag">STAGE 6 · PRODUCTION RENDERING</span>
+                <span class="card-code">[BATCH: LOSSLESS ALBUM]</span>
+              </div>
+              <h3 class="stage-title" data-i18n-key="carouselAutomationPage.stage6Title">Full Production Rendering &amp; Album Assembly</h3>
+              <p class="stage-desc" data-i18n-key="carouselAutomationPage.stage6Desc">
+                Upon clicking "Genera Carosello", the compositor initializes production viewports configured for Instagram 1080×1350 (4:5) or TikTok 1080×1920 (9:16 safe areas). Sequentially iterates across all slides, applies the active theme CSS class, captures transparent-edge PNG snapshots, and bundles the ordered media album.
+              </p>
+              <div class="sub-features-grid">
+                <div class="sub-feature-box">
+                  <h4 data-i18n-key="carouselAutomationPage.stage6Sub1Title"><i class="fas fa-mobile-screen"></i> TikTok Safe-Zone Layout Engine</h4>
+                  <p data-i18n-key="carouselAutomationPage.stage6Sub1Desc">Enforces responsive margins ensuring headlines and copy never collide with native app overlays (captions, sounds, side buttons).</p>
+                </div>
+                <div class="sub-feature-box">
+                  <h4 data-i18n-key="carouselAutomationPage.stage6Sub2Title"><i class="fas fa-layer-group"></i> Ordered Album Assembly</h4>
+                  <p data-i18n-key="carouselAutomationPage.stage6Sub2Desc">Validates 100% slide asset availability and compiles lossless PNG frames into an ordered native carousel collection.</p>
+                </div>
+              </div>
+              <div class="stage-tech-pills">
+                <span>Multi-Slide Batch Engine</span>
+                <span>TikTok Safe-Zone Engine</span>
+                <span>Lossless PNG Compositing</span>
+                <span>Native Album Packager</span>
+              </div>
+            </article>
+
+            <!-- Stage 7 -->
+            <article class="stage-card" data-sound-hover="ui-hover">
+              <div class="stage-header-row">
+                <span class="stage-index-badge" data-i18n-key="carouselAutomationPage.stage7Tag">STAGE 7 · DELIVERY &amp; PURGE</span>
+                <span class="card-code">[LIFECYCLE: ZERO-FOOTPRINT]</span>
+              </div>
+              <h3 class="stage-title" data-i18n-key="carouselAutomationPage.stage7Title">Delivery, Ephemeral Cleanup &amp; Lifecycle Completion</h3>
+              <p class="stage-desc" data-i18n-key="carouselAutomationPage.stage7Desc">
+                Streams the entire slide collection as a native multi-page carousel photo album directly to the creator. Dispatches completion telemetry, deletes temporary staging messages to leave a pristine chat history, unconditionally wipes staging disk files, and destroys the session in memory.
+              </p>
+              <div class="sub-features-grid">
+                <div class="sub-feature-box">
+                  <h4 data-i18n-key="carouselAutomationPage.stage7Sub1Title"><i class="fas fa-paper-plane"></i> Native Photo Carousel Dispatch</h4>
+                  <p data-i18n-key="carouselAutomationPage.stage7Sub1Desc">Streams media as high-resolution photo album cards directly into the recipient's chat for instant one-click publishing.</p>
+                </div>
+                <div class="sub-feature-box">
+                  <h4 data-i18n-key="carouselAutomationPage.stage7Sub2Title"><i class="fas fa-broom"></i> Guaranteed Finally-Block Purge</h4>
+                  <p data-i18n-key="carouselAutomationPage.stage7Sub2Desc">Bound to an unconditional finally block ensuring all intermediate HTML, raw graphics, isolated PNGs, and session states are erased.</p>
+                </div>
+              </div>
+              <div class="stage-tech-pills">
+                <span>Telegram MediaGroup API</span>
+                <span>Native Photo Album Dispatch</span>
+                <span>Guaranteed Finally Block</span>
+                <span>Zero-Footprint Purge</span>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!-- 6. System Actors & External Integrations -->
+        <section class="actors-section">
+          <div class="section-header-centered">
+            <h3 class="section-title">
+              <i class="fas fa-users-gear"></i>
+              <span data-i18n-key="carouselAutomationPage.actorsHeading">System Actors &amp; External Integrations</span>
+            </h3>
+            <p class="section-subtext" data-i18n-key="carouselAutomationPage.actorsDescription">
+              Logical classifications and operational responsibilities across internal stores and external platform endpoints.
+            </p>
+          </div>
+
+          <div class="actors-grid">
+            <div class="actor-card" data-sound-hover="ui-hover">
+              <span class="actor-role-badge" data-i18n-key="carouselAutomationPage.actor1Class">Human Director</span>
+              <h4 class="actor-title" data-i18n-key="carouselAutomationPage.actor1Title">Content Creator / User</h4>
+              <p class="actor-desc" data-i18n-key="carouselAutomationPage.actor1Desc">
+                Supplies conceptual topics, reviews rendered mockups, toggles aesthetic themes, edits copywriting, and issues publishing approvals.
+              </p>
+            </div>
+
+            <div class="actor-card" data-sound-hover="ui-hover">
+              <span class="actor-role-badge" data-i18n-key="carouselAutomationPage.actor2Class">Ingress / Egress Controller</span>
+              <h4 class="actor-title" data-i18n-key="carouselAutomationPage.actor2Title">Conversational Gateway</h4>
+              <p class="actor-desc" data-i18n-key="carouselAutomationPage.actor2Desc">
+                Manages command parsing, dynamic inline buttons, in-place message updates, and final photo album delivery.
+              </p>
+            </div>
+
+            <div class="actor-card" data-sound-hover="ui-hover">
+              <span class="actor-role-badge" data-i18n-key="carouselAutomationPage.actor3Class">Ephemeral State Store</span>
+              <h4 class="actor-title" data-i18n-key="carouselAutomationPage.actor3Title">Session &amp; State Ledger</h4>
+              <p class="actor-desc" data-i18n-key="carouselAutomationPage.actor3Desc">
+                Isolated in-memory data store holding conversation state, active channel bounds, active theme tokens, and deck text models.
+              </p>
+            </div>
+
+            <div class="actor-card" data-sound-hover="ui-hover">
+              <span class="actor-role-badge" data-i18n-key="carouselAutomationPage.actor4Class">Generative Intelligence</span>
+              <h4 class="actor-title" data-i18n-key="carouselAutomationPage.actor4Title">AI Narrative Strategist</h4>
+              <p class="actor-desc" data-i18n-key="carouselAutomationPage.actor4Desc">
+                Google Gemini API trained on luxury editorial social media copywriting; authors Italian narrative arcs and 3D image prompts.
+              </p>
+            </div>
+
+            <div class="actor-card" data-sound-hover="ui-hover">
+              <span class="actor-role-badge" data-i18n-key="carouselAutomationPage.actor5Class">Cloud Generative Vision</span>
+              <h4 class="actor-title" data-i18n-key="carouselAutomationPage.actor5Title">Generative Visual Synthesizer</h4>
+              <p class="actor-desc" data-i18n-key="carouselAutomationPage.actor5Desc">
+                Synthesizes 1080×1080 centered 3D hero objects against solid white backdrops with 45s connection limit and exponential retry.
+              </p>
+            </div>
+
+            <div class="actor-card" data-sound-hover="ui-hover">
+              <span class="actor-role-badge" data-i18n-key="carouselAutomationPage.actor6Class">Deep Learning Segmentation</span>
+              <h4 class="actor-title" data-i18n-key="carouselAutomationPage.actor6Title">Neural Foreground Isolator</h4>
+              <p class="actor-desc" data-i18n-key="carouselAutomationPage.actor6Desc">
+                Neural computer vision engine (rembg) that strips white backgrounds to output an alpha-transparent PNG with a 3-tier cascade.
+              </p>
+            </div>
+
+            <div class="actor-card" data-sound-hover="ui-hover">
+              <span class="actor-role-badge" data-i18n-key="carouselAutomationPage.actor7Class">Execution Environment</span>
+              <h4 class="actor-title" data-i18n-key="carouselAutomationPage.actor7Title">High-DPI Headless Compositor</h4>
+              <p class="actor-desc" data-i18n-key="carouselAutomationPage.actor7Desc">
+                Headless Chromium (Puppeteer) loading responsive HTML/CSS templates, applying safe-area spacing, and capturing lossless PNG frames.
+              </p>
+            </div>
+
+            <div class="actor-card" data-sound-hover="ui-hover">
+              <span class="actor-role-badge" data-i18n-key="carouselAutomationPage.actor8Class">Guaranteed Lifecycle Cleanup</span>
+              <h4 class="actor-title" data-i18n-key="carouselAutomationPage.actor8Title">Ephemeral File Staging Cache</h4>
+              <p class="actor-desc" data-i18n-key="carouselAutomationPage.actor8Desc">
+                Isolated temporary disk storage holding intermediate assets, bound to an unconditional finally-block purge upon task completion.
+              </p>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- Universal Footer & Social Contact Dock -->
+      <div class="container footer-container">
+        <footer id="footer-container"></footer>
+      </div>
+    </div>
+
+    <!-- Audio Engine (Howler.js) — must load before audio.service.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"></script>
+    <script src="assets/icons/icons.js"></script>
+
+    <!-- Feature-First Clean Architecture Scripts -->
+    <!-- 1. Core Layer -->
+    <script src="src/core/domain/usecases/localization.usecase.js"></script>
+    <script src="src/core/data/datasources/storage.datasource.js"></script>
+    <script src="src/core/data/datasources/audio.service.js"></script>
+    <script src="src/core/data/datasources/language.datasource.js"></script>
+    <script src="src/core/data/repositories/language.repository.js"></script>
+    <script src="src/core/presentation/components/language-switcher/language-switcher.component.js"></script>
+    <script src="src/core/presentation/components/appbar/appbar.component.js"></script>
+    <script src="src/core/presentation/components/footer/footer.component.js"></script>
+
+    <!-- 2. Feature Controller -->
+    <script src="src/features/carousel-automation/presentation/controllers/carousel-automation.controller.js"></script>
+
+    <script>
+      // Initialize AI Social Media Carousel Automation Detail Page via Feature-First Controller
+      document.addEventListener("DOMContentLoaded", () => {
+        window.Portfolio.presentation.controllers.CarouselAutomationController.init();
+      });
+    </script>
+  </body>
+</html>

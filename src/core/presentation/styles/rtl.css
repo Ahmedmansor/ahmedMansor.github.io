@@ -328,7 +328,8 @@ html[dir="rtl"] .stage-number-badge {
 }
 
 html[dir="rtl"] .carousel-item .uploader-card .view-project-btn,
-html[dir="rtl"] .carousel-item .multiplatform-card .view-project-btn {
+html[dir="rtl"] .carousel-item .multiplatform-card .view-project-btn,
+html[dir="rtl"] .carousel-item .carousel-card .view-project-btn {
   align-self: flex-start;
 }
 

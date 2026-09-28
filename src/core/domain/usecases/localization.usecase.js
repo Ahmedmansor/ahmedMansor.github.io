@@ -36,6 +36,9 @@ window.Portfolio.domain.usecases = window.Portfolio.domain.usecases || {};
       if (pageId === "socialmediauploader-page") {
         return translations.socialMediaUploaderPage || {};
       }
+      if (pageId === "carouselautomation-page") {
+        return translations.carouselAutomationPage || {};
+      }
       return translations[pageId] || {};
     }
 
@@ -80,7 +83,8 @@ window.Portfolio.domain.usecases = window.Portfolio.domain.usecases || {};
             .replace("project1Page.", "")
             .replace("semanticCutPage.", "")
             .replace("shortsUploaderPage.", "")
-            .replace("socialMediaUploaderPage.", "");
+            .replace("socialMediaUploaderPage.", "")
+            .replace("carouselAutomationPage.", "");
 
           value = cleanKey
             .split(".")

@@ -26,16 +26,18 @@ window.Portfolio.domain.usecases = window.Portfolio.domain.usecases || {};
      * @param {Object} params
      * @param {number} params.index - 0-indexed item number
      * @param {number} params.progress - Scroll progress from 0.0 to 1.0
+     * @param {number} [params.totalCount] - Total number of cards in cylinder
      * @param {number} [params.winWidth] - Current window viewport width
      * @param {boolean} [params.isMobile] - Whether viewport is mobile device
      * @returns {Object} Spatial CSS properties and active state
      */
-    static calculateCardTransform({ index, progress, winWidth = window.innerWidth, isMobile = false }) {
-      const angle = progress * 3 * 90; // 0 to 270 degrees
-      const rx = Math.round(Math.min(winWidth * 0.42, 590));
-      const rz = 290;
+    static calculateCardTransform({ index, progress, totalCount = 4, winWidth = window.innerWidth, isMobile = false }) {
+      const stepAngle = 360 / totalCount;
+      const angle = progress * (totalCount - 1) * stepAngle;
+      const rx = Math.round(Math.min(winWidth * 0.44, 670));
+      const rz = 310;
 
-      let theta = (index * 90 - angle) % 360;
+      let theta = (index * stepAngle - angle) % 360;
       while (theta > 180) theta -= 360;
       while (theta < -180) theta += 360;
 
@@ -51,7 +53,7 @@ window.Portfolio.domain.usecases = window.Portfolio.domain.usecases || {};
 
       const depthFactor = (cosT + 1) / 2;
       const opacity = 0.38 + 0.62 * depthFactor;
-      const isNearCenter = Math.abs(theta) < 45;
+      const isNearCenter = Math.abs(theta) < (stepAngle / 2);
       const zIndex = isNearCenter ? 10 : (depthFactor > 0.4 ? 5 : 1);
 
       return {
@@ -66,10 +68,11 @@ window.Portfolio.domain.usecases = window.Portfolio.domain.usecases || {};
      * Calculates the vertical translation offset for the title track
      * @param {number} progress - Scroll progress (0 to 1)
      * @param {number} itemHeight - Height of a single title item in px
+     * @param {number} [totalCount=4] - Total number of cards
      * @returns {number} Y translation in px
      */
-    static calculateTitleOffset(progress, itemHeight) {
-      return -progress * 3 * itemHeight;
+    static calculateTitleOffset(progress, itemHeight, totalCount = 4) {
+      return -progress * (totalCount - 1) * itemHeight;
     }
   }
 

@@ -50,30 +50,34 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
 
       if (!projects || projects.length === 0) return;
 
-      // Exactly 4 items for the 3D cylinder geometry
-      let fourProjects;
-      if (projects.length >= 4) {
-        fourProjects = projects.slice(0, 4);
-      } else if (projects.length === 3) {
-        fourProjects = [projects[0], projects[1], projects[2], projects[0]];
-      } else {
+      // Dynamic project list for 3D cylinder geometry
+      let cylinderProjects = projects;
+      if (projects.length === 3) {
+        cylinderProjects = [projects[0], projects[1], projects[2], projects[0]];
+      } else if (projects.length <= 2) {
         const p1 = projects[0];
         const p2 = projects[1] || projects[0];
-        fourProjects = [p1, p2, p1, p2];
+        cylinderProjects = [p1, p2, p1, p2];
       }
 
       // 2. Render Title Track & 3D Cards
       let titlesHTML = "";
       let cardsHTML = "";
 
-      fourProjects.forEach((project, index) => {
+      cylinderProjects.forEach((project, index) => {
         const isLinker = project.id === "linker";
         const isUploader = project.id === "shorts-uploader";
         const isMultiPlatform = project.id === "social-media-uploader";
+        const isCarouselAutomation = project.id === "carousel-automation";
         const displayTitle = project.bigTitle || project.title;
         const displayCategory = project.category || "";
         const viewText = project.viewProject || "View Project Details";
-        const titleBtnClass = isLinker ? "title-btn-linker" : (isUploader ? "title-btn-uploader" : (isMultiPlatform ? "title-btn-multiplatform" : "title-btn-automation"));
+
+        let titleBtnClass = "title-btn-automation";
+        if (isLinker) titleBtnClass = "title-btn-linker";
+        else if (isUploader) titleBtnClass = "title-btn-uploader";
+        else if (isMultiPlatform) titleBtnClass = "title-btn-multiplatform";
+        else if (isCarouselAutomation) titleBtnClass = "title-btn-carousel";
 
         // Title Zone Item
         titlesHTML += `
@@ -89,8 +93,18 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
         `;
 
         // 3D Card Item
-        const cardClass = isLinker ? "project-card linker-card" : (isUploader ? "project-card uploader-card" : (isMultiPlatform ? "project-card multiplatform-card" : "project-card semanticcut-card"));
-        const thumbClass = isLinker ? "linker-thumb" : (isUploader ? "uploader-thumb" : (isMultiPlatform ? "multiplatform-thumb" : "automation-thumb"));
+        let cardClass = "project-card semanticcut-card";
+        if (isLinker) cardClass = "project-card linker-card";
+        else if (isUploader) cardClass = "project-card uploader-card";
+        else if (isMultiPlatform) cardClass = "project-card multiplatform-card";
+        else if (isCarouselAutomation) cardClass = "project-card carousel-card";
+
+        let thumbClass = "automation-thumb";
+        if (isLinker) thumbClass = "linker-thumb";
+        else if (isUploader) thumbClass = "uploader-thumb";
+        else if (isMultiPlatform) thumbClass = "multiplatform-thumb";
+        else if (isCarouselAutomation) thumbClass = "carousel-thumb";
+
         const typeBadgeText = project.typeBadge || (isLinker ? "Mobile App • iOS & Android" : "AI Automation Pipeline");
         const typeIcon = project.typeBadgeIcon || (isLinker ? "fas fa-mobile-screen-button" : "fas fa-robot");
         const badgeIconHTML = window.Icons ? window.Icons.get(typeIcon) : `<i class="${typeIcon}"></i>`;
@@ -144,9 +158,14 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
       const nextBtn = document.getElementById("carousel-next");
       const prevBtn = document.getElementById("carousel-prev");
 
-      const itemCount = 4;
+      const itemCount = itemEls.length;
+      const maxIndex = Math.max(itemCount - 1, 1);
       let activeIndex = 0;
-      const pinDistance = 2400;
+      const pinDistance = maxIndex * 800;
+
+      // Set dynamic component height based on pinDistance to guarantee smooth scroll physics
+      componentEl.style.height = `calc(100vh + ${pinDistance}px)`;
+      componentEl.style.minHeight = `calc(100vh + ${pinDistance}px)`;
 
       // Cache card nodes and child references to eliminate DOM traversing during scroll
       const cardNodes = Array.from(itemEls).map((el, i) => ({
@@ -160,7 +179,7 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
       function updateControls(index) {
         activeIndex = index;
         if (prevBtn) prevBtn.classList.toggle("is-disabled", index === 0);
-        if (nextBtn) nextBtn.classList.toggle("is-disabled", index === itemCount - 1);
+        if (nextBtn) nextBtn.classList.toggle("is-disabled", index === maxIndex);
       }
 
       function updateStage(progress) {
@@ -172,6 +191,7 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
           const cardProps = CarouselGeometryUseCase.calculateCardTransform({
             index: item.index,
             progress,
+            totalCount: itemCount,
             winWidth,
             isMobile
           });
@@ -194,7 +214,7 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
 
         // Exact title track offset
         const titleItemHeight = CarouselGeometryUseCase.getTitleItemHeight(winWidth);
-        const titleY = CarouselGeometryUseCase.calculateTitleOffset(progress, titleItemHeight);
+        const titleY = CarouselGeometryUseCase.calculateTitleOffset(progress, titleItemHeight, itemCount);
         if (titleTrackEl) {
           titleTrackEl.style.transform = `translate3d(0px, ${titleY}px, 0px)`;
         }
@@ -240,7 +260,7 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
         duration: 1,
         onUpdate: () => {
           updateStage(animState.progress);
-          const idx = Math.min(Math.round(animState.progress * 3), 3);
+          const idx = Math.min(Math.round(animState.progress * maxIndex), maxIndex);
           if (idx !== activeIndex) {
             updateControls(idx);
             if (window.AudioService) window.AudioService.play("ratchet-step");
@@ -254,14 +274,14 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
         if (!tl.scrollTrigger) return;
         const startY = tl.scrollTrigger.start;
         const endY = tl.scrollTrigger.end;
-        const targetY = startY + (targetIndex / 3) * (endY - startY);
+        const targetY = startY + (targetIndex / maxIndex) * (endY - startY);
         window.scrollTo({ top: targetY, behavior: "smooth" });
       }
 
       // Arrow navigation (Vanilla JS)
       if (nextBtn) {
         nextBtn.onclick = () => {
-          if (activeIndex < 3) {
+          if (activeIndex < maxIndex) {
             scrollToStep(activeIndex + 1);
             if (window.AudioService) window.AudioService.play("ratchet-step");
           }
@@ -341,7 +361,9 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
       if (currentCarouselTimeline && currentCarouselTimeline.scrollTrigger) {
         const startY = currentCarouselTimeline.scrollTrigger.start;
         const endY = currentCarouselTimeline.scrollTrigger.end;
-        const targetY = startY + (targetIndex / 3) * (endY - startY);
+        const itemCount = document.querySelectorAll("[carousel='item']").length || 4;
+        const maxIndex = Math.max(itemCount - 1, 1);
+        const targetY = startY + (targetIndex / maxIndex) * (endY - startY);
         window.scrollTo({ top: targetY, behavior: smooth ? "smooth" : "auto" });
       } else {
         const section = document.getElementById("projects-carousel-section");
