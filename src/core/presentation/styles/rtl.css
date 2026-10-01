@@ -346,4 +346,60 @@ html[dir="rtl"] .actor-classification {
   letter-spacing: 0 !important;
 }
 
+/* ========================================================
+   Cyberpunk Skills Matrix & Technical Arsenal Drawer RTL
+   ======================================================== */
+html[dir="rtl"] .skills-drawer-header {
+  direction: rtl;
+  text-align: right;
+}
+
+html[dir="rtl"] .drawer-header-left {
+  text-align: right;
+}
+
+html[dir="rtl"] .drawer-title {
+  font-family: 'Alexandria', 'Alexandria-fallback', var(--font-arabic, "Cairo"), sans-serif !important;
+  letter-spacing: 0 !important;
+}
+
+html[dir="rtl"] .drawer-subtitle {
+  font-family: var(--font-arabic, "Cairo"), sans-serif !important;
+}
+
+html[dir="rtl"] .skill-pillar-card {
+  direction: rtl;
+  text-align: right;
+}
+
+html[dir="rtl"] .pillar-title-wrap h3 {
+  font-family: 'Alexandria', 'Alexandria-fallback', var(--font-arabic, "Cairo"), sans-serif !important;
+  letter-spacing: 0 !important;
+}
+
+html[dir="rtl"] .pillar-title-wrap p {
+  font-family: var(--font-arabic, "Cairo"), sans-serif !important;
+  line-height: 1.5;
+}
+
+/* Technical Package and Library Tags Remain Strictly LTR */
+html[dir="rtl"] .tech-tag {
+  direction: ltr !important;
+  unicode-bidi: normal !important;
+}
+
+html[dir="rtl"] .btn-open-skills-matrix {
+  font-family: 'Alexandria', 'Alexandria-fallback', var(--font-arabic, "Cairo"), 'Share Tech Mono', sans-serif !important;
+  letter-spacing: 0.5px !important;
+}
+
+html[dir="rtl"] .skills-drawer-footer {
+  direction: rtl;
+}
+
+html[dir="rtl"] .footer-telemetry-status {
+  direction: ltr;
+}
+
+
 

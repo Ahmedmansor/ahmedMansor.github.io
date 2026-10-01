@@ -30,6 +30,7 @@
     <link rel="stylesheet" href="src/core/presentation/components/footer/footer.css" />
     <link rel="stylesheet" href="src/features/home/presentation/styles/home-header.css" />
     <link rel="stylesheet" href="src/features/home/presentation/styles/carousel.css" />
+    <link rel="stylesheet" href="src/features/home/presentation/styles/skills-drawer.css" />
     <link rel="stylesheet" href="style.css" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -202,6 +203,7 @@
         </a>
         <nav class="appbar-nav">
           <a href="#projects-carousel-section" class="appbar-link" data-i18n-key="common.navProjects" data-sound-click="ui-click" data-sound-hover="ui-hover">Projects</a>
+          <button id="nav-skills-btn" class="appbar-link appbar-btn-link" type="button" data-i18n-key="common.navSkills" data-sound-click="ui-click" data-sound-hover="ui-hover">Skills</button>
         </nav>
         <div class="appbar-actions">
           <!-- Cyber Audio Controller (Mute / Unmute Toggle) -->
@@ -439,33 +441,44 @@
                 <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
                 <span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span>
               </div>
-              <div class="ide-code-scroll"><pre class="ide-code-content active" id="code-dart"><code><span class="cm-kw">class</span> <span class="cm-cls">AhmedMansour</span> <span class="cm-kw">extends</span> <span class="cm-cls">SoftwareEngineer</span> {
-  <span class="cm-kw">final</span> <span class="cm-cls">String</span> role = <span class="cm-str">"Flutter &amp; Mobile Systems Engineer"</span>;
-  <span class="cm-kw">final</span> <span class="cm-cls">String</span> location = <span class="cm-str">"Cairo, Egypt (UTC+2)"</span>;
-  <span class="cm-kw">final</span> <span class="cm-cls">Status</span> status = <span class="cm-cls">Status</span>.<span class="cm-prop">availableForProjects</span>;
+              <div class="ide-code-scroll"><pre class="ide-code-content active" id="code-dart"><code><span class="cm-cmt">// 🏛️ Clean Architecture: Domain &amp; Infrastructure Layer</span>
+<span class="cm-kw">class</span> <span class="cm-cls">AhmedMansour</span> <span class="cm-kw">implements</span> <span class="cm-cls">MobileSystemsEngineer</span> {
+  <span class="cm-kw">final</span> <span class="cm-cls">Architecture</span> style = <span class="cm-cls">Architecture</span>.<span class="cm-prop">cleanDomainDriven</span>;
+  <span class="cm-kw">final</span> <span class="cm-cls">StateEngine</span> state = <span class="cm-cls">StateEngine</span>.<span class="cm-prop">reactiveBlocStreams</span>;
+  <span class="cm-kw">final</span> <span class="cm-cls">StoreDelivery</span> target = <span class="cm-cls">StoreDelivery</span>.<span class="cm-prop">googlePlayProduction</span>;
 
-  <span class="cm-kw">final</span> <span class="cm-cls">List</span>&lt;<span class="cm-cls">String</span>&gt; coreStack = [
-    <span class="cm-str">"Flutter"</span>, <span class="cm-str">"Dart"</span>, <span class="cm-str">"Bloc"</span>, <span class="cm-str">"Clean Arch"</span>,
-    <span class="cm-str">"Supabase"</span>, <span class="cm-str">"Firebase"</span>, <span class="cm-str">"AI Automations"</span>
+  <span class="cm-kw">final</span> <span class="cm-cls">List</span>&lt;<span class="cm-cls">String</span>&gt; techArsenal = <span class="cm-kw">const</span> [
+    <span class="cm-str">"Flutter SDK"</span>, <span class="cm-str">"Dart 3.x"</span>, <span class="cm-str">"BLoC / Cubit"</span>,
+    <span class="cm-str">"Supabase RLS"</span>, <span class="cm-str">"Firebase"</span>, <span class="cm-str">"Python Automations"</span>,
+    <span class="cm-str">"RTL-First UI"</span>, <span class="cm-str">"Playwright &amp; AI Agents"</span>
   ];
 
-  <span class="cm-cls">Future</span>&lt;<span class="cm-kw">void</span>&gt; <span class="cm-fn">executeMission</span>() <span class="cm-kw">async</span> {
-    <span class="cm-cmt">// 🚀 Architecting high-performance, reactive iOS &amp; Android apps</span>
-    <span class="cm-cmt">// ⚡ Leveraging cutting-edge AI pipelines to accelerate delivery</span>
-    <span class="cm-kw">await</span> <span class="cm-fn">deployMobileApp</span>(quality: <span class="cm-cls">Standard</span>.<span class="cm-prop">productionGrade</span>);
+  <span class="cm-cls">Future</span>&lt;<span class="cm-cls">Either</span>&lt;<span class="cm-cls">Failure</span>, <span class="cm-cls">AppProductionRelease</span>&gt;&gt; <span class="cm-fn">buildMission</span>() <span class="cm-kw">async</span> {
+    <span class="cm-kw">await</span> <span class="cm-fn">optimizeFrameBudget</span>(fps: <span class="cm-num">120</span>, zeroJank: <span class="cm-kw">true</span>);
+    <span class="cm-kw">final</span> pipeline = <span class="cm-kw">await</span> <span class="cm-cls">AIWorker</span>.<span class="cm-fn">automateWorkflows</span>();
+    <span class="cm-kw">return</span> <span class="cm-cls">Right</span>(<span class="cm-cls">AppProductionRelease</span>(readyForGCCStartups: <span class="cm-kw">true</span>));
   }
 }</code></pre>
 
                 <pre class="ide-code-content" id="code-json"><code>{
   <span class="cm-str">"engineer"</span>: <span class="cm-str">"Ahmed Mansour"</span>,
-  <span class="cm-str">"role"</span>: <span class="cm-str">"Flutter &amp; Mobile Systems Engineer"</span>,
-  <span class="cm-str">"technologies"</span>: {
-    <span class="cm-str">"mobile"</span>: [<span class="cm-str">"Flutter"</span>, <span class="cm-str">"Dart SDK"</span>],
-    <span class="cm-str">"architecture"</span>: [<span class="cm-str">"Clean Architecture"</span>, <span class="cm-str">"BLoC"</span>, <span class="cm-str">"Repository Pattern"</span>],
-    <span class="cm-str">"cloud_backend"</span>: [<span class="cm-str">"Supabase"</span>, <span class="cm-str">"Firebase"</span>, <span class="cm-str">"REST APIs"</span>],
-    <span class="cm-str">"ai_workflows"</span>: [<span class="cm-str">"Code Acceleration"</span>, <span class="cm-str">"Automations"</span>]
+  <span class="cm-str">"title"</span>: <span class="cm-str">"Mobile Systems &amp; AI Automation Engineer"</span>,
+  <span class="cm-str">"target_markets"</span>: [<span class="cm-str">"Saudi Arabia / GCC Startups"</span>, <span class="cm-str">"Global Remote"</span>],
+  <span class="cm-str">"engineering_pillars"</span>: {
+    <span class="cm-str">"01_mobile_systems"</span>: [
+      <span class="cm-str">"Flutter"</span>, <span class="cm-str">"Dart 3.x"</span>, <span class="cm-str">"BLoC"</span>, <span class="cm-str">"Clean Architecture"</span>, <span class="cm-str">"GetIt / Injectable"</span>
+    ],
+    <span class="cm-str">"02_ai_and_automation"</span>: [
+      <span class="cm-str">"Python"</span>, <span class="cm-str">"Playwright Headless"</span>, <span class="cm-str">"LLM Prompt Pipelines"</span>, <span class="cm-str">"OAuth Workflows"</span>
+    ],
+    <span class="cm-str">"03_cloud_and_data"</span>: [
+      <span class="cm-str">"Supabase"</span>, <span class="cm-str">"PostgreSQL RLS"</span>, <span class="cm-str">"Firebase Auth &amp; FCM"</span>, <span class="cm-str">"Hive / SQLite"</span>
+    ],
+    <span class="cm-str">"04_production_excellence"</span>: [
+      <span class="cm-str">"Google Play Published"</span>, <span class="cm-str">"120fps Compositor"</span>, <span class="cm-str">"Unit &amp; Widget Testing"</span>, <span class="cm-str">"GitFlow &amp; CI/CD"</span>
+    ]
   },
-  <span class="cm-str">"availability"</span>: <span class="cm-str">"Ready for mission deployment"</span>
+  <span class="cm-str">"status"</span>: <span class="cm-str">"AVAILABLE_FOR_MISSION"</span>
 }</code></pre>
               </div>
             </div>
@@ -493,6 +506,14 @@
             </div>
           </div>
 
+        </div>
+
+        <!-- Trigger Button for Cyberpunk Skills Matrix Drawer -->
+        <div class="skills-matrix-trigger-wrap">
+          <button id="open-skills-drawer-btn" class="btn-open-skills-matrix" type="button" data-sound-click="warp-whoosh" data-sound-hover="ui-hover">
+            <svg class="btn-icon-hexagon" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M256 0c14.1 0 27.2 7.5 34.3 19.8l208 360c7.1 12.3 7.1 27.4 0 39.7l-208 360C283.2 504.5 270.1 512 256 512s-27.2-7.5-34.3-19.8l-208-360c-7.1-12.3-7.1-27.4 0-39.7l208-360C228.8 7.5 241.9 0 256 0z"/></svg>
+            <span data-i18n-key="indexPage.openSkillsBtn">OPEN TECHNICAL ARSENAL // SKILLS MATRIX</span>
+          </button>
         </div>
       </div>
     </section>
@@ -529,6 +550,139 @@
 
       </div>
     </section>
+
+    <!-- Cyberpunk Skills Matrix & Technical Arsenal Drawer Modal -->
+    <div id="skills-drawer" class="skills-drawer" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="skills-drawer-title">
+      <div class="skills-drawer-backdrop"></div>
+      <div class="skills-drawer-panel">
+        <!-- Corner Tech Brackets -->
+        <div class="hud-corner hud-corner-tl"></div>
+        <div class="hud-corner hud-corner-tr"></div>
+        <div class="hud-corner hud-corner-bl"></div>
+        <div class="hud-corner hud-corner-br"></div>
+
+        <!-- Header -->
+        <div class="skills-drawer-header">
+          <div class="drawer-header-left">
+            <span class="drawer-sys-tag" data-i18n-key="indexPage.skillsDrawerSysTag">&gt; [SYS.ARSENAL // SKILLS_MATRIX.V2]</span>
+            <h2 id="skills-drawer-title" class="drawer-title" data-i18n-key="indexPage.skillsDrawerTitle">TECHNICAL ARSENAL &amp; SYSTEM ARCHITECTURE</h2>
+            <p class="drawer-subtitle" data-i18n-key="indexPage.skillsDrawerSubtitle">Categorized engineering disciplines, enterprise architecture patterns, and production toolchains.</p>
+          </div>
+          <button id="skills-drawer-close-btn" class="skills-drawer-close" type="button" aria-label="Close Skills Matrix" data-sound-click="ui-click" data-sound-hover="ui-hover">
+            <svg viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>
+          </button>
+        </div>
+
+        <!-- 4 Pillars Content Grid -->
+        <div class="skills-drawer-content">
+          <div class="skills-pillars-grid">
+
+            <!-- Pillar 1: Mobile Systems & Clean Arch -->
+            <div class="skill-pillar-card pillar-mobile">
+              <div class="pillar-header">
+                <div class="pillar-icon-badge">
+                  <svg viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M410.5 256.7L254.8 412.4l-57.8-57.8 97.9-97.9-97.9-97.9 57.8-57.8L410.5 256.7zM254.8 101L156.9 3.1 3.1 156.9l97.9 97.9L254.8 101zM156.9 508.9l97.9-97.9-57.8-57.8-97.9 97.9 57.8 57.8z"/></svg>
+                </div>
+                <div class="pillar-title-wrap">
+                  <h3 data-i18n-key="indexPage.pillarMobileTitle">Mobile Systems &amp; Clean Architecture</h3>
+                  <p data-i18n-key="indexPage.pillarMobileDesc">Enterprise-grade mobile engineering with strict separation of concerns, reactive streams, and declarative state orchestration.</p>
+                </div>
+              </div>
+              <div class="pillar-skills-cloud">
+                <span class="tech-tag tag-highlight"><span class="tag-dot"></span>Flutter SDK</span>
+                <span class="tech-tag tag-highlight"><span class="tag-dot"></span>Dart 3.x</span>
+                <span class="tech-tag"><span class="tag-dot"></span>Clean Architecture</span>
+                <span class="tech-tag"><span class="tag-dot"></span>BLoC / Cubit</span>
+                <span class="tech-tag"><span class="tag-dot"></span>Repository Pattern</span>
+                <span class="tech-tag"><span class="tag-dot"></span>GetIt / Injectable</span>
+                <span class="tech-tag"><span class="tag-dot"></span>Freezed &amp; dartz (Either)</span>
+                <span class="tech-tag"><span class="tag-dot"></span>Retrofit &amp; Dio</span>
+                <span class="tech-tag"><span class="tag-dot"></span>Reactive Streams</span>
+              </div>
+            </div>
+
+            <!-- Pillar 2: AI Pipelines & Workflow Automation -->
+            <div class="skill-pillar-card pillar-ai">
+              <div class="pillar-header">
+                <div class="pillar-icon-badge">
+                  <svg viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M184 0c30.9 0 56 25.1 56 56V456c0 30.9-25.1 56-56 56c-28.9 0-52.6-21.9-55.7-50.1l-5.2-47.3C104.9 397 86.8 380.2 68.3 360.2l-37 36.9c-21.9 21.9-57.3 21.9-79.2 0s-21.9-57.3 0-79.2l36.9-37C-31 262.4-47.8 244.3-65.4 226.1l-47.3-5.2C-140.9 217.8-162.8 194.1-162.8 165.2c0-30.9 25.1-56 56-56h4.5l47.3-5.2c18.5-2.1 36.6-18.9 55.1-38.9l-36.9-37c-21.9-21.9-21.9-57.3 0-79.2s57.3-21.9 79.2 0l37 36.9C91.6-32.9 109.7-49.7 127.3-67.3l5.2-47.3C135.6-142.8 159.3-164.7 188.2-164.7c30.9 0 56 25.1 56 56"/></svg>
+                </div>
+                <div class="pillar-title-wrap">
+                  <h3 data-i18n-key="indexPage.pillarAiTitle">AI Pipelines &amp; Workflow Automation</h3>
+                  <p data-i18n-key="indexPage.pillarAiDesc">Full-stack automation with Python, headless browser clusters, LLM prompt pipelines, and multi-platform OAuth publishing.</p>
+                </div>
+              </div>
+              <div class="pillar-skills-cloud">
+                <span class="tech-tag tag-ai"><span class="tag-dot"></span>Python Automation</span>
+                <span class="tech-tag tag-ai"><span class="tag-dot"></span>Playwright Headless</span>
+                <span class="tech-tag tag-ai"><span class="tag-dot"></span>LLM Prompt Engineering</span>
+                <span class="tech-tag"><span class="tag-dot"></span>OAuth 2.0 Token Sync</span>
+                <span class="tech-tag"><span class="tag-dot"></span>Multi-Platform Social API</span>
+                <span class="tech-tag"><span class="tag-dot"></span>Automated Media Rendering</span>
+                <span class="tech-tag"><span class="tag-dot"></span>Selenium &amp; Chromium Clusters</span>
+                <span class="tech-tag"><span class="tag-dot"></span>Batch Scheduler Daemons</span>
+              </div>
+            </div>
+
+            <!-- Pillar 3: Cloud Backend, BaaS & Data Persistence -->
+            <div class="skill-pillar-card pillar-cloud">
+              <div class="pillar-header">
+                <div class="pillar-icon-badge">
+                  <svg viewBox="0 0 640 512" fill="currentColor" aria-hidden="true"><path d="M537.6 226.6c4.1-10.7 6.4-22.4 6.4-34.6 0-53-43-96-96-96-19.7 0-38.1 6-53.3 16.2C367 64.2 315.3 32 256 32c-88.4 0-160 71.6-160 160 0 2.7 .1 5.4 .2 8.1C40.2 219.8 0 273.2 0 336c0 79.5 64.5 144 144 144h368c70.7 0 128-57.3 128-128 0-61.9-44-113.6-102.4-125.4z"/></svg>
+                </div>
+                <div class="pillar-title-wrap">
+                  <h3 data-i18n-key="indexPage.pillarCloudTitle">Cloud Backend, BaaS &amp; Data Persistence</h3>
+                  <p data-i18n-key="indexPage.pillarCloudDesc">Scalable backend integrations with PostgreSQL Row-Level Security, real-time sync, and resilient offline-first caching.</p>
+                </div>
+              </div>
+              <div class="pillar-skills-cloud">
+                <span class="tech-tag tag-cloud"><span class="tag-dot"></span>Supabase BaaS</span>
+                <span class="tech-tag tag-cloud"><span class="tag-dot"></span>PostgreSQL &amp; RLS Policies</span>
+                <span class="tech-tag tag-cloud"><span class="tag-dot"></span>Firebase Auth &amp; Firestore</span>
+                <span class="tech-tag"><span class="tag-dot"></span>Firebase Cloud Messaging (FCM)</span>
+                <span class="tech-tag"><span class="tag-dot"></span>RESTful APIs &amp; WebSockets</span>
+                <span class="tech-tag"><span class="tag-dot"></span>Hive Local NoSQL</span>
+                <span class="tech-tag"><span class="tag-dot"></span>SQLite / Floor</span>
+                <span class="tech-tag"><span class="tag-dot"></span>Encrypted Storage (Biometrics)</span>
+              </div>
+            </div>
+
+            <!-- Pillar 4: Production Reliability & Store Delivery -->
+            <div class="skill-pillar-card pillar-production">
+              <div class="pillar-header">
+                <div class="pillar-icon-badge">
+                  <svg viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/></svg>
+                </div>
+                <div class="pillar-title-wrap">
+                  <h3 data-i18n-key="indexPage.pillarProductionTitle">Production Reliability &amp; Store Delivery</h3>
+                  <p data-i18n-key="indexPage.pillarProductionDesc">Shipped production apps on Google Play, 60/120fps compositor optimization, and RTL-first localized typography.</p>
+                </div>
+              </div>
+              <div class="pillar-skills-cloud">
+                <span class="tech-tag tag-store"><span class="tag-dot"></span>Google Play Deployment</span>
+                <span class="tech-tag tag-store"><span class="tag-dot"></span>Release Keystore &amp; ProGuard</span>
+                <span class="tech-tag tag-store"><span class="tag-dot"></span>RTL-First Arabic UI/UX</span>
+                <span class="tech-tag"><span class="tag-dot"></span>60/120fps DevTools Profiling</span>
+                <span class="tech-tag"><span class="tag-dot"></span>Memory Leak Prevention</span>
+                <span class="tech-tag"><span class="tag-dot"></span>Responsive Multi-Device Layouts</span>
+                <span class="tech-tag"><span class="tag-dot"></span>GitFlow &amp; Mobile CI/CD</span>
+                <span class="tech-tag"><span class="tag-dot"></span>Unit &amp; Widget Testing</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Footer Telemetry -->
+        <div class="skills-drawer-footer">
+          <div class="footer-telemetry-status">
+            <span class="status-dot"></span>
+            <span>SYSTEM AUDIT: 100% PRODUCTION READY</span>
+          </div>
+          <span class="footer-note-text" data-i18n-key="indexPage.skillsFooterNote">Ready to accelerate mobile engineering and AI automation for fast-growing startups in Saudi Arabia and the GCC.</span>
+        </div>
+      </div>
+    </div>
 
     <div class="container footer-container">
       <footer id="footer-container"></footer>

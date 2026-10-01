@@ -234,6 +234,9 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
       // 8. Initialize Cyberpunk Code IDE & Biometric Hologram section (Section 2 - Middle)
       this.setupCyberAboutSection();
 
+      // 8.1 Initialize Cyberpunk Skills Matrix Drawer
+      this.setupSkillsDrawer();
+
       // 9. Load initial language & render Carousel 3D cards (Section 3 - Bottom)
       await this.switchLanguage(activeLang);
 
@@ -803,38 +806,60 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
           const cogIcon = window.Icons ? window.Icons.cog("icon-spin") : '<i class="fas fa-cog fa-spin"></i>';
           terminalOutput.innerHTML = `
             <div class="term-line prompt-line">$ flutter run -d production --profile</div>
-            <div class="term-line info-line">${cogIcon} Initializing Dart VM & Clean Architecture kernel...</div>
+            <div class="term-line info-line">${cogIcon} [VM] Initializing Dart 3.x Sound Null Safety &amp; Clean Architecture kernel...</div>
           `;
 
           // Step 1: Resolving dependencies
           setTimeout(() => {
             const line1 = document.createElement("div");
             line1.className = "term-line info-line";
-            line1.innerHTML = `[SYS] Resolving dependencies: flutter_bloc, supabase_flutter, get_it... <span style="color:#00e696;">[OK]</span>`;
+            line1.innerHTML = `[SYS] Resolving core layers: flutter_bloc, get_it, dartz, supabase_flutter... <span style="color:#00e696;">[OK]</span>`;
             terminalOutput.appendChild(line1);
+            terminalOutput.scrollTop = terminalOutput.scrollHeight;
             if (window.AudioService) window.AudioService.play("typing-tick");
-          }, 500);
+          }, 400);
 
-          // Step 2: AI Pipelines & State Management
+          // Step 2: Security & Cloud
           setTimeout(() => {
             const line2 = document.createElement("div");
             line2.className = "term-line info-line";
-            line2.innerHTML = `[SYS] Compiling Reactive BLoCs & AI Automation Pipelines... <span style="color:#00e696;">[OK]</span>`;
+            line2.innerHTML = `[SEC] Enforcing PostgreSQL RLS policies &amp; biometric keychain vaults... <span style="color:#00e696;">[SECURE]</span>`;
             terminalOutput.appendChild(line2);
+            terminalOutput.scrollTop = terminalOutput.scrollHeight;
             if (window.AudioService) window.AudioService.play("typing-tick");
-          }, 1000);
+          }, 800);
 
-          // Step 3: Build Successful Finish
+          // Step 3: AI Automation pipelines
           setTimeout(() => {
             const line3 = document.createElement("div");
-            line3.className = "term-line success-line";
-            line3.innerHTML = `[BUILD SUCCESSFUL] 🚀 Ahmed Mansour is compiled and ready for deployment!`;
+            line3.className = "term-line info-line";
+            line3.innerHTML = `[AI] Connecting Python Playwright engine &amp; LLM automation worker... <span style="color:#a855f7;">[ONLINE]</span>`;
             terminalOutput.appendChild(line3);
+            terminalOutput.scrollTop = terminalOutput.scrollHeight;
+            if (window.AudioService) window.AudioService.play("typing-tick");
+          }, 1200);
 
+          // Step 4: Compositor Performance
+          setTimeout(() => {
             const line4 = document.createElement("div");
-            line4.className = "term-line accent-line";
-            line4.innerHTML = `&gt; High-performance mobile applications initialized (0.42s).`;
+            line4.className = "term-line info-line";
+            line4.innerHTML = `[PERF] Compositor frame budget verified: 120 FPS // 0 dropped frames <span style="color:#00e696;">[OPTIMAL]</span>`;
             terminalOutput.appendChild(line4);
+            terminalOutput.scrollTop = terminalOutput.scrollHeight;
+            if (window.AudioService) window.AudioService.play("typing-tick");
+          }, 1600);
+
+          // Step 5: Build Successful Finish
+          setTimeout(() => {
+            const line5 = document.createElement("div");
+            line5.className = "term-line success-line";
+            line5.innerHTML = `[BUILD SUCCESSFUL] 🚀 Ahmed Mansour is compiled and ready for deployment!`;
+            terminalOutput.appendChild(line5);
+
+            const line6 = document.createElement("div");
+            line6.className = "term-line accent-line";
+            line6.innerHTML = `&gt; Enterprise Clean Architecture | Ready for Saudi Arabia &amp; GCC tech missions.`;
+            terminalOutput.appendChild(line6);
 
             if (termStatus) {
               termStatus.textContent = "[READY]";
@@ -843,7 +868,7 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
             terminalOutput.scrollTop = terminalOutput.scrollHeight;
             if (window.AudioService) window.AudioService.play("success-chime");
             isCompiling = false;
-          }, 1500);
+          }, 2000);
         });
       }
 
@@ -1056,6 +1081,65 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
         document.removeEventListener("visibilitychange", this._aboutVisibilityHandler);
         this._aboutVisibilityHandler = null;
       }
+    }
+
+    /**
+     * Initializes the Cyberpunk Skills Matrix & Technical Arsenal Drawer
+     * Handles open/close events, keyboard Escape dismiss, backdrop clicks, and audio cues.
+     */
+    static setupSkillsDrawer() {
+      const drawer = document.getElementById("skills-drawer");
+      const openBtn = document.getElementById("open-skills-drawer-btn");
+      const navSkillsBtn = document.getElementById("nav-skills-btn");
+      const closeBtn = document.getElementById("skills-drawer-close-btn");
+      const backdrop = drawer ? drawer.querySelector(".skills-drawer-backdrop") : null;
+
+      if (!drawer) return;
+
+      const openDrawer = (e) => {
+        if (e) e.preventDefault();
+        drawer.classList.add("is-active");
+        drawer.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+        if (window.AudioService) {
+          window.AudioService.play("warp-whoosh");
+        }
+        if (closeBtn) {
+          closeBtn.focus();
+        }
+      };
+
+      const closeDrawer = (e) => {
+        if (e) e.preventDefault();
+        drawer.classList.remove("is-active");
+        drawer.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
+        if (window.AudioService) {
+          window.AudioService.play("ui-click");
+        }
+      };
+
+      if (openBtn) {
+        openBtn.addEventListener("click", openDrawer);
+      }
+
+      if (navSkillsBtn) {
+        navSkillsBtn.addEventListener("click", openDrawer);
+      }
+
+      if (closeBtn) {
+        closeBtn.addEventListener("click", closeDrawer);
+      }
+
+      if (backdrop) {
+        backdrop.addEventListener("click", closeDrawer);
+      }
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && drawer.classList.contains("is-active")) {
+          closeDrawer();
+        }
+      });
     }
 
     /**

@@ -1,0 +1,422 @@
+/* ==============================================================================
+   CYBERPUNK SKILLS MATRIX & TECHNICAL ARSENAL DRAWER
+   src/features/home/presentation/styles/skills-drawer.css
+   Compositor-Only animations, zero layout thrashing, strict adherence to 10 Commandments.
+   ============================================================================== */
+
+/* ─── 0. App Bar Nav Button Reset ─────────────────────────────────────────── */
+button.appbar-btn-link {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  font: inherit;
+}
+
+/* ─── 1. Trigger Button in About Section ───────────────────────────────────── */
+.skills-matrix-trigger-wrap {
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.btn-open-skills-matrix {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 28px;
+  background: linear-gradient(135deg, rgba(0, 240, 255, 0.12) 0%, rgba(168, 85, 247, 0.18) 100%);
+  border: 1.5px solid rgba(0, 240, 255, 0.5);
+  border-radius: 6px;
+  color: #ffffff;
+  font-family: 'Orbitron', 'Share Tech Mono', monospace;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 24px rgba(0, 240, 255, 0.25), inset 0 0 14px rgba(0, 240, 255, 0.1);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+  user-select: none;
+}
+
+.btn-open-skills-matrix:hover {
+  transform: translateY(-2px);
+  border-color: #00f0ff;
+  box-shadow: 0 0 35px rgba(0, 240, 255, 0.6), inset 0 0 20px rgba(0, 240, 255, 0.25);
+  color: #00f0ff;
+}
+
+.btn-open-skills-matrix:active {
+  transform: translateY(1px);
+}
+
+.btn-open-skills-matrix .btn-icon-hexagon {
+  width: 16px;
+  height: 16px;
+  color: #00f0ff;
+  transition: transform 0.3s ease;
+}
+
+.btn-open-skills-matrix:hover .btn-icon-hexagon {
+  transform: rotate(60deg) scale(1.15);
+}
+
+/* ─── 2. Drawer Backdrop & Modal Shell ─────────────────────────────────────── */
+.skills-drawer {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999980;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.35s ease;
+}
+
+.skills-drawer.is-active {
+  pointer-events: auto;
+  opacity: 1;
+  visibility: visible;
+}
+
+.skills-drawer-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(4, 7, 14, 0.88);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  z-index: 1;
+}
+
+/* ─── 3. Drawer Main Panel (HUD Window) ────────────────────────────────────── */
+.skills-drawer-panel {
+  position: relative;
+  z-index: 2;
+  width: min(1040px, 92vw);
+  max-height: 88vh;
+  background: linear-gradient(180deg, rgba(14, 19, 32, 0.96) 0%, rgba(8, 12, 20, 0.98) 100%);
+  border: 1px solid rgba(0, 240, 255, 0.35);
+  border-radius: 8px;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.85), 0 0 35px rgba(0, 240, 255, 0.15), inset 0 0 30px rgba(0, 240, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform: scale(0.94) translateY(20px);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.skills-drawer.is-active .skills-drawer-panel {
+  transform: scale(1) translateY(0);
+}
+
+/* Corner HUD Brackets */
+.skills-drawer-panel .hud-corner {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: #00f0ff;
+  border-style: solid;
+  pointer-events: none;
+  z-index: 3;
+}
+.skills-drawer-panel .hud-corner-tl { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+.skills-drawer-panel .hud-corner-tr { top: -1px; right: -1px; border-width: 2px 2px 0 0; }
+.skills-drawer-panel .hud-corner-bl { bottom: -1px; left: -1px; border-width: 0 0 2px 2px; }
+.skills-drawer-panel .hud-corner-br { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+
+/* ─── 4. Drawer Header ─────────────────────────────────────────────────────── */
+.skills-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 28px;
+  background: rgba(10, 16, 28, 0.85);
+  border-bottom: 1px solid rgba(0, 240, 255, 0.18);
+  position: relative;
+}
+
+.drawer-header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.drawer-sys-tag {
+  font-family: 'Share Tech Mono', 'ShareTechMono-fallback', monospace;
+  font-size: 0.78rem;
+  letter-spacing: 2px;
+  color: #00f0ff;
+  text-shadow: 0 0 8px rgba(0, 240, 255, 0.6);
+}
+
+.drawer-title {
+  margin: 0;
+  font-family: 'Orbitron', 'Montserrat', sans-serif;
+  font-size: clamp(1.1rem, 2.2vw, 1.45rem);
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.drawer-subtitle {
+  margin: 0;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.85rem;
+  color: #94a3b8;
+  margin-top: 2px;
+}
+
+.skills-drawer-close {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  border-radius: 6px;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.skills-drawer-close:hover {
+  background: rgba(255, 75, 75, 0.2);
+  border-color: #ff4b4b;
+  color: #ff4b4b;
+  transform: rotate(90deg);
+}
+
+.skills-drawer-close svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* ─── 5. Drawer Body & 4 Engineering Pillars ───────────────────────────────── */
+.skills-drawer-content {
+  padding: 24px 28px;
+  overflow-y: auto;
+  max-height: calc(88vh - 150px);
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 240, 255, 0.4) rgba(6, 10, 18, 0.6);
+}
+
+.skills-drawer-content::-webkit-scrollbar {
+  width: 6px;
+}
+.skills-drawer-content::-webkit-scrollbar-track {
+  background: rgba(6, 10, 18, 0.6);
+}
+.skills-drawer-content::-webkit-scrollbar-thumb {
+  background: rgba(0, 240, 255, 0.4);
+  border-radius: 3px;
+}
+
+.skills-pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+@media (max-width: 820px) {
+  .skills-pillars-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Pillar Card */
+.skill-pillar-card {
+  background: rgba(14, 22, 38, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.skill-pillar-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(0, 240, 255, 0.4);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 240, 255, 0.12);
+}
+
+/* Accent Borders per Pillar */
+.pillar-mobile { border-top: 3px solid #00f0ff; }
+.pillar-ai { border-top: 3px solid #a855f7; }
+.pillar-cloud { border-top: 3px solid #00e696; }
+.pillar-production { border-top: 3px solid #ffaa00; }
+
+.pillar-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pillar-icon-badge {
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pillar-mobile .pillar-icon-badge { background: rgba(0, 240, 255, 0.12); color: #00f0ff; }
+.pillar-ai .pillar-icon-badge { background: rgba(168, 85, 247, 0.15); color: #c084fc; }
+.pillar-cloud .pillar-icon-badge { background: rgba(0, 230, 150, 0.12); color: #00e696; }
+.pillar-production .pillar-icon-badge { background: rgba(255, 170, 0, 0.12); color: #ffaa00; }
+
+.pillar-icon-badge svg {
+  width: 18px;
+  height: 18px;
+}
+
+.pillar-title-wrap h3 {
+  margin: 0;
+  font-family: 'Orbitron', 'Cairo', sans-serif;
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+}
+
+.pillar-title-wrap p {
+  margin: 3px 0 0 0;
+  font-size: 0.78rem;
+  color: #94a3b8;
+  line-height: 1.45;
+}
+
+/* Skill Tags Cloud */
+.pillar-skills-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 2px;
+}
+
+.tech-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  font-family: 'Share Tech Mono', 'ShareTechMono-fallback', monospace;
+  font-size: 0.75rem;
+  color: #e2e8f0;
+  letter-spacing: 0.5px;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.tech-tag:hover {
+  background: rgba(0, 240, 255, 0.1);
+  border-color: #00f0ff;
+  color: #00f0ff;
+  transform: translateY(-1px);
+}
+
+.tech-tag.tag-highlight {
+  background: rgba(0, 240, 255, 0.08);
+  border-color: rgba(0, 240, 255, 0.3);
+  color: #00f0ff;
+}
+
+.tech-tag.tag-ai {
+  background: rgba(168, 85, 247, 0.08);
+  border-color: rgba(168, 85, 247, 0.3);
+  color: #c084fc;
+}
+
+.tech-tag.tag-cloud {
+  background: rgba(0, 230, 150, 0.08);
+  border-color: rgba(0, 230, 150, 0.3);
+  color: #00e696;
+}
+
+.tech-tag.tag-store {
+  background: rgba(255, 170, 0, 0.08);
+  border-color: rgba(255, 170, 0, 0.3);
+  color: #ffaa00;
+}
+
+.tag-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* ─── 6. Drawer Footer Telemetry ───────────────────────────────────────────── */
+.skills-drawer-footer {
+  padding: 14px 28px;
+  background: rgba(8, 12, 20, 0.95);
+  border-top: 1px solid rgba(0, 240, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 0.78rem;
+}
+
+.footer-telemetry-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #00e696;
+  font-family: 'Share Tech Mono', 'ShareTechMono-fallback', monospace;
+  font-size: 0.76rem;
+  letter-spacing: 1px;
+}
+
+.footer-telemetry-status .status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #00e696;
+  box-shadow: 0 0 8px #00e696;
+  animation: cyberDotPulse 1.8s ease-in-out infinite;
+}
+
+.footer-note-text {
+  color: #64748b;
+  font-size: 0.76rem;
+}
+
+@media (max-width: 640px) {
+  .skills-drawer-panel {
+    width: 96vw;
+    max-height: 92vh;
+  }
+  .skills-drawer-header {
+    padding: 16px 20px;
+  }
+  .skills-drawer-content {
+    padding: 18px 20px;
+  }
+  .skills-drawer-footer {
+    padding: 12px 20px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
