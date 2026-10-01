@@ -127,8 +127,8 @@
   /* ======================================================
      5. TYPOGRAPHY & TRANSITIONS
      ====================================================== */
-  --font-primary: "Montserrat", sans-serif;
-  --font-arabic: "Cairo", sans-serif;
+  --font-primary: 'Montserrat', 'Montserrat-fallback', sans-serif;
+  --font-arabic: 'Cairo', 'Cairo-fallback', sans-serif;
 
   --transition-fast: 0.2s ease;
   --transition-normal: 0.3s ease;

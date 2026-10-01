@@ -19,9 +19,27 @@ window.Portfolio.data.datasources = window.Portfolio.data.datasources || {};
      */
     static loadLanguage(lang) {
       return new Promise((resolve, reject) => {
-        const oldScript = document.getElementById("lang-script");
-        if (oldScript) {
-          oldScript.remove();
+        const currentScript = document.getElementById("lang-script");
+        if (
+          currentScript &&
+          currentScript.src &&
+          currentScript.src.indexOf(`lang/${lang}.js`) !== -1
+        ) {
+          if (typeof window.translations !== "undefined") {
+            resolve(window.translations);
+          } else {
+            currentScript.addEventListener("load", () => {
+              resolve(window.translations || {});
+            }, { once: true });
+            currentScript.addEventListener("error", (err) => {
+              reject(err);
+            }, { once: true });
+          }
+          return;
+        }
+
+        if (currentScript) {
+          currentScript.remove();
         }
 
         const script = document.createElement("script");

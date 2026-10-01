@@ -1,0 +1,135 @@
+/* ==============================================================================
+   CRITICAL LAYOUT GUARDS & METRIC-ADJUSTED FONT FALLBACKS
+   src/core/presentation/styles/critical.css
+   Eliminates Cumulative Layout Shift (CLS) and FOUC across all devices.
+   ============================================================================== */
+
+/* ─── 1. Metric-Adjusted Font Fallbacks (Size-Adjust & Ascent/Descent Overrides) ── */
+
+/* Lato Regular 400 → Arial fallback */
+@font-face {
+  font-family: 'Lato-fallback';
+  src: local('Arial'), local('Helvetica Neue'), local('sans-serif');
+  font-weight: 400;
+  size-adjust: 97.84%;
+  ascent-override: 100.60%;
+  descent-override: 20.70%;
+  line-gap-override: 0%;
+}
+
+/* Lato Bold 700 */
+@font-face {
+  font-family: 'Lato-fallback';
+  src: local('Arial Bold'), local('Helvetica Neue'), local('sans-serif');
+  font-weight: 700;
+  size-adjust: 97.84%;
+  ascent-override: 100.60%;
+  descent-override: 20.70%;
+  line-gap-override: 0%;
+}
+
+/* Montserrat → Arial fallback */
+@font-face {
+  font-family: 'Montserrat-fallback';
+  src: local('Arial'), local('Helvetica Neue'), local('sans-serif');
+  font-weight: 400 700;
+  size-adjust: 89.50%;
+  ascent-override: 102.43%;
+  descent-override: 25.49%;
+  line-gap-override: 0%;
+}
+
+/* Cairo → Tahoma/Arial fallback (Arabic-aware font) */
+@font-face {
+  font-family: 'Cairo-fallback';
+  src: local('Tahoma'), local('Arial'), local('sans-serif');
+  font-weight: 300 700;
+  size-adjust: 103.00%;
+  ascent-override: 88.00%;
+  descent-override: 22.00%;
+  line-gap-override: 0%;
+}
+
+/* Alexandria → Tahoma fallback */
+@font-face {
+  font-family: 'Alexandria-fallback';
+  src: local('Tahoma'), local('Arial'), local('sans-serif');
+  font-weight: 500 900;
+  size-adjust: 102.00%;
+  ascent-override: 95.00%;
+  descent-override: 20.00%;
+  line-gap-override: 0%;
+}
+
+/* Orbitron → Impact/Arial fallback */
+@font-face {
+  font-family: 'Orbitron-fallback';
+  src: local('Impact'), local('Arial'), local('sans-serif');
+  font-weight: 500 900;
+  size-adjust: 87.00%;
+  ascent-override: 102.00%;
+  descent-override: 25.00%;
+  line-gap-override: 0%;
+}
+
+/* Share Tech Mono → Courier New / monospace fallback */
+@font-face {
+  font-family: 'ShareTechMono-fallback';
+  src: local('Courier New'), local('Courier'), local('monospace');
+  font-weight: 400;
+  size-adjust: 100.00%;
+  ascent-override: 96.00%;
+  descent-override: 24.00%;
+  line-gap-override: 0%;
+}
+
+/* ─── 2. Stable Bounding Boxes & Critical Layout Guards ──────────────────────── */
+
+html {
+  scroll-behavior: auto !important;
+}
+
+#home-page #title {
+  min-height: 5rem;
+}
+
+#home-page .console-container {
+  min-height: 4.8rem;
+}
+
+#home-page #subtitle {
+  min-height: 2.2rem;
+}
+
+#home-page .appbar.appbar-hero-hidden {
+  transform: translate(-50%, -110px) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+@media (max-width: 768px) {
+  #home-page .appbar.appbar-hero-hidden {
+    transform: translateY(-110%) !important;
+  }
+}
+
+#home-page .header-container {
+  max-width: 100% !important;
+  width: 100% !important;
+  min-height: 100vh !important;
+  height: 100vh !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+#home-page #space-hero-stage {
+  width: 100% !important;
+  min-height: 100vh !important;
+  height: 100vh !important;
+}
+
+#home-page .carousel-section {
+  width: 100% !important;
+  min-height: calc(100vh + 2400px) !important;
+  height: calc(100vh + 2400px) !important;
+}

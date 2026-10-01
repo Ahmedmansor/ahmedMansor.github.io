@@ -469,7 +469,7 @@
 
 .hud-telemetry {
   position: absolute;
-  font-family: 'Share Tech Mono', 'Cairo', monospace, sans-serif;
+  font-family: 'Share Tech Mono', 'ShareTechMono-fallback', 'Cairo', monospace, sans-serif;
   font-size: 11px;
   letter-spacing: 1.8px;
   color: #8bbce5;
@@ -700,7 +700,7 @@
   top: 50%;
   transform: translateY(calc(-50% - 0.06em));
   margin-left: clamp(6px, 1vw, 12px);
-  font-family: 'Orbitron', 'Share Tech Mono', monospace;
+  font-family: 'Orbitron', 'Orbitron-fallback', 'Share Tech Mono', 'ShareTechMono-fallback', monospace;
   font-size: 1em;
   font-weight: 800;
   background: linear-gradient(180deg, #ffffff 32%, #d2f9ff 65%, #00e5ff 100%);
@@ -727,7 +727,7 @@
 
 #subtitle {
   position: absolute;
-  font-family: 'Share Tech Mono', monospace;
+  font-family: 'Share Tech Mono', 'ShareTechMono-fallback', monospace;
   font-weight: 400;
   top: 72%;
   left: 0;

@@ -6,8 +6,24 @@
     <title data-i18n-key="indexPage.pageTitle">
       Home | Ahmed Mansour - Flutter Developer Portfolio
     </title>
+    <!-- Early Language & Direction Guard: Sets direction and language before first paint, eliminating Direction Flip CLS (0.366) -->
+    <script>
+      (function () {
+        try {
+          var lang = localStorage.getItem('lang') || 'en';
+          if (lang === 'ar') {
+            document.documentElement.lang = 'ar';
+            document.documentElement.dir = 'rtl';
+          } else {
+            document.documentElement.lang = 'en';
+            document.documentElement.dir = 'ltr';
+          }
+        } catch (e) {}
+      })();
+    </script>
     <!-- Direct Core & Feature Stylesheets (Eliminates @import FOUC) -->
     <link rel="stylesheet" href="src/core/presentation/styles/variables.css" />
+    <link rel="stylesheet" href="src/core/presentation/styles/critical.css" />
     <link rel="stylesheet" href="src/core/presentation/styles/base.css" />
     <link rel="stylesheet" href="src/core/presentation/components/appbar/appbar.css" />
     <link rel="stylesheet" href="src/core/presentation/components/language-switcher/language-switcher.css" />
@@ -18,8 +34,43 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- CLS Fix: Preload the heaviest font files so they arrive before first render.
+         URLs sourced directly from the Lighthouse CLS culprit report. -->
+    <!-- Lato 400 Latin – biggest single CLS offender (0.359) -->
+    <link rel="preload" as="font" type="font/woff2" crossorigin
+      href="https://fonts.gstatic.com/s/lato/v25/S6uyw4BMUTPHjx4wXiWtFCc.woff2">
+    <!-- Montserrat 600 Latin -->
+    <link rel="preload" as="font" type="font/woff2" crossorigin
+      href="https://fonts.gstatic.com/s/montserrat/v31/JTUSjIg1_i6t8kCHKm459WlhyyTh89Y.woff2">
+    <!-- Cairo 400 Arabic - primary Arabic body font -->
+    <link rel="preload" as="font" type="font/woff2" crossorigin
+      href="https://fonts.gstatic.com/s/cairo/v31/SLXVc1nY6HkvangtZmpQdkhzfH5lkSscQyyS8p4_RHH1.woff2">
+    <!-- Cairo 600 Arabic -->
+    <link rel="preload" as="font" type="font/woff2" crossorigin
+      href="https://fonts.gstatic.com/s/cairo/v31/SLXVc1nY6HkvangtZmpQdkhzfH5lkSscRiyS8p4_RA.woff2">
+    <!-- Alexandria 500 Arabic - used in hero heading -->
+    <link rel="preload" as="font" type="font/woff2" crossorigin
+      href="https://fonts.gstatic.com/s/alexandria/v6/UMBXrPdDqW66y0Y2usFeaijdA5E64BdCIg.woff2">
+    <!-- Alexandria 800 Arabic -->
+    <link rel="preload" as="font" type="font/woff2" crossorigin
+      href="https://fonts.gstatic.com/s/alexandria/v6/UMBXrPdDqW66y0Y2usFeai3dA5E64Bc.woff2">
+    <!-- Orbitron 700 (HUD / telemetry labels) -->
+    <link rel="preload" as="font" type="font/woff2" crossorigin
+      href="https://fonts.gstatic.com/s/orbitron/v35/yMJRMIlzdpvBhQQL_Qq7dy1biN15.woff2">
+    <!-- Fira Code 400 (IDE / code blocks) -->
+    <link rel="preload" as="font" type="font/woff2" crossorigin
+      href="https://fonts.gstatic.com/s/firacode/v27/uU9NCBsR6Z2vfE9aq3bh3dSDqFGedA.woff2">
+    <!-- Share Tech Mono 400 (Telemetry HUD labels, console cursor & subtitle) -->
+    <link rel="preload" as="font" type="font/woff2" crossorigin
+      href="https://fonts.gstatic.com/s/sharetechmono/v16/J7aHnp1uDWRBEqV98dVQztYldFcLowEFA87Heg.woff2">
+
+    <!-- CLS Fix: display=optional means the browser will ONLY swap in the font
+         if it arrives within the 100ms block period. Combined with preloads above,
+         fonts arrive in time on repeat visits (cached) and most first visits.
+         No late swap = zero font-related CLS. -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Alexandria:wght@500;700;800;900&family=Cairo:wght@300;400;600;700&family=Fira+Code:wght@400;600;700&family=Lato:wght@300;400;700&family=Montserrat:wght@300;400;600;700&family=Orbitron:wght@500;700;800;900&family=Share+Tech+Mono&family=Tajawal:wght@500;700;800;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Alexandria:wght@500;700;800;900&family=Cairo:wght@300;400;600;700&family=Fira+Code:wght@400;600;700&family=Lato:wght@300;400;700&family=Montserrat:wght@300;400;600;700&family=Orbitron:wght@500;700;800;900&family=Share+Tech+Mono&family=Tajawal:wght@500;700;800;900&display=optional"
       rel="stylesheet"
     />
 
@@ -30,13 +81,24 @@
     <!-- Audio Engine (Howler.js) — must load before audio.service.js (no defer!) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"></script>
 
-    <!-- Initial Localization Dictionary (Synchronous) -->
-    <script src="lang/en.js" id="lang-script"></script>
+    <!-- Initial Localization Dictionary (Standard DOM Script Injection) -->
+    <script>
+      (function () {
+        var lang = 'en';
+        try {
+          lang = localStorage.getItem('lang') || 'en';
+        } catch (e) {}
+        var s = document.createElement('script');
+        s.id = 'lang-script';
+        s.src = (lang === 'ar') ? 'lang/ar.js' : 'lang/en.js';
+        document.head.appendChild(s);
+      })();
+    </script>
 
-    <!-- Critical CSS Layout Guards (Prevents FOUC and CLS during initial load) -->
+    <!-- Critical Preloader Guard (Zero-FOUC Dark Canvas) -->
     <style>
-      html {
-        scroll-behavior: auto !important;
+      html, body {
+        background: #020408;
       }
       .cyber-preloader {
         position: fixed;
@@ -45,34 +107,6 @@
         height: 100vh;
         z-index: 999999;
         background: #020408;
-      }
-      #home-page .appbar.appbar-hero-hidden {
-        transform: translate(-50%, -110px) !important;
-        opacity: 0 !important;
-        pointer-events: none !important;
-      }
-      @media (max-width: 768px) {
-        #home-page .appbar.appbar-hero-hidden {
-          transform: translateY(-110%) !important;
-        }
-      }
-      #home-page .header-container {
-        max-width: 100% !important;
-        width: 100% !important;
-        min-height: 100vh !important;
-        height: 100vh !important;
-        margin: 0 !important;
-        padding: 0 !important;
-      }
-      #home-page #space-hero-stage {
-        width: 100% !important;
-        min-height: 100vh !important;
-        height: 100vh !important;
-      }
-      #home-page .carousel-section {
-        width: 100% !important;
-        min-height: calc(100vh + 2400px) !important;
-        height: calc(100vh + 2400px) !important;
       }
     </style>
 

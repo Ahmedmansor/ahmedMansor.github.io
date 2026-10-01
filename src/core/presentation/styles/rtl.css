@@ -180,7 +180,7 @@ html[dir="rtl"] .ide-status-bar {
 html[dir="rtl"] .hud-telemetry {
   direction: rtl !important;
   text-align: right !important;
-  font-family: var(--font-arabic, "Cairo"), 'Share Tech Mono', sans-serif !important;
+  font-family: var(--font-arabic, "Cairo"), 'Share Tech Mono', 'ShareTechMono-fallback', sans-serif !important;
   letter-spacing: 0 !important;
 }
 
@@ -202,7 +202,7 @@ html[dir="rtl"] .cyber-pulse-dot {
 html[dir="rtl"] .cyber-header-telemetry {
   direction: rtl !important;
   text-align: right !important;
-  font-family: var(--font-arabic, "Cairo"), 'Share Tech Mono', sans-serif !important;
+  font-family: var(--font-arabic, "Cairo"), 'Share Tech Mono', 'ShareTechMono-fallback', sans-serif !important;
   letter-spacing: 0 !important;
 }
 
@@ -219,7 +219,7 @@ html[dir="rtl"] .console-container {
 }
 
 html[dir="rtl"] .cyber-console-text {
-  font-family: 'Alexandria', 'Tajawal', var(--font-arabic, "Cairo"), sans-serif !important;
+  font-family: 'Alexandria', 'Alexandria-fallback', 'Tajawal', var(--font-arabic, "Cairo"), sans-serif !important;
   font-weight: 800 !important;
   font-size: 1em !important;
   letter-spacing: 0 !important;
@@ -234,6 +234,7 @@ html[dir="rtl"] .cyber-console-text {
 }
 
 html[dir="rtl"] .console-underscore {
+  font-family: 'Orbitron', 'Orbitron-fallback', 'Share Tech Mono', 'ShareTechMono-fallback', monospace !important;
   left: auto !important;
   right: 100% !important;
   top: 50% !important;
@@ -259,21 +260,21 @@ html[dir="rtl"] .console-underscore {
 /* Sequential Scroll-Triggered Subtitle in RTL */
 html[dir="rtl"] #subtitle {
   direction: rtl !important;
-  font-family: 'Alexandria', var(--font-arabic, "Cairo"), sans-serif !important;
+  font-family: 'Alexandria', 'Alexandria-fallback', var(--font-arabic, "Cairo"), sans-serif !important;
   font-size: clamp(1.15rem, 2vw, 1.6rem) !important;
   letter-spacing: 0 !important;
   gap: clamp(10px, 1.5vw, 20px) !important;
 }
 
 html[dir="rtl"] #subtitle .sub-word {
-  font-family: 'Alexandria', var(--font-arabic, "Cairo"), sans-serif !important;
+  font-family: 'Alexandria', 'Alexandria-fallback', var(--font-arabic, "Cairo"), sans-serif !important;
   font-size: 1.15em !important;
   font-weight: 800 !important;
   letter-spacing: 0.5px !important;
 }
 
 html[dir="rtl"] #subtitle .sub-tag {
-  font-family: 'Alexandria', var(--font-arabic, "Cairo"), sans-serif !important;
+  font-family: 'Alexandria', 'Alexandria-fallback', var(--font-arabic, "Cairo"), sans-serif !important;
   font-size: 1em !important;
   font-weight: 700 !important;
   letter-spacing: 0.5px !important;

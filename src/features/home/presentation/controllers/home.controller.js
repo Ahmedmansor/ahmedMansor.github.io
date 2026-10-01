@@ -223,6 +223,11 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
         this.spaceHero.init();
       }
 
+      // Early DOM translation pass if dictionary is already synchronously loaded in head (eliminates layout shift)
+      if (typeof window.translations !== "undefined" && LocalizationUseCase) {
+        LocalizationUseCase.translateDOM(window.translations, "home-page");
+      }
+
       // 8. Initialize Pinned Scroll-Driven Space Hero Sequence (Section 1 - Top)
       this.setupSpaceHeroScrollSequence();
 
