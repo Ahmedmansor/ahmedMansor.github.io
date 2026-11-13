@@ -2,6 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/profile-favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
@@ -14,6 +15,7 @@
 
     <!-- Direct Core & Feature Stylesheets (Eliminates @import Waterfall) -->
     <link rel="stylesheet" href="src/core/presentation/styles/variables.css" />
+    <script src="src/core/presentation/components/effects-quality.js"></script>
     <link rel="stylesheet" href="src/core/presentation/styles/base.css" />
     <link rel="stylesheet" href="src/core/presentation/components/appbar/appbar.css" />
     <link rel="stylesheet" href="src/core/presentation/components/language-switcher/language-switcher.css" />
@@ -24,8 +26,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Montserrat:wght@400;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Montserrat:wght@400;600;700&display=optional"
       rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
     />
     <link
       rel="stylesheet"
@@ -64,12 +68,12 @@
     <!-- Global Sticky App Bar (Pre-rendered with .appbar to prevent CLS) -->
     <header id="appbar-container" class="appbar">
       <div class="appbar-inner">
-        <a href="index.html" class="appbar-brand" title="Home">
+        <a href="home.html" class="appbar-brand" title="Home">
           <span class="hud-status-dot" aria-hidden="true"></span>
           <span class="brand-tag">&lt;</span><span class="brand-name">ahmedMansour</span><span class="brand-tag"> /&gt;</span>
         </a>
         <nav class="appbar-nav">
-          <a href="index.html#projects-carousel-section" class="appbar-link active" data-i18n-key="common.navProjects">Projects</a>
+          <a href="home.html#projects-carousel-section" class="appbar-link active" data-i18n-key="common.navProjects">Projects</a>
         </nav>
         <div class="appbar-actions">
           <div class="language-switcher">
@@ -368,22 +372,22 @@
     </div>
 
     <!-- Audio Engine (Howler.js) — must load before audio.service.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"></script>
-    <script src="assets/icons/icons.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js" defer></script>
+    <script src="assets/icons/icons.js" defer></script>
 
     <!-- Feature-First Clean Architecture Scripts -->
     <!-- 1. Core Layer -->
-    <script src="src/core/domain/usecases/localization.usecase.js"></script>
-    <script src="src/core/data/datasources/storage.datasource.js"></script>
-    <script src="src/core/data/datasources/audio.service.js"></script>
-    <script src="src/core/data/datasources/language.datasource.js"></script>
-    <script src="src/core/data/repositories/language.repository.js"></script>
-    <script src="src/core/presentation/components/language-switcher/language-switcher.component.js"></script>
-    <script src="src/core/presentation/components/appbar/appbar.component.js"></script>
-    <script src="src/core/presentation/components/footer/footer.component.js"></script>
+    <script src="src/core/domain/usecases/localization.usecase.js" defer></script>
+    <script src="src/core/data/datasources/storage.datasource.js" defer></script>
+    <script src="src/core/data/datasources/audio.service.js" defer></script>
+    <script src="src/core/data/datasources/language.datasource.js" defer></script>
+    <script src="src/core/data/repositories/language.repository.js" defer></script>
+    <script src="src/core/presentation/components/language-switcher/language-switcher.component.js" defer></script>
+    <script src="src/core/presentation/components/appbar/appbar.component.js" defer></script>
+    <script src="src/core/presentation/components/footer/footer.component.js" defer></script>
 
     <!-- 2. Linker Feature -->
-    <script src="src/features/linker/presentation/controllers/linker.controller.js"></script>
+    <script src="src/features/linker/presentation/controllers/linker.controller.js" defer></script>
 
     <script>
       // Initialize Linker EG Detail Page via Feature-First Controller

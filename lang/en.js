@@ -24,6 +24,7 @@ translations = {
     hudStatus: "[STATUS: AVAILABLE]",
     hudInput: "[INPUT: SCROLL_DOWN]",
     hudScroll: "SCROLL",
+    heroName: "AHMED MANSOUR",
     subSoftware: "SOFTWARE",
     subEngineer: "ENGINEER",
     subTag: "[ FLUTTER & AI ]",

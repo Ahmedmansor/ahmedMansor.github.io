@@ -2,6 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/profile-favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
@@ -14,6 +15,7 @@
 
     <!-- Direct Core & Feature Stylesheets (Eliminates @import Waterfall & FOUC) -->
     <link rel="stylesheet" href="src/core/presentation/styles/variables.css" />
+    <script src="src/core/presentation/components/effects-quality.js"></script>
     <link rel="stylesheet" href="src/core/presentation/styles/base.css" />
     <link rel="stylesheet" href="src/core/presentation/components/appbar/appbar.css" />
     <link rel="stylesheet" href="src/core/presentation/components/language-switcher/language-switcher.css" />
@@ -63,12 +65,12 @@
     <!-- Global Sticky App Bar (Pre-rendered with .appbar to prevent CLS) -->
     <header id="appbar-container" class="appbar">
       <div class="appbar-inner">
-        <a href="index.html" class="appbar-brand" title="Home">
+        <a href="home.html" class="appbar-brand" title="Home">
           <span class="hud-status-dot" aria-hidden="true"></span>
           <span class="brand-tag">&lt;</span><span class="brand-name">ahmedMansour</span><span class="brand-tag"> /&gt;</span>
         </a>
         <nav class="appbar-nav">
-          <a href="index.html#projects-carousel-section" class="appbar-link active" data-i18n-key="common.navProjects">Projects</a>
+          <a href="home.html#projects-carousel-section" class="appbar-link active" data-i18n-key="common.navProjects">Projects</a>
         </nav>
         <div class="appbar-actions">
           <div class="language-switcher">

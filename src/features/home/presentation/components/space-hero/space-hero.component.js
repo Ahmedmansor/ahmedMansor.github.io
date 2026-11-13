@@ -1,10 +1,3 @@
-/**
- * @file space-hero.component.js
- * @description High-Performance Canvas Starfield & Gravity Space Hero Component.
- * Implements 3-layer parallax star drift, interactive mouse tilt, and auto-pause on scroll.
- * Part of Clean Architecture (Presentation Layer Component).
- */
-
 window.Portfolio = window.Portfolio || {};
 window.Portfolio.presentation = window.Portfolio.presentation || {};
 window.Portfolio.presentation.components = window.Portfolio.presentation.components || {};
@@ -12,293 +5,178 @@ window.Portfolio.presentation.components = window.Portfolio.presentation.compone
 (function (exports) {
   "use strict";
 
+  const presets = {
+    light: { counts: [23, 9, 3], dpr: 1, fps: 30 },
+    balanced: { counts: [40, 16, 5], dpr: 1.5, fps: 30 },
+    full: { counts: [140, 55, 25], dpr: 2, fps: 60 }
+  };
+  const colors = ["#fff", "#f0f8ff", "#e1f8ff"];
+
   class SpaceHeroComponent {
-    constructor() {
-      this.canvas = null;
-      this.ctx = null;
-      this.stage = null;
-      this.stars = [];
-      this.animationFrameId = null;
-      this.isRunning = false;
-      this.isVisible = true;
-
-      // Mouse parallax state
-      this.mouseX = 0;
-      this.mouseY = 0;
-      this.targetMouseX = 0;
-      this.targetMouseY = 0;
-      this._onMouseMove = null;
-
-      // Dynamic Star density (Graceful degradation: lightweight on mobile)
-      this.updateStarCounts();
-    }
-
-    /**
-     * Calibrates star counts based on viewport density (70 stars on mobile, 220 on desktop)
-     */
-    updateStarCounts() {
-      const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
-      this.smallCount = isMobile ? 45 : 140;
-      this.mediumCount = isMobile ? 18 : 55;
-      this.bigCount = isMobile ? 7 : 25;
-    }
-
-    /**
-     * Initializes the Space Hero Canvas and interaction listeners
-     */
     init() {
       this.stage = document.getElementById("space-hero-stage");
       this.canvas = document.getElementById("space-stars-canvas");
-
       if (!this.stage || !this.canvas) return;
+      this.ctx = this.canvas.getContext("2d");
+      if (!this.ctx) return;
 
-      this.ctx = this.canvas.getContext("2d", { alpha: true });
-      this.resize();
-      this.initStars();
-      this.setupEventListeners();
-      this.setupIntersectionObserver();
-      this.start();
-    }
+      this.motion = matchMedia("(prefers-reduced-motion: reduce)");
+      this.finePointer = matchMedia("(hover: hover) and (pointer: fine)");
+      const bounds = this.stage.getBoundingClientRect();
+      this.isVisible = bounds.bottom > 0 && bounds.top < window.innerHeight;
+      this.needsResize = true;
+      this.mouseX = this.mouseY = this.targetX = this.targetY = 0;
+      this.onFrame = (now) => this.frame(now);
+      this.onVisibility = () => this.sync();
+      this.onQuality = () => {
+        this.needsResize = true;
+        this.sync();
+      };
+      this.onResize = () => {
+        clearTimeout(this.resizeTimer);
+        this.resizeTimer = setTimeout(this.onQuality, 150);
+      };
+      this.onPointer = (event) => {
+        this.targetX = 2 * event.clientX / window.innerWidth - 1;
+        this.targetY = 2 * event.clientY / window.innerHeight - 1;
+      };
 
-    /**
-     * Resizes canvas to match container with High-DPI support
-     */
-    resize() {
-      if (!this.canvas || !this.stage) return;
-      this.updateStarCounts();
-      const rect = this.stage.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      window.addEventListener("resize", this.onResize, { passive: true });
+      window.addEventListener("portfolio-effects-change", this.onQuality);
+      document.addEventListener("visibilitychange", this.onVisibility);
+      this.motion.addEventListener("change", this.onQuality);
 
-      this.width = rect.width;
-      this.height = rect.height;
-
-      this.canvas.width = Math.floor(this.width * dpr);
-      this.canvas.height = Math.floor(this.height * dpr);
-      this.canvas.style.width = `${this.width}px`;
-      this.canvas.style.height = `${this.height}px`;
-
-      if (this.ctx) {
-        this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      }
-    }
-
-    /**
-     * Spawns multi-depth stars
-     */
-    initStars() {
-      this.stars = [];
-      const totalStars = this.smallCount + this.mediumCount + this.bigCount;
-
-      for (let i = 0; i < totalStars; i++) {
-        let layer, radius, speed, alpha, twinkleSpeed;
-
-        if (i < this.smallCount) {
-          layer = 1;
-          radius = Math.random() * 0.8 + 0.5;
-          speed = Math.random() * 0.15 + 0.08;
-          alpha = Math.random() * 0.4 + 0.3;
-          twinkleSpeed = 0.01;
-        } else if (i < this.smallCount + this.mediumCount) {
-          layer = 2;
-          radius = Math.random() * 0.9 + 1.1;
-          speed = Math.random() * 0.3 + 0.18;
-          alpha = Math.random() * 0.5 + 0.5;
-          twinkleSpeed = 0.02;
-        } else {
-          layer = 3;
-          radius = Math.random() * 1.2 + 1.8;
-          speed = Math.random() * 0.45 + 0.28;
-          alpha = Math.random() * 0.4 + 0.6;
-          twinkleSpeed = 0.035;
-        }
-
-        this.stars.push({
-          x: Math.random() * this.width,
-          y: Math.random() * this.height,
-          radius,
-          speed,
-          alpha,
-          baseAlpha: alpha,
-          twinkleSpeed,
-          twinklePhase: Math.random() * Math.PI * 2,
-          layer
+      if (window.IntersectionObserver) {
+        this.observer = new IntersectionObserver(([entry]) => {
+          this.isVisible = entry.isIntersecting;
+          this.sync();
         });
+        this.observer.observe(this.stage);
       }
+      this.sync();
     }
 
-    /**
-     * Mouse move parallax and window resize
-     */
-    setupEventListeners() {
-      let resizeTimer = null;
-      this._resizeHandler = () => {
-        if (resizeTimer) clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(() => {
-          this.resize();
-          this.initStars();
-        }, 150);
-      };
-      window.addEventListener("resize", this._resizeHandler, { passive: true });
+    resize() {
+      const { width, height } = this.stage.getBoundingClientRect();
+      const quality = document.documentElement.dataset.effectsQuality;
+      const preset = this.motion.matches ? presets.light : presets[quality] || presets.full;
+      const dpr = Math.min(window.devicePixelRatio || 1, preset.dpr);
+      this.width = width;
+      this.height = height;
+      this.interval = 1000 / preset.fps;
+      this.canvas.width = Math.floor(width * dpr);
+      this.canvas.height = Math.floor(height * dpr);
+      this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      // Window-wide subtle mouse parallax handler on desktop only (killed on touch devices)
-      const isTouch = window.matchMedia && window.matchMedia("(hover: none) and (pointer: coarse)").matches;
-      if (!isTouch) {
-        this._onMouseMove = (e) => {
-          const cx = window.innerWidth / 2;
-          const cy = window.innerHeight / 2;
-          // Normalized between -1 and 1
-          this.targetMouseX = (e.clientX - cx) / cx;
-          this.targetMouseY = (e.clientY - cy) / cy;
-        };
-      } else {
-        this._onMouseMove = null;
-      }
+      const counts = preset === presets.full && width < 768 ? [45, 18, 7] : preset.counts;
+      this.stars = counts.flatMap((count, layer) => Array.from({ length: count }, () => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        radius: 0.5 + layer * 0.6 + Math.random() * 0.8,
+        speed: 0.08 + layer * 0.1 + Math.random() * 0.15,
+        alpha: 0.35 + layer * 0.13 + Math.random() * 0.27,
+        phase: Math.random() * Math.PI * 2,
+        layer
+      })));
+      this.needsResize = false;
     }
 
-    /**
-     * Auto-pause canvas loop when scrolled out of viewport or when tab is backgrounded
-     */
-    setupIntersectionObserver() {
-      if (!window.IntersectionObserver || !this.stage) return;
-
-      if (this.observer) {
-        this.observer.disconnect();
-      }
-
-      this.observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            this.isVisible = entry.isIntersecting;
-            if (this.isVisible && !document.hidden) {
-              this.start();
-            } else {
-              this.stop();
-            }
-          });
-        },
-        { rootMargin: "80px 0px 80px 0px", threshold: 0 }
-      );
-
-      this.observer.observe(this.stage);
-
-      this._visibilityHandler = () => {
-        if (document.hidden) {
-          this.stop();
-        } else if (this.isVisible) {
-          this.start();
-        }
-      };
-      document.addEventListener("visibilitychange", this._visibilityHandler);
-    }
-
-    start() {
-      if (this.isRunning) return;
-
-      // Respect OS-level reduced motion accessibility setting
-      if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        this.loop(false);
+    sync() {
+      if (document.hidden || !this.isVisible) {
+        this.stop();
         return;
       }
-
-      this.isRunning = true;
-      if (this.animationFrameId) {
-        cancelAnimationFrame(this.animationFrameId);
-        this.animationFrameId = null;
+      if (this.needsResize) {
+        this.resize();
+        this.draw(0);
       }
-      if (this._onMouseMove) {
-        window.addEventListener("mousemove", this._onMouseMove, {
-          passive: true,
-        });
+      if (this.motion.matches) {
+        this.stop();
+        return;
       }
-      this.loop();
+      if (this.frameId) return;
+      if (this.finePointer.matches) {
+        window.addEventListener("pointermove", this.onPointer, { passive: true });
+      }
+      this.lastFrame = this.lastDraw = this.nextDraw = 0;
+      this.samples = this.slowFrames = 0;
+      this.lastScrollY = window.scrollY;
+      this.lastScroll = -Infinity;
+      this.frameId = requestAnimationFrame(this.onFrame);
     }
 
     stop() {
-      this.isRunning = false;
-      if (this.animationFrameId) {
-        cancelAnimationFrame(this.animationFrameId);
-        this.animationFrameId = null;
-      }
-      if (this._onMouseMove) {
-        window.removeEventListener("mousemove", this._onMouseMove);
-      }
+      cancelAnimationFrame(this.frameId);
+      this.frameId = null;
+      window.removeEventListener("pointermove", this.onPointer);
     }
 
-    /**
-     * Complete lifecycle cleanup preventing any SPA memory leaks
-     */
     destroy() {
+      if (!this.onVisibility) return;
       this.stop();
-      if (this.observer) {
-        this.observer.disconnect();
-        this.observer = null;
-      }
-      if (this._visibilityHandler) {
-        document.removeEventListener("visibilitychange", this._visibilityHandler);
-        this._visibilityHandler = null;
-      }
-      if (this._resizeHandler) {
-        window.removeEventListener("resize", this._resizeHandler);
-        this._resizeHandler = null;
-      }
+      clearTimeout(this.resizeTimer);
+      this.observer?.disconnect();
+      window.removeEventListener("resize", this.onResize);
+      window.removeEventListener("portfolio-effects-change", this.onQuality);
+      document.removeEventListener("visibilitychange", this.onVisibility);
+      this.motion.removeEventListener("change", this.onQuality);
     }
 
-    /**
-     * Main rendering loop (smooth 60fps throttle preventing 240Hz battery/GPU drain)
-     */
-    loop(continuous = true) {
-      if (continuous && !this.isRunning) return;
-
-      if (continuous && this.isRunning) {
-        this.animationFrameId = requestAnimationFrame(() => this.loop(true));
+    frame(now) {
+      this.frameId = requestAnimationFrame(this.onFrame);
+      if (window.scrollY !== this.lastScrollY) {
+        this.lastScrollY = window.scrollY;
+        this.lastScroll = now;
       }
 
-      const now = performance.now();
-      // Cap at 60fps (~16.6ms) to prevent 120Hz/144Hz/240Hz displays from overworking GPU
-      if (this.lastFrameTime && now - this.lastFrameTime < 16) {
-        return;
+      // Sample delivered browser frames during scrolling, independently of the canvas draw cap.
+      const frameTime = now - this.lastFrame;
+      if (now - this.lastScroll > 250 || frameTime > 250) {
+        this.samples = this.slowFrames = 0;
+      } else if (this.lastFrame && document.documentElement.dataset.effectsQuality !== "light") {
+        this.samples++;
+        if (frameTime > 25) this.slowFrames++;
+        if (this.samples >= 36) {
+          if (this.slowFrames >= 10) window.PortfolioEffects?.lowerQuality();
+          this.samples = this.slowFrames = 0;
+        }
       }
-      this.lastFrameTime = now;
+      this.lastFrame = now;
 
-      // Smooth lerp mouse interpolation
-      this.mouseX += (this.targetMouseX - this.mouseX) * 0.06;
-      this.mouseY += (this.targetMouseY - this.mouseY) * 0.06;
+      if (now + 0.5 < this.nextDraw) return;
+      const elapsed = this.lastDraw ? Math.min(now - this.lastDraw, 64) : 0;
+      this.nextDraw = Math.max((this.nextDraw || now) + this.interval, now + 1);
+      this.lastDraw = now;
+      this.draw(elapsed / (1000 / 60));
+    }
 
-      this.ctx.clearRect(0, 0, this.width, this.height);
+    draw(step) {
+      const { ctx, width, height } = this;
+      const ease = 1 - Math.pow(0.94, step);
+      this.mouseX += (this.targetX - this.mouseX) * ease;
+      this.mouseY += (this.targetY - this.mouseY) * ease;
+      ctx.clearRect(0, 0, width, height);
 
-      for (let i = 0; i < this.stars.length; i++) {
-        const star = this.stars[i];
-
-        // Move upward like original CodePen animStar
-        star.y -= star.speed;
+      let lastLayer = -1;
+      for (const star of this.stars) {
+        const { layer } = star;
+        if (layer !== lastLayer) {
+          ctx.fillStyle = colors[layer];
+          lastLayer = layer;
+        }
+        star.y -= star.speed * step;
         if (star.y < -5) {
-          star.y = this.height + 5;
-          star.x = Math.random() * this.width;
+          star.y = height + 5;
+          star.x = Math.random() * width;
         }
-
-        // Twinkle
-        star.twinklePhase += star.twinkleSpeed;
-        const twinkleFactor = Math.sin(star.twinklePhase) * 0.25;
-        const currentAlpha = Math.max(0.1, Math.min(1, star.baseAlpha + twinkleFactor));
-
-        // Depth parallax offset from mouse
-        const depthFactor = star.layer * 7;
-        const drawX = star.x + this.mouseX * depthFactor;
-        const drawY = star.y + this.mouseY * depthFactor;
-
-        this.ctx.beginPath();
-        this.ctx.arc(drawX, drawY, star.radius, 0, Math.PI * 2);
-
-        if (star.layer === 3) {
-          this.ctx.fillStyle = `rgba(225, 248, 255, ${currentAlpha})`;
-        } else if (star.layer === 2) {
-          this.ctx.fillStyle = `rgba(240, 248, 255, ${currentAlpha})`;
-        } else {
-          this.ctx.fillStyle = `rgba(255, 255, 255, ${currentAlpha})`;
-        }
-
-        this.ctx.fill();
+        star.phase += 0.012 * (layer + 1) * step;
+        ctx.globalAlpha = Math.min(1, star.alpha + Math.sin(star.phase) * 0.2);
+        const depth = (layer + 1) * 7;
+        ctx.beginPath();
+        ctx.arc(star.x + this.mouseX * depth, star.y + this.mouseY * depth, star.radius, 0, Math.PI * 2);
+        ctx.fill();
       }
+      ctx.globalAlpha = 1;
     }
   }
 

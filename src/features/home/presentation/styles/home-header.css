@@ -1,138 +1,4 @@
 /* ========================================================
-   CYBERPUNK SYSTEM BOOT PRELOADER
-   ======================================================== */
-.cyber-preloader {
-  position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: 100vh;
-  background: #020408;
-  z-index: 999999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: auto;
-  overflow: hidden;
-}
-
-/* Subtle Sci-Fi Grid Background */
-.preloader-grid-bg {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(90deg, rgba(0, 240, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(0deg, rgba(0, 240, 255, 0.035) 1px, transparent 1px);
-  background-size: 40px 40px;
-  background-position: center center;
-  mask-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 1) 40%, transparent 80%);
-  -webkit-mask-image: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 1) 40%, transparent 80%);
-  pointer-events: none;
-}
-
-.preloader-content {
-  position: relative;
-  z-index: 2;
-  width: min(460px, 88vw);
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  padding: 24px;
-  background: rgba(6, 12, 22, 0.78);
-  border: 1px solid rgba(0, 240, 255, 0.25);
-  border-radius: 6px;
-  box-shadow: 0 0 40px rgba(0, 0, 0, 0.95), 0 0 30px rgba(0, 240, 255, 0.12);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
-
-.preloader-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-family: 'Share Tech Mono', 'Orbitron', monospace;
-  font-size: clamp(0.72rem, 1.8vw, 0.82rem);
-  letter-spacing: 1.5px;
-}
-
-.preloader-tag {
-  color: #00f0ff;
-  font-weight: 700;
-  text-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
-}
-
-.preloader-status {
-  color: #ffd166;
-  font-weight: 600;
-  font-size: 0.75rem;
-  letter-spacing: 1px;
-  animation: preloaderPulse 1.2s ease-in-out infinite;
-}
-
-@keyframes preloaderPulse {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 1; text-shadow: 0 0 8px #ffd166; }
-}
-
-/* Neon Progress Bar Track */
-.preloader-progress-track {
-  width: 100%;
-  height: 5px;
-  background: rgba(0, 240, 255, 0.1);
-  border: 1px solid rgba(0, 240, 255, 0.2);
-  border-radius: 3px;
-  position: relative;
-  overflow: hidden;
-  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.8);
-}
-
-.preloader-progress-bar {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, #0088ff 0%, #00f0ff 70%, #ffffff 100%);
-  box-shadow: 0 0 12px #00f0ff, 0 0 24px rgba(0, 240, 255, 0.8);
-  border-radius: 3px;
-  position: relative;
-  transition: width 0.08s ease-out;
-}
-
-.preloader-progress-glow {
-  position: absolute;
-  right: 0;
-  top: -2px;
-  width: 10px;
-  height: 9px;
-  background: #ffffff;
-  border-radius: 50%;
-  box-shadow: 0 0 14px #00f0ff, 0 0 20px #ffffff;
-}
-
-.preloader-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 0.78rem;
-  letter-spacing: 1px;
-}
-
-.preloader-log {
-  color: #719ec2;
-  font-size: 0.74rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 78%;
-}
-
-.preloader-counter {
-  color: #00f0ff;
-  font-weight: 700;
-  font-family: 'Orbitron', monospace;
-  font-size: 0.82rem;
-  text-shadow: 0 0 8px rgba(0, 240, 255, 0.6);
-}
-
-/* ========================================================
    CYBER START EXPERIENCE / AUDIO INITIALIZATION OVERLAY
    ======================================================== */
 .cyber-start-overlay {
@@ -152,9 +18,7 @@
 .start-overlay-backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(2, 6, 14, 0.82);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  background: rgba(2, 6, 14, 0.94);
   z-index: 1;
 }
 
@@ -167,26 +31,12 @@
   border-radius: 8px;
   padding: 36px 30px 32px;
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.95), 0 0 30px rgba(0, 240, 255, 0.18), inset 0 0 25px rgba(0, 150, 255, 0.05);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   gap: 16px;
   box-sizing: border-box;
-  animation: cyberModalPop 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes cyberModalPop {
-  0% {
-    transform: scale(0.92);
-    opacity: 0;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
 }
 
 .start-overlay-badge {
@@ -353,59 +203,18 @@
   z-index: 1;
 }
 
+/* Static atmosphere with a soft edge and no blur surfaces. */
 #horizon {
   position: absolute;
   width: 160%;
   height: 70%;
-  border-radius: 100% / 100%;
-  background: #0088ff;
-  -webkit-filter: blur(28px);
-  filter: blur(28px);
   left: 50%;
-  bottom: -20%;
+  bottom: -17%;
   margin-left: -80%;
+  background: radial-gradient(ellipse closest-side, var(--color-primary), transparent);
+  opacity: 0.56;
   pointer-events: none;
   z-index: 2;
-}
-
-#horizon:before {
-  content: " ";
-  position: absolute;
-  width: 81.25%;
-  height: 70%;
-  border-radius: 100% / 100%;
-  background: #5bf8ff;
-  -webkit-filter: blur(24px);
-  filter: blur(24px);
-  opacity: 0.72;
-  margin-left: 9.375%;
-}
-
-#horizon:after {
-  content: " ";
-  position: absolute;
-  width: 34%;
-  height: 20%;
-  border-radius: 650px / 350px;
-  background: #cbf9ff;
-  -webkit-filter: blur(20px);
-  filter: blur(20px);
-  opacity: 0.7;
-  left: 50%;
-  transform: translateX(-50%);
-  margin-left: 0;
-}
-
-#horizon .glow {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 100% / 100%;
-  background: radial-gradient(ellipse at 50% 50%, rgba(15, 72, 143, 0.85) 0%, rgba(15, 72, 143, 0) 70%);
-  -webkit-filter: blur(40px);
-  filter: blur(40px);
-  opacity: 0.85;
-  top: -10%;
 }
 
 #earth {
@@ -522,6 +331,13 @@
 
 /* Futuristic Animated Cyber Mouse Scroll Indicator */
 .cyber-scroll-indicator {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  min-width: 44px;
+  min-height: 44px;
   position: absolute;
   bottom: 18px;
   left: 50%;
@@ -647,7 +463,7 @@
 /* --------------------------------------------------------
    4. Cyber Code Cursor Typography (Scroll-Scrubbed)
    -------------------------------------------------------- */
-#title {
+#space-hero-stage .hero-intro {
   position: absolute;
   top: 29%;
   left: 0;
@@ -676,17 +492,19 @@
   margin: 0;
 }
 
-/* Typed Name Text with Ultra-Crisp OLED Cyber Cyan Gradient */
+/* Solid glyphs keep the name readable when the browser adjusts page colors. */
+.cyber-console-text,
+.console-underscore {
+  color: #d2f9ff;
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.62), 0 0 24px rgba(0, 140, 255, 0.45);
+}
+
 .cyber-console-text {
   font-family: 'Orbitron', 'Share Tech Mono', sans-serif;
   font-weight: 800;
   font-size: 1em;
   letter-spacing: clamp(6px, 1.4vw, 15px);
   padding-left: clamp(6px, 1.4vw, 15px);
-  background: linear-gradient(180deg, #ffffff 32%, #d2f9ff 65%, #00e5ff 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.8)) drop-shadow(0 0 24px rgba(0, 140, 255, 0.45));
   display: inline-block;
   min-height: 1.15em;
   white-space: nowrap;
@@ -703,10 +521,6 @@
   font-family: 'Orbitron', 'Orbitron-fallback', 'Share Tech Mono', 'ShareTechMono-fallback', monospace;
   font-size: 1em;
   font-weight: 800;
-  background: linear-gradient(180deg, #ffffff 32%, #d2f9ff 65%, #00e5ff 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.8)) drop-shadow(0 0 24px rgba(0, 140, 255, 0.45));
   animation: cyberCursorBlink 0.8s steps(2, start) infinite;
   user-select: none;
   pointer-events: none;
@@ -746,10 +560,6 @@
 #subtitle .sub-word {
   color: #d8ecf8;
   display: inline-block;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(18px);
-  will-change: transform, opacity;
   text-shadow: 0 0 10px rgba(0, 229, 255, 0.45);
 }
 
@@ -757,9 +567,6 @@
   color: #00f0ff;
   font-weight: 700;
   font-size: 0.9em;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(18px);
   letter-spacing: 4px;
   text-shadow: 0 0 12px #00f0ff, 0 0 24px rgba(0, 240, 255, 0.7);
 }
@@ -874,7 +681,7 @@
   z-index: 15;
   border-top: none;
   border-bottom: 1px solid rgba(0, 240, 255, 0.12);
-  overflow: hidden;
+  overflow: clip;
   content-visibility: auto;
   contain-intrinsic-size: 0 750px;
 }
@@ -1160,6 +967,7 @@
    B. Cyberpunk Code IDE (Right Column)
    ======================================================== */
 .cyber-ide-container {
+  min-inline-size: 0;
   background: rgba(5, 10, 18, 0.92);
   border: 1px solid rgba(0, 240, 255, 0.28);
   border-radius: 8px;
@@ -1169,7 +977,7 @@
     inset 0 0 30px rgba(0, 150, 255, 0.03);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  overflow: hidden;
+  overflow: clip;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -1315,8 +1123,7 @@
   height: 465px;
   min-height: 465px;
   box-sizing: border-box;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: auto;
   scrollbar-width: thin;
   scrollbar-color: rgba(0, 240, 255, 0.35) rgba(3, 7, 14, 0.8);
 }
@@ -1382,8 +1189,8 @@
 
 /* Code Content Area */
 .ide-code-scroll {
-  flex-grow: 1;
-  overflow-x: auto;
+  /* Let the editor body scroll the code and line numbers together. */
+  flex: 1 0 max-content;
   position: relative;
   z-index: 2;
 }
@@ -1617,7 +1424,7 @@
   }
 
   /* 3. Responsive Hero Typography & Name */
-  #title {
+  #space-hero-stage .hero-intro {
     top: 24%;
     margin-top: 0;
     padding: 0 10px;
@@ -1780,3 +1587,18 @@
 
 
 
+
+:root:is([data-effects-quality="light"], [data-effects-quality="balanced"]) .space-vessel {
+  filter: none;
+}
+
+:root:is([data-effects-quality="light"], [data-effects-quality="balanced"]) .spaceship-svg [filter] {
+  filter: none;
+}
+
+:root[data-effects-quality="light"] .hud-telemetry,
+:root[data-effects-quality="light"] .cyber-scroll-indicator,
+:root[data-effects-quality="light"] .cyber-ide-container {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}

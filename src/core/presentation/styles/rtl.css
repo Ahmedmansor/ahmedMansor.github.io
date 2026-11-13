@@ -257,7 +257,7 @@ html[dir="rtl"] .console-underscore {
   }
 }
 
-/* Sequential Scroll-Triggered Subtitle in RTL */
+/* Hero Subtitle in RTL */
 html[dir="rtl"] #subtitle {
   direction: rtl !important;
   font-family: 'Alexandria', 'Alexandria-fallback', var(--font-arabic, "Cairo"), sans-serif !important;

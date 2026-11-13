@@ -117,3 +117,20 @@ a:hover {
   }
 }
 
+
+/* Shared by the homepage and the project pages. */
+:root[data-effects-quality="balanced"] .appbar {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+:root[data-effects-quality="light"] .appbar {
+  background: var(--bg-surface);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+:root[data-effects-quality="light"] .language-switcher {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}

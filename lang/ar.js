@@ -24,6 +24,7 @@ translations = {
     hudStatus: "[الحالة: متاح للمشاريع الكبرى]",
     hudInput: "[إدخال: مرر للأسفل]",
     hudScroll: "مرر للأسفل",
+    heroName: "أحمد منصور",
     subSoftware: "مهندس",
     subEngineer: "أنظمة برمجيات",
     subTag: "[ فلاتر وأتمتة الذكاء الاصطناعي ]",

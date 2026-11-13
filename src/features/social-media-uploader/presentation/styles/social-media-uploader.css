@@ -188,6 +188,10 @@ html[dir="rtl"] .solution-card {
   margin: 0 auto;
 }
 
+:root[data-effects-quality="light"] .tech-stack-single-line {
+  backdrop-filter: none;
+}
+
 .tech-pill-badge {
   font-size: 0.88em;
   font-weight: 600;

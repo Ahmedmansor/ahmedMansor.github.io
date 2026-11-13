@@ -102,6 +102,7 @@ window.Portfolio.data.datasources = window.Portfolio.data.datasources || {};
       }
 
       const basePath = options.basePath || "assets/fx/";
+      this._basePath = basePath;
 
       // 1. Read persistent mute state from localStorage (defaults to false / unmuted)
       try {
@@ -114,37 +115,13 @@ window.Portfolio.data.datasources = window.Portfolio.data.datasources || {};
         this._bgmPlaying = false;
       }
 
-      // 2. Instantiate Howler sound sprite
-      if (typeof Howl !== "undefined") {
-        this._initHowl(basePath);
-      } else {
-        // Defer until Howler script finishes loading
-        window.addEventListener("DOMContentLoaded", () => {
-          if (typeof Howl !== "undefined") {
-            this._initHowl(basePath);
-          }
-        });
-      }
-
-      // 3. Attempt to fetch latest portfolio-sprite.json asynchronously
-      this._loadSpriteJson(basePath);
-
       // 4. Setup one-time Web Audio unlock listener on first user interaction
       this._setupAutoUnlock();
 
       // 5. Setup declarative event delegation ([data-sound-click], [data-sound-hover])
       this._bindGlobalDelegation();
 
-      // 6. Initialize BGM Howl (lazy — won't play until playBGM() is called)
-      if (typeof Howl !== "undefined") {
-        this._initBgm(basePath);
-      } else {
-        window.addEventListener("DOMContentLoaded", () => {
-          if (typeof Howl !== "undefined") this._initBgm(basePath);
-        });
-      }
-
-      // 7. Persist BGM seek position on page unload / navigation
+      // Persist BGM seek position on page unload / navigation.
       this._setupSeekPersistence();
 
       this._isInitialized = true;
@@ -350,9 +327,9 @@ window.Portfolio.data.datasources = window.Portfolio.data.datasources || {};
       if (this._isMuted || !cueId) return null;
 
       if (!this._howl) {
-        // Attempt lazy init if Howler became ready
         if (typeof Howl !== "undefined") {
-          this._initHowl("assets/fx/");
+          this._initHowl(this._basePath);
+          if (this._howl) this._loadSpriteJson(this._basePath);
         }
         if (!this._howl) return null;
       }
@@ -438,6 +415,7 @@ window.Portfolio.data.datasources = window.Portfolio.data.datasources || {};
         }
       }
 
+      if (!this._isMuted && this._bgmPlaying && !this._bgmHowl) this.playBGM();
       this._notifyListeners(this._isMuted);
     }
 
@@ -462,7 +440,7 @@ window.Portfolio.data.datasources = window.Portfolio.data.datasources || {};
     static playBGM() {
       if (this._isMuted) return;
       if (!this._bgmHowl) {
-        this._initBgm("assets/fx/");
+        this._initBgm(this._basePath);
       }
       if (this._bgmHowl && !this._bgmHowl.playing()) {
         this._bgmHowl.volume(DEFAULT_BGM_VOLUME);

@@ -479,7 +479,7 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
 
     /**
      * Smart Video Lazy Loading & Hardware Decoder Optimization:
-     * - Only loads video stream (src) when within 250px of the viewport
+     * - Loads the video stream when the demo enters the viewport
      * - Automatically pauses videos when off-screen to free hardware decoder slots and conserve RAM/battery
      * - Automatically resumes playing when back in view
      */
@@ -525,7 +525,6 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
           });
         },
         {
-          rootMargin: "250px 0px 250px 0px",
           threshold: 0.05
         }
       );

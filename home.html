@@ -1,14 +1,657 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="refresh" content="0; url=index.html" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/profile-favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title data-i18n-key="indexPage.pageTitle">
+      Home | Ahmed Mansour - Flutter Developer Portfolio
+    </title>
+    <!-- Early Language & Direction Guard: Sets direction and language before first paint, eliminating Direction Flip CLS (0.366) -->
     <script>
-      window.location.replace("index.html");
+      (function () {
+        try {
+          var lang = localStorage.getItem('lang') || 'en';
+          if (lang === 'ar') {
+            document.documentElement.lang = 'ar';
+            document.documentElement.dir = 'rtl';
+          } else {
+            document.documentElement.lang = 'en';
+            document.documentElement.dir = 'ltr';
+          }
+        } catch (e) {}
+      })();
     </script>
-    <title>Ahmed Mansour | Flutter Developer Portfolio</title>
+    <!-- Direct Core & Feature Stylesheets (Eliminates @import FOUC) -->
+    <link rel="stylesheet" href="src/core/presentation/styles/variables.css" />
+    <link rel="stylesheet" href="src/core/presentation/styles/critical.css" />
+    <script src="src/core/presentation/components/effects-quality.js"></script>
+    <link rel="stylesheet" href="src/core/presentation/styles/base.css" />
+    <link rel="stylesheet" href="src/core/presentation/components/appbar/appbar.css" />
+    <link rel="stylesheet" href="src/core/presentation/components/language-switcher/language-switcher.css" />
+    <link rel="stylesheet" href="src/core/presentation/components/footer/footer.css" />
+    <link rel="stylesheet" href="src/features/home/presentation/styles/home-header.css" />
+    <link rel="stylesheet" href="src/features/home/presentation/styles/carousel.css" />
+    <link rel="stylesheet" href="src/features/home/presentation/styles/skills-drawer.css" />
+    <link rel="stylesheet" href="src/core/presentation/styles/rtl.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link rel="stylesheet" media="print" onload="this.media='all'" href="https://fonts.googleapis.com/css2?family=Alexandria:wght@500;700;800;900&family=Cairo:wght@300;400;600;700&family=Fira+Code:wght@400;600;700&family=Lato:wght@300;400;700&family=Montserrat:wght@300;400;600;700&family=Orbitron:wght@500;700;800;900&family=Share+Tech+Mono&family=Tajawal:wght@500;700;800;900&display=optional" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alexandria:wght@500;700;800;900&family=Cairo:wght@300;400;600;700&family=Fira+Code:wght@400;600;700&family=Lato:wght@300;400;700&family=Montserrat:wght@300;400;600;700&family=Orbitron:wght@500;700;800;900&family=Share+Tech+Mono&family=Tajawal:wght@500;700;800;900&display=optional" /></noscript>
+
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+
+    <!-- AudioService initializes the engine after deferred scripts are ready. -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js" defer></script>
+
+    <!-- Initial Localization Dictionary (Standard DOM Script Injection) -->
+    <script>
+      (function () {
+        var lang = 'en';
+        try {
+          lang = localStorage.getItem('lang') || 'en';
+        } catch (e) {}
+        var s = document.createElement('script');
+        s.id = 'lang-script';
+        s.src = (lang === 'ar') ? 'lang/ar.js' : 'lang/en.js';
+        document.head.appendChild(s);
+      })();
+    </script>
+
+    <!-- Early Session Guard: Instantly hide overlay & restore audio state before first paint -->
+    <script>
+      (function () {
+        if (sessionStorage.getItem('experience_started') === 'true') {
+          // Inject a style rule to hide the overlay before the browser paints it
+          var s = document.createElement('style');
+          s.textContent = '#cyber-start-overlay { display: none !important; }';
+          document.head.appendChild(s);
+          // Ensure mute state is set (defaults to false/unmuted if never explicitly muted)
+          try {
+            if (localStorage.getItem('portfolio_audio_muted') === null) {
+              localStorage.setItem('portfolio_audio_muted', 'false');
+            }
+          } catch (e) {}
+        }
+      })();
+    </script>
   </head>
-  <body style="background-color: #121212; color: #e0e0e0; font-family: 'Montserrat', sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0;">
-    <p>Redirecting to <a href="index.html" style="color: #03dac6; text-decoration: none; font-weight: bold;">Home</a>...</p>
+
+  <body id="home-page">
+    <!-- Cyber Audio & Experience Initialization Overlay (First-Load Entrance) -->
+    <div id="cyber-start-overlay" class="cyber-start-overlay" role="dialog" aria-modal="true" aria-labelledby="start-overlay-title">
+      <div class="start-overlay-backdrop"></div>
+      <div class="start-overlay-card">
+        <!-- Corner Tech Brackets -->
+        <div class="hud-corner hud-corner-tl"></div>
+        <div class="hud-corner hud-corner-tr"></div>
+        <div class="hud-corner hud-corner-bl"></div>
+        <div class="hud-corner hud-corner-br"></div>
+
+        <!-- Animated Radar Sound Waves Hologram Badge -->
+        <div class="start-overlay-badge">
+          <div class="badge-pulse-ring"></div>
+          <svg class="app-icon start-sound-icon" viewBox="0 0 640 512" fill="currentColor">
+            <path d="M533.6 32.5C598.5 85.3 640 165.8 640 256s-41.5 170.7-106.4 223.5c-10.3 8.4-25.4 6.8-33.8-3.5s-6.8-25.4 3.5-33.8C557.5 398.2 592 331.2 592 256s-34.5-142.2-88.7-186.3c-10.3-8.4-11.8-23.5-3.5-33.8s23.5-11.8 33.8-3.5zM473.1 107c6.1-12 20.8-16.8 32.8-10.7 48.2 24.4 82.1 74.5 82.1 132.3s-33.9 107.9-82.1 132.3c-12 6.1-26.7 1.3-32.8-10.7s-1.3-26.7 10.7-32.8C520.1 308.8 544 272.7 544 256s-23.9-52.8-60.2-71.2c-12-6.1-16.8-20.8-10.7-32.8zM380 448c-12.7 0-24.9-5.1-33.9-14.1L217.9 306 144 306c-26.5 0-48-21.5-48-48l0-64c0-26.5 21.5-48 48-48l73.9 0 128.1-127.9C355.1 8.9 367.3 3.8 380 3.8c24.3 0 44 19.7 44 44l0 356.3c0 24.3-19.7 44-44 44z"/>
+          </svg>
+        </div>
+
+        <div class="start-overlay-header">
+          <span class="start-sys-tag">&gt; [SYS.AUDIO // INITIALIZE_ENGINE]</span>
+          <h2 id="start-overlay-title" class="start-title">SPATIAL AUDIO INTERFACE</h2>
+        </div>
+
+        <p class="start-overlay-description">
+          This portfolio is enhanced with dynamic spatial audio sprites, GSAP scroll triggers, and high-frequency tactile UI interactions. Click below to initialize the audio engine.
+        </p>
+
+        <div class="start-overlay-actions">
+          <button id="btn-start-experience" class="btn-start-experience" type="button" data-sound-hover="ui-hover">
+            <svg class="app-icon" viewBox="0 0 384 512" fill="currentColor">
+              <path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/>
+            </svg>
+            <span>START EXPERIENCE</span>
+          </button>
+          <button id="btn-skip-audio" class="btn-skip-audio" type="button">
+            <span>PROCEED MUTED</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Global Sticky App Bar (Starts hidden on Hero) -->
+    <header id="appbar-container" class="appbar appbar-hero-hidden">
+      <div class="appbar-inner">
+        <a href="home.html" class="appbar-brand" title="Home" data-sound-click="ui-click" data-sound-hover="ui-hover">
+          <span class="hud-status-dot" aria-hidden="true"></span>
+          <span class="brand-tag">&lt;</span><span class="brand-name">ahmedMansour</span><span class="brand-tag"> /&gt;</span>
+        </a>
+        <nav class="appbar-nav">
+          <a href="#projects-carousel-section" class="appbar-link" data-i18n-key="common.navProjects" data-sound-click="ui-click" data-sound-hover="ui-hover">Projects</a>
+          <button id="nav-skills-btn" class="appbar-link appbar-btn-link" type="button" data-i18n-key="common.navSkills" data-sound-click="ui-click" data-sound-hover="ui-hover">Skills</button>
+        </nav>
+        <div class="appbar-actions">
+          <!-- Cyber Audio Controller (Mute / Unmute Toggle) -->
+          <button id="audio-toggle-btn" class="appbar-audio-btn" type="button" aria-label="Toggle Audio" title="Toggle Audio (Mute/Unmute)">
+            <span class="audio-btn-icon" id="audio-btn-icon"></span>
+            <span class="audio-wave-bars" aria-hidden="true">
+              <span class="bar bar-1"></span>
+              <span class="bar bar-2"></span>
+              <span class="bar bar-3"></span>
+            </span>
+          </button>
+          <div class="language-switcher">
+            <button id="lang-en-btn" data-sound-click="ui-click" data-sound-hover="ui-hover">English</button>
+            <button id="lang-ar-btn" data-sound-click="ui-click" data-sound-hover="ui-hover">العربية</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="header-container" id="space-hero-pin-wrapper">
+      <header class="portfolio-header">
+        <div class="space-hero-stage" id="space-hero-stage">
+          <canvas id="space-stars-canvas" aria-hidden="true"></canvas>
+          <div id="horizon" aria-hidden="true"></div>
+          <div id="earth"></div>
+
+          <!-- Futuristic Spaceship Probe (Flies on scroll across curved horizon) -->
+          <div id="space-vessel" class="space-vessel" aria-hidden="true">
+            <svg class="spaceship-svg" viewBox="0 0 360 95" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Engine Exhaust Plasma Trail -->
+              <defs>
+                <linearGradient id="thrusterPlasma" x1="50" y1="47" x2="-90" y2="47" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#00f0ff" stop-opacity="1"/>
+                  <stop offset="0.25" stop-color="#0088ff" stop-opacity="0.85"/>
+                  <stop offset="0.65" stop-color="#7000ff" stop-opacity="0.45"/>
+                  <stop offset="1" stop-color="#000000" stop-opacity="0"/>
+                </linearGradient>
+                <linearGradient id="hullMetal" x1="40" y1="20" x2="340" y2="70" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#0e1724"/>
+                  <stop offset="0.5" stop-color="#182538"/>
+                  <stop offset="1" stop-color="#0a1018"/>
+                </linearGradient>
+                <linearGradient id="wingGradient" x1="120" y1="0" x2="220" y2="95" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#0a121d"/>
+                  <stop offset="0.7" stop-color="#142132"/>
+                  <stop offset="1" stop-color="#050a10"/>
+                </linearGradient>
+                <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
+                  <feGaussianBlur stdDeviation="3" result="blur"/>
+                  <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                </filter>
+              </defs>
+
+              <!-- Dual Plasma Ion Exhaust Beams -->
+              <path d="M48 38 L -85 38" stroke="url(#thrusterPlasma)" stroke-width="6" stroke-linecap="round"/>
+              <path d="M48 56 L -85 56" stroke="url(#thrusterPlasma)" stroke-width="6" stroke-linecap="round"/>
+              <path d="M48 47 L -50 47" stroke="#00f0ff" stroke-width="2.5" stroke-linecap="round" opacity="0.9"/>
+
+              <!-- Upper Swept Wing & Fin -->
+              <polygon points="190,32 150,4 100,10 125,35" fill="url(#wingGradient)" stroke="#00d4ff" stroke-width="1.5"/>
+              <line x1="150" y1="4" x2="100" y2="10" stroke="#00f0ff" stroke-width="2" filter="url(#neonGlow)"/>
+              <circle cx="150" cy="4" r="2.5" fill="#00f0ff"/>
+
+              <!-- Lower Swept Wing & Fin -->
+              <polygon points="190,62 150,90 100,84 125,59" fill="url(#wingGradient)" stroke="#00d4ff" stroke-width="1.5"/>
+              <line x1="150" y1="90" x2="100" y2="84" stroke="#00f0ff" stroke-width="2" filter="url(#neonGlow)"/>
+              <circle cx="150" cy="90" r="2.5" fill="#00f0ff"/>
+
+              <!-- Main Aerodynamic Fuselage -->
+              <polygon points="340,47 250,23 90,28 45,36 35,47 45,58 90,66 250,71" fill="url(#hullMetal)" stroke="#4da2ff" stroke-width="2"/>
+
+              <!-- Cyber Armor Facets & Surface Plating -->
+              <polygon points="275,47 230,30 160,33 190,47" fill="#1b2a3f" stroke="#00e5ff" stroke-width="1" opacity="0.75"/>
+              <polygon points="275,47 230,64 160,61 190,47" fill="#1b2a3f" stroke="#00e5ff" stroke-width="1" opacity="0.75"/>
+
+              <!-- Sleek Cockpit Canopy (Cyan Glass) -->
+              <polygon points="295,47 245,36 185,38 215,47 185,56 245,58" fill="#00e5ff" fill-opacity="0.35" stroke="#00f0ff" stroke-width="1.8" filter="url(#neonGlow)"/>
+              <line x1="245" y1="36" x2="215" y2="47" stroke="#ffffff" stroke-width="1" opacity="0.8"/>
+
+              <!-- Cyber Tech Panel Neon Gridlines -->
+              <line x1="180" y1="47" x2="65" y2="47" stroke="#00f0ff" stroke-width="1.5" stroke-dasharray="6 3"/>
+              <line x1="150" y1="37" x2="90" y2="37" stroke="#4da2ff" stroke-width="1" stroke-dasharray="4 2"/>
+              <line x1="150" y1="57" x2="90" y2="57" stroke="#4da2ff" stroke-width="1" stroke-dasharray="4 2"/>
+
+              <!-- Twin Heavy Plasma Thruster Nozzles -->
+              <rect x="36" y="32" width="14" height="12" rx="2" fill="#0b131e" stroke="#00e5ff" stroke-width="1.5"/>
+              <ellipse cx="48" cy="38" rx="4" ry="5.5" fill="#00f0ff"/>
+              <rect x="36" y="50" width="14" height="12" rx="2" fill="#0b131e" stroke="#00e5ff" stroke-width="1.5"/>
+              <ellipse cx="48" cy="56" rx="4" ry="5.5" fill="#00f0ff"/>
+            </svg>
+          </div>
+
+          <div id="title" class="hero-intro">
+            <h1 class="console-container" id="console-box">
+              <span id="text" class="cyber-console-text" data-i18n-key="indexPage.heroName">AHMED MANSOUR</span>
+              <span class="console-underscore" id="console" aria-hidden="true">&#95;</span>
+            </h1>
+          </div>
+
+          <!-- Sequential Scroll-Triggered Subtitle -->
+          <div id="subtitle" class="gravity-subtitle">
+            <span class="sub-word sub-software" data-i18n-key="indexPage.subSoftware">SOFTWARE</span>
+            <span class="sub-word sub-engineer" data-i18n-key="indexPage.subEngineer">ENGINEER</span>
+            <span class="sub-word sub-tag" data-i18n-key="indexPage.subTag">[ FLUTTER & AI ]</span>
+          </div>
+
+          <!-- Futuristic Cyberpunk HUD Telemetry Terminal Modules -->
+          <div class="hud-telemetry hud-tl">
+            <span class="hud-bracket">&gt;</span> <span class="hud-text" data-i18n-key="indexPage.hudCore">[SYS.CORE: FLUTTER &amp; AI]</span> <span class="cyber-pulse-dot" title="Core Active"></span>
+          </div>
+          <div class="hud-telemetry hud-tr">
+            <span class="hud-bracket">&gt;</span> <span class="hud-text" data-i18n-key="indexPage.hudNode">[NODE: CAIRO // UTC+2]</span>
+          </div>
+          <div class="hud-telemetry hud-bl">
+            <span class="hud-bracket">&gt;</span> <span class="hud-text" data-i18n-key="indexPage.hudStatus">[STATUS: AVAILABLE]</span>
+          </div>
+          <div class="hud-telemetry hud-br">
+            <span class="hud-bracket">&gt;</span> <span class="hud-text" data-i18n-key="indexPage.hudInput">[INPUT: SCROLL_DOWN]</span> <span class="cyber-cursor"></span>
+          </div>
+
+          <!-- Futuristic Animated Cyber Mouse Scroll Indicator -->
+          <button type="button" class="cyber-scroll-indicator" id="cyber-scroll-indicator" aria-label="Scroll to descend" data-sound-click="warp-whoosh" data-sound-hover="ui-hover">
+            <span class="mouse-icon">
+              <span class="mouse-wheel"></span>
+            </span>
+            <span class="scroll-chevrons">
+              <span class="chevron-down"></span>
+            </span>
+            <span class="scroll-text" data-i18n-key="indexPage.hudScroll">SCROLL</span>
+          </button>
+        </div>
+      </header>
+    </div>
+
+    <!-- 2. Cyberpunk Code IDE & Biometric Hologram Avatar Section -->
+    <section class="about-me-section" id="about-section">
+      <div class="cyber-about-wrapper">
+        <!-- 3D Perspective Retro Grid Floor -->
+        <div class="cyber-grid-floor" aria-hidden="true"></div>
+
+        <!-- Section Header HUD -->
+        <div class="cyber-section-header">
+          <div class="cyber-tag-badge">
+            <svg class="app-icon" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160zm352 182.6c0 17.7-14.3 32-32 32H192c-17.7 0-32-14.3-32-32s14.3-32 32-32h137.4c17.7 0 32 14.3 32 32z"/></svg>
+            <span data-i18n-key="indexPage.aboutMeTag">&lt;ABOUT_ME /&gt;</span>
+          </div>
+          <div class="cyber-header-telemetry">
+            <span class="hud-bracket">&gt;</span> <span data-i18n-key="indexPage.aboutHeaderTelemetry">[SYS.OPERATOR: AHMED MANSOUR // LEAD ENGINEER]</span>
+          </div>
+        </div>
+
+        <!-- Main Cyber Dual Grid -->
+        <div class="cyber-about-grid">
+
+          <!-- 1. Left: Biometric Hologram ID Card -->
+          <div class="biometric-card-wrapper">
+            <div class="biometric-card" data-sound-hover="hologram-on">
+              <!-- Corner HUD Brackets -->
+              <div class="hud-corner hud-corner-tl"></div>
+              <div class="hud-corner hud-corner-tr"></div>
+              <div class="hud-corner hud-corner-bl"></div>
+              <div class="hud-corner hud-corner-br"></div>
+
+              <!-- Animated Laser Scanline Beam -->
+              <div class="bio-scanline-beam"></div>
+
+              <!-- 3D Parallax Image Frame -->
+              <div class="bio-img-container" id="bio-parallax-container">
+                <!-- Layer 1: Background Cyber Station -->
+                <img src="assets/images/profile-cyber-bg.webp" alt="Cyber Station Background" class="bio-layer bio-layer-bg" id="bio-layer-bg" width="600" height="912" loading="lazy" decoding="async" />
+                <!-- Layer 2: Foreground Person Cutout -->
+                <img src="assets/images/profile-cyber-person.webp" alt="Ahmed Mansour - Lead Flutter Engineer" class="bio-layer bio-layer-person" id="bio-layer-person" width="600" height="912" loading="lazy" decoding="async" />
+                <div class="bio-grid-overlay"></div>
+              </div>
+
+              <!-- Biometric Telemetry Meta Footer -->
+              <div class="bio-meta-footer">
+                <div class="bio-id-row">
+                  <span class="bio-label" data-i18n-key="indexPage.bioLabelName">NAME:</span>
+                  <span class="bio-val" data-i18n-key="indexPage.bioValName">Ahmed Mansour</span>
+                </div>
+                <div class="bio-id-row">
+                  <span class="bio-label" data-i18n-key="indexPage.bioLabelStatus">STATUS:</span>
+                  <span class="bio-val bio-status-active">
+                    <span class="bio-pulse-dot"></span> <span data-i18n-key="indexPage.bioValStatus">AVAILABLE FOR PROJECTS</span>
+                  </span>
+                </div>
+                <div class="bio-id-row">
+                  <span class="bio-label" data-i18n-key="indexPage.bioLabelSpecialty">SPECIALTY:</span>
+                  <span class="bio-val" data-i18n-key="indexPage.bioValSpecialty">FLUTTER &amp; AI SYSTEMS</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Right: Cyberpunk Code IDE Window (Protected Strictly in LTR) -->
+          <div class="cyber-ide-container" dir="ltr">
+            <!-- IDE Window Header -->
+            <div class="ide-window-header">
+              <div class="ide-dots">
+                <span class="dot dot-close" title="Close" data-sound-click="warning-beep" data-sound-hover="ui-hover"></span>
+                <span class="dot dot-min" title="Minimize" data-sound-click="warning-beep" data-sound-hover="ui-hover"></span>
+                <span class="dot dot-max" title="Maximize" data-sound-click="warning-beep" data-sound-hover="ui-hover"></span>
+              </div>
+
+              <!-- File Tabs -->
+              <div class="ide-tabs">
+                <button class="ide-tab active" data-tab="dart" id="tab-dart" type="button" data-sound-click="ui-click" data-sound-hover="ui-hover">
+                  <svg class="app-icon ide-tab-icon" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M410.5 256.7L254.8 412.4l-57.8-57.8 97.9-97.9-97.9-97.9 57.8-57.8L410.5 256.7zM254.8 101L156.9 3.1 3.1 156.9l97.9 97.9L254.8 101zM156.9 508.9l97.9-97.9-57.8-57.8-97.9 97.9 57.8 57.8z"/></svg>
+                  <span>ahmed_mansour.dart</span>
+                </button>
+                <button class="ide-tab" data-tab="json" id="tab-json" type="button" data-sound-click="ui-click" data-sound-hover="ui-hover">
+                  <svg class="app-icon ide-tab-icon" viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><path d="M0 64C0 28.7 28.7 0 64 0H224V128c0 17.7 14.3 32 32 32H384V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V64zm384 64H256V0L384 128zM175 231c-9.4-9.4-24.6-9.4-33.9 0l-48 48c-9.4 9.4-9.4 24.6 0 33.9l48 48c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9L141.9 296l33.1-33.1c9.4-9.4 9.4-24.6 0-33.9zm66 0c-9.4 9.4-9.4 24.6 0 33.9l33.1 33.1-33.1 33.1c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l48-48c9.4-9.4 9.4-24.6 0-33.9l-48-48c-9.4-9.4-24.6-9.4-33.9 0z"/></svg>
+                  <span>skills_matrix.json</span>
+                </button>
+              </div>
+
+              <!-- Run Code Action Button -->
+              <div class="ide-actions">
+                <button class="ide-run-btn" id="ide-run-btn" type="button" title="Execute Code" data-sound-click="warp-whoosh" data-sound-hover="ui-hover">
+                  <svg class="app-icon" viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg>
+                  <span>RUN CODE</span>
+                  <span class="run-glow"></span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Code Editor Workspace -->
+            <div class="ide-editor-body" id="ide-editor-body">
+              <div class="ide-gutter" id="ide-gutter">
+                <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+                <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+                <span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span>
+              </div>
+              <div class="ide-code-scroll"><pre class="ide-code-content active" id="code-dart"><code><span class="cm-cmt">// 🏛️ Clean Architecture: Domain &amp; Infrastructure Layer</span>
+<span class="cm-kw">class</span> <span class="cm-cls">AhmedMansour</span> <span class="cm-kw">implements</span> <span class="cm-cls">MobileSystemsEngineer</span> {
+  <span class="cm-kw">final</span> <span class="cm-cls">Architecture</span> style = <span class="cm-cls">Architecture</span>.<span class="cm-prop">cleanDomainDriven</span>;
+  <span class="cm-kw">final</span> <span class="cm-cls">StateEngine</span> state = <span class="cm-cls">StateEngine</span>.<span class="cm-prop">reactiveBlocStreams</span>;
+  <span class="cm-kw">final</span> <span class="cm-cls">StoreDelivery</span> target = <span class="cm-cls">StoreDelivery</span>.<span class="cm-prop">googlePlayProduction</span>;
+
+  <span class="cm-kw">final</span> <span class="cm-cls">List</span>&lt;<span class="cm-cls">String</span>&gt; techArsenal = <span class="cm-kw">const</span> [
+    <span class="cm-str">"Flutter SDK"</span>, <span class="cm-str">"Dart 3.x"</span>, <span class="cm-str">"BLoC / Cubit"</span>,
+    <span class="cm-str">"Supabase RLS"</span>, <span class="cm-str">"Firebase"</span>, <span class="cm-str">"Python Automations"</span>,
+    <span class="cm-str">"RTL-First UI"</span>, <span class="cm-str">"Playwright &amp; AI Agents"</span>
+  ];
+
+  <span class="cm-cls">Future</span>&lt;<span class="cm-cls">Either</span>&lt;<span class="cm-cls">Failure</span>, <span class="cm-cls">AppProductionRelease</span>&gt;&gt; <span class="cm-fn">buildMission</span>() <span class="cm-kw">async</span> {
+    <span class="cm-kw">await</span> <span class="cm-fn">optimizeFrameBudget</span>(fps: <span class="cm-num">120</span>, zeroJank: <span class="cm-kw">true</span>);
+    <span class="cm-kw">final</span> pipeline = <span class="cm-kw">await</span> <span class="cm-cls">AIWorker</span>.<span class="cm-fn">automateWorkflows</span>();
+    <span class="cm-kw">return</span> <span class="cm-cls">Right</span>(<span class="cm-cls">AppProductionRelease</span>(readyForGCCStartups: <span class="cm-kw">true</span>));
+  }
+}</code></pre>
+
+                <pre class="ide-code-content" id="code-json"><code>{
+  <span class="cm-str">"engineer"</span>: <span class="cm-str">"Ahmed Mansour"</span>,
+  <span class="cm-str">"title"</span>: <span class="cm-str">"Mobile Systems &amp; AI Automation Engineer"</span>,
+  <span class="cm-str">"target_markets"</span>: [<span class="cm-str">"Saudi Arabia / GCC Startups"</span>, <span class="cm-str">"Global Remote"</span>],
+  <span class="cm-str">"engineering_pillars"</span>: {
+    <span class="cm-str">"01_mobile_systems"</span>: [
+      <span class="cm-str">"Flutter"</span>, <span class="cm-str">"Dart 3.x"</span>, <span class="cm-str">"BLoC"</span>, <span class="cm-str">"Clean Architecture"</span>, <span class="cm-str">"GetIt / Injectable"</span>
+    ],
+    <span class="cm-str">"02_ai_and_automation"</span>: [
+      <span class="cm-str">"Python"</span>, <span class="cm-str">"Playwright Headless"</span>, <span class="cm-str">"LLM Prompt Pipelines"</span>, <span class="cm-str">"OAuth Workflows"</span>
+    ],
+    <span class="cm-str">"03_cloud_and_data"</span>: [
+      <span class="cm-str">"Supabase"</span>, <span class="cm-str">"PostgreSQL RLS"</span>, <span class="cm-str">"Firebase Auth &amp; FCM"</span>, <span class="cm-str">"Hive / SQLite"</span>
+    ],
+    <span class="cm-str">"04_production_excellence"</span>: [
+      <span class="cm-str">"Google Play Published"</span>, <span class="cm-str">"120fps Compositor"</span>, <span class="cm-str">"Unit &amp; Widget Testing"</span>, <span class="cm-str">"GitFlow &amp; CI/CD"</span>
+    ]
+  },
+  <span class="cm-str">"status"</span>: <span class="cm-str">"AVAILABLE_FOR_MISSION"</span>
+}</code></pre>
+              </div>
+            </div>
+
+            <!-- Interactive Terminal Drawer -->
+            <div class="ide-terminal-drawer" id="ide-terminal-drawer">
+              <div class="terminal-header">
+                <div class="term-title">
+                  <svg class="app-icon" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160zm352 182.6c0 17.7-14.3 32-32 32H192c-17.7 0-32-14.3-32-32s14.3-32 32-32h137.4c17.7 0 32 14.3 32 32z"/></svg>
+                  <span>DEBUG CONSOLE &bull; zsh / flutter</span>
+                </div>
+                <div class="term-status" id="term-status">[STANDBY]</div>
+              </div>
+              <div class="terminal-body" id="terminal-output">
+                <div class="term-line prompt-line">$ flutter run -d production --profile</div>
+                <div class="term-line dim-line">// Click [ ▶ RUN CODE ] to compile Ahmed's profile</div>
+              </div>
+            </div>
+
+            <!-- IDE Status Bar -->
+            <div class="ide-status-bar">
+              <div class="status-item"><svg class="app-icon" viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M80 104a24 24 0 1 0 0-48 24 24 0 1 0 0 48zm80-24c0 32.8-19.7 61-48 73.3V264c0 17.7 14.3 32 32 32h96c17.7 0 32-14.3 32-32V153.3C243.7 141 224 112.8 224 80c0-44.2 35.8-80 80-80s80 35.8 80 80c0 32.8-19.7 61-48 73.3V264c0 53-43 96-96 96H144c-17.7 0-32 14.3-32 32v24.7c28.3 12.3 48 40.5 48 73.3c0 44.2-35.8 80-80 80s-80-35.8-80-80c0-32.8 19.7-61 48-73.3V153.3C19.7 141 0 112.8 0 80 0 35.8 35.8 0 80 0s80 35.8 80 80zm208 24a24 24 0 1 0 0-48 24 24 0 1 0 0 48zM80 456a24 24 0 1 0 0-48 24 24 0 1 0 0 48z"/></svg> <span>git:(main)</span></div>
+              <div class="status-item"><svg class="app-icon" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg> <span>0 Errors, 0 Warnings</span></div>
+              <div class="status-item status-right"><span id="ide-status-lang">Dart 3.x &bull; UTF-8</span></div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Trigger Button for Cyberpunk Skills Matrix Drawer -->
+        <div class="skills-matrix-trigger-wrap">
+          <button id="open-skills-drawer-btn" class="btn-open-skills-matrix" type="button" data-sound-click="warp-whoosh" data-sound-hover="ui-hover">
+            <svg class="btn-icon-hexagon" viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M256 0c14.1 0 27.2 7.5 34.3 19.8l208 360c7.1 12.3 7.1 27.4 0 39.7l-208 360C283.2 504.5 270.1 512 256 512s-27.2-7.5-34.3-19.8l-208-360c-7.1-12.3-7.1-27.4 0-39.7l208-360C228.8 7.5 241.9 0 256 0z"/></svg>
+            <span data-i18n-key="indexPage.openSkillsBtn">OPEN TECHNICAL ARSENAL // SKILLS MATRIX</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3D GSAP Cylinder Carousel Section (Wide 4-Item Ring & Locked Pin Scroll) -->
+    <section class="carousel-section" id="projects-carousel-section" carousel="component">
+      <div class="carousel-viewport">
+
+        <!-- 1. Top Title Zone (Layer on TOP, synchronized with scroll) -->
+        <div class="carousel-title-zone">
+          <div class="carousel-title-track" id="carousel-title-track">
+            <!-- 4 synchronized title items populated via JS -->
+          </div>
+        </div>
+
+        <!-- 2. Center 3D Stage (Wide Circular Stage) -->
+        <div class="carousel-scene">
+          <div class="carousel-wrap" carousel="wrap">
+            <div class="carousel-cylinder" id="carousel-cylinder">
+              <!-- 4 rich card widgets populated via JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Lower Controls Zone (Lime-Neon Arrows) -->
+        <div class="carousel-controls-zone">
+          <button class="carousel-arrow-btn prev-btn" id="carousel-prev" aria-label="Previous Project" data-sound-click="ratchet-step" data-sound-hover="ui-hover">
+            <svg class="app-icon" viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
+          </button>
+          <button class="carousel-arrow-btn next-btn" id="carousel-next" aria-label="Next Project" data-sound-click="ratchet-step" data-sound-hover="ui-hover">
+            <svg class="app-icon" viewBox="0 0 448 512" fill="currentColor" aria-hidden="true"><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg>
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Cyberpunk Skills Matrix & Technical Arsenal Drawer Modal -->
+    <div id="skills-drawer" class="skills-drawer" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="skills-drawer-title">
+      <div class="skills-drawer-backdrop"></div>
+      <div class="skills-drawer-panel">
+        <!-- Corner Tech Brackets -->
+        <div class="hud-corner hud-corner-tl"></div>
+        <div class="hud-corner hud-corner-tr"></div>
+        <div class="hud-corner hud-corner-bl"></div>
+        <div class="hud-corner hud-corner-br"></div>
+
+        <!-- Header -->
+        <div class="skills-drawer-header">
+          <div class="drawer-header-left">
+            <span class="drawer-sys-tag" data-i18n-key="indexPage.skillsDrawerSysTag">&gt; [SYS.ARSENAL // SKILLS_MATRIX.V2]</span>
+            <h2 id="skills-drawer-title" class="drawer-title" data-i18n-key="indexPage.skillsDrawerTitle">TECHNICAL ARSENAL &amp; SYSTEM ARCHITECTURE</h2>
+            <p class="drawer-subtitle" data-i18n-key="indexPage.skillsDrawerSubtitle">Categorized engineering disciplines, enterprise architecture patterns, and production toolchains.</p>
+          </div>
+          <button id="skills-drawer-close-btn" class="skills-drawer-close" type="button" aria-label="Close Skills Matrix" data-sound-click="ui-click" data-sound-hover="ui-hover">
+            <svg viewBox="0 0 384 512" fill="currentColor" aria-hidden="true"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>
+          </button>
+        </div>
+
+        <!-- 4 Pillars Content Grid -->
+        <div class="skills-drawer-content">
+          <div class="skills-pillars-grid">
+
+            <!-- Pillar 1: Mobile Systems & Clean Arch -->
+            <div class="skill-pillar-card pillar-mobile">
+              <div class="pillar-header">
+                <div class="pillar-icon-badge">
+                  <svg viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M410.5 256.7L254.8 412.4l-57.8-57.8 97.9-97.9-97.9-97.9 57.8-57.8L410.5 256.7zM254.8 101L156.9 3.1 3.1 156.9l97.9 97.9L254.8 101zM156.9 508.9l97.9-97.9-57.8-57.8-97.9 97.9 57.8 57.8z"/></svg>
+                </div>
+                <div class="pillar-title-wrap">
+                  <h3 data-i18n-key="indexPage.pillarMobileTitle">Mobile Systems &amp; Clean Architecture</h3>
+                  <p data-i18n-key="indexPage.pillarMobileDesc">Enterprise-grade mobile engineering with strict separation of concerns, reactive streams, and declarative state orchestration.</p>
+                </div>
+              </div>
+              <div class="pillar-skills-cloud">
+                <span class="tech-tag tag-highlight"><span class="tag-dot"></span>Flutter SDK</span>
+                <span class="tech-tag tag-highlight"><span class="tag-dot"></span>Dart 3.x</span>
+                <span class="tech-tag"><span class="tag-dot"></span>Clean Architecture</span>
+                <span class="tech-tag"><span class="tag-dot"></span>BLoC / Cubit</span>
+                <span class="tech-tag"><span class="tag-dot"></span>Repository Pattern</span>
+                <span class="tech-tag"><span class="tag-dot"></span>GetIt / Injectable</span>
+                <span class="tech-tag"><span class="tag-dot"></span>Freezed &amp; dartz (Either)</span>
+                <span class="tech-tag"><span class="tag-dot"></span>Retrofit &amp; Dio</span>
+                <span class="tech-tag"><span class="tag-dot"></span>Reactive Streams</span>
+              </div>
+            </div>
+
+            <!-- Pillar 2: AI Pipelines & Workflow Automation -->
+            <div class="skill-pillar-card pillar-ai">
+              <div class="pillar-header">
+                <div class="pillar-icon-badge">
+                  <svg viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M184 0c30.9 0 56 25.1 56 56V456c0 30.9-25.1 56-56 56c-28.9 0-52.6-21.9-55.7-50.1l-5.2-47.3C104.9 397 86.8 380.2 68.3 360.2l-37 36.9c-21.9 21.9-57.3 21.9-79.2 0s-21.9-57.3 0-79.2l36.9-37C-31 262.4-47.8 244.3-65.4 226.1l-47.3-5.2C-140.9 217.8-162.8 194.1-162.8 165.2c0-30.9 25.1-56 56-56h4.5l47.3-5.2c18.5-2.1 36.6-18.9 55.1-38.9l-36.9-37c-21.9-21.9-21.9-57.3 0-79.2s57.3-21.9 79.2 0l37 36.9C91.6-32.9 109.7-49.7 127.3-67.3l5.2-47.3C135.6-142.8 159.3-164.7 188.2-164.7c30.9 0 56 25.1 56 56"/></svg>
+                </div>
+                <div class="pillar-title-wrap">
+                  <h3 data-i18n-key="indexPage.pillarAiTitle">AI Pipelines &amp; Workflow Automation</h3>
+                  <p data-i18n-key="indexPage.pillarAiDesc">Full-stack automation with Python, headless browser clusters, LLM prompt pipelines, and multi-platform OAuth publishing.</p>
+                </div>
+              </div>
+              <div class="pillar-skills-cloud">
+                <span class="tech-tag tag-ai"><span class="tag-dot"></span>Python Automation</span>
+                <span class="tech-tag tag-ai"><span class="tag-dot"></span>Playwright Headless</span>
+                <span class="tech-tag tag-ai"><span class="tag-dot"></span>LLM Prompt Engineering</span>
+                <span class="tech-tag"><span class="tag-dot"></span>OAuth 2.0 Token Sync</span>
+                <span class="tech-tag"><span class="tag-dot"></span>Multi-Platform Social API</span>
+                <span class="tech-tag"><span class="tag-dot"></span>Automated Media Rendering</span>
+                <span class="tech-tag"><span class="tag-dot"></span>Selenium &amp; Chromium Clusters</span>
+                <span class="tech-tag"><span class="tag-dot"></span>Batch Scheduler Daemons</span>
+              </div>
+            </div>
+
+            <!-- Pillar 3: Cloud Backend, BaaS & Data Persistence -->
+            <div class="skill-pillar-card pillar-cloud">
+              <div class="pillar-header">
+                <div class="pillar-icon-badge">
+                  <svg viewBox="0 0 640 512" fill="currentColor" aria-hidden="true"><path d="M537.6 226.6c4.1-10.7 6.4-22.4 6.4-34.6 0-53-43-96-96-96-19.7 0-38.1 6-53.3 16.2C367 64.2 315.3 32 256 32c-88.4 0-160 71.6-160 160 0 2.7 .1 5.4 .2 8.1C40.2 219.8 0 273.2 0 336c0 79.5 64.5 144 144 144h368c70.7 0 128-57.3 128-128 0-61.9-44-113.6-102.4-125.4z"/></svg>
+                </div>
+                <div class="pillar-title-wrap">
+                  <h3 data-i18n-key="indexPage.pillarCloudTitle">Cloud Backend, BaaS &amp; Data Persistence</h3>
+                  <p data-i18n-key="indexPage.pillarCloudDesc">Scalable backend integrations with PostgreSQL Row-Level Security, real-time sync, and resilient offline-first caching.</p>
+                </div>
+              </div>
+              <div class="pillar-skills-cloud">
+                <span class="tech-tag tag-cloud"><span class="tag-dot"></span>Supabase BaaS</span>
+                <span class="tech-tag tag-cloud"><span class="tag-dot"></span>PostgreSQL &amp; RLS Policies</span>
+                <span class="tech-tag tag-cloud"><span class="tag-dot"></span>Firebase Auth &amp; Firestore</span>
+                <span class="tech-tag"><span class="tag-dot"></span>Firebase Cloud Messaging (FCM)</span>
+                <span class="tech-tag"><span class="tag-dot"></span>RESTful APIs &amp; WebSockets</span>
+                <span class="tech-tag"><span class="tag-dot"></span>Hive Local NoSQL</span>
+                <span class="tech-tag"><span class="tag-dot"></span>SQLite / Floor</span>
+                <span class="tech-tag"><span class="tag-dot"></span>Encrypted Storage (Biometrics)</span>
+              </div>
+            </div>
+
+            <!-- Pillar 4: Production Reliability & Store Delivery -->
+            <div class="skill-pillar-card pillar-production">
+              <div class="pillar-header">
+                <div class="pillar-icon-badge">
+                  <svg viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/></svg>
+                </div>
+                <div class="pillar-title-wrap">
+                  <h3 data-i18n-key="indexPage.pillarProductionTitle">Production Reliability &amp; Store Delivery</h3>
+                  <p data-i18n-key="indexPage.pillarProductionDesc">Shipped production apps on Google Play, 60/120fps compositor optimization, and RTL-first localized typography.</p>
+                </div>
+              </div>
+              <div class="pillar-skills-cloud">
+                <span class="tech-tag tag-store"><span class="tag-dot"></span>Google Play Deployment</span>
+                <span class="tech-tag tag-store"><span class="tag-dot"></span>Release Keystore &amp; ProGuard</span>
+                <span class="tech-tag tag-store"><span class="tag-dot"></span>RTL-First Arabic UI/UX</span>
+                <span class="tech-tag"><span class="tag-dot"></span>60/120fps DevTools Profiling</span>
+                <span class="tech-tag"><span class="tag-dot"></span>Memory Leak Prevention</span>
+                <span class="tech-tag"><span class="tag-dot"></span>Responsive Multi-Device Layouts</span>
+                <span class="tech-tag"><span class="tag-dot"></span>GitFlow &amp; Mobile CI/CD</span>
+                <span class="tech-tag"><span class="tag-dot"></span>Unit &amp; Widget Testing</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Footer Telemetry -->
+        <div class="skills-drawer-footer">
+          <div class="footer-telemetry-status">
+            <span class="status-dot"></span>
+            <span>SYSTEM AUDIT: 100% PRODUCTION READY</span>
+          </div>
+          <span class="footer-note-text" data-i18n-key="indexPage.skillsFooterNote">Ready to accelerate mobile engineering and AI automation for fast-growing startups in Saudi Arabia and the GCC.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="container footer-container">
+      <footer id="footer-container"></footer>
+    </div>
+
+    <!-- Feature-First Clean Architecture Scripts -->
+    <script src="assets/icons/icons.js" defer></script>
+    <!-- 1. Core Layer -->
+    <script src="src/core/domain/usecases/localization.usecase.js" defer></script>
+    <script src="src/core/data/datasources/storage.datasource.js" defer></script>
+    <script src="src/core/data/datasources/audio.service.js" defer></script>
+    <script src="src/core/data/datasources/language.datasource.js" defer></script>
+    <script src="src/core/data/repositories/language.repository.js" defer></script>
+    <script src="src/core/presentation/components/language-switcher/language-switcher.component.js" defer></script>
+    <script src="src/core/presentation/components/appbar/appbar.component.js" defer></script>
+    <script src="src/core/presentation/components/footer/footer.component.js" defer></script>
+
+    <!-- 2. Home Feature -->
+    <script src="src/features/home/presentation/components/space-hero/space-hero.component.js" defer></script>
+    <script src="src/features/home/domain/models/project.model.js" defer></script>
+    <script src="src/features/home/domain/usecases/carousel-geometry.usecase.js" defer></script>
+    <script src="src/features/home/presentation/controllers/carousel.controller.js" defer></script>
+    <script src="src/features/home/presentation/controllers/home.controller.js" defer></script>
+
+    <script>
+      // Initialize Home Page via Feature-First Controller
+      document.addEventListener("DOMContentLoaded", () => {
+        window.Portfolio.presentation.controllers.HomeController.init();
+      });
+
+      // Recalibrate GSAP ScrollTriggers on Back-Forward navigation / BFCache restore
+      window.addEventListener("pageshow", (event) => {
+        if (
+          window.Portfolio &&
+          window.Portfolio.presentation &&
+          window.Portfolio.presentation.controllers &&
+          window.Portfolio.presentation.controllers.HomeController &&
+          typeof window.Portfolio.presentation.controllers.HomeController.handlePageShow === "function"
+        ) {
+          window.Portfolio.presentation.controllers.HomeController.handlePageShow(event);
+        }
+      });
+    </script>
   </body>
 </html>

@@ -97,10 +97,6 @@ html {
   min-height: 4.8rem;
 }
 
-#home-page #subtitle {
-  min-height: 2.2rem;
-}
-
 #home-page .appbar.appbar-hero-hidden {
   transform: translate(-50%, -110px) !important;
   opacity: 0 !important;

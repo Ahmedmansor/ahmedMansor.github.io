@@ -23,6 +23,13 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
     static _observer = null;
     static _visibilityHandler = null;
 
+    static reserveSpace(projectCount) {
+      const section = document.getElementById("projects-carousel-section");
+      if (!section || !projectCount) return;
+      const pinDistance = (Math.max(projectCount, 4) - 1) * 800;
+      section.style.height = section.style.minHeight = `calc(100vh + ${pinDistance}px)`;
+    }
+
     /**
      * Initializes and builds the 3D Cylinder Carousel
      * @param {Array<Object>} projects - Project list from localized dictionary
@@ -42,6 +49,8 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
 
       if (!componentEl || !titleTrack || !cylinder) return;
 
+      const motion = matchMedia("(prefers-reduced-motion: reduce)");
+      const staticLayout = motion.matches || typeof gsap === "undefined" || typeof ScrollTrigger === "undefined";
       titleTrack.innerHTML = "";
       cylinder.innerHTML = "";
 
@@ -52,9 +61,9 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
 
       // Dynamic project list for 3D cylinder geometry
       let cylinderProjects = projects;
-      if (projects.length === 3) {
+      if (!staticLayout && projects.length === 3) {
         cylinderProjects = [projects[0], projects[1], projects[2], projects[0]];
-      } else if (projects.length <= 2) {
+      } else if (!staticLayout && projects.length <= 2) {
         const p1 = projects[0];
         const p2 = projects[1] || projects[0];
         cylinderProjects = [p1, p2, p1, p2];
@@ -144,6 +153,17 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
       titleTrack.innerHTML = titlesHTML;
       cylinder.innerHTML = cardsHTML;
 
+      this._motion = motion;
+      this._motionHandler = () => this.init(projects);
+      motion.addEventListener("change", this._motionHandler);
+      if (staticLayout) {
+        componentEl.classList.add("carousel-static");
+        document.querySelector(".appbar")?.classList.remove("appbar-hidden");
+        window.ScrollTrigger?.refresh();
+        return;
+      }
+      componentEl.classList.remove("carousel-static");
+
       // 3. Setup 3D Geometry and GSAP ScrollTrigger
       this.setupAnimation(componentEl);
     }
@@ -155,6 +175,7 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
     static setupAnimation(componentEl) {
       const itemEls = componentEl.querySelectorAll("[carousel='item']");
       const titleTrackEl = componentEl.querySelector("#carousel-title-track");
+      const titleLinks = titleTrackEl?.querySelectorAll(".carousel-title-link");
       const nextBtn = document.getElementById("carousel-next");
       const prevBtn = document.getElementById("carousel-prev");
 
@@ -178,8 +199,20 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
 
       function updateControls(index) {
         activeIndex = index;
-        if (prevBtn) prevBtn.classList.toggle("is-disabled", index === 0);
-        if (nextBtn) nextBtn.classList.toggle("is-disabled", index === maxIndex);
+        if (prevBtn) {
+          prevBtn.disabled = index === 0;
+          prevBtn.classList.toggle("is-disabled", prevBtn.disabled);
+        }
+        if (nextBtn) {
+          nextBtn.disabled = index === maxIndex;
+          nextBtn.classList.toggle("is-disabled", nextBtn.disabled);
+        }
+        titleLinks?.forEach((link, i) => {
+          link.tabIndex = i === index ? 0 : -1;
+        });
+        cardNodes.forEach(({ card }, i) => {
+          if (card) card.tabIndex = i === index ? 0 : -1;
+        });
       }
 
       function updateStage(progress) {
@@ -330,7 +363,6 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
 
       // Title track link clicks (Vanilla JS)
       if (titleTrackEl) {
-        const titleLinks = titleTrackEl.querySelectorAll(".carousel-title-link");
         titleLinks.forEach((link) => {
           link.onclick = (e) => {
             e.preventDefault();
@@ -356,7 +388,8 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
      */
     static scrollToCarousel(targetIndex = 0, smooth = true) {
       const appbar = document.querySelector(".appbar");
-      if (appbar) appbar.classList.add("appbar-hidden");
+      if (appbar && currentCarouselTimeline) appbar.classList.add("appbar-hidden");
+      if (matchMedia("(prefers-reduced-motion: reduce)").matches) smooth = false;
 
       if (currentCarouselTimeline && currentCarouselTimeline.scrollTrigger) {
         const startY = currentCarouselTimeline.scrollTrigger.start;
@@ -384,6 +417,7 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
      * Cleans up timelines and scroll triggers
      */
     static cleanup() {
+      this._motion?.removeEventListener("change", this._motionHandler);
       if (currentCarouselTimeline) {
         if (currentCarouselTimeline.scrollTrigger) {
           currentCarouselTimeline.scrollTrigger.kill();

@@ -1,6 +1,6 @@
 /**
  * @file home.controller.js
- * @description Page Controller for the Home Landing Page (index.html).
+ * @description Page Controller for the Home Landing Page (home.html).
  * Part of Clean Architecture (Presentation Layer Controller).
  */
 
@@ -57,9 +57,8 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
 
     /**
      * Handles pageshow event to recalibrate ScrollTrigger on BFCache restore or back-forward navigation
-     * @param {PageTransitionEvent} event
      */
-    static handlePageShow(event) {
+    static handlePageShow() {
       if (typeof ScrollTrigger !== "undefined") {
         ScrollTrigger.refresh();
         requestAnimationFrame(() => {
@@ -67,100 +66,8 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
           ScrollTrigger.update();
         });
       }
-      if (event && event.persisted) {
-        const preloader = document.getElementById("cyber-preloader");
-        if (preloader) preloader.remove();
-      }
     }
 
-    /**
-     * Drives the Cyberpunk System Boot Preloader animation:
-     * - Animates progress bar from 0% to 100% in ~750ms
-     * - Sequentially updates system telemetry logs
-     * - Fades out seamlessly with GSAP once all components & ScrollTriggers are ready
-     */
-    static runCyberBootSequence() {
-      return new Promise((resolve) => {
-        const preloader = document.getElementById("cyber-preloader");
-        const progressBar = document.getElementById("preloader-progress-bar");
-        const counterEl = document.getElementById("preloader-counter");
-        const logEl = document.getElementById("preloader-log");
-        const statusEl = document.getElementById("preloader-status");
-
-        if (!preloader || !progressBar || !counterEl) {
-          resolve();
-          return;
-        }
-
-        const logs = [
-          { at: 15, text: "CALIBRATING QUANTUM SENSORS..." },
-          { at: 40, text: "MOUNTING FLUTTER & AI ENGINE..." },
-          { at: 70, text: "LINKING BIOMETRIC TELEMETRY..." },
-          { at: 90, text: "SYNCHRONIZING ORBITAL STAGE..." },
-          { at: 100, text: "[STATUS: ALL SYSTEMS NOMINAL // READY]" }
-        ];
-
-        const duration = 750; // Crisp 750ms duration
-        const startTime = performance.now();
-
-        const updatePreloader = (now) => {
-          const elapsed = now - startTime;
-          const progress = Math.min(100, Math.floor((elapsed / duration) * 100));
-
-          progressBar.style.width = `${progress}%`;
-          counterEl.textContent = `${String(progress).padStart(3, "0")}%`;
-
-          for (let i = logs.length - 1; i >= 0; i--) {
-            if (progress >= logs[i].at) {
-              if (logEl && logEl.textContent !== logs[i].text) {
-                logEl.textContent = logs[i].text;
-              }
-              break;
-            }
-          }
-
-          if (progress >= 100) {
-            if (statusEl) {
-              statusEl.textContent = "ONLINE";
-              statusEl.style.color = "#00e696";
-            }
-            if (logEl) {
-              logEl.style.color = "#00f0ff";
-            }
-
-            // Smooth holographic GSAP fade-out
-            setTimeout(() => {
-              if (typeof gsap !== "undefined") {
-                gsap.to(preloader, {
-                  autoAlpha: 0,
-                  duration: 0.45,
-                  ease: "power2.inOut",
-                  onComplete: () => {
-                    preloader.remove();
-                    resolve();
-                  }
-                });
-              } else {
-                preloader.style.opacity = "0";
-                preloader.style.pointerEvents = "none";
-                setTimeout(() => {
-                  preloader.remove();
-                  resolve();
-                }, 450);
-              }
-            }, 120);
-          } else {
-            requestAnimationFrame(updatePreloader);
-          }
-        };
-
-        requestAnimationFrame(updatePreloader);
-      });
-    }
-
-    /**
-     * Initializes the Home page
-     */
     static async init() {
       // Force auto scroll-behavior so ScrollTrigger calculations are never distorted by smooth transitions
       document.documentElement.style.scrollBehavior = "auto";
@@ -181,20 +88,7 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
       const navEntries = performance.getEntriesByType("navigation");
       const isBackForward = navEntries.length > 0 && navEntries[0].type === "back_forward";
 
-      const preloader = document.getElementById("cyber-preloader");
-
-      // 2. Start or bypass Cyberpunk Boot Sequence:
-      // On Back/Forward navigation, instantly dismiss the preloader so the user returns right to their spot
-      let bootPromise;
-      if (isBackForward) {
-        if (preloader) preloader.remove();
-        bootPromise = Promise.resolve();
-      } else {
-        if (!window.location.hash) {
-          window.scrollTo(0, 0);
-        }
-        bootPromise = this.runCyberBootSequence();
-      }
+      if (!isBackForward && !window.location.hash) window.scrollTo(0, 0);
 
       const activeLang = LanguageRepository.getActiveLanguage();
 
@@ -228,17 +122,16 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
         LocalizationUseCase.translateDOM(window.translations, "home-page");
       }
 
-      // 8. Initialize Pinned Scroll-Driven Space Hero Sequence (Section 1 - Top)
-      this.setupSpaceHeroScrollSequence();
-
-      // 8. Initialize Cyberpunk Code IDE & Biometric Hologram section (Section 2 - Middle)
-      this.setupCyberAboutSection();
-
       // 8.1 Initialize Cyberpunk Skills Matrix Drawer
       this.setupSkillsDrawer();
 
       // 9. Load initial language & render Carousel 3D cards (Section 3 - Bottom)
       await this.switchLanguage(activeLang);
+      this.prepareNearSection("about-section", () => {
+        this.setupCyberAboutSection();
+        window.ScrollTrigger?.refresh();
+      });
+      this.prepareNearSection("projects-carousel-section", () => this.mountProjects());
 
       // 10. Setup smooth navigation to projects
       this.setupProjectsNavLink();
@@ -249,18 +142,32 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
         ScrollTrigger.refresh();
       }
 
-      // 12. Await boot animation completion before resolving
-      await bootPromise;
-
-      if (typeof ScrollTrigger !== "undefined") {
-        ScrollTrigger.refresh();
-      }
-
-      // 13. Handle direct landing with hash (#projects-carousel-section)
+      // Handle direct landing with hash (#projects-carousel-section)
       this.handleHashNavigation();
 
-      // 14. Initialize Cyber Start Experience & Audio Warning Overlay
+      // Initialize Cyber Start Experience & Audio Warning Overlay
       this.setupStartExperienceOverlay();
+    }
+
+    static prepareNearSection(id, prepare) {
+      const section = document.getElementById(id);
+      if (!section) return;
+      if (!window.IntersectionObserver) {
+        prepare();
+        return;
+      }
+      const observer = new IntersectionObserver(([entry]) => {
+        if (!entry.isIntersecting) return;
+        observer.disconnect();
+        prepare();
+      }, { rootMargin: "350px 0px" });
+      observer.observe(section);
+    }
+
+    static mountProjects() {
+      if (this.projectsMounted || !this.projectsData) return;
+      this.projectsMounted = true;
+      CarouselController.init(this.projectsData);
     }
 
     /**
@@ -308,7 +215,8 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
         // 2. Set global mute state to FALSE & unlock audio
         if (AudioService) {
           AudioService.setMuted(false);
-          AudioService.unlock();
+          AudioService.play("hologram-on");
+          AudioService.playBGM();
         }
 
         // Mark session as started so overlay won't show again on refresh
@@ -326,25 +234,12 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
             scale: 1.04,
             duration: 0.45,
             ease: "power2.inOut",
-            onComplete: () => {
-              overlay.remove();
-              // 5. Play hologram-on SFX + start BGM loop
-              if (AudioService) {
-                AudioService.play("hologram-on");
-                AudioService.playBGM();
-              }
-            }
+            onComplete: () => overlay.remove()
           });
         } else {
           overlay.style.opacity = "0";
           overlay.style.pointerEvents = "none";
-          setTimeout(() => {
-            overlay.remove();
-            if (AudioService) {
-              AudioService.play("hologram-on");
-              AudioService.playBGM();
-            }
-          }, 450);
+          setTimeout(() => overlay.remove(), 450);
         }
       });
 
@@ -376,74 +271,43 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
       }
     }
 
-    /**
-     * Initializes the Pinned GSAP ScrollTrigger Sequence for Space Hero:
-     * - Pins hero stage for a crisp, cinematic scroll duration (~180vh).
-     * - Step 1: Cyber Console box activates with neon glow and blinking underscore cursor.
-     * - Step 2: "AHMED MANSOUR" is typed character-by-character synchronized with scroll (scrubbed).
-     * - Step 3: Subtitle ("SOFTWARE", "ENGINEER", "[ FLUTTER & AI ]") reveals sequentially.
-     * - Step 4: Futuristic spaceship probe swoops across the curved Earth horizon.
-     * - Unpins cleanly into the side-by-side About Me / Profile separator.
-     */
+    /** Pins the hero while the spaceship flies across the horizon. */
     static setupSpaceHeroScrollSequence() {
       if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") return;
 
       const heroWrapper = document.getElementById("space-hero-pin-wrapper");
-      const titleWrapper = document.getElementById("title");
-      const consoleBox = document.getElementById("console-box");
-      const consoleTextEl = document.getElementById("text");
-      const subWords = document.querySelectorAll("#subtitle .sub-word, #subtitle .sub-tag");
       const spaceship = document.getElementById("space-vessel");
-      const horizon = document.getElementById("horizon");
+      const name = document.getElementById("text");
+      const subtitle = heroWrapper?.querySelector("#subtitle");
+      if (!heroWrapper || !spaceship || !name || !subtitle) return;
 
-      if (!heroWrapper || !titleWrapper || !consoleTextEl) return;
-
-      // Clean up previous instance if re-initializing
+      const fullName = name.textContent;
       this.cleanupSpaceHero();
-
+      name.textContent = fullName;
+      name.closest("h1")?.setAttribute("aria-label", fullName);
       gsap.registerPlugin(ScrollTrigger);
 
-      const isAr = (typeof LanguageRepository !== "undefined" && LanguageRepository.getActiveLanguage() === "ar") || 
-                   document.documentElement.getAttribute("dir") === "rtl" ||
-                   document.documentElement.getAttribute("lang") === "ar";
-      const fullText = isAr ? "أحمد منصور" : "AHMED MANSOUR";
-
-      // Ensure title wrapper is visible with clean initial state
-      gsap.set(titleWrapper, { autoAlpha: 1 });
-
-      if (subWords.length > 0) {
-        gsap.set(subWords, { autoAlpha: 0, y: 22 });
-      }
-      if (spaceship) {
-        gsap.set(spaceship, { autoAlpha: 0, x: -450, y: 160, rotation: 16, scale: 0.75 });
-      }
-      if (horizon) {
-        gsap.set(horizon, { y: 0, scale: 1 });
-      }
-
-      let lastTypeCount = -1;
-      // Helper to compute typed text character-by-character continuously forward and backward
-      const updateTypingText = (progress) => {
-        let currentCount = 0;
-        const typingEndProgress = window.innerWidth <= 768 ? 0.42 : 0.48;
-        if (progress < 0.05) {
-          consoleTextEl.textContent = "";
-          currentCount = 0;
-        } else if (progress >= typingEndProgress) {
-          consoleTextEl.textContent = fullText;
-          currentCount = fullText.length;
-        } else {
-          const ratio = (progress - 0.05) / (typingEndProgress - 0.05);
-          currentCount = Math.min(fullText.length, Math.floor(ratio * fullText.length + 0.1));
-          consoleTextEl.textContent = fullText.slice(0, currentCount);
+      let visibleCharacters = 0;
+      const renderName = (progress, typingEnd, playSound = false) => {
+        const fraction = Math.min(1, Math.max(0, (progress - 0.05) / (typingEnd - 0.05)));
+        const count = Math.floor(fullName.length * fraction);
+        if (playSound && count !== visibleCharacters) {
+          window.AudioService?.playThrottled("typing-tick", 60);
         }
+        visibleCharacters = count;
+        const typed = fullName.slice(0, count);
+        if (name.textContent !== typed) name.textContent = typed;
+      };
 
-        if (currentCount !== lastTypeCount && currentCount > 0) {
-          lastTypeCount = currentCount;
-          if (window.AudioService) {
-            window.AudioService.playThrottled("typing-tick", 60);
-          }
-        }
+      const animateIntro = (timeline, revealAt) => {
+        timeline.fromTo(subtitle, { autoAlpha: 0, y: 12 }, {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.16,
+          ease: "power2.out"
+        }, revealAt);
+        renderName(timeline.scrollTrigger.progress, revealAt - 0.02);
+        return () => { name.textContent = fullName; };
       };
 
       // Smooth scroll click on cyber scroll indicator (desktop only)
@@ -453,7 +317,9 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
         scrollIndicator.addEventListener("click", () => {
           const aboutSection = document.getElementById("about-section");
           if (aboutSection) {
-            aboutSection.scrollIntoView({ behavior: "smooth" });
+            aboutSection.scrollIntoView({
+              behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"
+            });
           }
         });
       }
@@ -462,16 +328,10 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
       const mm = gsap.matchMedia();
       heroMatchMediaInstance = mm;
 
-      // Branch A: Desktop (Full cinematic flight, expansive curve, and smooth scrub)
-      mm.add("(min-width: 769px)", () => {
-        if (subWords.length > 0) {
-          gsap.set(subWords, { autoAlpha: 0, y: 22 });
-        }
+      // Desktop flyby.
+      mm.add("(min-width: 769px) and (prefers-reduced-motion: no-preference)", () => {
         if (spaceship) {
           gsap.set(spaceship, { autoAlpha: 0, x: -450, y: 160, rotation: 16, scale: 0.75 });
-        }
-        if (horizon) {
-          gsap.set(horizon, { y: 0, scale: 1 });
         }
 
         const heroTl = gsap.timeline({
@@ -484,16 +344,12 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
             scrub: 0.8,
             refreshPriority: 10,
             invalidateOnRefresh: true,
-            onUpdate: (self) => {
-              updateTypingText(self.progress);
-            }
+            onUpdate: ({ progress }) => renderName(progress, 0.48, true),
+            onRefresh: ({ progress }) => renderName(progress, 0.48)
           }
         });
         heroTimelineInstance = heroTl;
-
-        if (heroTl.scrollTrigger) {
-          updateTypingText(heroTl.scrollTrigger.progress);
-        }
+        const restoreName = animateIntro(heroTl, 0.50);
 
         if (scrollIndicator) {
           heroTl.to(scrollIndicator, {
@@ -502,20 +358,6 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
             duration: 0.12,
             ease: "power1.out"
           }, 0.01);
-        }
-
-        // Typing duration
-        heroTl.to({}, { duration: 0.43 }, 0.05);
-
-        // Subtitle words emerge sequentially
-        if (subWords.length > 0) {
-          heroTl.to(subWords, {
-            autoAlpha: 1,
-            y: 0,
-            stagger: 0.08,
-            duration: 0.22,
-            ease: "power2.out"
-          }, 0.50);
         }
 
         // Spaceship swoops across horizon
@@ -538,26 +380,14 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
           }, 0.60);
         }
 
-        if (horizon) {
-          heroTl.to(horizon, {
-            y: 16,
-            scale: 1.025,
-            duration: 0.45,
-            ease: "sine.inOut"
-          }, 0.58);
-        }
+        heroTl.to({}, { duration: 0.05 }, 0.98);
+        return restoreName;
       });
 
       // Branch B: Mobile (Compact, lightweight, smaller spaceship, fast natural touch response)
-      mm.add("(max-width: 768px)", () => {
-        if (subWords.length > 0) {
-          gsap.set(subWords, { autoAlpha: 0, y: 14 });
-        }
+      mm.add("(width < 769px) and (prefers-reduced-motion: no-preference)", () => {
         if (spaceship) {
           gsap.set(spaceship, { autoAlpha: 0, x: -280, y: 70, rotation: 8, scale: 0.75 });
-        }
-        if (horizon) {
-          gsap.set(horizon, { y: 0, scale: 1 });
         }
 
         const heroTl = gsap.timeline({
@@ -570,16 +400,12 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
             scrub: 0.8, // Smooth cinematic scrub avoiding jumpy thumb flicks
             refreshPriority: 10,
             invalidateOnRefresh: true,
-            onUpdate: (self) => {
-              updateTypingText(self.progress);
-            }
+            onUpdate: ({ progress }) => renderName(progress, 0.42, true),
+            onRefresh: ({ progress }) => renderName(progress, 0.42)
           }
         });
         heroTimelineInstance = heroTl;
-
-        if (heroTl.scrollTrigger) {
-          updateTypingText(heroTl.scrollTrigger.progress);
-        }
+        const restoreName = animateIntro(heroTl, 0.44);
 
         if (scrollIndicator) {
           heroTl.to(scrollIndicator, {
@@ -588,20 +414,6 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
             duration: 0.1,
             ease: "power1.out"
           }, 0.01);
-        }
-
-        // Typing from 0.05 to 0.44
-        heroTl.to({}, { duration: 0.39 }, 0.05);
-
-        // Subtitle emerges at 0.42
-        if (subWords.length > 0) {
-          heroTl.to(subWords, {
-            autoAlpha: 1,
-            y: 0,
-            stagger: 0.06,
-            duration: 0.18,
-            ease: "power2.out"
-          }, 0.42);
         }
 
         // Spaceship swoops slowly & gracefully from 0.46 all the way to 0.98
@@ -624,14 +436,7 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
           }, 0.46);
         }
 
-        if (horizon) {
-          heroTl.to(horizon, {
-            y: 12,
-            scale: 1.02,
-            duration: 0.50,
-            ease: "sine.inOut"
-          }, 0.46);
-        }
+        return restoreName;
       });
     }
 
@@ -640,19 +445,22 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
      * to smoothly scroll directly to the 3D Carousel start.
      */
     static setupProjectsNavLink() {
-      const projectsLink = document.querySelector('.appbar-link[href*="projects-carousel-section"]');
-      if (projectsLink) {
+      const projectsLinks = document.querySelectorAll('a[href="#projects-carousel-section"]');
+      projectsLinks.forEach((projectsLink) => {
         projectsLink.addEventListener("click", (e) => {
+          if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
           e.preventDefault();
+          this.mountProjects();
           CarouselController.scrollToCarousel(0);
           if (window.location.hash !== "#projects-carousel-section") {
             history.pushState(null, "", "#projects-carousel-section");
           }
         });
-      }
+      });
 
       window.addEventListener("hashchange", () => {
         if (window.location.hash === "#projects-carousel-section") {
+          this.mountProjects();
           CarouselController.scrollToCarousel(0);
         }
       });
@@ -677,6 +485,7 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
      */
     static handleHashNavigation() {
       if (window.location.hash === "#projects-carousel-section") {
+        this.mountProjects();
         CarouselController.scrollToCarousel(0, false);
       }
     }
@@ -714,9 +523,19 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
           trigger: carousel,
           start: "top 120px",
           end: "bottom 100px",
-          onEnter: () => appbar.classList.add("appbar-hidden"),
+          onEnter: () => {
+            if (!carousel.classList.contains("carousel-static") &&
+                !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+              appbar.classList.add("appbar-hidden");
+            }
+          },
           onLeave: () => appbar.classList.remove("appbar-hidden"),
-          onEnterBack: () => appbar.classList.add("appbar-hidden"),
+          onEnterBack: () => {
+            if (!carousel.classList.contains("carousel-static") &&
+                !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+              appbar.classList.add("appbar-hidden");
+            }
+          },
           onLeaveBack: () => appbar.classList.remove("appbar-hidden")
         });
       }
@@ -873,7 +692,8 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
       }
 
       // 4. GSAP ScrollTrigger Entrance Animation
-      if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
+      const motion = matchMedia("(prefers-reduced-motion: reduce)");
+      if (!motion.matches && typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
         gsap.registerPlugin(ScrollTrigger);
 
         if (bioCard && ideContainer) {
@@ -910,6 +730,14 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
         let currentZ = 0;
 
         const updateParallax = () => {
+          if (motion.matches || document.documentElement.dataset.effectsQuality === "light") {
+            layerBg.style.transform = "";
+            layerPerson.style.transform = "";
+            bioCard.style.transform = "";
+            bioCard.style.willChange = "";
+            rafId = null;
+            return;
+          }
           // Continuous physics lerp for all 3 axes
           currentX += (targetX - currentX) * 0.085;
           currentY += (targetY - currentY) * 0.085;
@@ -1151,11 +979,13 @@ window.Portfolio.presentation.controllers = window.Portfolio.presentation.contro
         const translations = await LanguageRepository.loadLanguage(lang);
         const { pageTranslations } = LocalizationUseCase.translateDOM(translations, "home-page");
 
-        // Re-initialize hero typing sequence with localized name and subtitle
+        // Rebuild the sequence with the translated heading.
         this.setupSpaceHeroScrollSequence();
 
-        if (pageTranslations && pageTranslations.projectsData) {
-          CarouselController.init(pageTranslations.projectsData);
+        if (pageTranslations?.projectsData) {
+          this.projectsData = pageTranslations.projectsData;
+          CarouselController.reserveSpace(this.projectsData.length);
+          if (this.projectsMounted) CarouselController.init(this.projectsData);
         }
 
         if (typeof ScrollTrigger !== "undefined") {

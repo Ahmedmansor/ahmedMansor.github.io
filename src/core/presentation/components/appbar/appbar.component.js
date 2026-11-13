@@ -18,12 +18,12 @@ window.Portfolio.presentation.components = window.Portfolio.presentation.compone
      */
     static getTemplate() {
       const isHome = document.body && (document.body.id === "home-page" || document.body.id === "index-page");
-      const projectsHref = isHome ? "#projects-carousel-section" : "index.html#projects-carousel-section";
+      const projectsHref = isHome ? "#projects-carousel-section" : "home.html#projects-carousel-section";
       const activeClass = !isHome ? "active" : "";
 
       return `
         <div class="appbar-inner">
-          <a href="index.html" class="appbar-brand" title="Home" data-sound-click="ui-click" data-sound-hover="ui-hover">
+          <a href="home.html" class="appbar-brand" title="Home" data-sound-click="ui-click" data-sound-hover="ui-hover">
             <span class="hud-status-dot" aria-hidden="true"></span>
             <span class="brand-tag">&lt;</span><span class="brand-name">ahmedMansour</span><span class="brand-tag"> /&gt;</span>
           </a>

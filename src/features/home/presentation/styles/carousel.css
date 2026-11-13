@@ -1314,3 +1314,59 @@ html[dir="rtl"] .carousel-item .view-project-btn svg {
     font-size: 1rem;
   }
 }
+.carousel-section.carousel-static {
+  height: auto !important;
+  min-height: 0 !important;
+  scroll-margin-top: 80px;
+}
+
+.carousel-static .carousel-viewport,
+.carousel-static .carousel-scene,
+.carousel-static .carousel-wrap {
+  position: static;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  overflow: visible;
+  perspective: none;
+  will-change: auto;
+}
+
+.carousel-static .carousel-title-zone,
+.carousel-static .carousel-controls-zone {
+  display: none;
+}
+
+.carousel-static .carousel-cylinder {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: 20px;
+  width: min(100%, 1100px);
+  margin-inline: auto;
+}
+
+.carousel-static .carousel-item {
+  position: relative;
+  min-width: 0;
+  height: auto;
+  will-change: auto;
+}
+
+.carousel-static .carousel-item .project-card {
+  pointer-events: auto;
+  cursor: pointer;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+:root[data-effects-quality="light"] .carousel-item .project-card,
+:root[data-effects-quality="light"] .carousel-title-nav-btn {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+:root[data-effects-quality="light"] .carousel-item .project-card::before,
+:root[data-effects-quality="light"] .carousel-title-nav-btn::before,
+:root[data-effects-quality="light"] .carousel-title-nav-btn::after {
+  display: none;
+}
