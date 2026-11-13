@@ -4,6 +4,9 @@
 # Ignore VS Code's workspace settings
 .vscode/
 
+# Local agent skill checkout
+/.agents/skills/ui-ux-pro-max/
+
 
 
 # Raw Audio FX Files
